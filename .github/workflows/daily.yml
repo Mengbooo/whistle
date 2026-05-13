@@ -111,6 +111,12 @@ jobs:
           codex exec \
             --cd . \
             --dangerously-bypass-approvals-and-sandbox \
+            --config 'model_provider="micu"' \
+            --config "model_providers.micu.base_url=\"${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}\"" \
+            --config 'model_providers.micu.name="micu"' \
+            --config 'model_providers.micu.requires_openai_auth=true' \
+            --config 'model_providers.micu.wire_api="responses"' \
+            --config "shell_environment_policy.set.OPENAI_API_KEY=\"$MICU_API_KEY\"" \
             --model "${MICU_MODEL:-gpt-5.5}" \
             "$(cat prompts/daily_report.md)"
 
