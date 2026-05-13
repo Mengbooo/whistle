@@ -32,7 +32,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm install
+          pnpm install --frozen-lockfile --ignore-scripts
           pnpm exec playwright install --with-deps chromium
           pnpm add -g @openai/codex
 
@@ -83,6 +83,7 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           REPORT_FROM: ${{ secrets.REPORT_FROM }}
           REPORT_TO: ${{ secrets.REPORT_TO }}
+          REPORT_BASE_URL: ${{ secrets.REPORT_BASE_URL }}
         run: pnpm run email
 
       - name: Commit report archive

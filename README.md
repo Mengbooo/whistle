@@ -48,6 +48,10 @@ Required for email delivery:
 - `REPORT_FROM`
 - `REPORT_TO`
 
+Optional for email links:
+
+- `REPORT_BASE_URL` defaults to `https://daily.bolaxious.cn`
+
 ## Vercel
 
 Deploy the repository to Vercel and set the output directory to `site`. The included `vercel.json` already declares this.
