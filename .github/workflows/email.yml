@@ -41,3 +41,10 @@ jobs:
           REPORT_TO: ${{ secrets.REPORT_TO }}
           REPORT_BASE_URL: ${{ secrets.REPORT_BASE_URL }}
         run: pnpm run email
+
+      - name: Notify email failure
+        if: failure()
+        env:
+          ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          ALERT_WEBHOOK_TYPE: ${{ secrets.ALERT_WEBHOOK_TYPE }}
+        run: node scripts/send-webhook-alert.js email-delivery

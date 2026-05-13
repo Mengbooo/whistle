@@ -68,6 +68,13 @@ Email variables:
 - `REPORT_TO`
 - `REPORT_BASE_URL`, default: `https://daily.bolaxious.cn`
 
+Alert variables:
+
+- `ALERT_FROM`, optional, falls back to `REPORT_FROM`
+- `ALERT_TO`, optional, falls back to `REPORT_TO`
+- `ALERT_WEBHOOK_URL`, optional, used for non-email failure alerts
+- `ALERT_WEBHOOK_TYPE`, optional, supports `discord`, `generic`, `slack`, `feishu`, `lark`, or `wecom`
+
 ## Deployment
 
 The static site can be deployed to Vercel with `site` as the output directory. The repository already includes `vercel.json`.
