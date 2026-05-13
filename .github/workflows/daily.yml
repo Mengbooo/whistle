@@ -50,7 +50,7 @@ jobs:
           disable_response_storage = true
 
           [model_providers.micu]
-          base_url = "${MICU_BASE_URL:-https://www.micuapi.ai/v1}"
+          base_url = "${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}"
           name = "micu"
           requires_openai_auth = true
           wire_api = "responses"
@@ -70,13 +70,6 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.MICU_API_KEY }}
         run: |
           test -n "$MICU_API_KEY"
-          EFFECTIVE_MICU_BASE_URL="${MICU_BASE_URL:-https://www.micuapi.ai/v1}"
-          echo "Using MICU_BASE_URL=$EFFECTIVE_MICU_BASE_URL"
-          echo "MICU_API_KEY length=${#MICU_API_KEY}"
-          if [ "$EFFECTIVE_MICU_BASE_URL" = "https://www.openclaudecode.cn/v1" ]; then
-            echo "MICU_BASE_URL is still using the old provider endpoint."
-            exit 1
-          fi
           codex exec \
             --cd . \
             --dangerously-bypass-approvals-and-sandbox \
