@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 1 * * *"
   workflow_dispatch:
+    inputs:
+      whistle_date:
+        description: "Optional report date in YYYY-MM-DD (Asia/Shanghai)"
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -29,10 +34,13 @@ jobs:
         run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Verify report artifacts
+        env:
+          WHISTLE_DATE: ${{ inputs.whistle_date }}
         run: |
-          test -f "outputs/$(TZ=Asia/Shanghai date +%F)/report.html"
-          test -f "outputs/$(TZ=Asia/Shanghai date +%F)/report.pdf"
-          test -f "site/reports/$(TZ=Asia/Shanghai date +%F).html"
+          TARGET_DATE="${WHISTLE_DATE:-$(TZ=Asia/Shanghai date +%F)}"
+          test -f "outputs/$TARGET_DATE/report.html"
+          test -f "outputs/$TARGET_DATE/report.pdf"
+          test -f "site/reports/$TARGET_DATE.html"
 
       - name: Send PDF email
         env:
@@ -40,6 +48,7 @@ jobs:
           REPORT_FROM: ${{ secrets.REPORT_FROM }}
           REPORT_TO: ${{ secrets.REPORT_TO }}
           REPORT_BASE_URL: ${{ secrets.REPORT_BASE_URL }}
+          WHISTLE_DATE: ${{ inputs.whistle_date }}
         run: pnpm run email
 
       - name: Notify email failure
@@ -47,4 +56,5 @@ jobs:
         env:
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
           ALERT_WEBHOOK_TYPE: ${{ secrets.ALERT_WEBHOOK_TYPE }}
+          WHISTLE_DATE: ${{ inputs.whistle_date }}
         run: node scripts/send-webhook-alert.js email-delivery

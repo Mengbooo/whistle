@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "30 0 * * *"
   workflow_dispatch:
+    inputs:
+      whistle_date:
+        description: "Optional report date in YYYY-MM-DD (Asia/Shanghai)"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -94,6 +99,7 @@ jobs:
           MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
           MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
           MICU_MODEL: ${{ secrets.MICU_MODEL }}
+          WHISTLE_DATE: ${{ inputs.whistle_date }}
         run: |
           test -n "$MICU_API_KEY"
           codex exec \
@@ -103,10 +109,13 @@ jobs:
             "$(cat prompts/daily_report.md)"
 
       - name: Verify generated report
+        env:
+          WHISTLE_DATE: ${{ inputs.whistle_date }}
         run: |
-          test -f "outputs/$(TZ=Asia/Shanghai date +%F)/report.html"
-          test -f "outputs/$(TZ=Asia/Shanghai date +%F)/report.pdf"
-          test -f "site/reports/$(TZ=Asia/Shanghai date +%F).html"
+          TARGET_DATE="${WHISTLE_DATE:-$(TZ=Asia/Shanghai date +%F)}"
+          test -f "outputs/$TARGET_DATE/report.html"
+          test -f "outputs/$TARGET_DATE/report.pdf"
+          test -f "site/reports/$TARGET_DATE.html"
 
       - name: Commit report archive
         run: |
@@ -124,4 +133,5 @@ jobs:
           REPORT_TO: ${{ secrets.REPORT_TO }}
           ALERT_FROM: ${{ secrets.ALERT_FROM }}
           ALERT_TO: ${{ secrets.ALERT_TO }}
+          WHISTLE_DATE: ${{ inputs.whistle_date }}
         run: node scripts/send-failure-alert.js report-generation
