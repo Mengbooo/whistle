@@ -62,6 +62,27 @@ jobs:
           OPENAI_API_KEY = "$MICU_API_KEY"
           EOF
 
+      - name: Validate MICU API
+        env:
+          MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
+          MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
+        run: |
+          test -n "$MICU_API_KEY"
+          EFFECTIVE_MICU_BASE_URL="${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}"
+          STATUS="$(curl -sS -o /tmp/micu-models.json -w "%{http_code}" \
+            -H "Authorization: Bearer $MICU_API_KEY" \
+            "$EFFECTIVE_MICU_BASE_URL/models")"
+          echo "MICU /models status=$STATUS"
+          if [ "$STATUS" = "401" ]; then
+            echo "MICU_API_KEY was rejected by the configured provider."
+            exit 1
+          fi
+          if [ "$STATUS" -lt 200 ] || [ "$STATUS" -ge 300 ]; then
+            echo "Unexpected MICU API status."
+            cat /tmp/micu-models.json
+            exit 1
+          fi
+
       - name: Generate report with headless agent
         env:
           MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
