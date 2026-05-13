@@ -1,0 +1,94 @@
+name: Daily Whistle Report
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Configure pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: |
+          pnpm install
+          pnpm exec playwright install --with-deps chromium
+          pnpm add -g @openai/codex
+
+      - name: Configure Codex provider
+        env:
+          MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
+          MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
+          MICU_MODEL: ${{ secrets.MICU_MODEL }}
+        run: |
+          mkdir -p ~/.codex
+          cat > ~/.codex/config.toml <<EOF
+          model = "${MICU_MODEL:-gpt-5.5}"
+          model_provider = "micu"
+          model_reasoning_effort = "medium"
+          disable_response_storage = true
+
+          [model_providers.micu]
+          base_url = "${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}"
+          name = "micu"
+          requires_openai_auth = true
+          wire_api = "responses"
+
+          [shell_environment_policy]
+          inherit = "core"
+
+          [shell_environment_policy.set]
+          OPENAI_API_KEY = "$MICU_API_KEY"
+          EOF
+
+      - name: Generate report with headless agent
+        env:
+          MICU_MODEL: ${{ secrets.MICU_MODEL }}
+        run: |
+          codex exec \
+            --cd . \
+            --dangerously-bypass-approvals-and-sandbox \
+            --model "${MICU_MODEL:-gpt-5.5}" \
+            "$(cat prompts/daily_report.md)"
+
+      - name: Verify generated report
+        run: |
+          test -f "outputs/$(TZ=Asia/Shanghai date +%F)/report.html"
+          test -f "outputs/$(TZ=Asia/Shanghai date +%F)/report.pdf"
+          test -f "site/reports/$(TZ=Asia/Shanghai date +%F).html"
+
+      - name: Send PDF email
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          REPORT_FROM: ${{ secrets.REPORT_FROM }}
+          REPORT_TO: ${{ secrets.REPORT_TO }}
+        run: pnpm run email
+
+      - name: Commit report archive
+        run: |
+          git config user.name "whistle-bot"
+          git config user.email "whistle-bot@users.noreply.github.com"
+          git add outputs/ site/
+          git commit -m "Update Whistle report" || echo "No changes"
+          git push

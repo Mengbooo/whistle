@@ -1,0 +1,32 @@
+{
+  "name": "whistle",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "node scripts/generate-report.js",
+    "brief": "node scripts/generate-report.js",
+    "pdf": "node scripts/html-to-pdf.js",
+    "archive": "node scripts/archive-report.js && node scripts/build-site-index.js",
+    "email": "node scripts/send-report-email.js",
+    "build": "node scripts/build-site-index.js",
+    "dev": "vite --host 0.0.0.0",
+    "site:build": "vite build",
+    "publish": "node scripts/html-to-pdf.js && node scripts/archive-report.js && node scripts/build-site-index.js",
+    "agent": "pnpm run prepare && codex exec --cd . --dangerously-bypass-approvals-and-sandbox \"$(cat prompts/kami_report_only.md)\""
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "feedparser": "^2.2.10",
+    "jsdom": "^25.0.1",
+    "playwright": "^1.49.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "resend": "^4.1.2",
+    "yaml": "^2.6.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.21"
+  }
+}
