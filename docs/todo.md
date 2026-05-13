@@ -2,50 +2,50 @@
 
 本文记录 Whistle 当前阶段除信息源扩展之外，值得继续推进的事项。
 
-## 1. Reliability
+## 1. 稳定性
 
-- Add failure notification for report generation and email delivery.
-- Support rerunning a specific date via `WHISTLE_DATE`.
-- Strengthen artifact checks before sending email, including title and file size validation.
-- Separate experimental workflows from stable production workflows.
+- 为日报生成失败和邮件发送失败增加告警通知。
+- 支持通过 `WHISTLE_DATE` 重跑指定日期。
+- 在邮件发送前加强产物校验，包括标题、文件大小和关键文件存在性。
+- 将实验性 workflow 和稳定生产 workflow 分开维护。
 
-## 2. Metadata Layer
+## 2. 元数据层
 
-- Generate a stable `meta.json` for each daily report.
-- Move title, summary, date, and paths out of HTML parsing and into structured metadata.
-- Make homepage, archive page, and email all read from the same metadata source.
+- 为每期日报生成稳定的 `meta.json`。
+- 将标题、摘要、日期和路径从 HTML 解析迁移到结构化元数据。
+- 让首页、归档页和邮件统一读取同一份元数据。
 
-## 3. Subscription System
+## 3. 订阅系统
 
-- Implement real email collection and storage.
-- Add double opt-in.
-- Add unsubscribe support.
-- Add duplicate email and invalid email handling.
-- Define a minimal subscriber management flow before opening subscription publicly.
+- 实现真实的邮箱收集与存储。
+- 增加 double opt-in。
+- 增加退订支持。
+- 增加重复邮箱与无效邮箱处理。
+- 在正式开放订阅前，先定义一个最小可用的订阅管理流程。
 
-## 4. Archive Site
+## 4. 归档网站
 
-- Add archive search.
-- Add tag or section filtering.
-- Improve homepage summary cards using structured report metadata.
-- Expose a simple RSS feed for published reports.
+- 增加归档搜索。
+- 增加标签或板块筛选。
+- 基于结构化元数据优化首页摘要卡片。
+- 提供一个简单的 RSS feed，方便订阅已发布日报。
 
-## 5. Testing
+## 5. 测试
 
-- Add tests for ranking and deduplication logic in `scripts/generate-report.js`.
-- Add tests for email summary extraction in `scripts/send-report-email.js`.
-- Add structural validation for generated HTML reports.
-- Add a lightweight CI smoke check for the publish pipeline.
+- 为 `scripts/generate-report.js` 的排序和去重逻辑补测试。
+- 为 `scripts/send-report-email.js` 的摘要提取补测试。
+- 为生成后的 HTML 报告增加结构校验。
+- 为 publish 流程增加轻量级 CI smoke check。
 
-## 6. Performance
+## 6. 性能
 
-- Reduce unnecessary context read by the agent during report generation.
-- Review PDF generation cost and Chromium install overhead.
-- Keep generation, publishing, and email steps clearly separated.
-- Track average daily workflow runtime and failure patterns.
+- 减少日报生成时 Agent 不必要的上下文读取。
+- 评估 PDF 生成成本和 Chromium 安装开销。
+- 继续保持生成、发布和邮件步骤职责分离。
+- 持续记录每日 workflow 的平均耗时和失败模式。
 
-## 7. Product Direction
+## 7. 产品方向
 
-- Keep the project focused on low-noise work signals instead of expanding into broad media aggregation.
-- Continue improving report quality before adding more delivery channels.
-- Prioritize stability and repeatability over experimental generation paths.
+- 保持项目聚焦在低噪音工作信号，而不是扩展成泛媒体聚合器。
+- 在增加更多分发渠道之前，优先继续提高日报质量。
+- 稳定性和可重复性优先于实验性生成路径。
