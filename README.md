@@ -42,6 +42,11 @@ Optional provider overrides:
 - `MICU_BASE_URL`
 - `MICU_MODEL`
 
+Default provider values:
+
+- `MICU_BASE_URL=https://www.micuapi.ai/v1`
+- `MICU_MODEL=gpt-5.5`
+
 Required for email delivery:
 
 - `RESEND_API_KEY`
