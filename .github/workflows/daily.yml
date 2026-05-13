@@ -52,14 +52,8 @@ jobs:
           [model_providers.micu]
           base_url = "${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}"
           name = "micu"
-          requires_openai_auth = true
+          env_key = "MICU_API_KEY"
           wire_api = "responses"
-
-          [shell_environment_policy]
-          inherit = "core"
-
-          [shell_environment_policy.set]
-          OPENAI_API_KEY = "$MICU_API_KEY"
           EOF
 
       - name: Validate MICU API
@@ -100,23 +94,11 @@ jobs:
           MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
           MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
           MICU_MODEL: ${{ secrets.MICU_MODEL }}
-          ANTHROPIC_AUTH_TOKEN: ${{ secrets.MICU_API_KEY }}
-          ANTHROPIC_BASE_URL: ${{ secrets.MICU_BASE_URL }}
-          OPENAI_API_KEY: ${{ secrets.MICU_API_KEY }}
         run: |
           test -n "$MICU_API_KEY"
-          export ANTHROPIC_AUTH_TOKEN="$MICU_API_KEY"
-          export ANTHROPIC_BASE_URL="${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}"
-          export OPENAI_API_KEY="$MICU_API_KEY"
           codex exec \
             --cd . \
             --dangerously-bypass-approvals-and-sandbox \
-            --config 'model_provider="micu"' \
-            --config "model_providers.micu.base_url=\"${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}\"" \
-            --config 'model_providers.micu.name="micu"' \
-            --config 'model_providers.micu.requires_openai_auth=true' \
-            --config 'model_providers.micu.wire_api="responses"' \
-            --config "shell_environment_policy.set.OPENAI_API_KEY=\"$MICU_API_KEY\"" \
             --model "${MICU_MODEL:-gpt-5.4}" \
             "$(cat prompts/daily_report.md)"
 
