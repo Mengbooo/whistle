@@ -64,8 +64,12 @@ jobs:
 
       - name: Generate report with headless agent
         env:
+          MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
+          MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
           MICU_MODEL: ${{ secrets.MICU_MODEL }}
+          OPENAI_API_KEY: ${{ secrets.MICU_API_KEY }}
         run: |
+          test -n "$MICU_API_KEY"
           codex exec \
             --cd . \
             --dangerously-bypass-approvals-and-sandbox \
