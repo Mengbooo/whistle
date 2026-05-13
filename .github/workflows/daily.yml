@@ -66,6 +66,7 @@ jobs:
         env:
           MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
           MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
+          MICU_MODEL: ${{ secrets.MICU_MODEL }}
         run: |
           test -n "$MICU_API_KEY"
           EFFECTIVE_MICU_BASE_URL="${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}"
@@ -82,15 +83,31 @@ jobs:
             cat /tmp/micu-models.json
             exit 1
           fi
+          RESPONSES_STATUS="$(curl -sS -o /tmp/micu-responses.json -w "%{http_code}" \
+            -H "Authorization: Bearer $MICU_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d "{\"model\":\"${MICU_MODEL:-gpt-5.5}\",\"input\":\"ping\"}" \
+            "$EFFECTIVE_MICU_BASE_URL/responses")"
+          echo "MICU /responses status=$RESPONSES_STATUS"
+          if [ "$RESPONSES_STATUS" -lt 200 ] || [ "$RESPONSES_STATUS" -ge 300 ]; then
+            echo "Unexpected MICU /responses status."
+            cat /tmp/micu-responses.json
+            exit 1
+          fi
 
       - name: Generate report with headless agent
         env:
           MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
           MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
           MICU_MODEL: ${{ secrets.MICU_MODEL }}
+          ANTHROPIC_AUTH_TOKEN: ${{ secrets.MICU_API_KEY }}
+          ANTHROPIC_BASE_URL: ${{ secrets.MICU_BASE_URL }}
           OPENAI_API_KEY: ${{ secrets.MICU_API_KEY }}
         run: |
           test -n "$MICU_API_KEY"
+          export ANTHROPIC_AUTH_TOKEN="$MICU_API_KEY"
+          export ANTHROPIC_BASE_URL="${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}"
+          export OPENAI_API_KEY="$MICU_API_KEY"
           codex exec \
             --cd . \
             --dangerously-bypass-approvals-and-sandbox \
