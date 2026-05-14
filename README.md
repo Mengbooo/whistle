@@ -40,14 +40,6 @@ Preview the site locally:
 pnpm run dev
 ```
 
-Rerun a specific date locally:
-
-```bash
-WHISTLE_DATE=2026-05-13 pnpm run prepare
-WHISTLE_DATE=2026-05-13 pnpm run agent
-WHISTLE_DATE=2026-05-13 pnpm run email
-```
-
 ## Outputs
 
 - `outputs/YYYY-MM-DD/report.md`
@@ -68,8 +60,6 @@ GitHub Actions / headless Codex variables:
 - `MICU_API_KEY`
 - `MICU_BASE_URL`, default: `https://www.openclaudecode.cn/v1`
 - `MICU_MODEL`, default: `gpt-5.4`
-
-Manual GitHub Actions runs also support an optional `whistle_date` input in `YYYY-MM-DD` format. If omitted, workflows use the current Asia/Shanghai date.
 
 Email variables:
 
