@@ -11,7 +11,7 @@
    来源：TechCrunch｜板块：AI 与新工具｜时间：05/14 05:45｜评分：1.22  
    摘要：Notion’s new developer platform lets teams connect AI agents, external data sources, and custom code directly into their workspace as the company pushes deeper into agentic productivity software.
 3. [Anthropic reinstates OpenClaw and third-party agent usage on Claude subscriptions — with a catch](https://venturebeat.com/technology/anthropic-reinstates-openclaw-and-third-party-agent-usage-on-claude-subscriptions-with-a-catch)  
-   来源：VentureBeat｜板块：AI 与新工具｜时间：05/14 06:15｜评分：1.21  
+   来源：VentureBeat｜板块：AI 与新工具｜时间：05/14 06:15｜评分：1.20  
    摘要：Good news, OpenClaw fans — you can once again use your Claude AI subscription to power the hit, open source, autonomous AI agentic harness! But, there&#x27;s a big catch with how it&#x27;s being enacted. A few hours ago, Anthropic announce...
 4. [AutoScout24 scales engineering with AI-powered workflows](https://openai.com/index/autoscout24)  
    来源：OpenAI News｜板块：AI 与新工具｜时间：05/12 08:00｜评分：1.14  
@@ -30,7 +30,7 @@
 - 发布时间：05/11 20:46
 - 命中主题：regulation
 - 命中板块词：regulation
-- 排序分：0.77
+- 排序分：0.76
 - 摘要：Welcome to Import AI, a newsletter about AI research. Import AI runs on arXiv, cappuccinos, and feedback from readers. If you’d like to support this, please subscribe. Subscribe now Regulate? Don’t regulate. There’s a third way: Radical Op...
 
 ### The new AI-powered Google Finance is expanding to Europe.
@@ -97,7 +97,7 @@
 - 发布时间：05/14 06:15
 - 命中主题：ai agent, anthropic, open source
 - 命中板块词：ai, agent, claude
-- 排序分：1.21
+- 排序分：1.20
 - 摘要：Good news, OpenClaw fans — you can once again use your Claude AI subscription to power the hit, open source, autonomous AI agentic harness! But, there&#x27;s a big catch with how it&#x27;s being enacted. A few hours ago, Anthropic announce...
 
 ### AutoScout24 scales engineering with AI-powered workflows
@@ -124,7 +124,7 @@
 - 发布时间：05/14 10:41
 - 命中主题：无明确命中
 - 命中板块词：ai, agent
-- 排序分：1.02
+- 排序分：1.01
 - 摘要：36氪获悉，5月13日，阿里巴巴集团发布2026财年Q4及全年财报。财报表示，阿里全栈AI技术投入已正式跨越初期培育阶段，进入正向的规模商业化回报周期。在财年第四季度，阿里 AI 在模型、云基础设施和应用各层实现加速突破。在AI to B方向，阿里旗下企业级Agent平台“悟空”已于近期逐步规模化放量。
 
 ### Anthropic finally beat OpenAI in business AI adoption — but 3 big threats could erase its lead
@@ -133,7 +133,7 @@
 - 发布时间：05/14 05:53
 - 命中主题：openai, anthropic, chatgpt
 - 命中板块词：ai, claude, chatgpt
-- 排序分：1.01
+- 排序分：1.00
 - 摘要：For the first time since the AI race began, more American businesses are paying for Anthropic&#x27;s Claude than for OpenAI&#x27;s ChatGPT. Adoption of Anthropic rose 3.8% in April to 34.4% of businesses , according to the May 2026 release...
 
 ### Running Codex safely at OpenAI
@@ -254,6 +254,15 @@ AI 监管、数据合规、平台治理、广告政策、隐私与跨境。
 
 相关但话题性强于工作性的内容，只放在本板块，不挤占头条与工作信号排序。
 
+### Launch HN: Ardent (YC P26) – Postgres sandboxes in seconds with zero migration
+
+- 来源：[Hacker News Front Page](https://www.tryardent.com/)
+- 发布时间：05/14 00:54
+- 命中主题：coding agent
+- 命中板块词：agent, coding agent
+- 排序分：0.24
+- 摘要：Hey HN! We’re Vikram and Evan from Ardent ( https://tryardent.com ). We're building database sandboxes for you and your coding agents. In the last two years coding agents have gotten dramatically more capable at handling complex engineerin...
+
 ### Fostering breakthrough AI innovation through customer-back engineering
 
 - 来源：[MIT Technology Review](https://www.technologyreview.com/2026/05/11/1136967/fostering-breakthrough-ai-innovation-through-customer-back-engineering/)
@@ -269,5 +278,5 @@ AI 监管、数据合规、平台治理、广告政策、隐私与跨境。
 
 ## 去噪说明
 
-- 本次保留 23 条，过滤 1993 条重复、过期或低相关内容。
+- 本次保留 24 条，过滤 1993 条重复、过期或低相关内容。
 - 抓取异常 0 个。
