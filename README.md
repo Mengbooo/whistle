@@ -1,46 +1,20 @@
 # Whistle
 
-Whistle is a lightweight daily brief project for internet and tech work signals.
-
-It collects configured RSS sources, filters and ranks them, then uses an agent workflow to produce a daily HTML report, a PDF version, and a static archive site.
-
-## Features
-
-- Collect and rank configured sources
-- Generate report materials and final HTML
-- Export PDF
-- Build a static archive site
-- Send email via Resend
-- Run on a daily GitHub Actions schedule
+Whistle is a lightweight personal intelligence desk. It collects configured RSS sources, filters noise, ranks useful items, and publishes a daily report as HTML, PDF, email, and a web archive.
 
 ## Local Run
-
-Install dependencies and Chromium first:
 
 ```bash
 pnpm install
 pnpm exec playwright install chromium
-```
-
-Generate the daily report:
-
-```bash
 pnpm run agent
 ```
 
-Prepare materials only:
+`pnpm run prepare` only collects and ranks source items. `pnpm run agent` asks the headless agent to use the vendored Kami skill to write the report HTML, then the publish scripts generate the PDF and archive pages.
 
-```bash
-pnpm run prepare
-```
+The archive site is a Vite + React static build. Run `pnpm run dev` to preview it locally, or `pnpm run build` to rebuild `site/`.
 
-Preview the site locally:
-
-```bash
-pnpm run dev
-```
-
-## Outputs
+The current report is written to:
 
 - `outputs/YYYY-MM-DD/report.md`
 - `outputs/YYYY-MM-DD/report.html`
@@ -51,27 +25,38 @@ pnpm run dev
 
 ## Configuration
 
-- Sources, keywords, and ranking weights live in `sources.yaml`
-- Project skills live in `skills/`
-- The full Kami skill is vendored in `skills/kami/` so local runs and CI use the same document guidance
+Edit `sources.yaml` to change sources, topic keywords, and ranking weights.
 
-GitHub Actions / headless Codex variables:
+## Skills
+
+Project skills live in `skills/`. The full Kami skill is vendored into `skills/kami/` so local runs and CI runs use the same document guidance.
+
+## GitHub Actions Secrets
+
+Required for headless Codex:
 
 - `MICU_API_KEY`
-- `MICU_BASE_URL`, default: `https://www.openclaudecode.cn/v1`
-- `MICU_MODEL`, default: `gpt-5.4`
 
-Email variables:
+Optional provider overrides:
+
+- `MICU_BASE_URL`
+- `MICU_MODEL`
+
+Default provider values:
+
+- `MICU_BASE_URL=https://www.openclaudecode.cn/v1`
+- `MICU_MODEL=gpt-5.4`
+
+Required for email delivery:
 
 - `RESEND_API_KEY`
 - `REPORT_FROM`
 - `REPORT_TO`
-- `REPORT_BASE_URL`, default: `https://daily.bolaxious.cn`
 
-## Deployment
+Optional for email links:
 
-The static site can be deployed to Vercel with `site` as the output directory. The repository already includes `vercel.json`.
+- `REPORT_BASE_URL` defaults to `https://daily.bolaxious.cn`
 
-## License
+## Vercel
 
-This project is provided under the terms in [`LICENSE`](/Users/qiumengbo.123/Desktop/whistle/LICENSE).
+Deploy the repository to Vercel and set the output directory to `site`. The included `vercel.json` already declares this.

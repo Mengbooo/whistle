@@ -2,7 +2,7 @@ name: Daily Whistle Report
 
 on:
   schedule:
-    - cron: "0 1 * * *"
+    - cron: "0 0 * * *"
   workflow_dispatch:
 
 permissions:
@@ -107,6 +107,14 @@ jobs:
           test -f "outputs/$(TZ=Asia/Shanghai date +%F)/report.html"
           test -f "outputs/$(TZ=Asia/Shanghai date +%F)/report.pdf"
           test -f "site/reports/$(TZ=Asia/Shanghai date +%F).html"
+
+      - name: Send PDF email
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          REPORT_FROM: ${{ secrets.REPORT_FROM }}
+          REPORT_TO: ${{ secrets.REPORT_TO }}
+          REPORT_BASE_URL: ${{ secrets.REPORT_BASE_URL }}
+        run: pnpm run email
 
       - name: Commit report archive
         run: |
