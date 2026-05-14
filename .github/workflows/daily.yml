@@ -2,7 +2,7 @@ name: Daily Whistle Report
 
 on:
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "0 5 * * *"
   workflow_dispatch:
 
 permissions:
@@ -107,6 +107,7 @@ jobs:
           test -f "outputs/$(TZ=Asia/Shanghai date +%F)/report.html"
           test -f "outputs/$(TZ=Asia/Shanghai date +%F)/report.pdf"
           test -f "site/reports/$(TZ=Asia/Shanghai date +%F).html"
+          test -f "public/reports/$(TZ=Asia/Shanghai date +%F).html"
 
       - name: Send PDF email
         env:
@@ -120,6 +121,6 @@ jobs:
         run: |
           git config user.name "whistle-bot"
           git config user.email "whistle-bot@users.noreply.github.com"
-          git add outputs/ site/
+          git add outputs/ public/ site/ src/reports.generated.json
           git commit -m "Update Whistle report" || echo "No changes"
           git push
