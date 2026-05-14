@@ -1,9 +1,5 @@
 name: Daily Whistle Report
 
-concurrency:
-  group: daily-whistle-report
-  cancel-in-progress: false
-
 on:
   schedule:
     - cron: "0 3 * * *"
@@ -138,8 +134,7 @@ jobs:
           git config user.email "whistle-bot@users.noreply.github.com"
           git add outputs/ site/
           git commit -m "Update Whistle report" || echo "No changes"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          git push
 
       - name: Notify report failure
         if: failure()
