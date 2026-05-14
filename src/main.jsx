@@ -83,8 +83,8 @@ function SubscribePage() {
           <label className="sr-only" htmlFor="email">
             邮箱
           </label>
-          <input id="email" name="email" type="email" placeholder="输入邮箱地址" className="input" />
-          <button type="submit" className="pill pill--solid">
+          <input id="email" name="email" type="email" placeholder="输入邮箱地址" className="input" disabled />
+          <button type="submit" className="pill pill--solid" disabled>
             订阅
           </button>
         </form>
