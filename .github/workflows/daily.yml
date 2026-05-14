@@ -2,9 +2,19 @@ name: Daily Whistle Report
 
 on:
   schedule:
-    - cron: "30 0 * * *"
+    - cron: "0 2 * * *"
+    - cron: "30 2 * * *"
   workflow_dispatch:
     inputs:
+      task:
+        description: "Task to run"
+        required: true
+        default: "both"
+        type: choice
+        options:
+          - both
+          - generate
+          - email
       whistle_date:
         description: "Optional report date in YYYY-MM-DD (Asia/Shanghai)"
         required: false
@@ -15,6 +25,7 @@ permissions:
 
 jobs:
   report:
+    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 2 * * *') || (github.event_name == 'workflow_dispatch' && (inputs.task == 'both' || inputs.task == 'generate')) }}
     runs-on: ubuntu-latest
 
     steps:
@@ -135,3 +146,58 @@ jobs:
           ALERT_TO: ${{ secrets.ALERT_TO }}
           WHISTLE_DATE: ${{ inputs.whistle_date }}
         run: node scripts/send-failure-alert.js report-generation
+
+  email:
+    needs: report
+    if: ${{ always() && ((github.event_name == 'schedule' && github.event.schedule == '30 2 * * *') || (github.event_name == 'workflow_dispatch' && inputs.task == 'email') || (github.event_name == 'workflow_dispatch' && inputs.task == 'both' && needs.report.result == 'success')) }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - name: Configure pnpm cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+
+      - name: Verify report is ready
+        env:
+          WHISTLE_DATE: ${{ inputs.whistle_date }}
+        run: |
+          TARGET_DATE="${WHISTLE_DATE:-$(TZ=Asia/Shanghai date +%F)}"
+          test -f "outputs/$TARGET_DATE/report.html"
+          test -f "outputs/$TARGET_DATE/report.pdf"
+          test -f "site/reports/$TARGET_DATE.html"
+
+      - name: Send PDF email
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          REPORT_FROM: ${{ secrets.REPORT_FROM }}
+          REPORT_TO: ${{ secrets.REPORT_TO }}
+          REPORT_BASE_URL: ${{ secrets.REPORT_BASE_URL }}
+          WHISTLE_DATE: ${{ inputs.whistle_date }}
+        run: pnpm run email
+
+      - name: Notify email failure
+        if: failure()
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          REPORT_FROM: ${{ secrets.REPORT_FROM }}
+          REPORT_TO: ${{ secrets.REPORT_TO }}
+          ALERT_FROM: ${{ secrets.ALERT_FROM }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
+          WHISTLE_DATE: ${{ inputs.whistle_date }}
+        run: node scripts/send-failure-alert.js email-delivery
