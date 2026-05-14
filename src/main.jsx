@@ -79,19 +79,12 @@ function SubscribePage() {
         <p className="intro">
           每日生成一份低噪音互联网工作日报，覆盖 AI 与新工具、平台动态、产品增长、工程实践、机会与合规信号。
         </p>
-        <form className="subscribe-form" aria-disabled="true">
+        <form className="subscribe-form">
           <label className="sr-only" htmlFor="email">
             邮箱
           </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="订阅功能开发中"
-            className="input input--disabled"
-            disabled
-          />
-          <button type="button" className="pill pill--solid pill--disabled" disabled aria-disabled="true">
+          <input id="email" name="email" type="email" placeholder="输入邮箱地址" className="input" />
+          <button type="submit" className="pill pill--solid">
             订阅
           </button>
         </form>
