@@ -115,13 +115,3 @@ jobs:
           git add outputs/ site/
           git commit -m "Update Whistle report" || echo "No changes"
           git push
-
-      - name: Notify report failure
-        if: failure()
-        env:
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          REPORT_FROM: ${{ secrets.REPORT_FROM }}
-          REPORT_TO: ${{ secrets.REPORT_TO }}
-          ALERT_FROM: ${{ secrets.ALERT_FROM }}
-          ALERT_TO: ${{ secrets.ALERT_TO }}
-        run: node scripts/send-failure-alert.js report-generation
