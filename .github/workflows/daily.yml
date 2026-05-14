@@ -2,8 +2,8 @@ name: Daily Whistle Report
 
 on:
   schedule:
-    - cron: "0 3 * * *"
-    - cron: "30 3 * * *"
+    - cron: "0 2 * * *"
+    - cron: "30 2 * * *"
   workflow_dispatch:
     inputs:
       task:
@@ -25,7 +25,7 @@ permissions:
 
 jobs:
   report:
-    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 3 * * *') || (github.event_name == 'workflow_dispatch' && (inputs.task == 'both' || inputs.task == 'generate')) }}
+    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '0 2 * * *') || (github.event_name == 'workflow_dispatch' && (inputs.task == 'both' || inputs.task == 'generate')) }}
     runs-on: ubuntu-latest
 
     steps:
@@ -148,7 +148,7 @@ jobs:
         run: node scripts/send-failure-alert.js report-generation
 
   email:
-    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '30 3 * * *') || (github.event_name == 'workflow_dispatch' && inputs.task == 'email') }}
+    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '30 2 * * *') || (github.event_name == 'workflow_dispatch' && inputs.task == 'email') }}
     runs-on: ubuntu-latest
 
     steps:
