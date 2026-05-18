@@ -44,7 +44,7 @@ Optional provider overrides:
 
 Default provider values:
 
-- `MICU_BASE_URL=https://www.openclaudecode.cn/v1`
+- `MICU_BASE_URL=https://www.micuapi.ai/v1`
 - `MICU_MODEL=gpt-5.4`
 
 Required for email delivery:

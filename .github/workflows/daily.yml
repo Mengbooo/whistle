@@ -48,7 +48,7 @@ jobs:
           disable_response_storage = true
 
           [model_providers.micu]
-          base_url = "${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}"
+          base_url = "${MICU_BASE_URL:-https://www.micuapi.ai/v1}"
           name = "micu"
           env_key = "MICU_API_KEY"
           wire_api = "responses"
@@ -61,7 +61,7 @@ jobs:
           MICU_MODEL: ${{ secrets.MICU_MODEL }}
         run: |
           test -n "$MICU_API_KEY"
-          EFFECTIVE_MICU_BASE_URL="${MICU_BASE_URL:-https://www.openclaudecode.cn/v1}"
+          EFFECTIVE_MICU_BASE_URL="${MICU_BASE_URL:-https://www.micuapi.ai/v1}"
           STATUS="$(curl -sS -o /tmp/micu-models.json -w "%{http_code}" \
             -H "Authorization: Bearer $MICU_API_KEY" \
             "$EFFECTIVE_MICU_BASE_URL/models")"
