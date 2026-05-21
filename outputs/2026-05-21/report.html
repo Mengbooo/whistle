@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="低噪音互联网工作日报，聚焦 AI Agent 企业化、搜索入口变化、开发者工具、基础设施、商业化与合规信号。">
+  <meta name="keywords" content="Whistle,互联网日报,AI Agent,开发工具,平台动态">
+  <meta name="generator" content="Kami">
+  <title>Whistle 互联网日报｜2026-05-21</title>
+  <style>
+    @font-face {
+      font-family: "TsangerJinKai02";
+      src: url("../../skills/kami/assets/fonts/TsangerJinKai02-W04.ttf") format("truetype");
+      font-weight: 400 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root {
+      --parchment: #f5f4ed;
+      --ivory: #faf9f5;
+      --warm-sand: #e8e6dc;
+      --brand: #1B365D;
+      --ink-light: #2D5A8A;
+      --near-black: #141413;
+      --dark-warm: #3d3d3a;
+      --olive: #504e49;
+      --stone: #6b6a64;
+      --border: #e8e6dc;
+      --border-soft: #e5e3d8;
+      --tag-blue: #EEF2F7;
+      --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+      --sans: var(--serif);
+    }
+    @page {
+      size: A4;
+      margin: 12mm;
+      background: var(--parchment);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--parchment);
+      color: var(--near-black);
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0.15pt;
+      -webkit-font-smoothing: antialiased;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+    }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { color: var(--ink-light); }
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 54px 34px 72px;
+    }
+    header {
+      border-bottom: 1px solid var(--border-soft);
+      padding-bottom: 26px;
+      margin-bottom: 34px;
+    }
+    .eyebrow {
+      color: var(--stone);
+      font-size: 12px;
+      letter-spacing: 0.8pt;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    h1 {
+      color: var(--brand);
+      font-size: 34px;
+      line-height: 1.18;
+      font-weight: 500;
+      margin: 0 0 12px;
+      letter-spacing: 0;
+    }
+    .intro {
+      max-width: 790px;
+      margin: 0;
+      color: var(--olive);
+      font-size: 16px;
+      line-height: 1.58;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .pill {
+      background: var(--tag-blue);
+      color: var(--brand);
+      border: 0.5pt solid #D0DCE9;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    section { margin: 34px 0 0; }
+    .section-title {
+      border-left: 3px solid var(--brand);
+      border-radius: 2px;
+      padding-left: 10px;
+      margin: 0 0 14px;
+      color: var(--near-black);
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .section-note {
+      margin: -4px 0 16px 13px;
+      color: var(--stone);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .item {
+      background: var(--ivory);
+      border: 0.5pt solid var(--border);
+      border-radius: 8px;
+      padding: 15px 16px 14px;
+      break-inside: avoid;
+      box-shadow: 0 2px 14px rgba(20, 20, 19, 0.035);
+    }
+    .item.wide { grid-column: 1 / -1; }
+    .item h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      line-height: 1.34;
+      font-weight: 500;
+      color: var(--near-black);
+      letter-spacing: 0;
+    }
+    .item p {
+      margin: 0;
+      color: var(--dark-warm);
+      font-size: 14px;
+      line-height: 1.62;
+    }
+    .source {
+      margin-top: 10px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .actions {
+      background: var(--ivory);
+      border: 0.5pt solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .actions p {
+      margin: 0 0 10px;
+      color: var(--dark-warm);
+      line-height: 1.62;
+    }
+    .actions p:last-child { margin-bottom: 0; }
+    .noise {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .note-card {
+      background: var(--ivory);
+      border: 0.5pt solid var(--border-soft);
+      border-radius: 8px;
+      padding: 14px 16px;
+      color: var(--dark-warm);
+      font-size: 14px;
+      line-height: 1.58;
+      break-inside: avoid;
+    }
+    .note-card strong {
+      display: block;
+      color: var(--brand);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+    footer {
+      margin-top: 36px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-soft);
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    @media (max-width: 720px) {
+      .page { padding: 34px 18px 52px; }
+      h1 { font-size: 28px; }
+      .grid, .noise { grid-template-columns: 1fr; }
+      .item.wide { grid-column: auto; }
+    }
+    @media print {
+      .page { max-width: none; padding: 0; }
+      body { font-size: 12px; }
+      h1 { font-size: 25pt; }
+      .intro { font-size: 11pt; }
+      .section-title { font-size: 16pt; margin-top: 4pt; }
+      .item { box-shadow: none; }
+      .item h3 { font-size: 12.5pt; }
+      .item p { font-size: 10pt; line-height: 1.52; }
+      section { break-inside: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="eyebrow">Whistle Daily Brief · Low-noise internet intelligence</div>
+      <h1>Whistle 互联网日报｜2026-05-21</h1>
+      <p class="intro">今天的强信号集中在 AI Agent 的企业化：编码 Agent 开始进入混合云、本地环境、托管执行层和内部系统连接，搜索、开发工具、基础设施和合规边界都在随之调整。本期刊发 24 条，优先保留会影响产品、研发、增长、商业化、基础设施和团队决策的信息。</p>
+      <div class="meta-row">
+        <span class="pill">刊发条目 24</span>
+        <span class="pill">重点：Agent 企业化</span>
+        <span class="pill">过滤 1983 条</span>
+        <span class="pill">抓取异常 1</span>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">今日头条</h2>
+      <div class="grid">
+        <article class="item wide">
+          <h3>OpenAI 与 Dell 推进 Codex 的混合云和本地企业部署</h3>
+          <p>OpenAI 宣布与 Dell 合作，把 Codex 带到混合云和本地企业环境，核心卖点是让企业在更可控的数据、权限和工作流边界内使用编码 Agent。这说明编码 Agent 正从个人效率工具进入大组织采购和治理流程，研发管理者需要开始把它看成开发基础设施的一部分，提前评估审计、数据驻留、代码访问范围和现有 DevOps 链路的兼容性。</p>
+          <div class="source">来源：<a href="https://openai.com/index/dell-codex-enterprise-partnership">OpenAI News</a></div>
+        </article>
+        <article class="item">
+          <h3>Google I/O 将 Gemini 推向 Agentic 产品周期</h3>
+          <p>Google 在 I/O 2026 把 Gemini 叙事集中到 Agentic 体验，覆盖搜索、开发者工具、Workspace 和消费者入口。对互联网团队来说，重点不是单个功能发布，而是 Google 正把 AI 作为入口、操作者和分发中介嵌入既有生态；产品设计需要重新考虑用户提出任务、AI 代为执行、平台回收注意力的完整路径。</p>
+          <div class="source">来源：<a href="https://blog.google/innovation-and-ai/sundar-pichai-io-2026/">Google AI Blog</a></div>
+        </article>
+        <article class="item">
+          <h3>Claude Managed Agents 与 Cloudflare 形成托管执行组合</h3>
+          <p>Cloudflare 宣布支持 Anthropic 的 Claude Managed Agents，为自治代码交付提供隔离、快速、全球化的执行环境。Agent 落地的竞争点正在从“能否生成代码”转向“能否在可控环境里持续执行任务”，工程团队在试点时应先设计沙箱、权限、密钥、日志和回滚机制，再扩大任务范围。</p>
+          <div class="source">来源：<a href="https://blog.cloudflare.com/claude-managed-agents/">Cloudflare Blog</a></div>
+        </article>
+        <article class="item wide">
+          <h3>Google AI Search 加速改写内容发现和自然流量结构</h3>
+          <p>Google 发布 AI Search 更新，把传统搜索进一步推向回答、比较和任务代办。依赖搜索流量的内容、SaaS、开发者文档和电商页面都需要调整：未来可见性不仅来自关键词排名，也来自结构化事实、权威来源、可验证数据和可被 Agent 调用的接口。增长团队应开始拆分 AI 摘要、原始链接点击和品牌直达流量的变化。</p>
+          <div class="source">来源：<a href="https://blog.google/products-and-platforms/products/search/search-io-2026/">Google AI Blog</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">AI 与新工具</h2>
+      <p class="section-note">本板块适当保留更多条目，重点看 Agent、开发工具、企业连接、评测和输出形态。</p>
+      <div class="grid">
+        <article class="item">
+          <h3>NanoClaw 从开源 Agent Harness 走向企业“第二大脑”</h3>
+          <p>NanoClaw 团队正在把安全、开源的 Agent Harness 商业化，面向企业提供可扩展的 Agent 记忆和编排能力。这个方向说明企业并不只需要一个会调用工具的模型，还需要一层能保留上下文、约束权限并沉淀流程知识的运行框架；选型时应关注可迁移性、审计和私有部署，而不是只看演示任务是否顺滑。</p>
+          <div class="source">来源：<a href="https://venturebeat.com/orchestration/nanoclaws-creators-are-turning-the-secure-open-source-ai-agent-harness-into-an-enterprise-second-brain">VentureBeat</a></div>
+        </article>
+        <article class="item">
+          <h3>Code with Claude 强调托管 Agent、主动工作流和能力曲线</h3>
+          <p>Anthropic 在 Code with Claude 2026 中集中展示 Claude Code、API 平台和更主动的 Agent 工作流。开发工具的价值正在从单次补全转向任务接收、上下文整理、修改交付和反馈循环；团队引入这类工具时，应把需求描述、代码评审和验收标准写进流程，而不是只比较模型在局部代码片段上的表现。</p>
+          <div class="source">来源：<a href="https://www.infoq.com/news/2026/05/code-with-claude/?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global">InfoQ</a></div>
+        </article>
+        <article class="item">
+          <h3>MCP Tunnels 试图解决 Agent 访问内部系统的边界问题</h3>
+          <p>Anthropic 为 Claude Managed Agents 增加自托管沙箱和 MCP tunnels，目标是让 Agent 更安全地访问企业内部系统。模型能力提升后，真正阻碍上线的往往是身份、授权、数据路径和责任归属；平台团队可以先从只读、限权、可审计的内部 API 开始开放，避免把 MCP 简化成“给模型一个数据库入口”。</p>
+          <div class="source">来源：<a href="https://www.infoq.com/news/2026/05/claude-mcp-tunnels/?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global">InfoQ</a></div>
+        </article>
+        <article class="item">
+          <h3>Google Managed Agents API 降低部署门槛，也转移执行层控制权</h3>
+          <p>Google 在 Gemini API 中推出 Managed Agents，试图把原本需要数周搭建的 Agent 部署压缩到一次 API 调用。它适合快速试点，但也意味着执行层控制权更多交给平台；研发负责人需要在速度和可控性之间做选择，尤其要看运行日志、工具权限、失败恢复和供应商锁定成本。</p>
+          <div class="source">来源：<a href="https://venturebeat.com/orchestration/googles-managed-agents-api-promises-one-call-deployment-at-the-cost-of-execution-layer-control">VentureBeat</a></div>
+        </article>
+        <article class="item">
+          <h3>企业 Agent 失败的关键可能是“记不住学过什么”</h3>
+          <p>VentureBeat 讨论了企业 Agent 只依赖 RAG 时容易缺少结构化记忆、时间感和决策上下文的问题。这个观察对内部知识库和客服、销售、工程支持系统都有现实意义：把文档检索接给模型只是第一步，长期可用的 Agent 还需要保存任务状态、历史判断和组织规则，否则会反复犯同类错误。</p>
+          <div class="source">来源：<a href="https://venturebeat.com/orchestration/enterprise-ai-agents-keep-failing-because-they-forget-what-they-learned">VentureBeat</a></div>
+        </article>
+        <article class="item">
+          <h3>Runtime 和 Emdash 显示“团队级沙箱编码 Agent”成为工具方向</h3>
+          <p>Product Hunt 上的 Runtime 主打给团队使用的沙箱编码 Agent，Emdash 则强调用一个开源应用接入多种编码 Agent。虽然这些仍是早期工具信号，但方向清楚：团队会需要统一入口、隔离执行、任务权限和跨模型切换。中小团队可以用这类产品观察协作体验，但生产环境仍要自建或验证安全边界。</p>
+          <div class="source">来源：<a href="https://www.producthunt.com/products/runtime">Product Hunt</a>、<a href="https://www.producthunt.com/products/emdash">Product Hunt</a></div>
+        </article>
+        <article class="item">
+          <h3>Cohere 发布 Apache 2.0 开放模型 Command A+</h3>
+          <p>Cohere 推出 Command A+，强调 Apache 2.0 许可、无损量化和原生引用能力，面向企业构建者。对企业 AI 团队来说，开放许可和引用能力比单纯榜单分数更接近采购决策：前者影响部署自由度，后者影响知识问答、合规解释和客户可验证性。后续应重点看它在私有数据和低成本推理上的表现。</p>
+          <div class="source">来源：<a href="https://venturebeat.com/technology/cohere-cracks-lossless-quantization-and-native-citations-with-first-full-apache-2-0-licensed-open-model-command-a">VentureBeat</a></div>
+        </article>
+        <article class="item">
+          <h3>OpenAI 低延迟语音 AI 架构提示实时交互的新门槛</h3>
+          <p>InfoQ 报道 OpenAI 如何将 WebRTC 用于全球规模的低延迟语音 AI，采用更适合 Kubernetes 和云负载均衡的 relay-transceiver 设计。语音输入会继续成为自然入口，但更理想的 AI 输出会越来越视觉化、结构化、可交互，可能从原始文本演进到 Markdown、HTML，再到交互式神经视频或模拟；做实时 AI 产品的团队需要同时关注延迟、状态同步和输出形态。</p>
+          <div class="source">来源：<a href="https://www.infoq.com/news/2026/05/openai-voice-ai-scale/?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global">InfoQ</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">大厂与平台动态</h2>
+      <div class="grid">
+        <article class="item">
+          <h3>英伟达把 AI Agent CPU 描述为 2000 亿美元市场</h3>
+          <p>黄仁勋称 AI Agent 相关 CPU 可能形成 2000 亿美元新市场，这延续了英伟达从 GPU 向整套 AI 基础设施扩张的叙事。无论规模预测是否偏乐观，它都说明 Agent 工作负载会推动服务器架构、CPU/GPU 配比和推理成本重新定价；基础设施团队应关注任务型推理的真实利用率，而不是只按训练时代的指标规划算力。</p>
+          <div class="source">来源：<a href="https://techcrunch.com/2026/05/20/jensen-huang-says-hes-found-a-brand-new-200b-market-for-nvidia/">TechCrunch</a></div>
+        </article>
+        <article class="item">
+          <h3>GitHub Copilot 会话支持跨设备接续</h3>
+          <p>GitHub 让本地 Copilot 会话可以在 VS Code、CLI、github.com 和 GitHub Mobile 之间接续，开发者能在移动端查看、引导或批准远程编码任务。编码工作正在从“坐在 IDE 前完成”变成异步管理任务流，团队需要重新定义哪些修改可以远程批准，哪些必须回到完整开发环境评审。</p>
+          <div class="source">来源：<a href="https://github.blog/news-insights/product-news/take-your-local-github-sessions-anywhere/">GitHub Blog</a></div>
+        </article>
+        <article class="item">
+          <h3>Apple Intelligence 进入辅助功能更新</h3>
+          <p>Apple 发布由 Apple Intelligence 支持的 VoiceOver、Magnifier 和 Voice Control 等辅助功能更新。它对开发者的提醒是，AI 交互不只服务效率，也会提高可访问性基线；面向大众用户的产品应重新检查语音、视觉理解、无障碍标签和系统智能能力的适配。</p>
+          <div class="source">来源：<a href="https://www.apple.com/newsroom/2026/05/apple-unveils-new-accessibility-features-and-updates-with-apple-intelligence/">Apple Newsroom</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">产品与增长观察</h2>
+      <div class="grid">
+        <article class="item">
+          <h3>Vibe Coding 开始进入手机端</h3>
+          <p>The Verge 观察到 Google 正把应用生成和 AI Studio 能力带向 Android 手机场景，用户可以在移动端描述需求、生成小工具或完成轻量开发。移动端不是最适合复杂工程的地方，但它很适合捕捉即时需求和快速原型；产品团队可以关注“从想法到可运行小工具”的路径是否会改变个人自动化和长尾应用分发。</p>
+          <div class="source">来源：<a href="https://www.theverge.com/tech/934628/google-io-2026-android-ai-studio-widgets-shortcuts">The Verge</a></div>
+        </article>
+        <article class="item">
+          <h3>Chance AI 获融资，视觉 Agent 继续验证拍摄即交互</h3>
+          <p>36氪报道 Visual Agent 创业公司 Chance AI 获美图等数百万美元投资，产品以摄像头作为主要交互入口，面向北美学生群体增长。这个方向的启发在于，AI 输入不必总围绕文本框展开；对教育、设计、维修、购物等场景，拍摄、识别、解释和行动建议可能比聊天更自然，关键是把视觉理解接到明确任务结果上。</p>
+          <div class="source">来源：<a href="https://36kr.com/p/3816947890471812?f=rss">36氪</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">开发者与工程实践</h2>
+      <div class="grid">
+        <article class="item">
+          <h3>Grab 用多 Agent 系统处理工程支持任务</h3>
+          <p>Grab 中央数据团队构建多 Agent 系统，用于自动化数据仓库平台上的重复工程支持任务，并区分调查与增强两类工作流。这个案例比泛泛的 Agent 演示更有参考价值，因为它从具体内部支持流程切入；工程团队可以优先选择问题边界清晰、输入结构稳定、失败代价可控的支持类任务作为试点。</p>
+          <div class="source">来源：<a href="https://www.infoq.com/news/2026/05/grab-multi-agent-support-system/?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global">InfoQ</a></div>
+        </article>
+        <article class="item">
+          <h3>AI Coding Loop 需要形式化验证和结构性刹车</h3>
+          <p>Hacker News 热议的文章主张在 AI 编码循环中加入形式化验证门禁，用结构性约束抑制“更聪明模型”带来的失控。对研发团队来说，这不是学术洁癖，而是自动化修改代码后必须回答的问题：哪些检查必须机器可验证，哪些改动需要人工批准，哪些失败要立刻停止循环。</p>
+          <div class="source">来源：<a href="https://reubenbrooks.dev/blog/structural-backpressure-beats-smarter-agents/">Reuben Brooks</a></div>
+        </article>
+        <article class="item">
+          <h3>GitHub 内部仓库未授权访问提醒供应链入口风险</h3>
+          <p>GitHub 公告正在调查内部仓库未授权访问，VentureBeat 进一步报道称事件与被污染的 VS Code 扩展和供应链攻击有关。即便最终影响范围仍需官方确认，开发团队也应把 IDE 扩展、CI 凭据、个人设备和内部仓库权限纳入同一套威胁模型；代码托管平台安全不只发生在云端，也发生在开发者本地工具链。</p>
+          <div class="source">来源：<a href="https://github.blog/security/investigating-unauthorized-access-to-githubs-internal-repositories/">GitHub Blog</a>、<a href="https://venturebeat.com/security/github-confirms-3800-repos-stolen-poisoned-vs-code-extension-supply-chain-worm-microsoft-python-sdk">VentureBeat</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">投融资与行业机会</h2>
+      <div class="grid">
+        <article class="item">
+          <h3>未来式智能完成 Pre-A 轮，继续押注数字劳动力工厂</h3>
+          <p>36氪报道未来式智能完成 Pre-A 轮融资，资金用于算力、团队扩张和产品生态建设，公司定位于用智能体技术赋能知识工作者。国内 Agent 创业正在从通用助手转向“数字劳动力生产工厂”叙事，商业化关键会落在行业流程、交付可控性和客户愿意为结果而非对话付费的程度。</p>
+          <div class="source">来源：<a href="https://36kr.com/p/3816909945029760?f=rss">36氪</a></div>
+        </article>
+        <article class="item">
+          <h3>英伟达披露 430 亿美元创业公司持仓</h3>
+          <p>TechCrunch 报道英伟达在创纪录季度中披露了 430 亿美元创业公司持仓，同时提示后续收入增长可能放缓。对行业机会判断来说，这意味着 AI 基础设施龙头正在通过投资强化生态位置，但也可能让创业公司融资、算力采购和平台依赖更加绑定；创业者需要区分战略资源和供应商锁定。</p>
+          <div class="source">来源：<a href="https://techcrunch.com/2026/05/20/nvidia-posts-another-record-quarter-reveals-43-billion-of-holdings-in-startups/">TechCrunch</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">政策监管与合规</h2>
+      <div class="grid">
+        <article class="item wide">
+          <h3>中国海关将 RTX 5090D V2 纳入禁运清单</h3>
+          <p>Ars Technica 报道，中国海关将 RTX 5090D V2 加入禁运商品清单，时间点正值英伟达 CEO 访华期间。对开发者和企业采购来说，这类合规变化会直接影响高端显卡、工作站和边缘推理硬件的可得性；团队在规划本地算力时，需要把出口管制、替代型号和云端推理方案纳入风险预案。</p>
+          <div class="source">来源：<a href="https://arstechnica.com/tech-policy/2026/05/china-banned-rtx-5090d-v2-while-nvidia-ceo-jensen-huang-was-visiting/">Ars Technica</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">社交热度观察</h2>
+      <div class="grid">
+        <article class="item wide">
+          <h3>Musk 诉 OpenAI 案阶段性失利，更适合作为治理背景信号</h3>
+          <p>MIT Technology Review 报道，Musk 对 OpenAI 的诉讼在部分主张上遭遇时效问题，形成阶段性失利。它的工作价值不在八卦层面，而在 AI 公司治理、使命承诺和商业化边界会继续成为公众讨论背景；对普通产品、研发和增长团队来说，这类信息应放在背景层观察，不应挤占模型能力、平台接口和工程落地的优先级。</p>
+          <div class="source">来源：<a href="https://www.technologyreview.com/2026/05/18/1137488/elon-musk-suit-openai-verdict/">MIT Technology Review</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">今日行动建议</h2>
+      <div class="actions">
+        <p>产品和增长团队今天应重点复盘搜索入口变化：把核心页面从关键词 SEO 扩展到任务型问题、结构化事实、对比信息和可被 Agent 引用的权威数据，并开始区分 AI 摘要曝光、原始链接点击和品牌直达流量。</p>
+        <p>研发团队可以选择一个低风险内部流程试点编码 Agent，例如测试修复、脚手架生成、只读数据分析或工程支持分流；同时先写清楚沙箱、凭据、日志、回滚和人工验收规则。</p>
+        <p>运营、设计和内容团队值得关注视觉 Agent 与实时语音 AI。更好的 AI 输出不会长期停留在纯文本，而会越来越结构化、视觉化、可交互；报告、素材、广告草案和内部看板都可以先改造成 Markdown/HTML 友好的结构。</p>
+        <p>创业者和管理者应把 Agent 采购判断从“哪家模型最强”改成“哪家能接入现有系统、控制权限、解释成本并完成审计”。今天的强信号都指向同一点：Agent 正在变成基础设施，治理能力会和模型能力同样重要。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">去噪说明</h2>
+      <div class="noise">
+        <div class="note-card">
+          <strong>取舍口径</strong>
+          本次脚本采集后保留 24 条候选、过滤 1983 条重复、过期或低相关内容，另有 58 条溢出候选未进入最终素材。最终 HTML 由 Agent 基于 report.json、report.md 与 ranked-items.json 手工编辑，不使用 scripts/generate-report.js 生成 HTML。
+        </div>
+        <div class="note-card">
+          <strong>排序处理</strong>
+          自动排序只作为输入，最终版重新调整板块归属和优先级：Agent 企业部署、搜索入口、内部系统连接、安全边界和基础设施成本被前置；消费电子、泛文化内容、弱相关热议和纯争议信息被过滤或放入“社交热度观察”。
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">抓取异常</h2>
+      <div class="note-card">
+        <strong>极客公园</strong>
+        RSS 抓取失败：fetch failed。本期未因该异常中断生成；异常仅影响该来源内容覆盖，后续可在源配置或网络层继续排查。
+      </div>
+    </section>
+
+    <footer>
+      生成时间基准：2026-05-21 · Whistle 每日情报 Agent 手工编辑与 Kami 排版。PDF 与归档页面由发布脚本生成。
+    </footer>
+  </main>
+</body>
+</html>
