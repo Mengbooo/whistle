@@ -1,0 +1,1013 @@
+{
+  "date": "2026-06-07",
+  "fetchedAt": "2026-06-07T01:28:38.654Z",
+  "timezone": "Asia/Shanghai",
+  "sources": {
+    "juya": {
+      "source": "juya-ai-daily",
+      "title": "2026-06-07",
+      "url": "https://imjuya.github.io/juya-ai-daily/issue-114/",
+      "publishedAt": "2026-06-07T00:58:51.000Z",
+      "contentHtml": "<p><img src=\"http://testtttt.oss-cn-guangzhou.aliyuncs.com/imagehub/20260607/2026060708425161805855ca_cover_6a24.png\" alt=\"\"></p>\n<h1>AI 早报 2026-06-07</h1>\n<p><strong>视频版</strong>：<a href=\"https://www.bilibili.com/video/BV1Wu7m6WEQ6\">哔哩哔哩</a> ｜ <a href=\"https://www.youtube.com/watch?v=jMCT5j3EOp0\">YouTube</a></p>\n<h2>概览</h2>\n<h3>模型发布</h3>\n<ul>\n<li>Cohere 发布其首个编程模型 BLS-Mini-Code-1.0 早期权重 <a href=\"https://huggingface.co/CohereLabs/BLS-Mini-Code-1.0\">↗</a> <code>#1</code></li>\n<li>研究团队推出开源 20B 搜索 Agent Harness-1 <a href=\"https://huggingface.co/pat-jj/harness-1\">↗</a> <code>#2</code></li>\n</ul>\n<h3>开发生态</h3>\n<ul>\n<li>Nous Research 发布 Hermes Agent v0.16.0 <a href=\"https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5\">↗</a> <code>#3</code></li>\n</ul>\n<h3>前瞻与传闻</h3>\n<ul>\n<li>消息称OpenAI与美政府正谈判入股事宜 <a href=\"https://the-decoder.com/openai-and-the-trump-administration-are-negotiating-a-government-stake-in-the-ai-startup/\">↗</a> <code>#4</code></li>\n<li>消息称 Anthropic 新模型 Claude Mythos 5 在 API 中短暂现身 <a href=\"https://x.com/testingcatalog/status/2063234385227252184\">↗</a> <code>#5</code></li>\n</ul>\n<hr>\n<h2><a href=\"https://huggingface.co/CohereLabs/BLS-Mini-Code-1.0\">Cohere 发布其首个编程模型 BLS-Mini-Code-1.0 早期权重</a> <code>#1</code></h2>\n<blockquote>\n<p><strong>Cohere</strong> 团队在 <strong>Hugging Face</strong> 上发布了其首个编程模型 <code>BLS-Mini-Code-1.0</code> 的早期访问版本，该模型总参数量为 <strong>30B</strong>、活跃参数量为 <strong>3B</strong>，目前正面向社区开放测试以收集反馈。</p>\n</blockquote>\n<p><strong>Cohere</strong> 联合创始人 <strong>Nick Frosst</strong> 在社区宣布了公司首个编程模型 <code>BLS-Mini-Code-1.0</code> 的早期测试计划。</p>\n<p>该模型采用 <code>混合专家架构</code>，总参数量 <strong>30B</strong>，活跃参数量 <strong>3B</strong>，包含 <strong>128</strong> 个专家，每次推理激活 <strong>8</strong> 个。</p>\n<p>并采用全局与 <code>4096</code> 滑动窗口交错 <code>注意力机制</code>，最高支持 <strong>50 万</strong> 最大位置长度。</p>\n<p>目前该模型权重已在 <strong>Hugging Face</strong> 上线，但官方强调其尚未完全就绪。</p>\n<p>具体的基准测试、许可证和详细运行说明将在后续正式发布时提供。</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/imjuya/picx-images-hosting@master/imagehub/20260607/20260607083600_9616839679.png\" alt=\"\"></p>\n<p>相关链接：</p>\n<ul>\n<li><a href=\"https://huggingface.co/CohereLabs/BLS-Mini-Code-1.0\">https://huggingface.co/CohereLabs/BLS-Mini-Code-1.0</a></li>\n<li><a href=\"https://www.reddit.com/r/LocalLLaMA/comments/1tylzy2/coheres_unreleased_coding_model_early_access_for/\">https://www.reddit.com/r/LocalLLaMA/comments/1tylzy2/coheres_unreleased_coding_model_early_access_for/</a></li>\n</ul>\n<hr>\n<h2><a href=\"https://huggingface.co/pat-jj/harness-1\">研究团队推出开源 20B 搜索 Agent Harness-1</a> <code>#2</code></h2>\n<blockquote>\n<p><strong>UIUC</strong>等大学联合团队发布并开源了名为 <code>Harness-1</code> 的 <strong>20B</strong> 参数搜索 <code>Agent</code>，该模型通过在有状态搜索框架内进行强化学习训练，将检索状态外部化维护。</p>\n</blockquote>\n<p><strong>UIUC</strong>等大学联合研究团队在 <strong>arXiv</strong> 发表论文并开源了名为 <code>Harness-1</code> 的 <strong>20B</strong> 参数检索子 <code>Agent</code>。</p>\n<p>该模型采用了一种“状态外化”的有状态搜索框架。环境侧会负责维护候选池、重要性标签、验证记录和预算感知上下文等可恢复的工作记忆。</p>\n<p>而模型策略本身仅专注于“搜索什么、保留什么、何时停止”等语义决策。</p>\n<p>官方数据显示，在涵盖网页、金融、专利和多跳问答的 <strong>8</strong> 个检索基准中，<code>Harness-1</code> 取得了 <strong>0.730</strong> 的平均精选召回率。</p>\n<p>它以 <strong>+11.4 个百分点</strong>的优势超越次强的开源搜索子 <code>Agent</code>，并与体积更大的前沿模型搜索器保持竞争力。</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/imjuya/picx-images-hosting@master/imagehub/aidaily/6a24c2f5-7488-4507-91ca-0bedda11ac04/2a58e898-9568-42a0-9337-0ae3a09a9c92/m001.gif\" alt=\"\"></p>\n<p>相关链接：</p>\n<ul>\n<li><a href=\"https://huggingface.co/pat-jj/harness-1\">https://huggingface.co/pat-jj/harness-1</a></li>\n<li><a href=\"https://github.com/pat-jj/harness-1\">https://github.com/pat-jj/harness-1</a></li>\n<li><a href=\"https://arxiv.org/abs/2606.02373\">https://arxiv.org/abs/2606.02373</a></li>\n</ul>\n<hr>\n<h2><a href=\"https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5\">Nous Research 发布 Hermes Agent v0.16.0</a> <code>#3</code></h2>\n<blockquote>\n<p>Nous Research 正式发布 <code>Hermes Agent v0.16.0</code> 版本。该版本新增<strong>原生桌面应用</strong>并为其引入了简体中文支持，还将 <strong>Web Dashboard</strong> 升级为包含 <strong>MCP</strong> 管理的完整控制面板。</p>\n</blockquote>\n<p><strong>Nous Research</strong> 在 <strong>GitHub</strong> 官方仓库正式发布了代号为“<strong>The Surface Release</strong>”的 <code>Hermes Agent v0.16.0</code> 版本。</p>\n<p>此次更新的核心是推出了基于 <code>Electron</code> 构建的原生桌面应用并为其引入了<strong>简体中文</strong>支持。</p>\n<p><code>Web Dashboard</code> 在此次更新中扩展为全功能管理面板，用户可以直接在浏览器中配置消息通道、管理 <code>MCP</code> 服务器、凭据与 <code>Webhooks</code>。</p>\n<p>此外，该版本精简了默认内置技能集，将 <code>NVIDIA/skills</code> 作为可信来源加入 <code>Skills Hub</code>，并新增了 <code>/undo [N]</code> 命令以支持在多端撤销先前的对话轮次。</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/imjuya/picx-images-hosting@master/imagehub/aidaily/6a24c2f5-7488-4507-91ca-0bedda11ac04/5a7c5701-e162-4f33-b858-19ccadf3b96a/m001.gif\" alt=\"\"></p>\n<p>相关链接：</p>\n<ul>\n<li><a href=\"https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5\">https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5</a></li>\n<li><a href=\"https://x.com/NousResearch/status/2063075092859637888\">https://x.com/NousResearch/status/2063075092859637888</a></li>\n</ul>\n<hr>\n<h2><a href=\"https://the-decoder.com/openai-and-the-trump-administration-are-negotiating-a-government-stake-in-the-ai-startup/\">消息称OpenAI与美政府正谈判入股事宜</a> <code>#4</code></h2>\n<blockquote>\n<p>据报道，<strong>OpenAI</strong>正与美国政府探讨入股事宜，拟通过捐赠股份设立向公众分红的公共财富基金。由于法律机制尚不明确，该谈判仍有流产可能。</p>\n</blockquote>\n<p>据多家媒体报道，<strong>OpenAI</strong> 与美国政府正在就美国政府入股 <strong>OpenAI</strong> 进行谈判，相关讨论已进行超过一年。</p>\n<p>谈判核心是让 <strong>OpenAI</strong> 自愿将部分股份转让给政府，以建立向公众分红的“公共财富基金”。</p>\n<p>目前尚无具体条款，股权转让的法律机制不明且存在流产可能。</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/imjuya/picx-images-hosting@master/imagehub/20260606/20260606191346_db049fdc22.png\" alt=\"\"></p>\n<p>相关链接：</p>\n<ul>\n<li><a href=\"https://the-decoder.com/openai-and-the-trump-administration-are-negotiating-a-government-stake-in-the-ai-startup/\">https://the-decoder.com/openai-and-the-trump-administration-are-negotiating-a-government-stake-in-the-ai-startup/</a></li>\n</ul>\n<hr>\n<h2><a href=\"https://x.com/testingcatalog/status/2063234385227252184\">消息称 Anthropic 新模型 Claude Mythos 5 在 API 中短暂现身</a> <code>#5</code></h2>\n<blockquote>\n<p>据社区成员爆料，名为 <code>Claude Mythos 5</code> 的未发布模型在 <strong>Anthropic</strong> 的 API 及开发者模式中短暂现身。此现象引发了关于该模型即将发布的猜测，但官方尚未发表任何回应。</p>\n</blockquote>\n<p>社区成员爆料称，在 <strong>Anthropic</strong> 的 <code>API</code> 和开发者模式中短暂出现了名为 <strong>Claude Mythos 5</strong> 的新模型标识。</p>\n<p>据 <strong>TestingCatalog</strong> 等消息源透露，<strong>Claude Mythos</strong> 将作为独立于 <code>Haiku</code>、<code>Sonnet</code> 和 <code>Opus</code> 之外的全新模型类别发布，且其定位将高于目前的 <code>Opus</code> 系列。</p>\n<p>此外有爆料称其内部代号可能为 <code>claude-oceanus-v1-p</code>，且此前已提供给部分红队成员进行测试。</p>\n<p>目前该模型标识已被撤下，<strong>Anthropic</strong> 官方尚未就发布时间与可用性作出任何声明。</p>\n<p><img src=\"https://cdn.jsdelivr.net/gh/imjuya/picx-images-hosting@master/imagehub/aidaily/6a24c2f5-7488-4507-91ca-0bedda11ac04/f87b7331-e83c-4d93-845a-360191f48cc5/m001.png\" alt=\"\"></p>\n<p>相关链接：</p>\n<ul>\n<li><a href=\"https://x.com/testingcatalog/status/2063234385227252184\">https://x.com/testingcatalog/status/2063234385227252184</a></li>\n</ul>\n<hr>\n<p><strong>提示</strong>：内容由AI辅助创作，可能存在<strong>幻觉</strong>和<strong>错误</strong>。</p>",
+      "contentText": "AI 早报 2026-06-07 视频版 ： 哔哩哔哩 ｜ YouTube 概览 模型发布 Cohere 发布其首个编程模型 BLS-Mini-Code-1.0 早期权重 ↗ #1 研究团队推出开源 20B 搜索 Agent Harness-1 ↗ #2 开发生态 Nous Research 发布 Hermes Agent v0.16.0 ↗ #3 前瞻与传闻 消息称OpenAI与美政府正谈判入股事宜 ↗ #4 消息称 Anthropic 新模型 Claude Mythos 5 在 API 中短暂现身 ↗ #5 Cohere 发布其首个编程模型 BLS-Mini-Code-1.0 早期权重 #1 Cohere 团队在 Hugging Face 上发布了其首个编程模型 BLS-Mini-Code-1.0 的早期访问版本，该模型总参数量为 30B 、活跃参数量为 3B ，目前正面向社区开放测试以收集反馈。 Cohere 联合创始人 Nick Frosst 在社区宣布了公司首个编程模型 BLS-Mini-Code-1.0 的早期测试计划。 该模型采用 混合专家架构 ，总参数量 30B ，活跃参数量 3B ，包含 128 个专家，每次推理激活 8 个。 并采用全局与 4096 滑动窗口交错 注意力机制 ，最高支持 50 万 最大位置长度。 目前该模型权重已在 Hugging Face 上线，但官方强调其尚未完全就绪。 具体的基准测试、许可证和详细运行说明将在后续正式发布时提供。 相关链接： https://huggingface.co/CohereLabs/BLS-Mini-Code-1.0 https://www.reddit.com/r/LocalLLaMA/comments/1tylzy2/coheres_unreleased_coding_model_early_access_for/ 研究团队推出开源 20B 搜索 Agent Harness-1 #2 UIUC 等大学联合团队发布并开源了名为 Harness-1 的 20B 参数搜索 Agent ，该模型通过在有状态搜索框架内进行强化学习训练，将检索状态外部化维护。 UIUC 等大学联合研究团队在 arXiv 发表论文并开源了名为 Harness-1 的 20B 参数检索子 Agent 。 该模型采用了一种“状态外化”的有状态搜索框架。环境侧会负责维护候选池、重要性标签、验证记录和预算感知上下文等可恢复的工作记忆。 而模型策略本身仅专注于“搜索什么、保留什么、何时停止”等语义决策。 官方数据显示，在涵盖网页、金融、专利和多跳问答的 8 个检索基准中， Harness-1 取得了 0.730 的平均精选召回率。 它以 +11.4 个百分点 的优势超越次强的开源搜索子 Agent ，并与体积更大的前沿模型搜索器保持竞争力。 相关链接： https://huggingface.co/pat-jj/harness-1 https://github.com/pat-jj/harness-1 https://arxiv.org/abs/2606.02373 Nous Research 发布 Hermes Agent v0.16.0 #3 Nous Research 正式发布 Hermes Agent v0.16.0 版本。该版本新增 原生桌面应用 并为其引入了简体中文支持，还将 Web Dashboard 升级为包含 MCP 管理的完整控制面板。 Nous Research 在 GitHub 官方仓库正式发布了代号为“ The Surface Release ”的 Hermes Agent v0.16.0 版本。 此次更新的核心是推出了基于 Electron 构建的原生桌面应用并为其引入了 简体中文 支持。 Web Dashboard 在此次更新中扩展为全功能管理面板，用户可以直接在浏览器中配置消息通道、管理 MCP 服务器、凭据与 Webhooks 。 此外，该版本精简了默认内置技能集，将 NVIDIA/skills 作为可信来源加入 Skills Hub ，并新增了 /undo [N] 命令以支持在多端撤销先前的对话轮次。 相关链接： https://github.com/NousResearch/hermes-agent/releases/tag/v2026.6.5 https://x.com/NousResearch/status/2063075092859637888 消息称OpenAI与美政府正谈判入股事宜 #4 据报道， OpenAI 正与美国政府探讨入股事宜，拟通过捐赠股份设立向公众分红的公共财富基金。由于法律机制尚不明确，该谈判仍有流产可能。 据多家媒体报道， OpenAI 与美国政府正在就美国政府入股 OpenAI 进行谈判，相关讨论已进行超过一年。 谈判核心是让 OpenAI 自愿将部分股份转让给政府，以建立向公众分红的“公共财富基金”。 目前尚无具体条款，股权转让的法律机制不明且存在流产可能。 相关链接： https://the-decoder.com/openai-and-the-trump-administration-are-negotiating-a-government-stake-in-the-ai-startup/ 消息称 Anthropic 新模型 Claude Mythos 5 在 API 中短暂现身 #5 据社区成员爆料，名为 Claude Mythos 5 的未发布模型在 Anthropic 的 API 及开发者模式中短暂现身。此现象引发了关于该模型即将发布的猜测，但官方尚未发表任何回应。 社区成员爆料称，在 Anthropic 的 API 和开发者模式中短暂出现了名为 Claude Mythos 5 的新模型标识。 据 TestingCatalog 等消息源透露， Claude Mythos 将作为独立于 Haiku 、 Sonnet 和 Opus 之外的全新模型类别发布，且其定位将高于目前的 Opus 系列。 此外有爆料称其内部代号可能为 claude-oceanus-v1-p ，且此前已提供给部分红队成员进行测试。 目前该模型标识已被撤下， Anthropic 官方尚未就发布时间与可用性作出任何声明。 相关链接： https://x.com/testingcatalog/status/2063234385227252184 提示 ：内容由AI辅助创作，可能存在 幻觉 和 错误 。"
+    },
+    "aihot": {
+      "source": "aihot",
+      "date": "2026-06-07",
+      "generatedAt": "2026-06-07T00:00:00.498Z",
+      "windowStart": "2026-06-06T00:00:00.000Z",
+      "windowEnd": "2026-06-07T00:00:00.000Z",
+      "lead": null,
+      "sections": [
+        {
+          "label": "产品发布/更新",
+          "items": [
+            {
+              "title": "GitHub 开源 Spec Kit 工具包，用产品规范引导 AI 编码",
+              "summary": "GitHub 发布开源工具包 Spec Kit，旨在解决 \"vibe coding\" 的最大弱点——AI 常在规则未明确时就开始编码。它把流程从 \"让 AI 直接构建\" 改为 \"先写产品规范，再让 AI 根据规范实现\"。当前 AI 编码模式常因松散提示直接跳入代码，导致需求薄弱、边界遗漏和反复返工。Spec Kit 推动反向流程：先定义产品功能，再澄清差距、制订技术计划、分解任务，最后让 agent 执行。规范成为可执行的开发合约，支持 Copilot、Claude Code、Codex、Gemini、Cursor、Qwen 等 30+ agent 集成。项目已获 109K+ 星标。",
+              "sourceUrl": "https://x.com/rohanpaul_ai/status/2063246343842501091",
+              "sourceName": "X：Rohan Paul (@rohanpaul_ai)"
+            },
+            {
+              "title": "OpenCV 5 发布：升级全新 DNN 引擎、原生支持大模型",
+              "summary": "OpenCV 5 正式发布，采用基于图的 DNN 引擎，ONNX 算子覆盖率从 4.x 的不到 23% 提升至超 80%，原生支持 Transformer、视觉语言模型（VLM）和大语言模型（LLM）。其他更新包括：更好的 Python 集成与命名参数、更紧凑核心代码、清晰硬件加速层、原生 FP16/BF16、规范化 0D/1D 张量、扩展 3D 视觉及现代化文档。该库 GitHub 拥有超 86,000 stars，每日安装量超一百万次。",
+              "sourceUrl": "https://www.ithome.com/0/960/969.htm",
+              "sourceName": "IT之家（RSS）"
+            },
+            {
+              "title": "Persona Atlas：Hugging Face 上的开源人物思维映射工具",
+              "summary": "Persona Atlas 是一个运行在 Hugging Face Inference Providers 上的开源项目。它通过工具调用代理执行真实网络搜索，生成公众人物的资料、事实清单和风格假设，然后让该人物回答十个关于身份、伦理等开放式问题。每个回答被转化为嵌入向量，从而在向量空间中对不同人物进行距离比较，并基于十个特质锚点绘制热力图。前端采用 Gradio，提供研究、比较和检查代理完整追溯三个标签页，预设多个人物角色，无需 token 即可直接体验。",
+              "sourceUrl": "https://huggingface.co/blog/build-small-hackathon/persona-atlas",
+              "sourceName": "Hugging Face：Blog（RSS）"
+            }
+          ]
+        },
+        {
+          "label": "行业动态",
+          "items": [
+            {
+              "title": "美国众议院议员发布法案草案，旨在禁止各州制定人工智能相关法规",
+              "summary": "美国众议院议员发布一项法案草案，旨在禁止各州自行制定人工智能相关法规，将AI监管权力集中到联邦层面。",
+              "sourceUrl": "https://www.reuters.com/business/us-house-lawmakers-release-draft-bill-regulate-ai-2026-06-04",
+              "sourceName": "Hacker News 热门（buzzing.cc 中文翻译）"
+            },
+            {
+              "title": "谷歌将每月向SpaceX支付9.2亿美元，以获取xAI数据中心的计算能力",
+              "summary": "谷歌与SpaceX达成协议，每月支付9.2亿美元，获得位于xAI数据中心的计算能力。该交易的具体金额和合作细节于本周披露，将极大扩充谷歌的算力资源。",
+              "sourceUrl": "https://www.cnbc.com/2026/06/05/google-to-pay-spacex-920-million-a-month-for-xai-compute-capacity.html",
+              "sourceName": "Hacker News 热门（buzzing.cc 中文翻译）"
+            },
+            {
+              "title": "阶跃首席科学家张祥雨合著论文 ResNet 获 CVPR 2026 「时间检验奖」",
+              "summary": "",
+              "sourceUrl": "https://mp.weixin.qq.com/s?__biz=MzkyNTYxNzg5Mg%3D%3D&mid=2247487873&idx=1&sn=48534d3e883573c603a58e114cbe8709",
+              "sourceName": "公众号：阶跃星辰（Step）"
+            },
+            {
+              "title": "阶跃首席科学家张祥雨合著论文 ResNet 获 CVPR 2026 「时间检验奖」",
+              "summary": "",
+              "sourceUrl": "https://mp.weixin.qq.com/s/ZVgqdH_fE42jO4kcI-lF3g",
+              "sourceName": "公众号：阶跃星辰（Step）"
+            },
+            {
+              "title": "海螺AI×上影节活动日历｜请收下邀请函！",
+              "summary": "MiniMax 海螺AI作为第28届上影节独家AI影像战略合作伙伴，将于6.14-6.15举办开放日活动，设AI片场专属Booth，展出四对“影视从业者+AI创作者”1+1组合的AI作品与创作过程，并设立创作体验区供现场交流。",
+              "sourceUrl": "https://mp.weixin.qq.com/s?__biz=MzkzNDUzMzEzNw%3D%3D&mid=2247487793&idx=1&sn=b5649b5c9c4204135b4914d89f71cb41",
+              "sourceName": "公众号：MiniMax（稀宇科技）"
+            }
+          ]
+        },
+        {
+          "label": "技巧与观点",
+          "items": [
+            {
+              "title": "AI 的黑色星期五",
+              "summary": "Gary Marcus 在文章中分享了对 AI 领域刚刚发生事件的看法，表达了对当前 AI 发展方向的思考。",
+              "sourceUrl": "https://garymarcus.substack.com/p/ais-black-friday",
+              "sourceName": "Gary Marcus：The Road to AI We Can Trust（RSS）"
+            },
+            {
+              "title": "五个实验室，五个心智：用小模型构建多模型金融剧情游戏",
+              "summary": "Thousand Token Wood v2使用四个不同实验室的小模型（gpt-oss-20b、MiniCPM3-4B、Nemotron-Mini-4B及微调Qwen 0.5B）驱动金融模拟游戏的智能体。核心发现是异构服务层摩擦在于vLLM 0.22.1需CUDA工具包，而非模型本身。通过容忍性JSON解析层，添加模型只需一条配置。信息隔离确保内幕标志不在提示词中，扫描测试验证无泄露。记忆用情绪摘要截断避免淹没。微调0.5B模型实现0%自成交、100%有效报价，真相防火墙零泄露。小模型是可靠格式生成器但不可靠推理器，可通过结构化、提示词和微调弥补。",
+              "sourceUrl": "https://huggingface.co/blog/build-small-hackathon/thousand-token-wood-sim-v2",
+              "sourceName": "Hugging Face：Blog（RSS）"
+            },
+            {
+              "title": "Job Searcher",
+              "summary": "Hugging Face 发布 Job Searcher，一个基于 AI 的求职搜索工具。用户上传简历并设定偏好后，系统使用教师模型 DeepSeek V4 Pro 生成 LinkedIn 搜索查询，通过 JobSpy 抓取职位，再对学生模型 Qwen3-8B（8B 参数）进行 LoRA 微调，对每个职位从技能匹配、经验相关性、教育背景、行业领域契合度和资历对齐五个维度给出评分和推理。训练在 Modal 平台单张 A100 上完成。推理部署于 Hugging Face ZeroGPU Space，使用 llama.cpp 实现流式输出。项目开源。",
+              "sourceUrl": "https://huggingface.co/blog/build-small-hackathon/job-search-blog",
+              "sourceName": "Hugging Face：Blog（RSS）"
+            },
+            {
+              "title": "M3与Opus代码审计13个bug：$0.07 vs $1.30",
+              "summary": "对 Claude Opus 4.8 和 MiniMax M3 进行相同的代码审计：同一代码库、同一提示词，预先植入 17 个已知 bug。MiniMax M3 以 $0.07 抓到 13 个；最便宜的 Claude 运行同样抓到 13 个，花费 $1.30。MiniMax 表示这一对比非常有趣，绝对值得一读。",
+              "sourceUrl": "https://x.com/MiniMax_AI/status/2063397618034844135",
+              "sourceName": "X：MiniMax (@MiniMax_AI)"
+            },
+            {
+              "title": "No, Anthropic did not call for a pause on AI development",
+              "summary": "",
+              "sourceUrl": "https://garymarcus.substack.com/p/no-anthropic-did-not-call-for-a-pause",
+              "sourceName": "Gary Marcus：The Road to AI We Can Trust（RSS）"
+            }
+          ]
+        }
+      ],
+      "flashes": []
+    },
+    "aihotItems": {
+      "source": "aihot-items",
+      "count": 40,
+      "hasNext": true,
+      "items": [
+        {
+          "id": "cmq2yz8xj02fosl97d6ckqael",
+          "title": "M3与Opus代码审计13个bug：$0.07 vs $1.30",
+          "url": "https://x.com/MiniMax_AI/status/2063397618034844135",
+          "source": "X：MiniMax (@MiniMax_AI)",
+          "publishedAt": "2026-06-06T23:08:22.000Z",
+          "summary": "对 Claude Opus 4.8 和 MiniMax M3 进行相同的代码审计：同一代码库、同一提示词，预先植入 17 个已知 bug。MiniMax M3 以 $0.07 抓到 13 个；最便宜的 Claude 运行同样抓到 13 个，花费 $1.30。MiniMax 表示这一对比非常有趣，绝对值得一读。",
+          "category": "tip"
+        },
+        {
+          "id": "cmq2w7jzd01ojsl97krih83rb",
+          "title": "美国众议院议员发布法案草案，旨在禁止各州制定人工智能相关法规",
+          "url": "https://www.reuters.com/business/us-house-lawmakers-release-draft-bill-regulate-ai-2026-06-04",
+          "source": "Hacker News 热门（buzzing.cc 中文翻译）",
+          "publishedAt": "2026-06-06T21:47:39.887Z",
+          "summary": "美国众议院议员发布一项法案草案，旨在禁止各州自行制定人工智能相关法规，将AI监管权力集中到联邦层面。",
+          "category": "industry"
+        },
+        {
+          "id": "cmq2rp55c00hlsl97h98gkd14",
+          "title": "五个实验室，五个心智：用小模型构建多模型金融剧情游戏",
+          "url": "https://huggingface.co/blog/build-small-hackathon/thousand-token-wood-sim-v2",
+          "source": "Hugging Face：Blog（RSS）",
+          "publishedAt": "2026-06-06T19:02:33.000Z",
+          "summary": "Thousand Token Wood v2使用四个不同实验室的小模型（gpt-oss-20b、MiniCPM3-4B、Nemotron-Mini-4B及微调Qwen 0.5B）驱动金融模拟游戏的智能体。核心发现是异构服务层摩擦在于vLLM 0.22.1需CUDA工具包，而非模型本身。通过容忍性JSON解析层，添加模型只需一条配置。信息隔离确保内幕标志不在提示词中，扫描测试验证无泄露。记忆用情绪摘要截断避免淹没。微调0.5B模型实现0%自成交、100%有效报价，真相防火墙零泄露。小模型是可靠格式生成器但不可靠推理器，可通过结构化、提示词和微调弥补。",
+          "category": "tip"
+        },
+        {
+          "id": "cmq2kpb9b01h1slbv07xan05v",
+          "title": "AI 的黑色星期五",
+          "url": "https://garymarcus.substack.com/p/ais-black-friday",
+          "source": "Gary Marcus：The Road to AI We Can Trust（RSS）",
+          "publishedAt": "2026-06-06T16:24:04.000Z",
+          "summary": "Gary Marcus 在文章中分享了对 AI 领域刚刚发生事件的看法，表达了对当前 AI 发展方向的思考。",
+          "category": "tip"
+        },
+        {
+          "id": "cmq2j2aqq0111slbv2442dsoa",
+          "title": "Job Searcher",
+          "url": "https://huggingface.co/blog/build-small-hackathon/job-search-blog",
+          "source": "Hugging Face：Blog（RSS）",
+          "publishedAt": "2026-06-06T15:36:51.000Z",
+          "summary": "Hugging Face 发布 Job Searcher，一个基于 AI 的求职搜索工具。用户上传简历并设定偏好后，系统使用教师模型 DeepSeek V4 Pro 生成 LinkedIn 搜索查询，通过 JobSpy 抓取职位，再对学生模型 Qwen3-8B（8B 参数）进行 LoRA 微调，对每个职位从技能匹配、经验相关性、教育背景、行业领域契合度和资历对齐五个维度给出评分和推理。训练在 Modal 平台单张 A100 上完成。推理部署于 Hugging Face ZeroGPU Space，使用 llama.cpp 实现流式输出。项目开源。",
+          "category": "tip"
+        },
+        {
+          "id": "cmq2e53d100lpsl783tyjx1iw",
+          "title": "GitHub 开源 Spec Kit 工具包，用产品规范引导 AI 编码",
+          "url": "https://x.com/rohanpaul_ai/status/2063246343842501091",
+          "source": "X：Rohan Paul (@rohanpaul_ai)",
+          "publishedAt": "2026-06-06T13:07:16.000Z",
+          "summary": "GitHub 发布开源工具包 Spec Kit，旨在解决 \"vibe coding\" 的最大弱点--AI 常在规则未明确时就开始编码。它把流程从 \"让 AI 直接构建\" 改为 \"先写产品规范，再让 AI 根据规范实现\"。当前 AI 编码模式常因松散提示直接跳入代码，导致需求薄弱、边界遗漏和反复返工。Spec Kit 推动反向流程：先定义产品功能，再澄清差距、制订技术计划、分解任务，最后让 agent 执行。规范成为可执行的开发合约，支持 Copilot、Claude Code、Codex、Gemini、Cursor、Qwen 等 30+ agent 集成。项目已获 109K+ 星标。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq2doi6700hlsl78fk3tm0l4",
+          "title": "OpenCV 5 发布：升级全新 DNN 引擎、原生支持大模型",
+          "url": "https://www.ithome.com/0/960/969.htm",
+          "source": "IT之家（RSS）",
+          "publishedAt": "2026-06-06T12:48:12.000Z",
+          "summary": "OpenCV 5 正式发布，采用基于图的 DNN 引擎，ONNX 算子覆盖率从 4.x 的不到 23% 提升至超 80%，原生支持 Transformer、视觉语言模型（VLM）和大语言模型（LLM）。其他更新包括：更好的 Python 集成与命名参数、更紧凑核心代码、清晰硬件加速层、原生 FP16/BF16、规范化 0D/1D 张量、扩展 3D 视觉及现代化文档。该库 GitHub 拥有超 86，000 stars，每日安装量超一百万次。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq2ahm4y00o9slopm7hxc8ld",
+          "title": "Persona Atlas：Hugging Face 上的开源人物思维映射工具",
+          "url": "https://huggingface.co/blog/build-small-hackathon/persona-atlas",
+          "source": "Hugging Face：Blog（RSS）",
+          "publishedAt": "2026-06-06T11:42:01.000Z",
+          "summary": "Persona Atlas 是一个运行在 Hugging Face Inference Providers 上的开源项目。它通过工具调用代理执行真实网络搜索，生成公众人物的资料、事实清单和风格假设，然后让该人物回答十个关于身份、伦理等开放式问题。每个回答被转化为嵌入向量，从而在向量空间中对不同人物进行距离比较，并基于十个特质锚点绘制热力图。前端采用 Gradio，提供研究、比较和检查代理完整追溯三个标签页，预设多个人物角色，无需 token 即可直接体验。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq2o63pf01dosl6n6n4wr3tr",
+          "title": "阶跃首席科学家张祥雨合著论文 ResNet 获 CVPR 2026 「时间检验奖」",
+          "url": "https://mp.weixin.qq.com/s/ZVgqdH_fE42jO4kcI-lF3g",
+          "source": "公众号：阶跃星辰（Step）",
+          "publishedAt": "2026-06-06T06:46:02.000Z",
+          "summary": null,
+          "category": "industry"
+        },
+        {
+          "id": "cmq1jj4u00gejsltrelu93dbg",
+          "title": "PixelDiT入选CVPR2026最佳论文决赛",
+          "url": "https://x.com/NVIDIAAI/status/2063034422698389625",
+          "source": "X：NVIDIA AI (@NVIDIAAI)",
+          "publishedAt": "2026-06-05T23:05:10.000Z",
+          "summary": "被选为 #CVPR2026 最佳论文决赛作品：来自 NVIDIA Research 的 PixelDiT\n\n在大多数图像生成模型中，预训练的自编码器会在任何扩散发生前压缩图像，导致质量损失在整个流程中累积。\n\nPixelDiT，即像素扩散变换器，完全去掉了这一步骤。它是一个单阶段模型，直接在像素空间中端到端地学习扩散过程。",
+          "category": "paper"
+        },
+        {
+          "id": "cmq1ikzj50g4jsltr7vm9qbst",
+          "title": "用Qwen2.5-3B构建多智能体经济体：工程报告",
+          "url": "https://huggingface.co/blog/build-small-hackathon/thousand-token-wood-sim",
+          "source": "Hugging Face：Blog（RSS）",
+          "publishedAt": "2026-06-05T22:18:46.000Z",
+          "summary": "开发者用Qwen2.5-3B构建了五人森林生物多智能体经济体，每个智能体独立运行，通过vLLM部署在Modal，以Gradio为交互窗口。3B模型在100%调用中输出有效JSON，但经济判断能力弱。通过设计稀缺性（食物品种限制、易腐坏、冬季燃料危机）和优化提示词（禁止买入自产物品、给出示例）提升决策质量。15轮模拟中，蜜价从10跌至3、柴价从4涨至7、财富基尼系数从0.14扩至0.38。项目展示了小模型可靠格式化与不可靠推理之间的工程填补。",
+          "category": "tip"
+        },
+        {
+          "id": "cmq1hy4wt0fyrsltrxx64boz8",
+          "title": "Arena 发布真实世界 AI 智能体排行榜 Agent Arena",
+          "url": "https://x.com/rohanpaul_ai/status/2063018358795300982",
+          "source": "X：Rohan Paul (@rohanpaul_ai)",
+          "publishedAt": "2026-06-05T22:01:20.000Z",
+          "summary": "Arena 推出基于真实用户任务的智能体排行榜，评估模型在代码编写、应用构建、文档分析等工作中的表现，而非孤立基准。排行榜基于30万+任务、200万+工具调用和4000万行代码，综合任务成功、纠正遵从性、错误恢复、用户表扬与抱怨、工具幻觉等信号。前三名：GPT-5.5 High（+10.7%）、Claude Opus 4.7 Thinking（+9.5%）、GPT-5.4 High（+8.9%）。",
+          "category": "paper"
+        },
+        {
+          "id": "cmq1fw2bb0ffssltrvl691wnx",
+          "title": "Apollo 敲定 350 亿美元债务融资，为 Anthropic 采购 AI 芯片",
+          "url": "https://www.bloomberg.com/news/articles/2026-06-05/apollo-wraps-up-35-billion-debt-to-buy-ai-chips-for-anthropic",
+          "source": "Bloomberg：Technology（RSS）",
+          "publishedAt": "2026-06-05T21:02:29.000Z",
+          "summary": "Apollo Global Management 和 Blackstone 已为 Anthropic 敲定 350 亿美元融资方案，用于扩充其 AI 基础设施。这是人工智能竞赛中最新的一笔巨额交易。",
+          "category": "industry"
+        },
+        {
+          "id": "cmq1eqdug0f4bsltr1nzlten4",
+          "title": "SpaceX与Google达成云计算新协议",
+          "url": "https://x.com/rohanpaul_ai/status/2063000834045313314",
+          "source": "X：Rohan Paul (@rohanpaul_ai)",
+          "publishedAt": "2026-06-05T20:51:42.000Z",
+          "summary": "SpaceX 刚刚披露了一份与 Google 的新云服务协议。\n\nGoogle 将每月向 SpaceX 支付 9.2 亿美元（约合每年 110 亿美元），用于 xAI 数据中心的计算能力。\n\n这再次表明，AI 算力正成为一种战略性商品，就像发射能力或能源一样，而那些能够为庞大的 GPU 集群提供资金、电力、冷却和运营的公司，可能会在其原有业务之外获得巨大的杠杆优势。",
+          "category": "industry"
+        },
+        {
+          "id": "cmq1d2vyt0epssltrsz0gvbky",
+          "title": "微软Project Mosaic：micro-LED光学互连技术",
+          "url": "https://x.com/MSFTResearch/status/2062983588606320714",
+          "source": "X：Microsoft Research (@MSFTResearch)",
+          "publishedAt": "2026-06-05T19:43:10.000Z",
+          "summary": "微软Azure CTO Mark Russinovich在Build 2026上介绍Project Mosaic，这是微软剑桥研究院的实验性光学互连技术，采用micro-LED实现低功耗、高速数据传输。高级研究员Kaoutar Benyahya现场演示单个LED调制形成字母，证明概念具备实时响应能力。",
+          "category": "paper"
+        },
+        {
+          "id": "cmq1cb2df0ehlsltrb0nb702a",
+          "title": "五角大楼正运营着一个针对拉丁美洲的人工智能宣传机器",
+          "url": "https://theintercept.com/2026/06/02/la-tilde-propaganda-latin-america-pentagon",
+          "source": "Hacker News 热门（buzzing.cc 中文翻译）",
+          "publishedAt": "2026-06-05T19:23:20.788Z",
+          "summary": "据 The Intercept 6月5日报道，美国五角大楼正在运营一个针对拉丁美洲的人工智能宣传机器（AI propaganda mill）。报道指出，该机器利用 AI 技术生成并传播宣传内容，目标为拉丁美洲地区。该消息在 Hacker News 上获得 100 点热度。",
+          "category": "industry"
+        },
+        {
+          "id": "cmq1b8gvh0e7isltriul9fo2j",
+          "title": "Claude 是否增加了 rsync 中的错误？",
+          "url": "https://alexispurslane.github.io/rsync-analysis",
+          "source": "Hacker News 热门（buzzing.cc 中文翻译）",
+          "publishedAt": "2026-06-05T19:07:35.749Z",
+          "summary": "一篇 Hacker News 热门帖子（105 分）提出了 Claude 是否导致 rsync 工具中 bug 增加的问题，并附有分析链接。",
+          "category": "tip"
+        },
+        {
+          "id": "cmq18rbp70dk3sltr7eqx8xil",
+          "title": "智能体协作应如同事般对话和手势",
+          "url": "https://x.com/mntruell/status/2062955210897801520",
+          "source": "X：Michael Truell (@mntruell)",
+          "publishedAt": "2026-06-05T17:50:24.000Z",
+          "summary": "与 AI 智能体协作应感觉像与同事协作一样。你应能\"与它们交谈\"--不仅通过文本聊天，还能一起对着屏幕做手势、实时对话等。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq16l9id0cz7sltrd5u9tevg",
+          "title": "Riverflow 2.5：可控制评分标准的图像模型",
+          "url": "https://x.com/OpenRouter/status/2062944965978992935",
+          "source": "X：OpenRouter (@OpenRouter)",
+          "publishedAt": "2026-06-05T17:09:42.000Z",
+          "summary": "在OpenRouter上线：来自@Sourceful的Riverflow 2.5。\n\n首个具有独立评分标准的图像模型，你可控制该标准以引导其思维和编辑，并具备可控的推理努力，可在速度与质量之间进行权衡。\n\n免费至6月9日（周二）。Fast和Pro见下方🧵。",
+          "category": "ai-models"
+        },
+        {
+          "id": "cmq16lagb0czbsltr4d2whlpo",
+          "title": "ChatGPT 网页版支持从写作块发送邮件",
+          "url": "https://x.com/ChatGPTapp/status/2062944254591430917",
+          "source": "X：ChatGPT (@ChatGPTapp)",
+          "publishedAt": "2026-06-05T17:06:52.000Z",
+          "summary": "草拟。调整。发送。\n\n现在你可以在网页版 ChatGPT 中直接从写作块发送邮件，无需离开对话。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq16wkmr0d1qsltrrxq2ijpb",
+          "title": "Google AI 本周产品更新：Nano Banana 2、Co-Scientist、dreambeans、Gemma 4 等",
+          "url": "https://x.com/GoogleAI/status/2062942864288387430",
+          "source": "X：Google AI (@GoogleAI)",
+          "publishedAt": "2026-06-05T17:01:21.000Z",
+          "summary": "Google AI 本周发布多项更新：Nano Banana 2 及 Pro 正式 GA，可通过 Gemini Enterprise Agent Platform、Gemini API 和 Google AI Studio 获取；Co-Scientist 多智能体系统面向科研自动生成优化新假设；Google Labs 推出 dreambeans，根据用户 Google 应用数据每日生成个性化话题集；Gemma 4 12B 统一无编码器多模态模型可完全离线运行于笔记本；Gemma 4 系列及草稿模型引入 QAT 降低内存需求；Google Magenta RealTime 2 开源实时音乐模型，支持 MIDI 键盘、文本提示和手势演奏。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq15ifnr0comsltrb2vd53mu",
+          "title": "Gemini Live 支持实时创建编辑图像",
+          "url": "https://x.com/GeminiApp/status/2062936486509785385",
+          "source": "X：Gemini (@GeminiApp)",
+          "publishedAt": "2026-06-05T16:36:00.000Z",
+          "summary": "你现可直接在 Gemini Live 中创建和编辑图像。\n\n无论是测试房间装饰、解决数学问题，还是制作可分享的梗图，所有操作都实时完成。\n\n只需打开 Gemini 应用，点击 Live 按钮，共享摄像头，告诉 Gemini 你想看到的。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq15u3mt0cqjsltrhb1ch36w",
+          "title": "AI热推高美国计算基建GDP占比翻倍",
+          "url": "https://x.com/EpochAIResearch/status/2062933470373146828",
+          "source": "X：Epoch AI (@EpochAIResearch)",
+          "publishedAt": "2026-06-05T16:24:01.000Z",
+          "summary": "AI 热潮使计算基础设施占美国 GDP 比重翻倍。\n\n2026 年第一季度，与 AI 相关的数据中心建设、计算硬件和网络设备投资约占美国 GDP 的 0.8%，推动整个计算基础设施占 GDP 比重达到约 1.5%。",
+          "category": "industry"
+        },
+        {
+          "id": "cmq13pme90c62sltraucjmvp2",
+          "title": "Meta SAM 3D 获 CVPR26 最佳论文荣誉提名",
+          "url": "https://x.com/AIatMeta/status/2062920724944507095",
+          "source": "X：AI at Meta (@AIatMeta)",
+          "publishedAt": "2026-06-05T15:33:22.000Z",
+          "summary": "热烈祝贺我们的 SAM 3D 团队在 #CVPR26 获得最佳论文荣誉提名！这项殊荣凸显了他们在推动计算机视觉边界方面的杰出工作。\n\n论文链接：https：//arxiv.org/abs/2511.16624",
+          "category": "paper"
+        },
+        {
+          "id": "cmq12umcv0bxmsltr272hqb35",
+          "title": "Suno Voices 使用指南：6 个技巧打造高质量人声录制",
+          "url": "https://suno.com/blog/6-tips-for-voices",
+          "source": "Suno：Blog（网页）",
+          "publishedAt": "2026-06-05T15:26:17.111Z",
+          "summary": "Suno Voices 面向 Web 付费用户开放。提升人声质量的 6 个技巧：在安静环境录音以减少背景噪音；先练习歌词再正式录制；不必追求完美，保留真实情感；录音时长尽量超过 1 分钟以提供更多学习素材；将人声匹配到合适的音乐流派（如民谣、流行、死亡金属、波萨诺瓦等）；敢于尝试不同风格以发现惊喜。这些技巧旨在帮助用户获得更个性化、表现力更强的声音效果。",
+          "category": "tip"
+        },
+        {
+          "id": "cmq12z6ag0bzssltrkou6khap",
+          "title": "OpenAI 前 CTO 称若 Altman 未回归公司可能已\"瓦解\"",
+          "url": "https://www.bloomberg.com/news/articles/2026-06-05/openai-would-ve-imploded-if-altman-didn-t-return-ex-cto-says",
+          "source": "Bloomberg：Technology（RSS）",
+          "publishedAt": "2026-06-05T15:18:30.000Z",
+          "summary": "Mira Murati 表示，如果 Sam Altman 在 2023 年被短暂罢免后没有回归 CEO 职位，OpenAI 很可能已经\"瓦解\"。这是她对那场硅谷最激烈的董事会斗争的最清晰描述。",
+          "category": "industry"
+        },
+        {
+          "id": "cmq12z1oz0bzfsltrea6bc8t4",
+          "title": "Hinton称AI拥有意识：人类最好接受非唯一智能生命",
+          "url": "https://x.com/kimmonismus/status/2062915287700090948",
+          "source": "X：Kim (@kimmonismus)",
+          "publishedAt": "2026-06-05T15:11:46.000Z",
+          "summary": "AI先驱Geoffrey Hinton表示，他认为AI拥有意识，人类应接受自己并非唯一智能生命。他指出AI\"非常像我们\"，AI聊天机器人必须理解问题才能作答，这种觉知等同于感知能力，智能不限于生物。主推文作者进一步讨论意识本质：笛卡尔的\"我思故我在\"和fMRI等实证手段都无法真正定义意识，人类对自身了解远不及想象。作者呼吁转向新哲学问题，厘清人与机器的区别与联系。",
+          "category": "tip"
+        },
+        {
+          "id": "cmq118d2f0bjmsltrjj0o010h",
+          "title": "Viggle_PINOC 免费动捕测试开启",
+          "url": "https://x.com/ViggleAI/status/2062904007123714329",
+          "source": "X：Viggle AI (@ViggleAI)",
+          "publishedAt": "2026-06-05T14:26:56.000Z",
+          "summary": "Mocap 不需要套装、工作室或数千美元。\n\n使用 @Viggle_PINOC，任何人都可以简单地拍摄自己，并将该视频转换为动作捕捉。\n\n我们仍处于测试阶段，且对所有人完全免费。试试看，告诉我们你还想看什么！",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq10uuzu0bfasltril9vjxvg",
+          "title": "Sir Demis Hassabis vs Sir Demis Hassabis",
+          "url": "https://garymarcus.substack.com/p/sir-demis-hassabis-vs-sir-demis-hassabis",
+          "source": "Gary Marcus：The Road to AI We Can Trust（RSS）",
+          "publishedAt": "2026-06-05T14:25:36.000Z",
+          "summary": null,
+          "category": "tip"
+        },
+        {
+          "id": "cmq11mu8l0bm6sltrht2tvv27",
+          "title": "一个非常狠的AI教学提示词：追问式检查清单教学",
+          "url": "https://x.com/xiaohu/status/2062902972649222311",
+          "source": "X：小互 (@xiaohu)",
+          "publishedAt": "2026-06-05T14:22:50.000Z",
+          "summary": "这是一则AI提示词，让AI扮演极度严格的老师，通过逐阶段教学、持续维护MD检查清单来确保用户真正理解。AI先让用户复述当前理解，再填补漏洞，并用开放式或选择题（随机选项顺序，提交前不公布答案）测试。教学必须覆盖问题本身、解决方案、宏观背景三个层面，并不断深挖\"为什么\"。仅当用户通过清单上所有项目的验证，会话才算结束。提示词强调对理解程度的主动验证，而非一次性灌输。",
+          "category": "tip"
+        },
+        {
+          "id": "cmq12gsy20buksltr2nwivyhu",
+          "title": "苹果新版 Siri 不会被宣传为完成品，内部将其标记为\"Beta\"版",
+          "url": "https://www.ithome.com/0/960/739.htm",
+          "source": "IT之家（RSS）",
+          "publishedAt": "2026-06-05T14:21:03.000Z",
+          "summary": "苹果新版Siri被内部标记为\"Beta\"版，不会作为完成品宣传；可能设置等待清单供用户尝试。iOS 27细节：通知到达重新设计，通知中心手势移至左上角；\"查找\"应用视觉重设计；照片\"清理\"功能改进；大量底层安全改进。部分Siri查询将通过Google Cloud调用授权版Gemini，并使用谷歌的NVIDIA Blackwell B200集群处理。",
+          "category": "industry"
+        },
+        {
+          "id": "cmq10bltr0b9ksltrs7mappfh",
+          "title": "Meta 智能眼镜 App 暗藏人脸识别代码，NameTag 功能已推送至超 5000 万设备",
+          "url": "https://www.ithome.com/0/960/735.htm",
+          "source": "IT之家（RSS）",
+          "publishedAt": "2026-06-05T13:59:37.000Z",
+          "summary": "据《连线》今日报道，Meta 通过多次应用更新将人脸识别代码推送到智能眼镜配套 App 中，代号\"NameTag\"。该功能利用已部署的三个 AI 模型将人脸转换为\"人脸特征模板\"，与手机本地数据库匹配，识别成功后向佩戴者发送通知。App 下载量超 5000 万次。Meta 回应称代码仅为探索，尚未决定推出，且不会建立中央人脸数据库。此前 Meta 曾因人脸识别问题在伊利诺伊州和得克萨斯州分别达成 6.5 亿美元和 14 亿美元和解。",
+          "category": "industry"
+        },
+        {
+          "id": "cmq10blts0b9qsltr3hvk0fy1",
+          "title": "开源鸿蒙 OpenHarmony 具身智能版本 EmbodiedAI 1.0.1 发布",
+          "url": "https://www.ithome.com/0/960/722.htm",
+          "source": "IT之家（RSS）",
+          "publishedAt": "2026-06-05T13:31:13.000Z",
+          "summary": "6月5日，开源鸿蒙具身智能PMC（筹）发布EmbodiedAI 1.0.1版本。该版本聚焦机器人控制与智能体应用，升级导航规划、运动控制、仿真开发、硬件适配等核心能力，兼容ROS生态、机器人模拟器及多种本体形态。集成开源鸿蒙原生模拟器、MuJoCo、Gazebo三大仿真环境，打通从代码开发到真机验证的全流程链路。人形机器人、四足机器狗、商用服务机器人等已完成适配验证。目前具身智能方向已组建18个专项SIG工作组，版本源码已正式开放。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq0yxent0avgsltr8x9ya6jn",
+          "title": "社区基于MiniCPM-V 4.6打造财务分析工具AccountingLLM",
+          "url": "https://x.com/OpenBMB/status/2062889699056984281",
+          "source": "X：面壁智能 OpenBMB (@OpenBMB)",
+          "publishedAt": "2026-06-05T13:30:05.000Z",
+          "summary": "社区开发者使用面壁智能MiniCPM-V 4.6构建了AccountingLLM（quaesto.com），用于自动化财务文档分析。该工具可上传IPO招股书、年报或审计文件，自动从复杂PDF中提取财务表格、重建跨页表格、对照会计等式检查关键数据，并标记可疑条目供人工审核。开发者已将其商业化，成为实际可用的产品。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq10uxf80bfesltrngu1lo15",
+          "title": "你的AI账单失控了。Cloudflare现在可以解决这个问题。",
+          "url": "https://blog.cloudflare.com/ai-gateway-spend-limits",
+          "source": "Cloudflare Blog",
+          "publishedAt": "2026-06-05T13:00:00.000Z",
+          "summary": "Cloudflare AI Gateway新增实时消费限制功能，防止跨多个AI提供商的token账单失控。通过与Cloudflare Access集成，企业可以使用基于身份的预算和策略管理AI使用成本。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq2o71l001iisl6n8ljx5jbt",
+          "title": "首字延迟降低3.6倍，腾讯混元提出Stem稀疏注意力算法，长文推理加速新SOTA",
+          "url": "https://mp.weixin.qq.com/s/XneOSvjt-7A-DU546cGoZA",
+          "source": "公众号：腾讯混元",
+          "publishedAt": "2026-06-05T11:22:41.000Z",
+          "summary": null,
+          "category": "paper"
+        },
+        {
+          "id": "cmq2o6lwv01h0sl6ni883xkm3",
+          "title": "从品牌TVC到效果素材量产，Seedance 2.0进入广告核心生产流程",
+          "url": "https://mp.weixin.qq.com/s/uvasI0EYNtv1Q8bMd96CzQ",
+          "source": "公众号：火山引擎",
+          "publishedAt": "2026-06-05T11:17:53.000Z",
+          "summary": "Seedance 2.0进入广告核心生产流程，旨在同时应对品牌TVC的高质感、叙事统一需求与效果素材的快速迭代、量产压力。传统广告制作中，品牌广告与效果广告依赖两套不同的生产体系，前者周期长、重视觉统一，后者需高频更新。Seedance 2.0试图融合两种模式，提升内容上新速度和项目交付效率。",
+          "category": "ai-products"
+        },
+        {
+          "id": "cmq0u0eel09ljsltrgblmk1xv",
+          "title": "微软CEO Satya Nadella最新访谈上线",
+          "url": "https://x.com/swyx/status/2062854555562565741",
+          "source": "X：swyx (@swyx)",
+          "publishedAt": "2026-06-05T11:10:26.000Z",
+          "summary": "Satya Nadella 在 Latent Space 发布最新访谈，链接见原文。原推文仅评论\"chat is he cooked\"。",
+          "category": "tip"
+        },
+        {
+          "id": "cmq2l9lfs009zsl6n45wlgkj8",
+          "title": "FluxA与百度智能云合作：DAA时代，AI开始自己赚钱",
+          "url": "https://mp.weixin.qq.com/s/_Gxb4JWjVidXVfeCRjghzg",
+          "source": "公众号：百度智能云（文心）",
+          "publishedAt": "2026-06-05T10:52:01.000Z",
+          "summary": "FluxA与百度智能云达成合作，标志着DAA时代到来--AI开始实现自身盈利，不再依赖外部投入。",
+          "category": "industry"
+        },
+        {
+          "id": "cmq2o71l001imsl6nw5cypu9a",
+          "title": "PawBench：给通用智能体一把可度量的尺",
+          "url": "https://mp.weixin.qq.com/s/Q1fa3KwT63HBOF2fmWKzlg",
+          "source": "公众号：通义实验室（千问）",
+          "publishedAt": "2026-06-05T09:54:27.000Z",
+          "summary": null,
+          "category": "paper"
+        }
+      ]
+    },
+    "hackernews": {
+      "source": "hackernews",
+      "fetchedAt": "2026-06-07T01:28:37.254Z",
+      "totalFetched": 50,
+      "highSignalCount": 36,
+      "threshold": 30,
+      "items": [
+        {
+          "id": 48421442,
+          "title": "S&P 500 rejects SpaceX, also blocking entry for OpenAI and Anthropic",
+          "url": "https://arstechnica.com/tech-policy/2026/06/sp-500-blocks-fast-spacex-entry-wont-waive-rule-for-unprofitable-ai-firms/",
+          "score": 1366,
+          "descendants": 472,
+          "by": "maltalex",
+          "time": "2026-06-06T04:38:36.000Z"
+        },
+        {
+          "id": 48389360,
+          "title": "How LLMs work",
+          "url": "https://www.0xkato.xyz/how-llms-actually-work/",
+          "score": 844,
+          "descendants": 235,
+          "by": "0xkato",
+          "time": "2026-06-03T20:15:13.000Z"
+        },
+        {
+          "id": 48415217,
+          "title": "Gov.uk has replaced Stripe with Dutch provider Adyen",
+          "url": "https://www.theregister.com/public-sector/2026/06/04/govuk-goes-dutch-on-payments-as-it-dumps-stripe/5250763",
+          "score": 552,
+          "descendants": 214,
+          "by": "toomuchtodo",
+          "time": "2026-06-05T16:55:30.000Z"
+        },
+        {
+          "id": 48406174,
+          "title": "Ask HN: What was your \"oh shit\" moment with GenAI?",
+          "url": "https://news.ycombinator.com/item?id=48406174",
+          "score": 546,
+          "descendants": 942,
+          "by": "andrehacker",
+          "time": "2026-06-04T23:42:20.000Z"
+        },
+        {
+          "id": 48427643,
+          "title": "Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot",
+          "url": "https://this.weekinsecurity.com/meta-confirms-thousands-of-instagram-accounts-were-hacked-by-abusing-its-ai-chatbot/",
+          "score": 414,
+          "descendants": 148,
+          "by": "speckx",
+          "time": "2026-06-06T18:35:27.000Z"
+        },
+        {
+          "id": 48427523,
+          "title": "Pentagon raised threat of Israeli spying on U.S. to highest level, sources say",
+          "url": "https://www.nbcnews.com/politics/national-security/pentagon-raised-threat-israeli-spying-us-highest-level-sources-say-rcna348565",
+          "score": 400,
+          "descendants": 296,
+          "by": "MilnerRoute",
+          "time": "2026-06-06T18:21:06.000Z"
+        },
+        {
+          "id": 48420827,
+          "title": "Ask HN: Why is the HN crowd so anti-AI?",
+          "url": "https://news.ycombinator.com/item?id=48420827",
+          "score": 388,
+          "descendants": 646,
+          "by": "Ekami",
+          "time": "2026-06-06T02:31:51.000Z"
+        },
+        {
+          "id": 48423762,
+          "title": "Pokemon Emerald Ported to WebAssembly (100k FPS)",
+          "url": "https://pokeemerald.com/",
+          "score": 276,
+          "descendants": 78,
+          "by": "tripplyons",
+          "time": "2026-06-06T11:12:58.000Z"
+        },
+        {
+          "id": 48428025,
+          "title": "Ntsc-rs – open-source video emulation of analog TV and VHS artifacts",
+          "url": "https://ntsc.rs/",
+          "score": 259,
+          "descendants": 59,
+          "by": "gregsadetsky",
+          "time": "2026-06-06T19:17:46.000Z"
+        },
+        {
+          "id": 48425528,
+          "title": "Moving beyond fork() + exec()",
+          "url": "https://lwn.net/SubscriberLink/1076018/16f01bbbb8e0d1f0/",
+          "score": 249,
+          "descendants": 258,
+          "by": "jwilk",
+          "time": "2026-06-06T14:34:20.000Z"
+        },
+        {
+          "id": 48420148,
+          "title": "The intracies of modern camera lens repair (2024)",
+          "url": "https://salvagedcircuitry.com/sigma-45mm.html",
+          "score": 241,
+          "descendants": 84,
+          "by": "transistor-man",
+          "time": "2026-06-06T00:33:26.000Z"
+        },
+        {
+          "id": 48424605,
+          "title": "Nvidia is proposing a beast of a CPU system for Windows PCs",
+          "url": "https://twitter.com/lemire/status/2062880075117113739",
+          "score": 227,
+          "descendants": 424,
+          "by": "tosh",
+          "time": "2026-06-06T12:52:18.000Z"
+        },
+        {
+          "id": 48398925,
+          "title": "My Agent Skill for Test-Driven Development",
+          "url": "https://www.saturnci.com/my-agent-skill-for-test-driven-development.html",
+          "score": 220,
+          "descendants": 104,
+          "by": "laxmena",
+          "time": "2026-06-04T14:10:40.000Z"
+        },
+        {
+          "id": 48425723,
+          "title": "Zeroserve: A zero-config web server you can script with eBPF",
+          "url": "https://su3.io/posts/introducing-zeroserve",
+          "score": 191,
+          "descendants": 48,
+          "by": "losfair",
+          "time": "2026-06-06T14:59:43.000Z"
+        },
+        {
+          "id": 48421171,
+          "title": "Pre-Modern Armies for Worldbuilders, Part I: Why They Fight",
+          "url": "https://acoup.blog/2026/06/05/collections-pre-modern-armies-for-worldbuilders-part-i-why-they-fight/",
+          "score": 172,
+          "descendants": 51,
+          "by": "gostsamo",
+          "time": "2026-06-06T03:41:32.000Z"
+        },
+        {
+          "id": 48419571,
+          "title": "The perils of UUID primary keys in SQLite",
+          "url": "https://andersmurphy.com/2026/06/05/the-perils-of-uuid-primary-keys-in-sqlite.html",
+          "score": 152,
+          "descendants": 91,
+          "by": "emschwartz",
+          "time": "2026-06-05T23:13:12.000Z"
+        },
+        {
+          "id": 48428763,
+          "title": "New U.S. college grads now have higher unemployment than the average worker",
+          "url": "https://www.randalolson.com/2026/06/04/recent-grad-unemployment-flip/",
+          "score": 147,
+          "descendants": 150,
+          "by": "davidbarker",
+          "time": "2026-06-06T20:35:40.000Z"
+        },
+        {
+          "id": 48425982,
+          "title": "Python JIT project was asked to pause development",
+          "url": "https://discuss.python.org/t/an-announcement-from-the-steering-council-regarding-the-jit-project/107638",
+          "score": 142,
+          "descendants": 64,
+          "by": "kbumsik",
+          "time": "2026-06-06T15:30:09.000Z"
+        },
+        {
+          "id": 48417490,
+          "title": "Google to pay SpaceX $920M a month for compute capacity at xAI data centers",
+          "url": "https://www.cnbc.com/2026/06/05/google-to-pay-spacex-920-million-a-month-for-xai-compute-capacity.html",
+          "score": 141,
+          "descendants": 711,
+          "by": "toephu2",
+          "time": "2026-06-05T20:06:36.000Z"
+        },
+        {
+          "id": 48425247,
+          "title": "Benchmarks in Leipzig",
+          "url": "https://arxiv.org/abs/2606.05818",
+          "score": 124,
+          "descendants": 44,
+          "by": "root-parent",
+          "time": "2026-06-06T14:00:52.000Z"
+        },
+        {
+          "id": 48369864,
+          "title": "Social Cache Busting",
+          "url": "https://www.autodidacts.io/social-cache-busting/",
+          "score": 124,
+          "descendants": 44,
+          "by": "surprisetalk",
+          "time": "2026-06-02T13:15:18.000Z"
+        },
+        {
+          "id": 48428356,
+          "title": "Home alone: Remote work, isolation, and mental health",
+          "url": "https://www.science.org/doi/10.1126/science.aec7671",
+          "score": 120,
+          "descendants": 111,
+          "by": "speckx",
+          "time": "2026-06-06T19:51:10.000Z"
+        },
+        {
+          "id": 48372138,
+          "title": "Show HN: Infinite canvas notes in the non-Euclidean Poincaré disk",
+          "url": "https://uonr.github.io/poincake/",
+          "score": 119,
+          "descendants": 22,
+          "by": "uonr",
+          "time": "2026-06-02T16:08:26.000Z"
+        },
+        {
+          "id": 48426202,
+          "title": "You Can Run",
+          "url": "https://magazine.atavist.com/2026/mccann-cocaine-fugitives",
+          "score": 99,
+          "descendants": 50,
+          "by": "bryanrasmussen",
+          "time": "2026-06-06T15:55:46.000Z"
+        },
+        {
+          "id": 48348876,
+          "title": "Building Rust Procedural Macros from the Grounds Up",
+          "url": "https://www.learnix-os.com/ch02-03-implementing-the-bitfields-proc-macro.html",
+          "score": 86,
+          "descendants": 18,
+          "by": "Sagi21805",
+          "time": "2026-05-31T19:28:49.000Z"
+        },
+        {
+          "id": 48425347,
+          "title": "Running Python code in a sandbox with MicroPython and WASM",
+          "url": "https://simonwillison.net/2026/Jun/6/micropython-in-a-sandbox/",
+          "score": 77,
+          "descendants": 23,
+          "by": "theanonymousone",
+          "time": "2026-06-06T14:15:32.000Z"
+        },
+        {
+          "id": 48424125,
+          "title": "The new bibliomaniacs",
+          "url": "https://engelsbergideas.com/notebook/the-new-bibliomaniacs/",
+          "score": 65,
+          "descendants": 55,
+          "by": "RickJWagner",
+          "time": "2026-06-06T12:03:21.000Z"
+        },
+        {
+          "id": 48425611,
+          "title": "Motorola effectively bricked its entire line of WiFi routers without explanation",
+          "url": "https://mashable.com/tech/motorola-wifi-routers-stop-working-motosync-plus-app-down",
+          "score": 61,
+          "descendants": 21,
+          "by": "thisislife2",
+          "time": "2026-06-06T14:43:53.000Z"
+        },
+        {
+          "id": 48395370,
+          "title": "WoofWare.PawPrint, a Deterministic .NET Runtime",
+          "url": "https://www.patrickstevens.co.uk/posts/2026-06-04-announcing-woofware-pawprint/",
+          "score": 52,
+          "descendants": 17,
+          "by": "Smaug123",
+          "time": "2026-06-04T07:32:20.000Z"
+        },
+        {
+          "id": 48362115,
+          "title": "Show HN: Soft Body Jiggle Physics",
+          "url": "https://github.com/xloveee/jiggle-physics",
+          "score": 51,
+          "descendants": 19,
+          "by": "vesperance",
+          "time": "2026-06-01T20:20:02.000Z"
+        },
+        {
+          "id": 48428475,
+          "title": "Sem: New primitive for code understanding – not LSPs, but entities on top of Git",
+          "url": "https://ataraxy-labs.github.io/sem/",
+          "score": 50,
+          "descendants": 22,
+          "by": "rohanucla",
+          "time": "2026-06-06T20:03:55.000Z"
+        },
+        {
+          "id": 48396783,
+          "title": "Summer of '85: DOSBOS is rejected by ANALOG Computing",
+          "url": "https://www.goto10retro.com/p/summer-of-85-dosbos-is-rejected-by",
+          "score": 50,
+          "descendants": 11,
+          "by": "ibobev",
+          "time": "2026-06-04T10:47:07.000Z"
+        },
+        {
+          "id": 48418125,
+          "title": "Tribute to Jiro Yamada, Automotive Artist (1960-2025) [video]",
+          "url": "https://www.youtube.com/watch?v=rJ2gQ5Md60U",
+          "score": 44,
+          "descendants": 4,
+          "by": "NaOH",
+          "time": "2026-06-05T20:52:56.000Z"
+        },
+        {
+          "id": 48416264,
+          "title": "Harness engineering: Leveraging Codex in an agent-first world",
+          "url": "https://openai.com/index/harness-engineering/",
+          "score": 43,
+          "descendants": 20,
+          "by": "pramodbiligiri",
+          "time": "2026-06-05T18:20:06.000Z"
+        },
+        {
+          "id": 48424674,
+          "title": "Trees to Flows and Back: Unifying Decision Trees and Diffusion Models",
+          "url": "https://arxiv.org/abs/2605.00414",
+          "score": 43,
+          "descendants": 8,
+          "by": "rsn243",
+          "time": "2026-06-06T12:59:59.000Z"
+        },
+        {
+          "id": 48390269,
+          "title": "Splash Is a Colour Format",
+          "url": "https://www.todepond.com/lab/splash/",
+          "score": 36,
+          "descendants": 31,
+          "by": "tobr",
+          "time": "2026-06-03T21:22:23.000Z"
+        }
+      ]
+    },
+    "githubTrending": {
+      "source": "github-trending",
+      "fetchedAt": "2026-06-07T01:28:38.652Z",
+      "count": 18,
+      "repos": [
+        {
+          "owner": "mvanhorn",
+          "name": "last30days-skill",
+          "fullName": "mvanhorn/last30days-skill",
+          "url": "https://github.com/mvanhorn/last30days-skill",
+          "description": "AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary",
+          "language": "Python",
+          "totalStars": 28828,
+          "todayStars": 439
+        },
+        {
+          "owner": "CopilotKit",
+          "name": "CopilotKit",
+          "fullName": "CopilotKit/CopilotKit",
+          "url": "https://github.com/CopilotKit/CopilotKit",
+          "description": "The Frontend Stack for Agents & Generative UI. React, Angular, Mobile, Slack, and more. Makers of the AG-UI Protocol",
+          "language": "TypeScript",
+          "totalStars": 33219,
+          "todayStars": 631
+        },
+        {
+          "owner": "MemPalace",
+          "name": "mempalace",
+          "fullName": "MemPalace/mempalace",
+          "url": "https://github.com/MemPalace/mempalace",
+          "description": "The best-benchmarked open-source AI memory system. And it's free.",
+          "language": "Python",
+          "totalStars": 54295,
+          "todayStars": 446
+        },
+        {
+          "owner": "danielmiessler",
+          "name": "Personal_AI_Infrastructure",
+          "fullName": "danielmiessler/Personal_AI_Infrastructure",
+          "url": "https://github.com/danielmiessler/Personal_AI_Infrastructure",
+          "description": "Agentic AI Infrastructure for magnifying HUMAN capabilities.",
+          "language": "TypeScript",
+          "totalStars": 14967,
+          "todayStars": 70
+        },
+        {
+          "owner": "openai",
+          "name": "plugins",
+          "fullName": "openai/plugins",
+          "url": "https://github.com/openai/plugins",
+          "description": "OpenAI Plugins",
+          "language": "JavaScript",
+          "totalStars": 1779,
+          "todayStars": 213
+        },
+        {
+          "owner": "Panniantong",
+          "name": "Agent-Reach",
+          "fullName": "Panniantong/Agent-Reach",
+          "url": "https://github.com/Panniantong/Agent-Reach",
+          "description": "Give your AI agent eyes to see the entire internet. Read & search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero API fees.",
+          "language": "Python",
+          "totalStars": 22343,
+          "todayStars": 683
+        },
+        {
+          "owner": "sveltejs",
+          "name": "svelte",
+          "fullName": "sveltejs/svelte",
+          "url": "https://github.com/sveltejs/svelte",
+          "description": "web development for the rest of us",
+          "language": "JavaScript",
+          "totalStars": 86991,
+          "todayStars": 25
+        },
+        {
+          "owner": "nginx",
+          "name": "nginx",
+          "fullName": "nginx/nginx",
+          "url": "https://github.com/nginx/nginx",
+          "description": "The official NGINX Open Source repository.",
+          "language": "C",
+          "totalStars": 30693,
+          "todayStars": 20
+        },
+        {
+          "owner": "aquasecurity",
+          "name": "trivy",
+          "fullName": "aquasecurity/trivy",
+          "url": "https://github.com/aquasecurity/trivy",
+          "description": "Find vulnerabilities, misconfigurations, secrets, SBOM in containers, Kubernetes, code repositories, clouds and more",
+          "language": "Go",
+          "totalStars": 36004,
+          "todayStars": 159
+        },
+        {
+          "owner": "golang",
+          "name": "go",
+          "fullName": "golang/go",
+          "url": "https://github.com/golang/go",
+          "description": "The Go programming language",
+          "language": "Go",
+          "totalStars": 134508,
+          "todayStars": 30
+        },
+        {
+          "owner": "lfnovo",
+          "name": "open-notebook",
+          "fullName": "lfnovo/open-notebook",
+          "url": "https://github.com/lfnovo/open-notebook",
+          "description": "An Open Source implementation of Notebook LM with more flexibility and features",
+          "language": "TypeScript",
+          "totalStars": 26628,
+          "todayStars": 794
+        },
+        {
+          "owner": "obra",
+          "name": "superpowers",
+          "fullName": "obra/superpowers",
+          "url": "https://github.com/obra/superpowers",
+          "description": "An agentic skills framework & software development methodology that works.",
+          "language": "Shell",
+          "totalStars": 219670,
+          "todayStars": 700
+        },
+        {
+          "owner": "santifer",
+          "name": "career-ops",
+          "fullName": "santifer/career-ops",
+          "url": "https://github.com/santifer/career-ops",
+          "description": "AI-powered job search system built on Claude Code. 14 skill modes, Go dashboard, PDF generation, batch processing.",
+          "language": "JavaScript",
+          "totalStars": 49367,
+          "todayStars": 193
+        },
+        {
+          "owner": "openai",
+          "name": "whisper",
+          "fullName": "openai/whisper",
+          "url": "https://github.com/openai/whisper",
+          "description": "Robust Speech Recognition via Large-Scale Weak Supervision",
+          "language": "Python",
+          "totalStars": 101866,
+          "todayStars": 150
+        },
+        {
+          "owner": "vitejs",
+          "name": "vite",
+          "fullName": "vitejs/vite",
+          "url": "https://github.com/vitejs/vite",
+          "description": "Next generation frontend tooling. It's fast!",
+          "language": "TypeScript",
+          "totalStars": 81184,
+          "todayStars": 25
+        },
+        {
+          "owner": "microsoft",
+          "name": "mxc",
+          "fullName": "microsoft/mxc",
+          "url": "https://github.com/microsoft/mxc",
+          "description": "Policy-driven, layered isolation and containment",
+          "language": "Rust",
+          "totalStars": 585,
+          "todayStars": 64
+        },
+        {
+          "owner": "PaddlePaddle",
+          "name": "PaddleOCR",
+          "fullName": "PaddlePaddle/PaddleOCR",
+          "url": "https://github.com/PaddlePaddle/PaddleOCR",
+          "description": "Turn any PDF or image document into structured data for your AI. A powerful, lightweight OCR toolkit that bridges the gap between images/PDFs and LLMs. Supports 100+ languages.",
+          "language": "Python",
+          "totalStars": 80967,
+          "todayStars": 433
+        },
+        {
+          "owner": "microsoft",
+          "name": "VibeVoice",
+          "fullName": "microsoft/VibeVoice",
+          "url": "https://github.com/microsoft/VibeVoice",
+          "description": "Open-Source Frontier Voice AI",
+          "language": "Python",
+          "totalStars": 48480,
+          "todayStars": 216
+        }
+      ]
+    }
+  },
+  "fetchSummary": {
+    "juya": "ok",
+    "aihotDaily": "ok",
+    "aihotItems": "ok (40 items)",
+    "hackernews": "ok (36 stories >= 30pts)",
+    "githubTrending": "ok (18 repos)"
+  }
+}
