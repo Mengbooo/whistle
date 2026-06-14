@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Kami">
+  <meta name="description" content="Whistle 互联网日报，聚焦 AI 模型、Agent 工程化、平台策略、开发者生态、商业机会与合规边界。">
+  <meta name="keywords" content="Whistle,互联网日报,AI,Agent,开发者工具,平台动态">
+  <title>Whistle 互联网日报｜2026-06-14</title>
+  <style>
+    :root {
+      --parchment: #f5f4ed;
+      --ivory: #faf9f5;
+      --warm-sand: #e8e6dc;
+      --brand: #1B365D;
+      --ink-light: #2D5A8A;
+      --near-black: #141413;
+      --dark-warm: #3d3d3a;
+      --olive: #504e49;
+      --stone: #6b6a64;
+      --border: #e8e6dc;
+      --border-soft: #e5e3d8;
+      --tag-blue: #EEF2F7;
+      --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+      --sans: var(--serif);
+      --mono: "JetBrains Mono", "SF Mono", Consolas, "TsangerJinKai02", "Source Han Serif SC", monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--parchment);
+      color: var(--near-black);
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0.12pt;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { color: var(--ink-light); }
+    .page {
+      width: min(980px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 68px 0 92px;
+    }
+    .hero {
+      padding-bottom: 30px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.4;
+      letter-spacing: 0.8pt;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    h1 {
+      margin: 0 0 14px;
+      color: var(--near-black);
+      font-size: 34px;
+      line-height: 1.18;
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+    .intro {
+      max-width: 800px;
+      margin: 0;
+      color: var(--olive);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .metric {
+      background: var(--ivory);
+      border: 0.5pt solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .metric strong {
+      display: block;
+      color: var(--brand);
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+    }
+    .metric span {
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    section { margin-top: 34px; }
+    .section-title {
+      margin: 0 0 14px;
+      padding-left: 10px;
+      border-left: 3px solid var(--brand);
+      border-radius: 2px;
+      color: var(--near-black);
+      font-size: 22px;
+      line-height: 1.25;
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+    .section-note {
+      margin: -4px 0 14px;
+      color: var(--olive);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .items { display: grid; gap: 12px; }
+    article, .brief-list {
+      background: var(--ivory);
+      border: 0.5pt solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+      break-inside: avoid;
+      box-shadow: 0 1px 0 #eeeade;
+    }
+    .item-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .tag {
+      flex: 0 0 auto;
+      background: var(--tag-blue);
+      color: var(--brand);
+      font-size: 11px;
+      line-height: 1.35;
+      padding: 2px 7px;
+      border-radius: 3px;
+      letter-spacing: 0.4pt;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    h2, h3 { font-weight: 500; letter-spacing: 0; }
+    h3 {
+      margin: 0;
+      color: var(--near-black);
+      font-size: 17px;
+      line-height: 1.35;
+    }
+    article p, .brief-list p {
+      margin: 0;
+      color: var(--dark-warm);
+      font-size: 14.5px;
+      line-height: 1.58;
+    }
+    .brief-list p + p { margin-top: 10px; }
+    .brief-list strong {
+      color: var(--brand);
+      font-weight: 500;
+    }
+    .source {
+      margin-top: 10px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .footer-note {
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border-soft);
+      color: var(--stone);
+      font-size: 12px;
+    }
+    @media (max-width: 720px) {
+      .page { width: calc(100% - 32px); padding: 42px 0 68px; }
+      h1 { font-size: 28px; }
+      .intro { font-size: 16px; }
+      .meta-grid { grid-template-columns: repeat(2, 1fr); }
+      .item-head { display: block; }
+      .tag { display: inline-block; margin-bottom: 7px; }
+    }
+    @media print {
+      body { background: var(--parchment); }
+      .page { width: auto; padding: 0; }
+      article, .brief-list { box-shadow: none; }
+      a { color: var(--brand); }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Daily Intelligence · 低噪音互联网工作日报</p>
+      <h1>Whistle 互联网日报｜2026-06-14</h1>
+      <p class="intro">今天的核心信号集中在四条线上：开源和长上下文代码模型继续抬高 Agent 工程门槛，AI 平台的成本与路由能力开始进入真实经营问题，大模型公司被监管和地缘边界重新约束，开发者社区则把注意力放在 skills、缓存、容器和本地成本控制上。</p>
+      <div class="meta-grid" aria-label="report metrics">
+        <div class="metric"><strong>24</strong><span>正文刊发条目</span></div>
+        <div class="metric"><strong>3/4</strong><span>精选源成功抓取</span></div>
+        <div class="metric"><strong>39</strong><span>HN 高分帖子入池</span></div>
+        <div class="metric"><strong>14</strong><span>GitHub 趋势仓库入池</span></div>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">今日头条</h2>
+      <div class="items">
+        <article>
+          <div class="item-head"><span class="tag">模型</span><h3>智谱 GLM-5.2 全量开放，1M 上下文与开源承诺同时落地</h3></div>
+          <p>智谱面向 GLM Coding Plan 用户开放 GLM-5.2，强调可用的 1M 上下文、长程任务能力和国产 Coding 模型定位，API 与 MIT 协议开源版本计划下周上线。对研发团队来说，这不是单纯的模型榜单更新，而是长上下文代码理解、仓库级改造和本地/私有化部署选择的新增变量；如果团队正在设计 Agent 编码流程，可以把它纳入代码检索、长任务规划和成本对比的验证清单。</p>
+          <div class="source">来源：<a href="https://mp.weixin.qq.com/s/LDrbtLM0wiCTJorvd5GY9w">公众号：智谱（GLM）</a>；HN 同题讨论 315 分。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">监管</span><h3>Anthropic 模型遭政府撤回，安全披露开始反向影响部署</h3></div>
+          <p>TechCrunch 与 HN 热帖均指向同一信号：Anthropic 因潜在越狱与政府安全担忧被撤回最强模型，另有报道将亚马逊 CEO 与美国官员会谈和后续整治联系起来。企业客户过去常把安全声明看作采购加分项，现在还要评估披露、审查和召回可能给生产系统带来的连续性风险；面向政府、医疗、金融或教育场景的产品，需要提前准备模型降级、供应商切换和审计解释路径。</p>
+          <div class="source">来源：<a href="https://techcrunch.com/2026/06/12/anthropics-safety-warnings-may-have-just-backfired-the-government-has-pulled-the-plug-on-its-most-powerful-ai">TechCrunch</a>、<a href="https://www.wsj.com/tech/ai/amazon-ceos-talks-with-u-s-officials-triggered-crackdown-on-anthropic-models-dcc90578">WSJ via HN</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">开源</span><h3>“Open source AI must win” 成为 HN 今日最高热度讨论</h3></div>
+          <p>“Open source AI must win” 在 HN 获得 1511 分，远高于其他技术帖，说明开发者社区对开放模型、可审计能力和平台依赖风险的关注仍在升温。这类讨论不等同于商业结论，但它会影响工具选型、招聘偏好和生态贡献方向；对基础设施团队来说，开源模型不是信仰问题，而是供应链弹性、合规可解释和长期成本控制的一部分。</p>
+          <div class="source">来源：<a href="https://opensourceaimustwin.com/?share=v2">Hacker News</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">交易</span><h3>Meta 撤销 20 亿美元 Manus 收购，AI 并购进入地缘审查区</h3></div>
+          <p>TechCrunch 报道称 Meta 已开始撤销对 Manus 的 20 亿美元收购，原因与北京方面要求交易反转有关。无论交易细节如何，这条信息对 AI 创业公司和平台方都有现实含义：模型、Agent、数据和团队跨境流动正在被纳入更严格的审查框架，未来并购退出不能只按产品协同和估值谈判来设计，也要提前处理监管许可、数据边界和客户迁移条款。</p>
+          <div class="source">来源：<a href="https://techcrunch.com/2026/06/13/meta-reportedly-moves-to-unwind-2b-manus-deal-after-beijings-demand">TechCrunch</a>。</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">AI 与新工具</h2>
+      <p class="section-note">本板块优先保留模型、Agent、开发工具和生产力链路相关信号。</p>
+      <div class="items">
+        <article>
+          <div class="item-head"><span class="tag">开源模型</span><h3>MiniMax M3 发布开源权重，代码、Agent、1M 上下文和多模态打包推进</h3></div>
+          <p>MiniMax 发布 M3 开源权重模型，披露 428B 总参数、23B 激活参数，并给出 SWE-Bench Pro、Terminal Bench、KernelBench 等编码与 Agent 指标，同时采用稀疏注意力扩展至 1M token。它的价值不只在单项分数，而在把长上下文、代码执行、多模态和 API 工具一起交给开发者测试；未来代码模型竞争会更像“工程环境能力”竞争，而不是只比较聊天质量。</p>
+          <div class="source">来源：<a href="https://x.com/MiniMax_AI/status/2065436935188058208">MiniMax</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">代码模型</span><h3>Kimi-K2.7-Code 开源，推理 token 降低 30%</h3></div>
+          <p>Kimi 发布并开源 Kimi-K2.7-Code，称相较 K2.6 在多个代码基准上提升，并将推理 token 使用量降低 30%。对高频使用 AI 编码的团队，成本下降与长时任务成功率同样关键，因为 Agent 失败往往消耗在反复试错和上下文膨胀上；值得用真实仓库任务测试它在端到端修改、回归验证和指令保持上的表现。</p>
+          <div class="source">来源：<a href="https://x.com/Kimi_Moonshot/status/2065377579130142937">Kimi.ai</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">Agent</span><h3>豆包上线“任务模式”，消费级 AI 应用继续向全链路执行器演进</h3></div>
+          <p>豆包大范围上线任务模式，覆盖定时执行、网页生成、PPT、数据可视化分析等能力，并将“思考模式”升级为“专家模式”，同时推出从 68 元到 500 元每月的专业版。这个改动说明通用 AI 应用正在从对话框走向可调度的工作流入口，产品团队应观察哪些任务会从“问答”迁移到“定时生成文件与页面”；AI 输出形态也会继续从纯文本走向 Markdown、HTML 和可交互结果。</p>
+          <div class="source">来源：<a href="https://www.ithome.com/0/963/725.htm">IT之家</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">开发工具</span><h3>Codex 引入浏览器开发者模式，AI 编码开始接近前端调试闭环</h3></div>
+          <p>OpenAI Developers 称 Codex 可通过 Chrome DevTools 协议调试浏览器问题，分析 JavaScript 性能、控制台、网络流量和页面状态。前端 Agent 的瓶颈一直不只是写代码，而是能否像工程师一样观察页面、定位状态并复核交互；这类能力会把 AI 编码从“生成文件”推向“操作浏览器并验证结果”的工作方式。</p>
+          <div class="source">来源：<a href="https://x.com/OpenAIDevs/status/2065226355495895521">OpenAI Developers</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">评估</span><h3>olmo-eval 把模型评估工作台前移到开发循环</h3></div>
+          <p>AllenAI 在 Hugging Face 介绍 olmo-eval，强调面向持续开发中的反复评测，支持 agentic、多轮评测、容器隔离、逐问题对比和最小可检测效应。对模型团队和应用团队来说，评估正在从发布前的排行榜动作变成每次迭代都要运行的工程系统；如果内部已经有 Agent 或 RAG 产品，应该把“能否稳定评估改动收益”视作基础设施，而不是临时脚本。</p>
+          <div class="source">来源：<a href="https://huggingface.co/blog/allenai/olmo-eval">Hugging Face Blog</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">GUI 模型</span><h3>VISTA-4B 开源 GUI 定位模型，桌面与网页 Agent 需要更强视觉锚点</h3></div>
+          <p>inclusionAI 开源 VISTA-4B，输入截图和自然语言指令后输出坐标，面向 GUI 定位任务优化。随着 Agent 从文本 API 走向浏览器、桌面和移动端操作，识别按钮、区域和状态的能力会影响执行可靠性；这类模型提醒团队，未来 AI 输出和操作界面会越来越视觉化、结构化、可交互，而不是停留在原始文本层。</p>
+          <div class="source">来源：<a href="https://huggingface.co/inclusionAI/VISTA-4B">Hugging Face</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">多模型路由</span><h3>OpenRouter Fusion API 与低成本推理教程强化“LLM 网关”位置</h3></div>
+          <p>OpenRouter 同时推 Fusion API、Hermes Agent 教程、低成本推理指南和 LLM 网关解释，核心指向是模型路由、成本上限、可靠性和合规管理。对应用开发者来说，单一模型调用正在变成不够稳的默认方案，网关层会承接降级、价格、速度和审计；真正需要关注的是是否能把模型选择从产品代码里解耦出来。</p>
+          <div class="source">来源：<a href="https://x.com/OpenRouter/status/2065856853989270011">OpenRouter Fusion</a>、<a href="https://openrouter.ai/blog/insights/llm-gateway">OpenRouter Blog</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">音频工具</span><h3>Suno 音轨分离改为重新生成，AI 音频工具从“修复”走向“再合成”</h3></div>
+          <p>Suno 称音轨分离升级后不再只是隔离频率，而是从零重新生成更纯净的音轨，可直接进入 DAW。对内容生产团队，这意味着 AI 音频编辑可能从后期补救工具变成创作流程的一部分；但涉及版权、声音相似性和可追溯素材时，仍需要在生产流程里保留来源记录与人工审核。</p>
+          <div class="source">来源：<a href="https://x.com/suno/status/2065862499765821916">Suno</a>。</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">大厂与平台动态</h2>
+      <div class="items">
+        <article>
+          <div class="item-head"><span class="tag">组织</span><h3>Meta AI 转型组织调整过快，管理跨度和协作成本暴露</h3></div>
+          <p>路透社披露的 Meta 内部备忘录显示，扎克伯格承认 AI 转型中组织调整节奏过快，裁员 10% 和 7000 人转岗后带来员工安置与管理跨度问题，新应用 AI 工程部门个人贡献者与管理者比例最高达 50:1。对管理者来说，这条信息比“Meta 加码 AI”更有参考价值：AI 转型不是把人移动到新部门就完成，流程、评审、目标和协作机制要同步重建。</p>
+          <div class="source">来源：<a href="https://www.ithome.com/0/963/858.htm">IT之家</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">平台伦理</span><h3>Google Android 安全负责人因军事 AI 合作辞职</h3></div>
+          <p>Google Android 平台安全负责人 René Mayrhofer 离职，并批评公司改变 AI 原则、放弃部分气候承诺以及与美国防务部门的合作边界。它对普通互联网团队的直接影响有限，但对大厂平台的信任和招聘叙事有影响；当 AI 能力进入安全、监控和军事用途，企业价值观不再只是品牌表达，也会影响人才稳定和客户采购审查。</p>
+          <div class="source">来源：<a href="https://www.ithome.com/0/963/888.htm">IT之家</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">开发者生态</span><h3>OpenAI 推 Codex 速率重置攒存，订阅权益继续产品化</h3></div>
+          <p>OpenAI 开始向 Go、Plus、Pro 和 Business 用户推出 Codex 速率限制重置保留功能，每人先提供一次免费重置。这个改动看似小，但说明 AI 编码产品正在把“使用峰值”和“任务节奏”设计成可管理权益；重度用户需要关注的不只是月费，还包括速率、重置、队列和任务失败后的补偿机制。</p>
+          <div class="source">来源：<a href="https://x.com/OpenAI/status/2065225362544726371">OpenAI</a>。</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">产品与增长观察</h2>
+      <div class="items">
+        <article>
+          <div class="item-head"><span class="tag">定价</span><h3>200 美元 AI 订阅可消耗 40 至 70 倍 API 价值，重度用户正在测试价格边界</h3></div>
+          <p>SemiAnalysis 模拟高强度编码任务后估算，Claude Max 20x 和 ChatGPT Pro 20x 在触及上限前可分别消耗远超订阅费的 API 价值。对 AI 产品定价来说，这提示“订阅制”与“按量成本”之间的张力正在扩大；团队做商业化时应把重度用户、滥用防护、排队体验和 API 转订阅套利一起纳入模型，而不是只看平均毛利。</p>
+          <div class="source">来源：<a href="https://www.ithome.com/0/963/834.htm">IT之家</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">工作流</span><h3>OpenAI Academy 新课程强化“AI at Work”标准化培训</h3></div>
+          <p>OpenAI 发布三门 Academy 课程，聚焦实用 AI 技能、可重复工作流和智能体在日常工作中的应用。它不是产品发布，但说明平台方正在把“会用 AI”包装成企业培训和组织采用路径；运营、HR 和内部效率团队可以关注课程结构，把其中可复用的任务模板改造成自己的 SOP 与权限规范。</p>
+          <div class="source">来源：<a href="https://openai.com/index/academy-courses-applying-ai-at-work">OpenAI</a>。</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">开发者与工程实践</h2>
+      <div class="items">
+        <article>
+          <div class="item-head"><span class="tag">Agent Skills</span><h3>GitHub Trending 多个 skills 项目升温，Agent 工程开始沉淀操作规范</h3></div>
+          <p>addyosmani/agent-skills 今日新增 1514 星，obra/superpowers 新增 924 星，NVIDIA/SkillSpector 新增 804 星，分别指向生产级编码 Agent 技能、Agentic 开发方法论和 skills 安全扫描。社区热度说明开发者已经不满足于“给 Agent 一段提示词”，而是在寻找可版本化、可审查、可复用、可检测的技能层；团队引入 Agent 时也应把技能文件当作代码资产管理。</p>
+          <div class="source">来源：<a href="https://github.com/addyosmani/agent-skills">addyosmani/agent-skills</a>、<a href="https://github.com/obra/superpowers">obra/superpowers</a>、<a href="https://github.com/NVIDIA/SkillSpector">NVIDIA/SkillSpector</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">基础设施</span><h3>Apple container 与 LMCache 上榜，端侧容器和 LLM 缓存成为基础设施关注点</h3></div>
+          <p>GitHub Trending 中 apple/container 今日新增 1487 星，LMCache/LMCache 新增 238 星，分别代表 Apple Silicon 上轻量虚拟机容器和 LLM KV Cache 层。它们服务的问题不同，但共同指向 AI 开发的基础设施化：本地运行环境要更稳，推理缓存要更省；研发团队可以把本地容器、缓存复用和模型路由作为一组成本与效率优化来评估。</p>
+          <div class="source">来源：<a href="https://github.com/apple/container">apple/container</a>、<a href="https://github.com/LMCache/LMCache">LMCache/LMCache</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">工程成本</span><h3>“AI coding at home without going broke” 提醒个人与小团队关注本地推理经济性</h3></div>
+          <p>HN 上一篇关于在家低成本使用 AI 编码的文章获得 226 分，另有 RTX 5080 与 RTX 3090 本地 Qwen 配置帖获得 188 分。这些内容不适合作为核心趋势夸大，但说明开发者正在认真计算云端订阅、API、显卡和本地模型之间的账；小团队选型时可以把“可离线、可控成本、可接受速度”作为云端工具之外的补充策略。</p>
+          <div class="source">来源：<a href="https://stephen.bochinski.dev/blog/2026/06/13/ai-coding-at-home-without-going-broke/">HN</a>、<a href="https://imil.net/blog/posts/2026/rtx-5080-+-rtx-3090-setup-80+-tok-s-on-qwen-3.6-27b-q8/">HN</a>。</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">投融资与行业机会</h2>
+      <div class="items">
+        <article>
+          <div class="item-head"><span class="tag">资本</span><h3>Anthropic 传秘密申请上市，AI 基础模型商业化进入公开市场叙事</h3></div>
+          <p>Bloomberg 报道称 Anthropic 已秘密提交 IPO 申请，并给出极高估值叙事。该消息需要等待更明确文件或公司确认，但它已经反映资本市场对头部模型公司的流动性预期；对创业者和投资人来说，真正值得跟踪的是收入质量、推理成本、企业续约和监管风险能否支撑这种估值，而不只是“AI 公司上市”本身。</p>
+          <div class="source">来源：<a href="https://www.bloomberg.com/news/articles/2026-06-13/global-capitalism-bets-it-all-on-ai-future-that-alarms-voters">Bloomberg</a>。</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">政策监管与合规</h2>
+      <div class="items">
+        <article>
+          <div class="item-head"><span class="tag">合规</span><h3>OpenAI 遭多州总检察长联合调查，AI 公司进入常态化问询阶段</h3></div>
+          <p>Bloomberg 报道称 OpenAI 正被美国多州总检察长联盟调查，并被要求提供多个主题的信息。虽然细节有限，但监管方向已经足够清晰：数据、儿童安全、消费者保护、竞争和责任归属都会进入 AI 平台的合规成本。使用大模型构建产品的团队也要准备供应商问卷、数据流说明和用户申诉机制，因为平台被调查时，下游应用也会被客户追问。</p>
+          <div class="source">来源：<a href="https://www.bloomberg.com/news/articles/2026-06-13/openai-probed-by-coalition-of-state-attorneys-general">Bloomberg</a>。</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">社交热度观察</h2>
+      <p class="section-note">以下内容热度高，但更偏背景信号或社区情绪，不放入核心排序。</p>
+      <div class="items">
+        <article>
+          <div class="item-head"><span class="tag">社区情绪</span><h3>Fable 相关争议与实验持续发酵</h3></div>
+          <p>HN 上“There is a shadow hanging over this Fable thing”获得 461 分，Fable 生成游戏实验也获得 177 分，说明社区对新一代 AI 叙事、产品承诺和实际可用性仍保持高警惕。它更像情绪温度计，而不是直接工作信号；团队评估新工具时应回到可复现实验、真实任务成功率和成本，而不是跟随单篇争议文章改变路线。</p>
+          <div class="source">来源：<a href="https://12gramsofcarbon.com/p/tech-things-there-is-a-massive-shadow">HN</a>、<a href="https://koenvangilst.nl/lab/claude-fable-shepherds-dog">HN</a>。</div>
+        </article>
+        <article>
+          <div class="item-head"><span class="tag">开源治理</span><h3>TensorZero 仓库融资后归档引发讨论</h3></div>
+          <p>“AI OSS tool repo goes archived over night after raising $7.3M Seed”在 HN 获得 237 分，指向开源 AI 工具在融资、治理和商业化之间的信任问题。它不必被解读为普遍现象，但提醒采购和开发团队：依赖开源 AI 基础组件时，除了 star 和融资新闻，还要看许可证、维护者结构、路线图透明度和退出预案。</p>
+          <div class="source">来源：<a href="https://github.com/tensorzero/tensorzero">HN / GitHub</a>。</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">今日行动建议</h2>
+      <div class="brief-list">
+        <p><strong>产品：</strong>把“对话模式”和“任务模式”分开评估，优先找出能定时执行、生成文件或产出可交互页面的高频场景。</p>
+        <p><strong>研发：</strong>用一个真实仓库测试 GLM-5.2、MiniMax M3、Kimi-K2.7-Code 等代码模型，记录长上下文、端到端成功率、回归验证和成本。</p>
+        <p><strong>运营与增长：</strong>重新计算 AI 订阅用户的重度使用成本，避免把少数高强度用户误判为健康增长。</p>
+        <p><strong>管理者：</strong>在引入 Agent 前先建立 skills、权限、审计和供应商切换规范，避免组织流程落后于工具采用速度。</p>
+        <p><strong>合规：</strong>面向客户准备一页式模型供应链说明，覆盖模型来源、数据处理、降级方案、人工复核和异常响应。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">去噪说明</h2>
+      <div class="brief-list">
+        <p>本期合并了 AI HOT daily 与 AI HOT items 中重复出现的 GLM-5.2、Anthropic 整治、Suno、OpenRouter、Meta 组织调整等信息；HN 中生物医学、体育广告、复古硬件、纯语言争论和低相关消费电子内容未进入核心板块。</p>
+        <p>HN 分数高但工作相关性弱的内容只作为社交热度或完全过滤；GitHub Trending 中 IPTV、音乐服务、翻墙集合等项目与 Whistle 当前读者的工作判断相关性不足，未刊发。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">抓取异常</h2>
+      <div class="brief-list">
+        <p><strong>juya-ai-daily RSS：</strong>抓取失败，脚本返回 404：juya RSS fetch failed。本期未使用 juya 的中文详述素材，已改以 AI HOT daily、AI HOT items、Hacker News 与 GitHub Trending 交叉整理。</p>
+      </div>
+    </section>
+
+    <p class="footer-note">生成时间：2026-06-14。内容基于 curated-sources.json 编辑整理，保持冷静、中立、克制、反噪音。</p>
+  </main>
+</body>
+</html>
