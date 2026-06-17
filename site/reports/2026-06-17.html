@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Whistle 互联网日报｜2026-06-17</title>
+  <style>
+    :root {
+      --paper: #f5f4ed;
+      --ivory: #faf9f5;
+      --brand: #1B365D;
+      --ink-light: #2D5A8A;
+      --near-black: #141413;
+      --dark-warm: #3d3d3a;
+      --olive: #504e49;
+      --stone: #6b6a64;
+      --border: #e8e6dc;
+      --border-soft: #e5e3d8;
+      --tag: #EEF2F7;
+      --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+      --sans: var(--serif);
+      --mono: "JetBrains Mono", "SF Mono", Consolas, "TsangerJinKai02", "Source Han Serif SC", monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--paper);
+      color: var(--near-black);
+      font-family: var(--serif);
+      letter-spacing: 0.12pt;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--brand);
+      text-decoration: none;
+      border-bottom: 0.5pt solid #D0DCE9;
+    }
+
+    .page {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 44px 26px 64px;
+    }
+
+    header {
+      padding: 34px 0 26px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+
+    .kicker {
+      color: var(--brand);
+      font-size: 13px;
+      letter-spacing: 0.8pt;
+      margin: 0 0 8px;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--near-black);
+      font-size: clamp(30px, 4.4vw, 48px);
+      line-height: 1.14;
+      font-weight: 500;
+      letter-spacing: 0.1pt;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: var(--dark-warm);
+      font-size: 17px;
+      line-height: 1.58;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--tag);
+      color: var(--brand);
+      font-size: 12px;
+      letter-spacing: 0.4pt;
+      font-weight: 500;
+      border: 0;
+    }
+
+    .section-title {
+      margin: 34px 0 14px;
+      padding-left: 11px;
+      border-left: 4px solid var(--brand);
+      border-radius: 2px;
+      color: var(--near-black);
+      font-size: 22px;
+      line-height: 1.24;
+      font-weight: 500;
+    }
+
+    .section-note {
+      margin: -4px 0 14px;
+      color: var(--stone);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .item {
+      background: var(--ivory);
+      border: 0.5pt solid var(--border);
+      border-radius: 8px;
+      padding: 17px 18px 15px;
+      break-inside: avoid;
+      box-shadow: 0 1px 0 #e8e6dc;
+    }
+
+    .item.wide { grid-column: 1 / -1; }
+
+    .item h3 {
+      margin: 0 0 8px;
+      color: var(--near-black);
+      font-size: 17px;
+      line-height: 1.32;
+      font-weight: 500;
+    }
+
+    .item p {
+      margin: 0;
+      color: var(--dark-warm);
+      font-size: 14.5px;
+      line-height: 1.62;
+    }
+
+    .source {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .source a { color: var(--ink-light); }
+
+    .compact-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .compact-list li {
+      padding: 13px 15px;
+      background: var(--ivory);
+      border: 0.5pt solid var(--border);
+      border-radius: 8px;
+      color: var(--dark-warm);
+      break-inside: avoid;
+    }
+
+    .compact-list strong {
+      color: var(--near-black);
+      font-weight: 500;
+    }
+
+    .exception {
+      border-color: #D0DCE9;
+      background: #faf9f5;
+    }
+
+    footer {
+      margin-top: 34px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--stone);
+      font-size: 12px;
+    }
+
+    @page {
+      size: A4;
+      margin: 14mm 12mm 16mm;
+    }
+
+    @media print {
+      body { font-size: 10pt; }
+      .page { width: auto; padding: 0; }
+      header { padding-top: 0; }
+      h1 { font-size: 28pt; }
+      .intro { font-size: 11pt; }
+      .section-title { font-size: 15pt; margin-top: 18pt; }
+      .item { box-shadow: none; padding: 11pt 12pt; }
+      .item h3 { font-size: 12pt; }
+      .item p { font-size: 9.4pt; }
+      .tag, .source { font-size: 8pt; }
+    }
+
+    @media (max-width: 760px) {
+      .page { padding: 28px 16px 48px; }
+      .grid { grid-template-columns: 1fr; }
+      .item.wide { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="kicker">Whistle Daily Intelligence</p>
+      <h1>Whistle 互联网日报｜2026-06-17</h1>
+      <p class="intro">今日信号集中在 AI Agent 工作流、具身模型、语音与视频生成、模型部署安全、企业算力成本和开发者安全。juya-ai-daily RSS 抓取失败，本期主要依据 AI HOT 结构化日报、Hacker News 高分帖与 GitHub Trending 做去重和编辑。</p>
+      <div class="meta-row">
+        <span class="tag">24 条正文信号</span>
+        <span class="tag">AI HOT 正常</span>
+        <span class="tag">HN 41 条高分帖</span>
+        <span class="tag">GitHub 13 个趋势仓库</span>
+        <span class="tag">juya 抓取异常</span>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">今日头条</h2>
+      <div class="grid">
+        <article class="item wide">
+          <h3>Copilot Cowork 全球可用，企业 Agent 进入长期任务阶段</h3>
+          <p>微软宣布 Copilot Cowork 全球正式可用，并强调支持多模型与基于组织知识的长期运行智能体。它的重点不是单次问答，而是让 Agent 承接复杂、多步骤、跨系统的办公任务；对产品和 IT 团队来说，接下来要关注的不只是模型效果，还包括知识权限、任务审计、计费边界和失败回滚。长期看，企业 AI 的竞争会从“谁能回答得好”转向“谁能在组织流程里稳定完成事”。</p>
+          <div class="source"><span>来源：</span><a href="https://x.com/satyanadella/status/2066911399494963335">Satya Nadella / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>Qwen 连发机器人基础模型，具身智能开始从演示走向系统化能力</h3>
+          <p>通义千问发布 RobotManip、RobotWorld、RobotNav 等机器人模型，分别覆盖操作、世界建模和导航，并在多个基准中取得强结果。这类发布对普通互联网团队的短期影响有限，但对多模态 Agent、仿真数据、动作接口和边缘部署有明显启发：未来模型输出不只停留在文本或代码，而会越来越结构化、可视化、可执行，甚至进入可交互的模拟环境。</p>
+          <div class="source"><span>来源：</span><a href="https://qwen.ai/blog?id=qwen-robotmanip">Qwen RobotManip</a><span>·</span><a href="https://qwen.ai/blog?id=qwen-robotworld">RobotWorld</a><span>·</span><a href="https://qwen.ai/blog?id=qwen-robotnav">RobotNav</a></div>
+        </article>
+        <article class="item">
+          <h3>OpenAI 推出部署模拟方法，模型发布前评估更贴近真实流量</h3>
+          <p>OpenAI 发布 Deployment Simulation，通过隐私保护方式重放历史对话，让候选模型在上线前面对更接近真实生产分布的输入。传统评测容易被固定题集和选择偏差限制，这种方法把安全、质量和工具调用风险提前到发布流程里；做模型应用的团队可以借鉴其思路，用历史工单、聊天和任务日志构建自己的灰度评估集。</p>
+          <div class="source"><span>来源：</span><a href="https://openai.com/index/deployment-simulation">OpenAI</a></div>
+        </article>
+        <article class="item wide">
+          <h3>LinkedIn 求职邀约后门登上 HN 榜首，招聘链路成为开发者安全入口</h3>
+          <p>一篇关于 LinkedIn 工作邀约夹带后门的复盘在 Hacker News 获得超过 1500 分。它提醒研发团队，供应链安全不只发生在依赖包和 CI，也可能发生在“求职沟通、面试作业、试运行项目”这些看似个人化的场景；团队应把陌生仓库执行、面试附件、测试任务和开发机隔离纳入安全规范，而不是只依赖个人警觉。</p>
+          <div class="source"><span>来源：</span><a href="https://roman.pt/posts/linkedin-backdoor/">Hacker News / roman.pt</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">AI 与新工具</h2>
+      <p class="section-note">本板块保留 8 条，偏向会改变创作、办公、Agent 编排和模型部署方式的工具。</p>
+      <div class="grid">
+        <article class="item">
+          <h3>Cartesia 推出 Sonic 3.5 与 Ink 2，实时语音栈继续压低延迟</h3>
+          <p>Cartesia 发布文本转语音 Sonic 3.5 和语音转文字 Ink 2，主打统一实时语音栈，AI HOT 摘要称其在相关流式榜单中排名靠前，并把首音频延迟压到约 82ms。语音会继续成为人类输入 AI 的自然入口，但更理想的 AI 输出会走向结构化和可交互；对产品团队来说，语音交互要同时设计“听得快”和“看得清”。</p>
+          <div class="source"><span>来源：</span><a href="https://x.com/testingcatalog/status/2066773392527655252">Testing Catalog / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>Google Cloud 发布 OKF v0.1，用 Markdown 给 Agent 喂结构化知识</h3>
+          <p>Google Cloud 推出 Open Knowledge Format v0.1，以带 YAML 元数据的 Markdown 目录来组织表结构、指标定义、runbook 等上下文，且不绑定特定供应商服务。这个方向值得内部工具团队关注：Agent 的能力瓶颈经常不是模型，而是组织知识格式混乱、权限不清、上下文无法迁移；轻量开放格式可能比重型知识平台更容易落地。</p>
+          <div class="source"><span>来源：</span><a href="https://www.marktechpost.com/2026/06/16/google-cloud-introduces-open-knowledge-format-okf-a-vendor-neutral-markdown-spec-for-giving-ai-agents-curated-context">MarkTechPost / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>OpenRouter 推出 Subagent，让前沿模型委托小模型处理琐碎任务</h3>
+          <p>OpenRouter 的 subagent server tool 允许前沿模型在生成过程中把摘要、抽取、重格式化等独立任务交给更便宜的小模型。它反映出 Agent 架构正在从“一个大模型包办一切”走向分层调度；如果团队已经有高成本模型调用，应优先把低风险、可验证的子任务拆出去，降低成本并提升吞吐。</p>
+          <div class="source"><span>来源：</span><a href="https://openrouter.ai/blog/announcements/subagent-server-tool">OpenRouter</a></div>
+        </article>
+        <article class="item">
+          <h3>字节 Seedance 2.0 Mini 降低视频生成成本，批量素材场景更接近可用</h3>
+          <p>火山方舟上线 Seedance 2.0 Mini，计划开放 API，AI HOT 摘要称其相对标准版成本约降低一半，面向电商、营销、UGC 和特效玩法。视频生成的短期价值不在单条大片，而在批量试错和版本化素材；增长与内容团队可以关注“多版本生成、人工筛选、数据回流”的工作流是否开始跑通。</p>
+          <div class="source"><span>来源：</span><a href="https://www.ithome.com/0/964/672.htm">IT之家 / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>AI 版支付宝邀测，“阿宝”把服务入口折叠成对话指令</h3>
+          <p>支付宝开启 AI 版邀测，用户右滑进入“阿宝”，可用对话或语音发起公积金查询等服务流转，涉及资金和支付仍需本人确认。这类改版说明超级 App 的 AI 化重点不是另做聊天机器人，而是把散落的小程序、表单和服务入口改造成可确认的任务流；产品团队应重点观察确认机制和责任边界如何设计。</p>
+          <div class="source"><span>来源：</span><a href="https://www.ithome.com/0/964/691.htm">IT之家 / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>小米 MiMo Claw 正式版结合金山办公，办公 Agent 继续向文件闭环靠拢</h3>
+          <p>小米发布 MiMo Claw 正式版，强调 MCP 工具调用、长上下文、连续工具调用，并与金山办公生态连接 Word、Excel、PPT、PDF 的生成、预览和在线编辑。办公 Agent 的关键壁垒会越来越偏向文件格式、权限体系和在线编辑闭环，而不是聊天窗口本身；研发团队评估类似产品时，应测试真实文档链路而非只看演示 prompt。</p>
+          <div class="source"><span>来源：</span><a href="https://mp.weixin.qq.com/s/N5ac768a8LkhEjOVpkR1dQ">小米 MiMo / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>Grok for PowerPoint 进入 Office 插件位，AI 写作工具贴近原生工作台</h3>
+          <p>xAI 发布 Grok for PowerPoint，作为 Microsoft 365 插件支持从大纲生成幻灯片、研究、撰写、排版，并可通过连接器读取邮件或 SharePoint 信息。类似工具会继续把 AI 从独立网页拉回原生工作环境；对企业来说，采购判断要看数据边界、连接器权限和协作审计，而不是只看幻灯片生成质量。</p>
+          <div class="source"><span>来源：</span><a href="https://x.ai/news/introducing-powerpoint-addin">xAI / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>本地模型体验改善，个人与团队的“可控 AI”选项变多</h3>
+          <p>“Running local models is good now”在 HN 获得超过 1000 分，说明本地模型体验的改善已经进入开发者主流讨论。它不会替代前沿模型，但会在隐私数据、离线工作、原型验证和成本可控场景中变得更实用；团队可以开始把“本地小模型 + 云端强模型”的混合策略纳入工具选型。</p>
+          <div class="source"><span>来源：</span><a href="https://vickiboykis.com/2026/06/15/running-local-models-is-good-now/">Hacker News / Vicki Boykis</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">大厂与平台动态</h2>
+      <div class="grid">
+        <article class="item">
+          <h3>GitHub AI 算力承压，微软被曝转向 AWS 寻求支持</h3>
+          <p>AI HOT 收录的 HN 热门讨论称，微软旗下 GitHub 面临 AI 容量压力，转而向 AWS 寻求算力支持。即使细节仍需持续确认，信号本身值得平台团队关注：AI 功能的增长会把云资源、成本结算和供应商关系推到产品策略核心，开发工具厂商不能只按传统 SaaS 毛利模型规划。</p>
+          <div class="source"><span>来源：</span><a href="https://runtimewire.com/article/microsoft-github-aws-ai-capacity-crunch">Runtimewire / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>微软考虑为 Copilot Cowork 接入 DeepSeek V4，成本成为多模型策略的现实驱动</h3>
+          <p>AI HOT 摘要称微软正考虑为 Copilot Cowork 提供 Azure 托管的 DeepSeek V4 作为低成本选项，并从无限定价转向按使用量计费。企业 Agent 如果跑长期任务，模型成本会很快变成产品约束；未来多模型不会只是能力路线，更会是价格、延迟、合规和任务风险的组合调度。</p>
+          <div class="source"><span>来源：</span><a href="https://x.com/kimmonismus/status/2066946013026263110">Kim / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>Meta 工程组织调整引发讨论，平台效率压力外溢到组织设计</h3>
+          <p>关于 Meta 是否正在破坏工程组织的文章在 HN 获得高讨论，AI HOT 也将其列入观点板块。它更像组织信号而非确定新闻：当大厂同时追求 AI 竞速、成本控制和产品重组时，工程管理方式会被迫调整；团队不宜照搬争议叙事，但可以关注平台型公司如何重新划分工程、产品和 AI 基建职责。</p>
+          <div class="source"><span>来源：</span><a href="https://newsletter.pragmaticengineer.com/p/why-is-meta-destroying-its-engineering">Pragmatic Engineer / HN</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">产品与增长观察</h2>
+      <div class="grid">
+        <article class="item">
+          <h3>Midjourney Draft mode 用低成本草稿扩大创作探索空间</h3>
+          <p>Midjourney V8.1 Draft mode 每次生成多张低分辨率草稿，用户再选择图片进行全质量渲染，草稿任务消耗减半。这个机制适合所有生成式产品参考：先让用户低成本发散，再把计算预算集中到确认后的版本，既能提升探索效率，也能让用户更容易理解“算力花在哪里”。</p>
+          <div class="source"><span>来源：</span><a href="https://updates.midjourney.com/draft-mode-for-v8-1-and-new-feature-previews">Midjourney</a></div>
+        </article>
+        <article class="item">
+          <h3>AI 检测误伤毕业生，自动化评估产品需要解释与申诉机制</h3>
+          <p>AI HOT 收录的案例显示，学生手写摘要被判高 AI 率，而 AI 生成内容反而可能被判低。它对教育之外的内容审核、风控和合规产品同样有提醒：检测模型如果没有证据解释、人工复核和申诉路径，很容易把技术不确定性转化为流程伤害；运营团队应避免把概率分数直接当成最终裁决。</p>
+          <div class="source"><span>来源：</span><a href="https://mp.weixin.qq.com/s/2QwIChisHW2Qto2H9-x0jg">AI HOT</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">开发者与工程实践</h2>
+      <div class="grid">
+        <article class="item">
+          <h3>Anthropic 分析 Claude Code 交互：专业知识仍然放大 Agent 产出</h3>
+          <p>Anthropic 基于约 40 万次 Claude Code 会话分析发现，人类更常决定做什么，Claude 更常负责怎么做，领域专业知识越强，模型每次指令完成的工作量越多。对研发管理者而言，这说明 Agent 并不会简单抹平经验差距，反而会放大清晰需求、架构判断和验收能力；培训重点应从“会不会提问”转到“能否拆任务和验收结果”。</p>
+          <div class="source"><span>来源：</span><a href="https://www.anthropic.com/research/claude-code-expertise">Anthropic Research</a></div>
+        </article>
+        <article class="item">
+          <h3>alibaba/zvec 登上 GitHub Trending，轻量本地向量库仍有需求</h3>
+          <p>alibaba/zvec 是一个轻量级进程内向量数据库，今日在 GitHub Trending 获得 156 个新增星标。随着 Agent 和 RAG 原型增多，很多团队并不总需要完整向量数据库服务，本地嵌入式方案能降低部署复杂度；适合用于插件、桌面端、边缘环境和小规模知识检索验证。</p>
+          <div class="source"><span>来源：</span><a href="https://github.com/alibaba/zvec">GitHub Trending</a></div>
+        </article>
+        <article class="item">
+          <h3>OpenBMB/VoxCPM 热度上升，开源语音生成继续补齐多语言与克隆能力</h3>
+          <p>OpenBMB/VoxCPM2 在 GitHub Trending 获得 408 个当日星标，定位为 tokenizer-free 的多语言语音生成、创意音色设计和拟真克隆工具。语音模型的开源热度意味着语音助手、内容生产和本地化配音的进入门槛继续降低；团队试用时应同步评估授权、声音权利和滥用防护。</p>
+          <div class="source"><span>来源：</span><a href="https://github.com/OpenBMB/VoxCPM">GitHub Trending</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">投融资与行业机会</h2>
+      <div class="grid">
+        <article class="item">
+          <h3>DeepSeek 完成首轮外部融资，开源模型商业化继续升温</h3>
+          <p>AI HOT 摘要称 DeepSeek 完成首轮外部融资，估值超过 500 亿美元，并继续强调基础研究、AGI 与开源路线。无论具体估值如何变化，核心信号是国产开源模型已经成为基础设施竞争的一部分；应用团队应把模型替换成本、私有部署和价格敏感任务纳入长期架构，而不是绑定单一供应商。</p>
+          <div class="source"><span>来源：</span><a href="https://the-decoder.com/deepseek-takes-outside-money-for-the-first-time-at-a-50-billion-valuation">The Decoder / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>Salesforce 收购 AI 客服平台 Fin，客服 Agent 仍是企业 AI 商业化主战场</h3>
+          <p>Salesforce 宣布以 36 亿美元收购 AI 客服平台 Fin，用于增强 Agentforce。客服是企业 AI 最容易量化 ROI 的场景之一，因为它有明确工单、渠道、SLA 和成本基线；SaaS 创业者应注意，单点 AI 客服能力会越来越快被平台吸收，机会更可能在垂直知识、流程集成和合规交付上。</p>
+          <div class="source"><span>来源：</span><a href="https://techcrunch.com/2026/06/15/salesforce-acquires-ai-customer-service-platform-fin-for-3-6b">TechCrunch / AI HOT</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">政策监管与合规</h2>
+      <div class="grid">
+        <article class="item">
+          <h3>Fable 5 被美国政府封禁引发争议，模型合规正在进入代码能力边界</h3>
+          <p>关于美国政府封禁 Anthropic 模型 Fable 5 的讨论在 HN 获得高分，相关报道认为争议可能并非传统“越狱”，而与简单代码修复能力相关。对模型提供商和企业客户来说，这类事件提示监管边界正在从内容安全扩展到代码执行、网络安全和自动化能力；采购与部署时需要把模型能力分级、用途限制和审计记录写入流程。</p>
+          <div class="source"><span>来源：</span><a href="https://www.theregister.com/security/2026/06/15/feds-freaked-over-fable-5-after-simple-fix-this-code-prompt-not-jailbreak-says-researcher/5255827">The Register / HN</a></div>
+        </article>
+        <article class="item">
+          <h3>xAI 燃气轮机诉讼出现国家安全辩护，AI 基础设施合规压力上升</h3>
+          <p>AI HOT 摘要称，美国司法部在诉讼中以国家安全为 xAI 数据中心燃气轮机运行辩护，争议集中在许可和排放影响。AI 基础设施不再只是云资源问题，还会牵涉能源、环保、地方许可和公共利益；算力密集型公司需要把基础设施合规作为业务连续性风险，而不是后置的行政事项。</p>
+          <div class="source"><span>来源：</span><a href="https://the-decoder.com/doj-invokes-national-security-to-defend-xais-unpermitted-gas-turbines-in-naacp-lawsuit">The Decoder / AI HOT</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">社交热度观察</h2>
+      <p class="section-note">这些条目讨论热度高，但工作决策信号弱于核心板块，作为背景观察保留。</p>
+      <div class="grid">
+        <article class="item">
+          <h3>SpaceX 收购 Cursor 传闻讨论极高，但更像情绪与资本叙事信号</h3>
+          <p>“SpaceX to buy Cursor for $60B”在 HN 获得 860 分和大量评论，AI HOT 也收录了相关 TechCrunch 条目。由于交易叙事强、金额极大且需要后续确认，本期不把它作为确定工作信号；但它反映 AI 编程工具已经成为基础模型、云平台和大型科技叙事争夺的高关注入口。</p>
+          <div class="source"><span>来源：</span><a href="https://www.reuters.com/legal/transactional/spacex-buy-anysphere-60-billion-2026-06-16/">Hacker News</a><span>·</span><a href="https://techcrunch.com/2026/06/16/spacex-to-acquire-cursor-for-60b-in-stock-days-after-blockbuster-ipo">TechCrunch / AI HOT</a></div>
+        </article>
+        <article class="item">
+          <h3>“Apple Hide My Email 将失效”讨论升温，隐私功能与营销归因继续冲突</h3>
+          <p>相关文章在 HN 获得 378 分，讨论集中在 Apple 隐私能力、邮箱别名和服务方识别之间的张力。它对多数团队不是立即行动项，但提醒增长、反作弊和账号系统团队：平台级隐私功能一旦变化，邮件触达、归因和风控逻辑都可能被迫调整。</p>
+          <div class="source"><span>来源：</span><a href="https://arseniyshestakov.com/2026/06/16/apple-is-about-to-make-hide-my-email-useless/">Hacker News</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">今日行动建议</h2>
+      <ul class="compact-list">
+        <li><strong>产品：</strong>检查现有 AI 功能是否只是聊天入口；若涉及真实任务，应补齐确认页、失败回滚、权限提示和操作日志。</li>
+        <li><strong>研发：</strong>为 Agent 和模型调用建立分层策略，把摘要、抽取、格式转换等低风险任务迁移到小模型或本地模型评估。</li>
+        <li><strong>运营与增长：</strong>关注视频生成草稿模式和批量素材工作流，先用低成本多版本测试替代单条高成本创作。</li>
+        <li><strong>安全与管理者：</strong>把招聘附件、面试作业和陌生仓库执行纳入安全规范，尤其要保护个人开发机和公司账号凭据。</li>
+        <li><strong>创业者：</strong>客服 Agent、办公 Agent、组织知识格式和轻量向量检索仍有机会，但要避开只做通用聊天壳的低壁垒方向。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="section-title">去噪说明</h2>
+      <ul class="compact-list">
+        <li>本期正文保留 24 条，合并了 Qwen 机器人套件相关多条发布，避免同一技术路线重复占位。</li>
+        <li>HN 中机械表、怀旧计算机、艺术归档、咖啡制作、游戏随机数等高分内容未刊发，原因是与 Whistle 的互联网工作决策目标弱相关。</li>
+        <li>消费电子体验、泛文化讨论和纯观点争议只在能影响产品、平台规则、增长或合规判断时保留。</li>
+        <li>SpaceX/Cursor 等高热度资本叙事被放入社交热度观察，不作为今日头条依据，等待后续更稳定来源交叉验证。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="section-title">抓取异常</h2>
+      <article class="item exception">
+        <h3>juya-ai-daily RSS 抓取失败</h3>
+        <p>运行 <code>node scripts/fetch-curated.js</code> 时，juya RSS 返回 404，脚本已继续生成 <code>outputs/2026-06-17/curated-sources.json</code>。本期报告未使用 juya 详述新闻，主要依据 AI HOT daily、Hacker News Firebase API 和 GitHub Trending；该异常已在此记录，不中断发布流程。</p>
+        <div class="source"><span>状态：</span><span>juya: failed</span><span>·</span><span>aihotDaily: ok</span><span>·</span><span>hackernews: ok</span><span>·</span><span>githubTrending: ok</span></div>
+      </article>
+    </section>
+
+    <footer>
+      <p>生成时间：2026-06-17。编辑原则：工作性优先于话题性，保留会影响产品、研发、运营增长、商业化、基础设施、合规或团队决策的信息。</p>
+    </footer>
+  </main>
+</body>
+</html>
