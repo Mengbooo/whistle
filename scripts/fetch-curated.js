@@ -33,10 +33,9 @@ function stripHtml(value = "") {
 
 async function fetchJuyaDaily() {
   try {
-    const response = await fetch(
-      "https://imjuya.github.io/juya-ai-daily/rss.xml",
-      { headers: { "User-Agent": USER_AGENT } },
-    );
+    const response = await fetch("https://daily.juya.uk/rss.xml", {
+      headers: { "User-Agent": USER_AGENT },
+    });
     if (!response.ok) throw new Error(`juya RSS fetch failed: ${response.status}`);
     const xml = await response.text();
 
@@ -67,7 +66,7 @@ async function fetchJuyaDaily() {
     return {
       source: "juya-ai-daily",
       title: latest.title || `AI 早报 ${todayInShanghai()}`,
-      url: latest.link || `https://imjuya.github.io/juya-ai-daily/`,
+      url: latest.link || `https://daily.juya.uk/`,
       publishedAt: latest.pubDate || latest.pubdate || null,
       contentHtml,
       contentText: stripHtml(contentHtml).slice(0, 8000),
