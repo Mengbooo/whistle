@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Kami">
+  <meta name="description" content="Whistle 互联网日报，聚焦 AI 工具、平台动态、工程实践、行业机会与合规信号。">
+  <meta name="keywords" content="Whistle, 互联网日报, AI, Agent, 开发工具, 平台动态">
+  <title>Whistle 互联网日报｜2026-07-02</title>
+  <style>
+    :root {
+      --parchment: #f5f4ed;
+      --ivory: #faf9f5;
+      --brand: #1B365D;
+      --brand-light: #2D5A8A;
+      --near-black: #141413;
+      --dark-warm: #3d3d3a;
+      --olive: #504e49;
+      --stone: #6b6a64;
+      --border: #e8e6dc;
+      --border-soft: #e5e3d8;
+      --tag: #EEF2F7;
+      --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+      --sans: var(--serif);
+      --mono: "JetBrains Mono", "SF Mono", Consolas, "TsangerJinKai02", "Source Han Serif SC", monospace;
+    }
+    @page { size: A4; margin: 12mm; background: #f5f4ed; }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: var(--parchment);
+      color: var(--near-black);
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0.12pt;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    body { padding: 42px 20px 64px; }
+    a { color: var(--brand); text-decoration: none; border-bottom: 1px solid #D0DCE9; }
+    a:hover { color: var(--brand-light); border-bottom-color: var(--brand-light); }
+    .page { max-width: 980px; margin: 0 auto; }
+    .hero { padding: 28px 0 30px; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
+    .eyebrow { margin: 0 0 14px; color: var(--stone); font-size: 12px; letter-spacing: 0.8pt; text-transform: uppercase; }
+    h1 { margin: 0; color: var(--near-black); font-size: 40px; line-height: 1.18; font-weight: 500; letter-spacing: 0; }
+    .dek { max-width: 800px; margin: 14px 0 0; color: var(--olive); font-size: 16px; line-height: 1.6; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .pill { display: inline-flex; padding: 3px 8px; background: var(--tag); color: var(--brand); border-radius: 4px; font-size: 12px; line-height: 1.35; font-weight: 500; }
+    section { margin: 34px 0 0; }
+    .section-title {
+      margin: 0 0 16px;
+      padding-left: 10px;
+      border-left: 3px solid var(--brand);
+      border-radius: 2px;
+      color: var(--near-black);
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .section-note { margin: -6px 0 14px; color: var(--stone); font-size: 13px; line-height: 1.55; }
+    .items { display: grid; gap: 12px; }
+    .item {
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px 15px;
+      break-inside: avoid;
+      box-shadow: 0 1px 0 #ece9dd;
+    }
+    .item h3 { margin: 0 0 8px; color: var(--near-black); font-size: 17px; line-height: 1.35; font-weight: 500; letter-spacing: 0; }
+    .item p { margin: 0; color: var(--dark-warm); font-size: 14px; line-height: 1.62; }
+    .source { margin-top: 9px; color: var(--stone); font-size: 12px; line-height: 1.45; }
+    .compact-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .compact-list li { background: var(--ivory); border: 1px solid var(--border-soft); border-radius: 8px; padding: 12px 14px; color: var(--dark-warm); font-size: 14px; line-height: 1.58; break-inside: avoid; }
+    .compact-list strong { color: var(--near-black); font-weight: 500; }
+    .noise { color: var(--olive); background: transparent; border-top: 1px solid var(--border); padding-top: 14px; }
+    .empty { color: var(--stone); background: var(--ivory); border: 1px solid var(--border-soft); border-radius: 8px; padding: 12px 14px; font-size: 14px; }
+    .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--stone); font-size: 12px; line-height: 1.5; }
+    @media (max-width: 720px) {
+      body { padding: 28px 14px 48px; }
+      h1 { font-size: 32px; }
+      .item { padding: 14px; }
+      .section-title { font-size: 20px; }
+    }
+    @media print {
+      body { padding: 0; }
+      a { border-bottom: none; }
+      .item, .compact-list li { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Daily Intelligence · Internet Work Brief</p>
+      <h1>Whistle 互联网日报｜2026-07-02</h1>
+      <p class="dek intro">今日信号集中在三条线上：模型和 Agent 工具继续降本并垂直化，Cloudflare、X、AWS 等平台开始重写智能体时代的流量、支付与服务交付方式，开发者社区则把注意力放在权限、路由、存储和开源工具链这些更贴近落地的基础设施上。</p>
+      <div class="meta-row">
+        <span class="pill">25 条刊发</span>
+        <span class="pill">AI 与新工具优先</span>
+        <span class="pill">含 HN 与 GitHub 热度观察</span>
+        <span class="pill">抓取源全部成功</span>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">今日头条</h2>
+      <div class="items">
+        <article class="item">
+          <h3>Claude Sonnet 5 发布，主力模型竞争继续向 Agent 能力集中</h3>
+          <p>Anthropic 发布 Claude Sonnet 5，强调计划、浏览器、终端和自主运行能力，性能接近 Opus 4.8 但价格更低，限时输入 2 美元/百万 token、输出 10 美元/百万 token。对研发和知识工作团队来说，这不是简单的模型榜单更新，而是日常编码、资料处理和工具调用主力模型的一次换代；已经使用 Claude Code 或 Anthropic API 的团队，值得用真实仓库重新评估成本、上下文稳定性和工具权限边界。</p>
+          <div class="source">来源：<a href="https://www.anthropic.com/news/claude-sonnet-5">Anthropic</a>、<a href="https://www.anthropic.com/claude-sonnet-5-system-card">System Card</a>、juya-ai-daily、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>美团开源 LongCat-2.0，国产算力、长上下文和编码 Agent 被放到同一张桌上比较</h3>
+          <p>美团 LongCat 团队发布并开源 1.6 万亿参数 MoE 模型 LongCat-2.0，平均激活约 480 亿参数，原生支持 100 万上下文，并称在五万卡国产算力集群上完成训练与推理。它的重要性不只在参数规模，而在国产算力供应链、长上下文和 SWE-bench 类编码能力被包装成可开放调用的产品；国内团队评估模型底座时，可以把它作为“成本、可控性、Agent 能力”三项同时比较的样本。</p>
+          <div class="source">来源：<a href="https://mp.weixin.qq.com/s/9XFcx3fmFcmbry5bHMJsow">LongCat 官方公众号</a>、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>Cloudflare 同时推进 AI 流量管控与 x402 付费网关，智能体互联网开始有商业层</h3>
+          <p>Cloudflare 为站点提供更细的 AI 流量管理选项，可区分搜索爬虫、智能体爬虫和训练爬虫，并开放 Monetization Gateway 候补名单，让网页、数据集、API 或 MCP 工具通过 x402 协议收费。对内容站、数据提供方和工具开发者而言，这把“被 AI 访问”从屏蔽或放任推进到授权、计量和收费；如果智能体成为新流量入口，内容和 API 的商业模式会更接近可计费资源，而不是单纯依附广告和搜索。</p>
+          <div class="source">来源：<a href="https://blog.cloudflare.com/content-independence-day-ai-options">Cloudflare AI options</a>、<a href="https://blog.cloudflare.com/monetization-gateway/">Cloudflare Monetization Gateway</a>、AI HOT、HN</div>
+        </article>
+        <article class="item">
+          <h3>AWS 投入 10 亿美元组建前置工程师团队，AI 落地服务开始产品化</h3>
+          <p>AWS 宣布设立新部门，先期投入 10 亿美元组建前置驻场工程师团队，以 5 到 6 人小组进入客户企业 45 天，帮助落地 AI 软件和智能体应用，首批客户包括 NBA 与理光。云厂商的竞争正在从卖算力和模型扩展到卖“可交付的实施能力”；企业客户应把这类服务视为短周期转化工具，同时保留内部架构、数据权限和长期维护能力，避免把核心流程完全外包给供应商。</p>
+          <div class="source">来源：<a href="https://www.ithome.com/0/971/071.htm">IT之家</a>、AI HOT</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">AI 与新工具</h2>
+      <p class="section-note">本板块优先保留能改变研发、内容生产、客服和专业工作流的工具，不收录只具话题性的泛 AI 信息。</p>
+      <div class="items">
+        <article class="item">
+          <h3>xAI Voice Agent Builder 测试版上线，语音 Agent 从 Demo 进入可部署形态</h3>
+          <p>xAI 推出基于 Grok Voice 的无代码 Voice Agent Builder，支持电话、知识检索、工具、MCP、Guardrails、可观测性、SIP 号码、API 和 WebSocket，并以每分钟音频 0.05 美元、电话费 0.01 美元计价。语音 Agent 的关键不再只是语音识别和合成，而是能否接入业务工具、被监控、被限制和被计费；客服、销售和本地服务团队可以先用低风险场景验证接通率、转人工规则和异常处理。</p>
+          <div class="source">来源：<a href="https://x.ai/news/grok-voice-agent-builder">xAI</a>、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>Claude Science 上线，垂直 Agent 的高价值形态更像工作台而不是聊天框</h3>
+          <p>Anthropic 推出 Claude Science，整合常用科研工具、计算资源、60 多项预配置技能和 reviewer agent，覆盖基因组学、蛋白质组学、结构生物学、化学信息学等流程，并支持本地、SSH 和 HPC 环境。它给垂直 SaaS 一个清晰参照：专业用户愿意付费的 AI 产品往往要绑定数据、工具、审计、可复现实验和领域流程，单独叠一个聊天入口很难形成长期差异。</p>
+          <div class="source">来源：<a href="https://www.anthropic.com/news/claude-science-ai-workbench">Anthropic</a>、<a href="https://claude.com/science">Claude Science</a>、juya-ai-daily、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>Google Nano Banana 2 Lite 主打低成本图像生成，AI 输出会继续视觉化</h3>
+          <p>Google DeepMind 推出 Nano Banana 2 Lite，定位为 Nano Banana 系列中速度最快、成本最低的图像模型，面向 AI Studio、Gemini API 和消费端产品开放。它的工作信号在于图像生成正在从“偶尔用来做素材”变成“可嵌入应用的低成本能力”；AI 输出形态大概率会继续从原始文本走向 Markdown、HTML、视频和可交互模拟，产品团队应更多考虑结构化、视觉化、可操作输出，而不是只优化一段回答。</p>
+          <div class="source">来源：<a href="https://deepmind.google/models/gemini-image/flash-lite/">Google DeepMind</a>、<a href="https://deepmind.google/blog/start-building-with-nano-banana-2-lite-and-gemini-omni-flash">Google DeepMind Blog</a>、juya-ai-daily、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>Claude Code v2.1.198 发布，后台 Agent 正在接近可协作的工程队友</h3>
+          <p>Claude Code 新版本让 Claude in Chrome 全面可用，增加后台智能体通知、/dataviz 技能、AWS Claude Platform Gateway 上游，并支持后台智能体在 worktree 完成代码后自动提交、推送和创建草稿 PR。对工程团队来说，重要的是协作协议而不是功能堆叠：后台任务什么时候需要输入、什么时候可自动提交、如何审查草稿 PR，这些规则会决定 Agent 能否进入真实迭代流程。</p>
+          <div class="source">来源：<a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.198">Claude Code Release</a>、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>Google Workbench Notebooks 扩展上线，云端 Jupyter 被拉回 VS Code 工作流</h3>
+          <p>Google Cloud Workbench Notebooks 扩展正式发布，开发者可在 VS Code 里连接可扩展的云端 Jupyter 环境，并使用 Google Cloud 基础设施完成机器学习开发。这个更新不惊艳，但贴近工程效率：云端算力、Notebook 和本地编辑器之间的切换成本一直很高，谁能把研究、调试和部署放进同一个上下文，谁就能减少机器学习团队的大量摩擦。</p>
+          <div class="source">来源：<a href="https://developers.googleblog.com/ml-development-in-vs-code-with-google-cloud-power-workbench-extension-now-available">Google Developers Blog</a>、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>Genkit Agents API 与 ADK Go 2.0 更新，Agent 开发框架开始补齐状态、图和人工介入</h3>
+          <p>Google 开源 Genkit 推出 Agents API，将消息历史、工具循环、流式传输和前后端统一线协议封装为更完整的开发接口；ADK Go 2.0 则加入基于图的工作流引擎、人工参与循环和动态编排。Agent 工程的难点正从“调通模型”转向状态持久化、分支历史、多智能体协调、人工审批和遥测，开发者选型时应优先看这些非模型能力，而不是只比较支持哪些 LLM。</p>
+          <div class="source">来源：<a href="https://developers.googleblog.com/build-agentic-full-stack-apps-with-genkit">Genkit Agents API</a>、<a href="https://developers.googleblog.com/announcing-adk-go-20">ADK Go 2.0</a>、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>ZCode 成为 GLM-5.2 官方开发环境，国产模型也在争夺 IDE 入口</h3>
+          <p>智谱推出 GLM-5.2 官方开发环境 ZCode，支持 macOS、Windows、Linux 和 BYOK，并为 GLM Coding Plan 订阅用户提供额外配额。模型厂商直接进入开发环境，说明编码 Agent 的分发入口越来越靠近 IDE 和命令行；团队可以把 ZCode 作为国产模型在本地仓库、跨语言任务和企业网络环境中的可用性样本，而不是只看网页聊天体验。</p>
+          <div class="source">来源：<a href="https://x.com/Zai_org/status/2072349453361557898">Z.ai</a>、<a href="https://zcode.z.ai/en">ZCode</a>、AI HOT、HN</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">大厂与平台动态</h2>
+      <div class="items">
+        <article class="item">
+          <h3>Meta 计划出售过剩 AI 算力，超大厂基础设施可能变成外部云商品</h3>
+          <p>据 TechCrunch 引述 Bloomberg 报道，Meta 正考虑推出 Meta Compute，对外出售 AI 计算能力和模型访问权限，直接与 AWS、Google Cloud 和 Azure 竞争。Meta 已承诺未来几年投入 1829 亿美元建设 AI 基础设施，如果这些能力被商品化，AI 算力市场可能从少数云厂商扩展到更多拥有自建集群的内容与社交平台；采购方需要关注价格之外的模型访问、数据隔离和服务稳定性。</p>
+          <div class="source">来源：<a href="https://techcrunch.com/2026/07/01/meta-like-spacex-looks-to-turn-excess-ai-compute-into-cash">TechCrunch</a>、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>X API 上线官方 MCP 服务器，实时社交数据通过 Agent 协议重新进入工具链</h3>
+          <p>X API 上线 hosted X MCP，AI 智能体可通过 MCP 直连 X API 获取实时信息，支持 Grok、Cursor 等工具，并按调用计费。对信息产品、舆情分析、销售线索和研究工作流来说，这是社交平台数据从网页、爬虫和传统 API 进入 Agent 协议的一步；但按量付费和授权流程也意味着平台会更精细地控制数据出口。</p>
+          <div class="source">来源：<a href="https://docs.x.com/tools/mcp">X Developers</a>、<a href="https://github.com/xdevplatform">xdevplatform</a>、juya-ai-daily、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>Anthropic 出口管制限制解除，模型可用性再次显示政策变量的影响</h3>
+          <p>Anthropic 表示美国商务部已解除 Claude Fable 5 与 Mythos 5 的出口管制限制，并恢复访问；该消息在 HN 获得最高讨论度。对跨境团队和依赖境外模型服务的企业来说，重点不在单个模型名称，而在模型可用性会受到政策、地区和供应商策略共同影响；关键生产流程最好准备多模型回退和区域可用性监测，不要把核心链路绑定到单一服务。</p>
+          <div class="source">来源：<a href="https://x.com/AnthropicAI/status/2072106151890809341">Anthropic</a>、juya-ai-daily、HN</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">产品与增长观察</h2>
+      <div class="items">
+        <article class="item">
+          <h3>OpenAI Signals 显示 ChatGPT 全球采用继续扩散，多语言和低成本访问是增长面</h3>
+          <p>OpenAI Signals 数据显示，用户注册六个月后日均消息量增加 50%，尝试任务种类翻倍，非洲和亚洲增长最快，非英语用户已占活跃用户半数以上。对产品和增长团队来说，这说明 AI 工具的增长不只来自英语知识工作者；本地化、低成本访问、移动端任务模板和对弱英语环境的支持，可能比追逐最新模型名称更能影响留存。</p>
+          <div class="source">来源：<a href="https://openai.com/index/how-chatgpt-adoption-has-expanded">OpenAI</a>、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>AI News Radar 增加多平台自媒体订阅，日报产品竞争的是信号过滤而不是源数量</h3>
+          <p>AI News Radar 新增自媒体板块，支持订阅多个平台账号，每日按热度推荐 Top10，并保留时间轴视图、来源分类、信号等级和多源认证。它对 Whistle 这类信息产品有直接参考意义：用户真正需要的不是无限抓取，而是热度、可信度、去重、板块归因和“没有强信号就不硬凑”的编辑规则；信息产品的差异会越来越体现在过滤体系，而不是源列表长度。</p>
+          <div class="source">来源：<a href="https://mp.weixin.qq.com/s/iW5FVqbHtYi31mJ22Q_cog">AI News Radar</a>、AI HOT</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">开发者与工程实践</h2>
+      <div class="items">
+        <article class="item">
+          <h3>Meta 公布 AI 存储蓝图，GPU 利用率正在倒逼数据层重构</h3>
+          <p>Meta Engineering 介绍其数百 EB 级 AI 存储架构，基于 Tectonic 分层存储构建 BLOB 存储接口，用闪存降低尾延迟，避免单个 GPU 因 I/O 等待拖慢整批训练任务，并支持跨区域数据注入。对工程团队来说，这篇文章的价值在于提醒：大模型效率不只取决于 GPU 数量，数据读取、元数据查询、尾延迟和跨区移动同样会吞掉算力收益；规模化训练和推理团队应把存储路径纳入性能预算。</p>
+          <div class="source">来源：<a href="https://engineering.fb.com/2026/07/01/data-infrastructure/metas-ai-storage-blueprint-at-scale">Meta Engineering</a>、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>Agent 成本优化开始强调路由，而不是简单换便宜模型</h3>
+          <p>Tomer Tunguz 的文章强调，构建 AI 智能体应优先设计 router：将 70% 到 80% 流量交给本地模型、异步批量推理或更低成本模型，可让开销下降 90% 以上。这个观点适合被落成工程动作：把任务按风险、时延、上下文长度和可验证性分层，再决定模型与执行路径；随着模型数量增加，路由策略会成为 Agent 产品毛利和体验稳定性的核心系统。</p>
+          <div class="source">来源：<a href="https://www.tomtunguz.com/ai-execution-routing">Tomer Tunguz</a>、AI HOT</div>
+        </article>
+        <article class="item">
+          <h3>NVIDIA 开放 TwoTower 扩散语言模型，生成架构仍有吞吐优化空间</h3>
+          <p>NVIDIA 发布 Nemotron-Labs-TwoTower 开放权重扩散语言模型，通过冻结自回归骨干、训练降噪器塔和层对齐交叉注意力，在 2×H100 BF16 评估中保留 98.7% 自回归基线质量，并获得 2.42 倍生成吞吐提升。它未必马上进入业务生产，但提醒开发者不要把“语言模型只能自回归”视为定局；对高并发生成场景，吞吐、延迟和质量之间仍可能通过架构创新重新平衡。</p>
+          <div class="source">来源：<a href="https://www.marktechpost.com/2026/07/01/nvidia-releases-nemotron-labs-twotower">MarkTechPost</a>、AI HOT</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">投融资与行业机会</h2>
+      <div class="items">
+        <article class="item">
+          <h3>Etched 宣布超 10 亿美元合同，专用 AI 芯片仍在寻找推理成本窗口</h3>
+          <p>AI 芯片创业公司 Etched 正式亮相，并称已签约超过 10 亿美元合同。虽然具体客户和交付细节仍需继续观察，但它反映了推理成本压力下，市场仍愿意为专用硬件押注；对基础设施团队来说，关注点不应停在融资或订单数字，而应跟踪其软件栈、模型兼容性、实际吞吐和供应能力，判断它是否能成为 GPU 之外的可采购选项。</p>
+          <div class="source">来源：<a href="https://x.com/Etched/status/2071972062202343590">Etched</a>、juya-ai-daily</div>
+        </article>
+        <article class="item">
+          <h3>黑石拟在日本 AI 数据中心投入 300 亿美元，算力基础设施继续全球化选址</h3>
+          <p>黑石计划未来 3 到 5 年在日本 AI 数据中心领域投资 300 亿美元，并在原 500MW 基础上新增超过 1GW 容量。该类投资说明 AI 基础设施正在从美国核心区向电力、土地、网络和监管条件更合适的区域扩散；关注出海和企业云成本的团队，可以把数据中心区域布局视为未来价格、延迟和合规可选项的先行信号。</p>
+          <div class="source">来源：<a href="https://www.ithome.com/0/970/583.htm">IT之家</a>、AI HOT</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">政策监管与合规</h2>
+      <div class="items">
+        <article class="item">
+          <h3>Claude Code 隐写术争议提醒团队审计本地 Agent 的真实行为</h3>
+          <p>社区逆向指出 Claude Code 可能读取本地时区和 ANTHROPIC_BASE_URL，并通过字符替换标记特定用户环境；相关说法来自社区与中文媒体报道，仍应保持审慎，但争议本身已经足够说明风险。企业采用本地编码 Agent 时，不能只看供应商品牌和模型能力，还应检查网络请求、环境变量读取、提示词变更、日志留存和可复现实验；越接近代码和生产凭据的工具，越需要可审计的运行边界。</p>
+          <div class="source">来源：<a href="https://mp.weixin.qq.com/s/yLb4T2UC16ebKHApdBbgWw">数字生命卡兹克</a>、<a href="https://www.reddit.com/r/ClaudeAI/comments/1ujila1/anthropic_embedded_spyware_in_claude_code_and/">Reddit 社区讨论</a>、AI HOT、juya-ai-daily</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">社交热度观察</h2>
+      <p class="section-note">以下信息讨论度高或开源热度强，但更适合作为背景信号，不进入核心排序。</p>
+      <div class="items">
+        <article class="item">
+          <h3>HN 高分讨论集中在 Claude 出口管制、合成细胞和数字所有权</h3>
+          <p>HN 今日最高分帖子包括 Anthropic 出口管制解除、从零构建的细胞首次生长分裂、PlayStation 新游戏实体盘生产将在 2028 年结束，以及 Sony 删除用户已购买影片。前两项分别是 AI 可用性和科学进展信号，后两项则更多反映数字所有权的不信任情绪；对产品团队来说，真正可借鉴的是长期授权、可迁移性和用户资产承诺的表达方式。</p>
+          <div class="source">来源：<a href="https://news.ycombinator.com/">Hacker News</a>、<a href="https://www.quantamagazine.org/for-the-first-time-a-cell-built-from-scratch-grows-and-divides-20260701/">Quanta Magazine</a>、<a href="https://blog.playstation.com/2026/07/01/physical-disc-production-ending-in-january-2028-for-new-games-releasing-on-playstation-consoles/">PlayStation Blog</a></div>
+        </article>
+        <article class="item">
+          <h3>GitHub Trending 中 Agent、安全和设计系统项目占据前排</h3>
+          <p>今日 GitHub Trending 中，agency-agents、strix、facebook/astryx、OmniRoute、CubeSandbox、video-use 等项目热度较高，分别指向多角色 Agent、AI 渗透测试、agent-ready 设计系统、模型网关、Agent 沙箱和视频编辑 Agent。它们不一定都成熟，但共同说明开源社区正在把 Agent 从聊天框拆成角色、网关、权限、UI 资产和媒体能力几个可复用模块。</p>
+          <div class="source">来源：<a href="https://github.com/msitarzewski/agency-agents">agency-agents</a>、<a href="https://github.com/usestrix/strix">strix</a>、<a href="https://github.com/facebook/astryx">astryx</a>、<a href="https://github.com/diegosouzapw/OmniRoute">OmniRoute</a>、GitHub Trending</div>
+        </article>
+        <article class="item">
+          <h3>高分工程帖仍有参考价值，但不应喧宾夺主</h3>
+          <p>Asahi Linux 7.1、Box3D、FFmpeg 9.1 AAC 编码器、Kubernetes kubelet 内存泄漏修复等帖子在 HN 获得较高分数，适合工程师按兴趣深读。它们是优秀技术材料，但与今日 AI/平台工作决策的直接相关性有限；日报保留为热度观察，是为了提醒读者社区兴趣所在，而不是把纯工程讨论误判成行业主线。</p>
+          <div class="source">来源：<a href="https://asahilinux.org/2026/06/progress-report-7-1/">Asahi Linux</a>、<a href="https://box2d.org/posts/2026/06/announcing-box3d/">Box3D</a>、<a href="https://heyoncall.com/blog/fixing-kubernetes-kubelet-memory-leak">Kubernetes kubelet memory leak</a>、HN</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">今日行动建议</h2>
+      <ul class="compact-list">
+        <li><strong>产品：</strong>检查现有 AI 输出是否仍停留在文本摘要，优先挑一个高频场景尝试结构化、可视化或可操作输出，例如短视频概览、HTML 报告或交互式工作流。</li>
+        <li><strong>研发：</strong>为编码 Agent 建立权限分层和成本路由规则，至少区分只读分析、工作区写入、可联网执行和可提交 PR 四类边界。</li>
+        <li><strong>运营与增长：</strong>关注多语言和低成本访问带来的新增量，不要只面向英语知识工作者设计 AI 功能文案、模板和 onboarding。</li>
+        <li><strong>管理者：</strong>评估云厂商前置工程师、模型供应商工作台和内部团队能力的边界，避免把短期实施服务误认为长期组织能力。</li>
+        <li><strong>创业者：</strong>如果在做 Agent 产品，优先补齐工具接入、状态管理、人工介入、审计和计费，而不是只包装一个更会聊天的入口。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="section-title">去噪说明</h2>
+      <p class="noise">本期合并 juya-ai-daily、AI HOT、Hacker News 和 GitHub Trending 四类素材，优先采用 juya 与 AI HOT 的已编辑判断，再用 HN 与 GitHub 补充社区和开源生态信号。重复主题已合并到同一条目，例如 Claude Sonnet 5、LongCat-2.0、Cloudflare x402/X AI 流量、ZCode 和 Claude Code；消费电子、泛争议、纯科学趣闻和分数未超过工作相关阈值的 HN 技术帖，没有进入核心板块。正文共刊发 25 条，AI 与新工具占比略高，其它板块宁缺毋滥。</p>
+    </section>
+
+    <section>
+      <h2 class="section-title">抓取异常</h2>
+      <p class="empty">本次抓取无异常。juya-ai-daily、AI HOT daily、AI HOT items、Hacker News Firebase API、GitHub Trending 均成功返回；抓取摘要为：juya ok，aihotDaily ok，aihotItems ok (40 items)，hackernews ok (38 stories &gt;= 30pts)，githubTrending ok (20 repos)。</p>
+    </section>
+
+    <footer class="footer">
+      Whistle 互联网日报由本地脚本抓取素材后人工编辑生成。风格遵循 Kami：暖纸背景、ink-blue 单强调色、serif-led 层级与克制留白。
+    </footer>
+  </main>
+</body>
+</html>
