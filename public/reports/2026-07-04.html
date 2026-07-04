@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Whistle 互联网日报｜2026-07-04</title>
+  <style>
+    :root {
+      --paper: #f5f4ed;
+      --ivory: #faf9f5;
+      --brand: #1B365D;
+      --ink: #141413;
+      --dark-warm: #3d3d3a;
+      --olive: #504e49;
+      --stone: #6b6a64;
+      --border: #e8e6dc;
+      --border-soft: #e5e3d8;
+      --tag: #EEF2F7;
+      --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+      --sans: var(--serif);
+      --mono: "JetBrains Mono", "SF Mono", Consolas, "TsangerJinKai02", "Source Han Serif SC", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--paper); }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0.1pt;
+    }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .page {
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 46px 0 64px;
+    }
+    .masthead {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 28px;
+    }
+    .eyebrow {
+      display: inline-block;
+      color: var(--brand);
+      background: var(--tag);
+      border-radius: 3px;
+      padding: 2px 7px;
+      font-size: 12px;
+      letter-spacing: 0.8pt;
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0 0 12px;
+      color: var(--brand);
+      font-size: clamp(30px, 5vw, 46px);
+      font-weight: 500;
+      line-height: 1.16;
+      letter-spacing: 0.1pt;
+    }
+    .intro {
+      max-width: 760px;
+      margin: 0;
+      color: var(--olive);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .metric {
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .metric strong {
+      display: block;
+      color: var(--brand);
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.2;
+      font-variant-numeric: tabular-nums;
+    }
+    .metric span {
+      display: block;
+      color: var(--stone);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    .section {
+      margin-top: 34px;
+    }
+    .section-title {
+      margin: 0 0 14px;
+      padding-left: 10px;
+      border-left: 4px solid var(--brand);
+      border-radius: 2px;
+      color: var(--ink);
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+    .section-note {
+      margin: -4px 0 14px;
+      color: var(--stone);
+      font-size: 13px;
+    }
+    .item {
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 17px 19px 16px;
+      margin: 12px 0;
+      break-inside: avoid;
+    }
+    .item-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+    h2, h3 {
+      margin: 0;
+      font-weight: 500;
+      line-height: 1.3;
+      letter-spacing: 0.1pt;
+    }
+    .item h3 {
+      font-size: 18px;
+      color: var(--ink);
+    }
+    .tag {
+      flex: 0 0 auto;
+      display: inline-block;
+      background: var(--tag);
+      color: var(--brand);
+      border-radius: 3px;
+      padding: 2px 7px;
+      font-size: 12px;
+      line-height: 1.35;
+      letter-spacing: 0.4pt;
+      white-space: nowrap;
+    }
+    .item p {
+      margin: 0;
+      color: var(--dark-warm);
+      font-size: 15px;
+      line-height: 1.58;
+    }
+    .source {
+      margin-top: 10px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .source a { margin-right: 10px; }
+    .advice-list, .plain-list {
+      margin: 0;
+      padding-left: 1.2em;
+      color: var(--dark-warm);
+    }
+    .advice-list li, .plain-list li {
+      margin: 8px 0;
+    }
+    .quiet {
+      color: var(--stone);
+    }
+    @media (max-width: 720px) {
+      .page { width: min(100% - 22px, 980px); padding-top: 28px; }
+      .meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .item-head { display: block; }
+      .tag { margin-top: 8px; }
+      .item { padding: 15px; }
+    }
+    @media print {
+      body { font-size: 10pt; }
+      .page { width: auto; padding: 0; }
+      h1 { font-size: 30pt; }
+      .item { box-shadow: none; }
+      a { text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="masthead">
+      <div class="eyebrow">Daily Intelligence</div>
+      <h1>Whistle 互联网日报｜2026-07-04</h1>
+      <p class="intro">今日信号集中在 AI Agent 工具链、生成式视频交互、形式化验证模型和开源开发基础设施。AI HOT 抓取失败，报告主要基于 juya AI 早报、Hacker News 高分帖和 GitHub Trending 交叉筛选，保留对产品、研发、增长、商业化、基础设施与合规判断有用的信息。</p>
+      <div class="meta-grid">
+        <div class="metric"><strong>24</strong><span>正文刊发条目</span></div>
+        <div class="metric"><strong>3/4</strong><span>精选源成功</span></div>
+        <div class="metric"><strong>34</strong><span>HN 高分帖子</span></div>
+        <div class="metric"><strong>19</strong><span>GitHub 趋势仓库</span></div>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2 class="section-title">今日头条</h2>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Mistral 发布 Leanstral 1.5，开源形式化验证 Agent 模型</h3>
+          <span class="tag">模型发布</span>
+        </div>
+        <p>Mistral AI 发布面向 Lean 4 的开源代码 Agent 模型 Leanstral 1.5，采用 Apache 2.0 许可，权重已在 Hugging Face 开放，并提供免费 API 端点。它面向数学证明、程序正确性和形式化验证场景，不是通用聊天模型的又一次参数竞赛；对需要高可靠代码、合规证明或复杂系统验证的团队来说，值得把它视作工程质量工具链的一部分，而不是单独的研究玩具。</p>
+        <div class="source"><a href="https://mistral.ai/news/leanstral-1-5/">Mistral</a><a href="https://huggingface.co/mistralai/Leanstral-1.5-119B-A6B">Hugging Face</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Vidu S1 发布实时交互模型，视频生成开始靠近可对话界面</h3>
+          <span class="tag">交互形态</span>
+        </div>
+        <p>生数科技发布 Vidu S1 实时交互模型，支持实时视频通话、语音控制角色行为和无限时长连续互动，网页端、API 与 App 端均已开启内测。它把生成式视频从“提交提示词后等待成片”推进到“可被语音驱动的实时界面”，更接近教育、陪练、客服和虚拟角色产品的工作流。长期看，AI 输出不太会停在纯文本层，Markdown、HTML、实时视频和可交互模拟会逐步成为更自然的承载形态。</p>
+        <div class="source"><a href="https://www.vidu.cn/vidu-stream">Vidu Stream</a><a href="https://platform.vidu.cn/live/landing">Vidu Platform</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>可灵 AI 确定获约 190 亿元融资，视频生成进入重资本阶段</h3>
+          <span class="tag">行业机会</span>
+        </div>
+        <p>快手公告显示，可灵 AI 已确定获得 190.48 亿元融资，阿里、腾讯、百度及多家国资参投，交易前估值约 150 亿美元。视频生成赛道的竞争正在从模型演示转向资金、算力、内容生态和商业化场景的综合竞争；对创业团队而言，直接正面对抗基础模型越来越难，围绕工作流、行业素材、分发渠道和可控合规输出做垂直产品，可能更现实。</p>
+        <div class="source"><a href="https://zhidx.com/p/572375.html">智东西</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>豆包智能体功能将于 7 月中旬下线，通用 Agent 留存仍需验证</h3>
+          <span class="tag">产品调整</span>
+        </div>
+        <p>豆包通知称智能体功能将于 2026 年 7 月 15 日下线，用户仍可在一段时间内查看和保存智能体信息及历史对话，相关数据将在 10 月中旬按隐私政策处理。这个调整提醒团队不要把“可配置 Agent”默认等同于稳定需求，通用智能体如果缺少高频场景、明确交付物和可复用工作流，很容易沦为一次性尝鲜入口；已有依赖该功能的用户应尽快备份数据并迁移关键流程。</p>
+        <div class="source"><a href="https://www.ithome.com/0/972/448.htm">IT之家</a></div>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">AI 与新工具</h2>
+      <p class="section-note">本板块保留更多条目，因为今天的有效信号主要集中在模型、Agent、开发工具和交互界面。</p>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>腾讯元宝搜索升级，回答可自动配图讲解</h3>
+          <span class="tag">搜索体验</span>
+        </div>
+        <p>腾讯元宝搜索新增自动图解能力，会在文字回答之外生成配图，用图文结合方式解释复杂问题。这个变化比“回答更长”更值得看，因为它说明 AI 搜索正在从文本摘要转向结构化、视觉化表达；做知识库、客服、教育或 BI 的产品团队，可以开始评估哪些回答不适合继续用纯段落呈现，而应直接产出图解、表格或可交互页面。</p>
+        <div class="source"><a href="https://mp.weixin.qq.com/s/tv0sTMTiT6L2L2W2piSzbA">腾讯元宝</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Cherry Studio V2 内测，将 Agent 作为核心重写底层系统</h3>
+          <span class="tag">客户端工具</span>
+        </div>
+        <p>Cherry Studio 开启 V2 内测，重写底层数据和任务系统，并把 Agent 作为核心能力，支持任意 OpenAI 兼容端点、多窗口、独立窗口和 HTML 实时预览卡片。它代表一类本地 AI 客户端的演进方向：不再只是模型选择器和聊天记录管理器，而是围绕多端点、任务状态和可视化结果组织工作台；重度 AI 用户可以关注其插件、数据迁移和稳定性进展。</p>
+        <div class="source"><a href="https://mp.weixin.qq.com/s/U4FoUw-K7O7wxT5wM8iZbA">Cherry Studio</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Claude 编码实践强调“消除未知项”，提示词正在变成工程发现过程</h3>
+          <span class="tag">AI 编程</span>
+        </div>
+        <p>Anthropic 工程师分享 Claude Fable 5 编码经验，核心不是写更漂亮的 prompt，而是在实现前、中、后持续识别“已知与未知”的差距，包括盲点扫描、访谈、源码参考和实现笔记。对研发团队来说，这比具体模型技巧更有迁移价值：AI 编程的瓶颈越来越像需求澄清和系统勘探，团队应把上下文收集、约束声明和验收标准前置，而不是只比较一次生成代码的速度。</p>
+        <div class="source"><a href="https://x.com/trq212/status/2073100352921215386">X / trq212</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>OpenAI codex-plugin-cc 登上 GitHub 趋势，跨 Agent 协作开始工具化</h3>
+          <span class="tag">Agent 协作</span>
+        </div>
+        <p>GitHub Trending 显示 openai/codex-plugin-cc 当日新增 634 星，该项目允许在 Claude Code 中调用 Codex 进行代码审查或任务委托。它的意义不在于某个插件本身，而在于开发者已经开始把不同 Agent 当作可互相调用的专业工具，而不是在单一模型里完成所有工作；团队评估 AI 开发流程时，应同步关注权限边界、上下文隔离和审计记录。</p>
+        <div class="source"><a href="https://github.com/openai/codex-plugin-cc">GitHub</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Chrome DevTools MCP 走热，浏览器调试能力正在接入编码 Agent</h3>
+          <span class="tag">MCP</span>
+        </div>
+        <p>ChromeDevTools/chrome-devtools-mcp 今日在 GitHub Trending 获得 405 星，项目目标是把 Chrome DevTools 暴露给编码 Agent 使用。前端自动化长期卡在“模型看不到真实页面状态”和“调试反馈链太长”，DevTools 级能力接入后，Agent 更可能直接观察 DOM、网络、控制台和性能问题；前端团队可优先在测试环境验证权限、数据泄露和误操作风险。</p>
+        <div class="source"><a href="https://github.com/ChromeDevTools/chrome-devtools-mcp">GitHub</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Strix 开源 AI 渗透测试工具热度升高，安全测试开始 Agent 化</h3>
+          <span class="tag">安全工具</span>
+        </div>
+        <p>usestrix/strix 在 GitHub Trending 当日新增 2803 星，定位为开源 AI 渗透测试工具，用于发现并修复应用漏洞。它显示安全测试正在从规则扫描和人工复核，扩展到由 Agent 主动探索攻击面；但这类工具引入生产流程前，应先限制目标范围、凭证权限和输出责任，避免把“自动找问题”变成不可控的自动攻击面扩张。</p>
+        <div class="source"><a href="https://github.com/usestrix/strix">GitHub</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Agent Skills 相关项目集中走热，技能文件成为可迁移工作流载体</h3>
+          <span class="tag">工作流</span>
+        </div>
+        <p>obra/superpowers、agentskills/agentskills 等 Agent 技能框架在 GitHub Trending 上获得较高新增星数，说明开发者正在把 AI 使用经验从零散 prompt 固化为可复用技能和流程规范。这类项目的长期价值取决于能否把上下文、工具、权限、验收方式写清楚；对团队来说，值得先把高频任务沉淀成小型技能，而不是一次性建设庞大的内部 Agent 平台。</p>
+        <div class="source"><a href="https://github.com/obra/superpowers">superpowers</a><a href="https://github.com/agentskills/agentskills">agentskills</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>腾讯云 CubeSandbox 提供轻量安全沙箱，指向 Agent 执行层基础设施</h3>
+          <span class="tag">Agent Infra</span>
+        </div>
+        <p>TencentCloud/CubeSandbox 出现在 GitHub Trending，定位为面向 AI Agent 的即时、并发、安全、轻量沙箱。随着 Agent 从“生成建议”走向“执行命令”，隔离环境会成为基础设施而非可选项；任何允许模型运行代码、访问文件或调用外部服务的团队，都应把沙箱、配额、日志和回滚机制作为上线前置条件。</p>
+        <div class="source"><a href="https://github.com/TencentCloud/CubeSandbox">GitHub</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>本地运行 SOTA LLM 指南获 HN 高分，本地推理需求仍在升温</h3>
+          <span class="tag">本地模型</span>
+        </div>
+        <p>Jamesob 的本地运行 SOTA LLM 指南在 Hacker News 获得 273 分，社区关注点集中在硬件、模型选择、部署方式和成本控制。本地推理不一定会替代云 API，但它在隐私、离线、低延迟和可控成本场景中持续有需求；研发团队可以把本地模型作为“敏感数据处理”和“开发实验”的补充路径，而不是默认追求全量替代。</p>
+        <div class="source"><a href="https://github.com/jamesob/local-llm">GitHub / local-llm</a></div>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">大厂与平台动态</h2>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>TRAE 向速通付费用户发放 Work 权益，AI IDE 竞争继续围绕用量和留存</h3>
+          <span class="tag">开发生态</span>
+        </div>
+        <p>TRAE 宣布向当前生效及新开通速通付费用户发放 50 次 TRAE Work 专属权益，有效期 31 天。这个动作本质上是通过短周期高价值额度刺激用户把真实任务迁移到平台内，而不是只试用聊天能力；对 AI IDE 厂商来说，留存竞争会越来越围绕“能否承接完整工作单元”和“额度定价是否可预期”。</p>
+        <div class="source"><a href="https://mp.weixin.qq.com/s/w1nrDRBn4e8VKK3s9SPVSw">TRAE</a></div>
+      </article>
+
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">产品与增长观察</h2>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Half-Baked Product 获 HN 极高讨论，产品发布节奏反思升温</h3>
+          <span class="tag">产品方法</span>
+        </div>
+        <p>“Half-Baked Product”在 Hacker News 获得 1193 分和大量讨论，核心关注产品是否过早发布、是否以不完整体验换取速度。它适合放在产品与增长观察而不是头条：讨论热度高，但工作启发更明确，团队在 AI 产品快速迭代时需要区分“可接受的 MVP 粗糙”和“破坏信任的未完成”，尤其是涉及数据、权限、付费和迁移成本的功能。</p>
+        <div class="source"><a href="https://weli.dev/blog/half-baked-product/">weli.dev</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Wordgard 走红，富文本编辑器仍是 AI 输出落地的关键界面</h3>
+          <span class="tag">创作工具</span>
+        </div>
+        <p>ProseMirror 作者的新浏览器富文本编辑器 Wordgard 在 HN 获得 260 分。编辑器并不是过时基础设施，反而会因为 AI 生成内容变得更重要：模型可以产出草稿，但人类仍需要在结构、引用、批注、协作和发布格式之间做最后控制；做内容、知识库或内部工具的团队，应关注编辑器能否承接 AI 生成后的精修与审阅。</p>
+        <div class="source"><a href="https://wordgard.net/">Wordgard</a></div>
+      </article>
+
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">开发者与工程实践</h2>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>用代码截图让模型 OCR，Claude Fable 成本降低 60% 的实验引发讨论</h3>
+          <span class="tag">成本优化</span>
+        </div>
+        <p>teamchong/pxpipe 在 HN 获得 235 分，项目声称通过把代码转成图片再让模型 OCR，可降低 Claude Fable 使用成本约 60%。这个方法未必适合所有场景，也需要验证准确率、可审计性和上下文损失，但它提出了一个重要方向：AI 成本优化不只靠缓存和短 prompt，也可能来自输入表示方式变化；团队可在低风险任务上做小样本评估，而不要直接用于关键代码路径。</p>
+        <div class="source"><a href="https://github.com/teamchong/pxpipe">GitHub / pxpipe</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>SQLite WAL 旧 bug 复盘显示，形式化方法正在进入工程主流视野</h3>
+          <span class="tag">可靠性</span>
+        </div>
+        <p>Ubuntu 博客关于用 TLA+ 追踪 16 年 SQLite WAL bug 的文章在 HN 获得 169 分。它与 Leanstral 1.5 形成呼应：当系统复杂度和自动生成代码比例上升，团队对“证明关键状态不会出错”的需求会变强；基础设施、数据库和金融类系统可以优先在高风险并发逻辑中试点形式化规格，而不是等事故后再补文档。</p>
+        <div class="source"><a href="https://ubuntu.com/blog/hunting-a-16-year-old-sqlite-bug-with-tla-is-dqlite-affected">Ubuntu Blog</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>PostgreSQL 与 OOM killer 复盘提醒，内存策略是数据库可靠性的产品决策</h3>
+          <span class="tag">数据库</span>
+        </div>
+        <p>Ubicloud 关于 PostgreSQL 和 OOM killer 的文章在 HN 获得 157 分，解释其为何使用严格内存 overcommit。对工程团队来说，这类基础设施配置不只是运维细节，而会直接影响故障模式、恢复时间和客户信任；管理者在评估托管数据库或自建集群时，应要求供应商说明内存压力下的行为，而不是只看正常负载基准测试。</p>
+        <div class="source"><a href="https://www.ubicloud.com/blog/postgresql-and-the-oom-killer-why-we-use-strict-memory-overcommit">Ubicloud</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Reddit 反垃圾内部机制复盘，为社区产品提供治理参考</h3>
+          <span class="tag">平台治理</span>
+        </div>
+        <p>关于 Reddit 反垃圾内部机制的文章在 HN 获得 160 分。它对做社区、评论、UGC 或开放注册产品的团队有现实价值：反垃圾不是单点模型分类，而是账号、内容、网络、人工处理和反馈机制的组合；AI 生成内容增多后，平台治理更需要可解释的处置链路，避免只靠黑盒分数决定用户命运。</p>
+        <div class="source"><a href="https://lyra.horse/blog/2026/06/reddit-spam-internals/">lyra.horse</a></div>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">投融资与行业机会</h2>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>视频生成融资继续集中，应用层机会更偏垂直场景和工作流</h3>
+          <span class="tag">赛道判断</span>
+        </div>
+        <p>可灵 AI 的大额融资是今天最强行业机会信号，但它同时提高了基础模型层竞争门槛。对中小团队更有价值的方向，是围绕营销素材、教育陪练、游戏资产、直播电商、企业培训等具体工作流，解决素材管理、可控生成、版权审计和投放闭环问题；单纯“更好看的视频生成”很难形成可持续差异。</p>
+        <div class="source"><a href="https://zhidx.com/p/572375.html">智东西</a></div>
+      </article>
+
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">政策监管与合规</h2>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>欧洲议会相关间谍软件事件提醒，高风险人群安全边界继续上移</h3>
+          <span class="tag">安全合规</span>
+        </div>
+        <p>Citizen Lab 关于欧洲议会相关成员遭 Pegasus 攻击的报告在 HN 获得 269 分。它不直接影响普通互联网产品上线，但对政务、媒体、公益、金融和跨境团队有合规启发：移动端安全、敏感通信、设备隔离和供应链审计需要按人群风险分层，而不是把所有员工放在同一安全策略下处理。</p>
+        <div class="source"><a href="https://citizenlab.ca/research/member-of-committee-investigating-spyware-hacked-with-pegasus/">Citizen Lab</a></div>
+      </article>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>豆包智能体数据处理时间表值得关注，Agent 产品要提前设计退出机制</h3>
+          <span class="tag">数据治理</span>
+        </div>
+        <p>豆包智能体下线通知明确提到用户可在过渡期保存数据，并将在 2026 年 10 月中旬按隐私政策处理相关数据。对所有 Agent 产品来说，这比功能下线本身更有合规意义：用户创建的角色、提示词、历史对话和工具配置都可能包含个人或业务数据，产品从第一天就应设计导出、删除、迁移和公告机制。</p>
+        <div class="source"><a href="https://www.ithome.com/0/972/448.htm">IT之家</a></div>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">社交热度观察</h2>
+      <p class="section-note">以下信息讨论度较高，但更偏背景、情绪或生态信号，不挤占核心工作信号排序。</p>
+
+      <article class="item">
+        <div class="item-head">
+          <h3>Valve 开源 Steam Machine e-ink 屏幕引发硬件社区兴趣</h3>
+          <span class="tag">生态情绪</span>
+        </div>
+        <p>Valve 开源 Steam Machine e-ink 屏幕相关内容在 HN 获得 533 分，显示开发者社区对可改造硬件和开放生态仍有强兴趣。它对大多数互联网团队不是直接行动项，但可作为一个背景信号：开放硬件、可玩性和社区二创仍能为成熟平台带来长尾传播。</p>
+        <div class="source"><a href="https://www.gamingonlinux.com/2026/07/valve-open-source-the-steam-machine-e-ink-screen-so-you-can-make-your-own/">GamingOnLinux</a></div>
+      </article>
+
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">今日行动建议</h2>
+      <article class="item">
+        <ul class="advice-list">
+          <li>产品：检查现有 AI 输出是否仍停留在长文本，优先挑一个复杂问答场景试做图解、HTML 卡片或可交互结果。</li>
+          <li>研发：把 Agent 试点拆成小任务，先补齐沙箱、权限、日志和回滚，再扩大到真实代码库。</li>
+          <li>运营与增长：关注“高信任、低噪音、少选择”的产品叙事，不要默认把更多入口、更多内容和更多推荐等同于增长。</li>
+          <li>设计：为 AI 生成后的编辑、审阅、引用和发布流程设计界面，而不是只设计聊天输入框。</li>
+          <li>创业者与管理者：视频生成基础层正在资本集中，应用层更应围绕行业素材、版权审计、工作流闭环和可控交付建立壁垒。</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">去噪说明</h2>
+      <article class="item">
+        <ul class="plain-list">
+          <li>本期去重合并了 juya 与 HN 中关于 Leanstral 1.5 的重复信号，优先采用 juya 的中文详述和官方链接。</li>
+          <li>HN 纯技术帖仅在分数较高且能影响工程实践时入选；低相关科学、历史、漫画、体育和泛消费内容未刊发。</li>
+          <li>GitHub Trending 只选入 AI Agent、开发工具、安全、沙箱、ML Systems 等与 Whistle 用户工作相关的项目；通用基础仓库和娱乐项目未单独刊发。</li>
+          <li>OpenAI GPT-5.6 相关内容仅作为传闻观察，不作为确定性平台动态处理。</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">抓取异常</h2>
+      <article class="item">
+        <p class="quiet">AI HOT daily 抓取失败：fetch failed。AI HOT items 抓取失败：fetch failed。本期未使用 AI HOT 的结构化日报与 40 条精选条目，相关缺口由 juya、Hacker News 与 GitHub Trending 补充，但没有把社交热度上移为核心排序依据。</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
