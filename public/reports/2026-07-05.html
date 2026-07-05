@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Kami">
+  <meta name="description" content="低噪音互联网工作日报，聚焦 AI 工具、Agent 开发生态、平台风险、工程实践与合规边界。">
+  <meta name="keywords" content="Whistle,互联网日报,AI,Agent,开发工具,合规">
+  <title>Whistle 互联网日报｜2026-07-05</title>
+  <style>
+    :root {
+      --parchment: #f5f4ed;
+      --ivory: #faf9f5;
+      --warm-sand: #e8e6dc;
+      --brand: #1B365D;
+      --brand-light: #2D5A8A;
+      --near-black: #141413;
+      --dark-warm: #3d3d3a;
+      --olive: #504e49;
+      --stone: #6b6a64;
+      --border: #e8e6dc;
+      --border-soft: #e5e3d8;
+      --tag-blue: #EEF2F7;
+      --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+      --sans: var(--serif);
+      --mono: "JetBrains Mono", "SF Mono", Consolas, "TsangerJinKai02", "Source Han Serif SC", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--parchment);
+      color: var(--near-black);
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0.12pt;
+      -webkit-font-smoothing: antialiased;
+    }
+    @page {
+      size: A4;
+      margin: 14mm 13mm 16mm;
+      background: #f5f4ed;
+    }
+    @media print {
+      body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .page { max-width: none; padding: 0; }
+      .item, .note, .section-title { break-inside: avoid; page-break-inside: avoid; }
+      a { color: var(--brand); text-decoration: none; }
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 56px 42px 72px;
+    }
+    header {
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border-soft);
+      margin-bottom: 34px;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.35;
+      letter-spacing: 0.8pt;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      color: var(--near-black);
+      font-size: 34px;
+      line-height: 1.18;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .intro {
+      max-width: 760px;
+      margin: 14px 0 0;
+      color: var(--olive);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      background: var(--tag-blue);
+      color: var(--brand);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 500;
+      letter-spacing: 0.2pt;
+    }
+    .section-title {
+      margin: 30px 0 14px;
+      padding-left: 10px;
+      border-left: 3px solid var(--brand);
+      border-radius: 2px;
+      color: var(--near-black);
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .section-note {
+      margin: -4px 0 12px;
+      color: var(--stone);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .item {
+      margin: 0 0 12px;
+      padding: 15px 18px 14px;
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 1px 0 #eeeade;
+    }
+    .item h3 {
+      margin: 0 0 8px;
+      color: var(--near-black);
+      font-size: 17px;
+      line-height: 1.32;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .item p {
+      margin: 0;
+      color: var(--dark-warm);
+      font-size: 14.5px;
+      line-height: 1.58;
+    }
+    .source {
+      margin-top: 10px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    a {
+      color: var(--brand);
+      text-decoration: none;
+      border-bottom: 1px solid #D0DCE9;
+    }
+    a:hover { color: var(--brand-light); }
+    .note {
+      margin: 0 0 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #faf9f5;
+      color: var(--dark-warm);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+    .action-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .action-list .note { margin: 0; }
+    .role {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--brand);
+      font-weight: 500;
+    }
+    footer {
+      margin-top: 36px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-soft);
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    @media (max-width: 720px) {
+      .page { padding: 34px 18px 48px; }
+      h1 { font-size: 27px; }
+      .intro { font-size: 15px; }
+      .section-title { font-size: 20px; }
+      .action-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Daily Intelligence · 2026-07-05 · Asia/Shanghai</p>
+      <h1>Whistle 互联网日报｜2026-07-05</h1>
+      <p class="intro">今天的有效信号集中在 AI 开发生态：Claude API 提升调用上限，Agent 工具在 GitHub Trending 集中出现，同时 Claude Code 与 Codex 的社区问题提醒团队把 AI 编程工具纳入可靠性和数据隔离审查。AI HOT 抓取失败，本期减少泛行业扩展，优先保留可直接影响产品、研发、增长、商业化、基础设施与合规判断的信息。</p>
+      <div class="meta-row">
+        <span class="tag">正文 26 条</span>
+        <span class="tag">juya · HN · GitHub Trending</span>
+        <span class="tag">AI HOT 抓取失败</span>
+        <span class="tag">冷静 · 中立 · 反噪音</span>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">今日头条</h2>
+      <article class="item">
+        <h3>Anthropic 提高 Claude API 速率限制，模型选择和吞吐约束被进一步解耦</h3>
+        <p>Anthropic 宣布为 Claude Platform 用户提高 API 调用频率上限，并简化层级结构，最高层级的 Sonnet 与 Haiku 速率限制提升到原先的 5 倍，各层级在 Opus、Sonnet、Haiku 上提供一致的请求数和令牌吞吐。对把 Claude 接入研发、客服、内部知识库或批处理流程的团队来说，这不是单纯的配额调整，而是让模型选择更少受平台计费层级和限流策略牵制；短期可重新压测队列、重试和降级策略，长期看大模型平台会继续把“可稳定调用”作为企业采用的关键卖点。</p>
+        <div class="source">来源：<a href="https://x.com/ClaudeDevs/status/2072818299361263778">Claude Developers</a>、juya-ai-daily</div>
+      </article>
+      <article class="item">
+        <h3>Claude Code 疑似跨会话缓存泄漏被 HN 高分讨论，Agent 工具进入隔离性审计阶段</h3>
+        <p>社区在 GitHub Issue 中报告 Claude Code 输出与当前任务无关的内容，并怀疑存在跨会话或跨工作区缓存泄漏；HN 同一话题获得 270 分讨论，说明开发者已把 Agent 的上下文隔离视为生产风险，而不只是模型“幻觉”。目前 Anthropic 尚未公开确认该报告，团队不宜直接下结论，但可以把 AI 编程工具纳入权限、日志、缓存和数据分级检查：敏感仓库优先使用最小权限工作区，关键输出保留可追溯记录，避免把 Agent 当成无状态工具。</p>
+        <div class="source">来源：<a href="https://github.com/anthropics/claude-code/issues/74066">GitHub Issue</a>、<a href="https://news.ycombinator.com/item?id=48785665">Hacker News</a>、juya-ai-daily</div>
+      </article>
+      <article class="item">
+        <h3>Codex 推理 token 异常聚类引发性能质疑，AI 编程工具需要可观测性而非只看主观体感</h3>
+        <p>多名开发者报告 GPT-5.5 在 Codex 环境中的推理 token 数量出现固定值聚类，复杂任务表现被认为下降，社区提出了调整提示词和工具配置的临时规避方法。无论最终原因是系统提示、批处理优化还是采样策略，这类问题都说明 AI 开发工具不能只用“能否跑通一次”评估；团队应该记录模型版本、推理预算、任务复杂度、失败类型和回滚路径，像监控 CI 一样监控 Agent 工作流。</p>
+        <div class="source">来源：<a href="https://github.com/openai/codex/issues/30364">GitHub Issue</a>、juya-ai-daily</div>
+      </article>
+      <article class="item">
+        <h3>GitHub Trending 被 Agent 与开发工具占据，AI 工具生态从单点插件转向工作流编排</h3>
+        <p>今天 GitHub Trending 中出现 openai/codex-plugin-cc、alibaba/page-agent、Chrome DevTools MCP、herdr、agent skills 等多个 Agent 相关项目，方向覆盖代码审查委托、网页 GUI 操作、浏览器调试、终端多 Agent 调度和技能规范。这个组合比单个项目更重要：AI 工具正在从“聊天框 + 插件”走向可嵌入 IDE、浏览器、终端和页面上下文的工作流层，产品团队应关注工具边界、权限边界和可回放结果，而不是只比较模型回答质量。</p>
+        <div class="source">来源：<a href="https://github.com/openai/codex-plugin-cc">openai/codex-plugin-cc</a>、<a href="https://github.com/alibaba/page-agent">alibaba/page-agent</a>、<a href="https://github.com/ChromeDevTools/chrome-devtools-mcp">ChromeDevTools/chrome-devtools-mcp</a>、GitHub Trending</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">AI 与新工具</h2>
+      <article class="item">
+        <h3>openai/codex-plugin-cc：让 Codex 从 Claude Code 中被调用</h3>
+        <p>openai/codex-plugin-cc 今天新增 718 星，项目定位是让用户在 Claude Code 中调用 Codex 做代码审查或任务委托。它反映出一个务实方向：开发者不一定希望押注单一 Agent，而是希望在同一工作区内把不同模型和工具按任务分工串起来；如果团队正在建设内部研发助手，可以优先设计“可插拔审阅者”和“跨工具任务记录”，避免把所有能力塞进一个不可替换的对话入口。</p>
+        <div class="source">来源：<a href="https://github.com/openai/codex-plugin-cc">GitHub Trending · openai/codex-plugin-cc</a></div>
+      </article>
+      <article class="item">
+        <h3>alibaba/page-agent：自然语言控制网页界面的 in-page GUI Agent</h3>
+        <p>alibaba/page-agent 今天新增 742 星，主打让 Agent 在网页内部通过自然语言控制 GUI。对产品和运营工具而言，这类 in-page Agent 比浏览器外部助手更接近真实工作现场，因为它能读取当前页面状态、执行局部操作并减少来回复制；但落地时必须把可执行动作、撤销、权限确认和审计日志作为一等功能，否则自然语言控制会快速放大误操作成本。</p>
+        <div class="source">来源：<a href="https://github.com/alibaba/page-agent">GitHub Trending · alibaba/page-agent</a></div>
+      </article>
+      <article class="item">
+        <h3>Chrome DevTools MCP：浏览器调试能力开始向 Coding Agent 开放</h3>
+        <p>ChromeDevTools/chrome-devtools-mcp 今天继续进入热门榜，项目将 Chrome DevTools 能力提供给 coding agents。这个方向值得前端团队关注，因为 Agent 如果能直接观察 DOM、网络请求、性能与控制台错误，就有机会从“读代码猜问题”变成“在浏览器里验证问题”；更理想的 AI 输出形态也会从纯文本解释，逐步走向 Markdown、HTML、可交互调试面板，最终接近可视化和可操作的工作界面。</p>
+        <div class="source">来源：<a href="https://github.com/ChromeDevTools/chrome-devtools-mcp">GitHub Trending · ChromeDevTools/chrome-devtools-mcp</a></div>
+      </article>
+      <article class="item">
+        <h3>Strix：开源 AI 渗透测试工具获得高热度</h3>
+        <p>usestrix/strix 今天新增 1904 星，定位是用 AI 查找并修复应用漏洞的开源渗透测试工具。安全团队可以把这类工具看作自动化初筛和验证补充，而不是替代人工红队；对研发团队更现实的动作是把它接入测试环境或预发布环境，观察它在权限边界、误报、复现步骤和修复建议上的表现，再决定是否进入 CI 或定期扫描流程。</p>
+        <div class="source">来源：<a href="https://github.com/usestrix/strix">GitHub Trending · usestrix/strix</a></div>
+      </article>
+      <article class="item">
+        <h3>Meetily：本地处理的 AI 会议助手继续验证隐私优先需求</h3>
+        <p>Zackriya-Solutions/meetily 今天新增 718 星，强调本地转写、说话人分离、Ollama 总结和无需云端处理。会议助手赛道已经不缺“自动总结”，真正的分化点在隐私、部署方式、延迟和组织内知识沉淀；如果面向企业客户，产品可以把本地模型、可控存储和可删除记录作为核心卖点，而不是只强调总结模板数量。</p>
+        <div class="source">来源：<a href="https://github.com/Zackriya-Solutions/meetily">GitHub Trending · meetily</a></div>
+      </article>
+      <article class="item">
+        <h3>herdr：终端里的 Agent multiplexer 指向多 Agent 协作入口</h3>
+        <p>ogulcancelik/herdr 今天新增 707 星，描述为“agent multiplexer that lives in your terminal”。多 Agent 协作如果只停留在概念层面价值有限，但终端入口有天然优势：开发者可以把不同 Agent 绑定到代码搜索、测试、审查、文档和发布任务中；团队试用时应重点看任务切换成本、上下文污染和输出合并方式，而不是只看单次响应是否聪明。</p>
+        <div class="source">来源：<a href="https://github.com/ogulcancelik/herdr">GitHub Trending · herdr</a></div>
+      </article>
+      <article class="item">
+        <h3>Agent Skills 相关仓库集中上榜，技能化正在成为编码助手的组织方式</h3>
+        <p>agentskills/agentskills、dotnet/skills、mattpocock/skills 与 alirezarezvani/claude-skills 同时出现在热门项目中，说明社区正在把 Agent 能力从一次性提示词转为可复用的技能、规范和命令集合。对团队来说，真正的机会不是收集更多提示词，而是把高频流程沉淀为版本化、可审查、可回滚的技能包；这会让 AI 使用从个人技巧进入工程资产管理。</p>
+        <div class="source">来源：<a href="https://github.com/agentskills/agentskills">agentskills/agentskills</a>、<a href="https://github.com/dotnet/skills">dotnet/skills</a>、<a href="https://github.com/mattpocock/skills">mattpocock/skills</a>、<a href="https://github.com/alirezarezvani/claude-skills">alirezarezvani/claude-skills</a></div>
+      </article>
+      <article class="item">
+        <h3>Fable 4D splat 格式提示下一代视觉生成会更重交互与空间连续性</h3>
+        <p>HN 上关于 Fable 新 4D splat 格式的讨论获得 108 分，项目展示了面向动态空间表达的新格式探索。它暂时更像研发信号而非可直接采购的产品，但对内容工具和设计工具有启发：AI 输出不应长期停留在原始文本或静态图像，视觉化、结构化、可交互的输出会更接近人类处理信息的优势，未来可能从 HTML 原型继续演进到可操作的神经视频或模拟环境。</p>
+        <div class="source">来源：<a href="https://adamraudonis.github.io/splats4D/">Fable 4D splat</a>、Hacker News</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">大厂与平台动态</h2>
+      <article class="item">
+        <h3>Midjourney 要求好莱坞片厂披露内部 AI 使用，版权诉讼开始反向审视权利方</h3>
+        <p>据 TechCrunch 报道，Midjourney 在与 Disney、Universal、Warner Bros. 的版权诉讼中提交动议，要求制片厂披露内部生成式 AI 使用方式、提示词和生成结果。这个动作不会立刻改变版权边界，但会让大型内容公司既作为权利主张者，也作为 AI 使用者接受审视；对内容、设计和媒体团队而言，内部 AI 使用记录、素材来源和授权链路将越来越难被视为“内部流程”。</p>
+        <div class="source">来源：<a href="https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/">TechCrunch</a>、juya-ai-daily</div>
+      </article>
+      <article class="item">
+        <h3>Anthropic 进入自主药物研发，AI 公司继续向高价值垂直场景试探</h3>
+        <p>Anthropic 宣布启动自主药物研发项目，聚焦传统药企投入不足的罕见病或被忽视疾病，但专家提醒 AI 仍难替代漫长实验、毒性验证和临床审批。这个事件的核心不是“AI 很快造药”，而是基础模型公司正在寻找高价值垂直场景的直接参与方式；相关团队可以关注它如何处理科学验证、商业合作和责任边界，而不是把它解读成短期医疗产品突破。</p>
+        <div class="source">来源：<a href="https://www.ithome.com/0/972/606.htm">IT之家</a>、juya-ai-daily</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">产品与增长观察</h2>
+      <article class="item">
+        <h3>YouTube 创作者私密视频泄露讨论升温，平台隐私承诺会直接影响创作者信任</h3>
+        <p>HN 上 “Leaking YouTube creators' private videos” 获得 472 分讨论，指向平台私密视频、权限边界和内容可见性的信任问题。对创作者平台、SaaS 协作工具和内容管理产品来说，私密状态不是一个 UI 标签，而是数据访问、缓存、预览、审核和内部工具权限的完整链路；增长团队在推动创作者上传更多内容时，也需要能解释平台如何保护未公开资产。</p>
+        <div class="source">来源：<a href="https://javoriuski.com/post/youtube">Leaking YouTube creators' private videos</a>、Hacker News</div>
+      </article>
+      <article class="item">
+        <h3>Verizon 手表连接变更引发讨论，硬件服务的长期兼容性会反噬用户关系</h3>
+        <p>HN 上关于 “Verizon is About to Break our Watches” 的帖子获得 134 分，讨论运营商网络或服务调整可能让既有手表设备失效。它不是典型互联网新闻，但对订阅、IoT 和硬件配套服务有现实提醒：产品团队如果把关键能力绑定到外部网络、平台或认证机制，就必须提前设计迁移、通知和补偿，否则一次基础设施变更会被用户理解为产品背弃。</p>
+        <div class="source">来源：<a href="https://www.jefftk.com/p/verizon-is-about-to-break-our-watches">Verizon is About to Break our Watches</a>、Hacker News</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">开发者与工程实践</h2>
+      <article class="item">
+        <h3>Zig 将包管理功能从编译器移至构建系统，语言工具链继续收敛职责边界</h3>
+        <p>Zig 开发日志显示，包管理相关功能从编译器移动到构建系统，HN 讨论获得 137 分。纯语言更新通常不单独刊发，但这条对工具链设计有参考价值：当语言生态变复杂，编译器、构建系统、包管理和项目配置的职责拆分会影响学习成本、缓存策略和 CI 可维护性；关注 Zig 的团队可评估构建脚本迁移成本，而其它语言生态也可借此观察工具链边界如何演进。</p>
+        <div class="source">来源：<a href="https://ziglang.org/devlog/2026/#2026-06-30">Zig Devlog</a>、Hacker News</div>
+      </article>
+      <article class="item">
+        <h3>“Better Models: Worse Tools” 提醒 AI 产品不要把模型进步等同于工具进步</h3>
+        <p>Armin Ronacher 的 “Better Models: Worse Tools” 在 HN 获得 86 分，讨论更强模型与更差工具体验之间的错位。它适合放在工程实践而非社交热度中：AI 工具的质量越来越取决于上下文组织、权限控制、错误恢复、界面反馈和可验证执行，而不是模型单项能力；产品经理和研发负责人应把工具链体验拆成可测试环节，不要用“模型升级”掩盖交互和工程问题。</p>
+        <div class="source">来源：<a href="https://lucumr.pocoo.org/2026/7/4/better-models-worse-tools/">Better Models: Worse Tools</a>、Hacker News</div>
+      </article>
+      <article class="item">
+        <h3>数据库分区设计复盘强调少维护架构，适合基础设施团队复查长期成本</h3>
+        <p>“Designing DB partitions you don't have to babysit” 获得 59 分，讨论如何设计不需要持续人工照看的数据库分区。分数不算极高，但主题与工程稳定性强相关：当数据量增长后，分区策略会影响查询性能、归档、迁移和故障恢复；如果团队正经历日志、事件或多租户数据膨胀，可以把这类复盘作为架构评审清单，而不是等到慢查询和手工清理成为常态。</p>
+        <div class="source">来源：<a href="https://explainanalyze.com/p/designing-partitioning-you-dont-have-to-babysit/">Designing DB partitions you don't have to babysit</a>、Hacker News</div>
+      </article>
+      <article class="item">
+        <h3>MSI Center 提权漏洞与 BareMetal RAM Dumper 同日受关注，端点安全仍是开发工具链薄弱点</h3>
+        <p>HN 上 MSI Center 可快速获得 SYSTEM 权限的分析获得 139 分，BareMetal RAM Dumper 也以 53 分进入高信号列表。它们不直接属于 AI 主题，但对工程团队有现实意义：开发机、构建机和测试硬件常常安装大量厂商工具与调试工具，权限边界比生产服务器更松；安全负责人可以把端点软件清单、驱动权限和冷启动攻击实验纳入研发设备审计。</p>
+        <div class="source">来源：<a href="https://mrbruh.com/msicenter/">MSI Center privilege analysis</a>、<a href="https://github.com/pIat0n/BareMetal-RAM-Dumper">BareMetal RAM Dumper</a>、Hacker News</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">投融资与行业机会</h2>
+      <article class="item">
+        <h3>本地 AI、Agent 编排与安全工具形成开源热度，商业机会更接近“工作流基础设施”</h3>
+        <p>今天没有明确融资或并购强信号，但 GitHub Trending 给出了一组行业机会线索：本地会议助手、终端 Agent 调度、AI 渗透测试、浏览器 MCP、技能规范同时上榜。它们共同指向一个比“再做一个聊天机器人”更具体的机会：围绕企业工作流的本地化、可审计、可插拔基础设施；创业团队可以从开发、安全、会议和浏览器自动化这些高频场景切入，先解决权限与可验证执行，再谈通用智能助手。</p>
+        <div class="source">来源：<a href="https://github.com/Zackriya-Solutions/meetily">meetily</a>、<a href="https://github.com/ogulcancelik/herdr">herdr</a>、<a href="https://github.com/usestrix/strix">strix</a>、GitHub Trending</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">政策监管与合规</h2>
+      <article class="item">
+        <h3>AI 误导性视频进入公共讨论，合规重点从生成能力转向传播链路</h3>
+        <p>ABC 报道的 “Australian influencer Lily Jay's tangled web of AI manipulation” 在 HN 获得 31 分，分数不高但与内容合规相关，涉及 AI 生成或误导性视频在公共传播中的影响。对内容平台和品牌运营团队来说，风险不只在“是否使用 AI”，还在是否标注、是否混淆真实事件、是否通过账号矩阵扩散；可以提前建立 AI 素材标记、来源留存和下架复核流程，避免问题发生后只靠人工公关补救。</p>
+        <div class="source">来源：<a href="https://www.abc.net.au/news/2026-07-05/lily-jay-foundation-posts-ai-generated-misleading-videos/106866422">ABC News</a>、Hacker News</div>
+      </article>
+      <article class="item">
+        <h3>版权诉讼中的 AI 使用证据开示，可能倒逼企业保存内部生成记录</h3>
+        <p>Midjourney 要求好莱坞片厂披露内部 AI 使用细节，也可以从合规角度看：未来版权、训练数据和生成内容纠纷可能不只审查模型供应商，也会审查企业用户如何提示、生成、编辑和发布。内容团队可以先建立低成本记录机制，例如项目级 AI 使用说明、关键提示词留档、素材授权状态和人工修改记录；这不会消除法律风险，但能减少事后无法解释的风险。</p>
+        <div class="source">来源：<a href="https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/">TechCrunch</a>、juya-ai-daily</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">社交热度观察</h2>
+      <p class="section-note">以下内容讨论度高，但工作性弱于核心板块，作为背景信号保留。</p>
+      <article class="item">
+        <h3>办公室 CO2 与决策质量帖子爆火，更多是组织运营背景信号</h3>
+        <p>“The bottleneck might be the air in the room” 在 HN 获得 760 分，是今天讨论度最高的帖子。它对互联网团队的直接业务影响有限，但提醒管理者别忽视办公环境对认知工作的影响；如果团队重回线下或混合办公，可以把会议室通风、传感器和高密度会议安排纳入办公体验优化，而不必把它包装成生产力玄学。</p>
+        <div class="source">来源：<a href="https://blog.mikebowler.ca/2026/07/03/co2-and-decision-making/">The bottleneck might be the air in the room</a>、Hacker News</div>
+      </article>
+      <article class="item">
+        <h3>Google Books 扫描数据赏金引发知识开放讨论，更多是公共数据情绪信号</h3>
+        <p>Anna's Archive 关于 Google Books 或类似书籍扫描数据的 20 万美元赏金获得 333 分讨论。它与版权、公共知识、数据可得性和模型训练材料都有间接关系，但不是今天可直接行动的工作信号；对 AI 团队的启发是，数据获取的合法性、来源质量和长期可维护性仍会决定很多产品边界。</p>
+        <div class="source">来源：<a href="https://software.annas-archive.gl/AnnaArchivist/annas-archive/-/work_items/234">Anna's Archive work item</a>、Hacker News</div>
+      </article>
+      <article class="item">
+        <h3>“Maybe you should learn something” 高热，反映开发者对浅层工具依赖的反思</h3>
+        <p>Marginalia 的文章获得 420 分讨论，主题是学习本身的价值。它不是新闻事件，但与 AI 工具时代的开发者能力焦虑有关：当工具越来越能代做局部任务，真正稀缺的仍是判断问题、拆解系统和验证结果的能力；团队培训可以从“提示词技巧”回到基本工程素养、调试能力和领域理解。</p>
+        <div class="source">来源：<a href="https://www.marginalia.nu/log/a_135_learn/">Maybe you should learn something</a>、Hacker News</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">今日行动建议</h2>
+      <div class="action-list">
+        <div class="note"><span class="role">产品</span>梳理正在接入的 AI 功能，标出哪些动作需要确认、撤销、审计和权限分级；对网页内 Agent、浏览器 MCP、会议助手这类工具，优先验证工作流闭环而非演示效果。</div>
+        <div class="note"><span class="role">研发</span>为 AI 编程工具建立轻量可观测性：记录模型版本、推理预算、任务类型、失败案例和人工修正；敏感仓库先限制 Agent 权限和上下文范围。</div>
+        <div class="note"><span class="role">运营与增长</span>如果平台承诺私密、未公开或本地处理，要把权限、缓存、预览和内部工具访问写成可解释流程；创作者和企业客户更在意信任链路。</div>
+        <div class="note"><span class="role">安全与合规</span>复查 AI 生成内容留痕、素材授权、提示词记录和端点软件清单；Agent 工具、厂商驱动、本地助手都应进入安全边界讨论。</div>
+        <div class="note"><span class="role">创业者 / 管理者</span>关注“工作流基础设施”机会：本地 AI、Agent 编排、安全扫描、浏览器自动化和技能管理，比泛聊天入口更容易形成明确购买理由。</div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">去噪说明</h2>
+      <div class="note">本期优先使用 juya-ai-daily 的详述内容作为核心板块素材，并用 Hacker News 分数与 GitHub Trending 热度交叉验证。已过滤纯科学、复古游戏、交通工具、历史百科、泛娱乐和弱工作相关条目；HN 纯技术讨论只有在分数较高或对工程实践有明确启发时保留。由于 AI HOT 两路抓取失败，今日没有使用其分类与精选条目，报告覆盖面会比正常日报更窄。</div>
+    </section>
+
+    <section>
+      <h2 class="section-title">抓取异常</h2>
+      <div class="note">AI HOT daily 抓取失败：fetch failed。AI HOT items 抓取失败：fetch failed。juya-ai-daily、Hacker News Firebase API 与 GitHub Trending 抓取成功，其中 juya 返回 2026-07-05 AI 早报，Hacker News 返回 30 条 score >= 30 的帖子，GitHub Trending 返回 18 个热门仓库。</div>
+    </section>
+
+    <footer>
+      Whistle 互联网日报以“低噪音、可行动、不过度扩写”为编辑原则。页面源文件：outputs/2026-07-05/report.html。
+    </footer>
+  </main>
+</body>
+</html>

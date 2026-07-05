@@ -1,0 +1,490 @@
+{
+  "date": "2026-07-05",
+  "fetchedAt": "2026-07-05T01:36:54.389Z",
+  "timezone": "Asia/Shanghai",
+  "sources": {
+    "juya": {
+      "source": "juya-ai-daily",
+      "title": "2026-07-05",
+      "url": "https://daily.juya.uk/issues/2026-07-05/",
+      "publishedAt": "2026-07-04T04:51:55.000Z",
+      "contentHtml": "<div style=\"font-family:-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,sans-serif;font-size:16px;line-height:1.75;color:#18181b;max-width:760px;\"><p><img src=\"https://assets.juya.uk/imagehub/20260705/2026070508385434839084c0_cover_337c.png\" alt=\"\"></p>\n<h1>AI 早报 2026-07-05</h1>\n<p><strong>视频版</strong>：<a href=\"https://www.bilibili.com/video/BV1zeMT6rEMG\" rel=\"noopener noreferrer\">哔哩哔哩</a> ｜ <a href=\"https://www.youtube.com/watch?v=IOWS37uf3Y4\" rel=\"noopener noreferrer\">YouTube</a></p>\n<h2>概览</h2>\n<h3>开发生态</h3>\n<ul><li>Anthropic上调Claude API速率限制并简化层级 <a href=\"https://x.com/ClaudeDevs/status/2072818299361263778\" rel=\"noopener noreferrer\">↗</a> <code>#1</code></li><li>社区报告 Claude Code 疑似跨会话缓存泄漏，Agent输出无关内容 <a href=\"https://github.com/anthropics/claude-code/issues/74066\" rel=\"noopener noreferrer\">↗</a> <code>#2</code></li><li>社区报告 Codex 推理token异常聚类或致复杂任务表现下降 <a href=\"https://github.com/openai/codex/issues/30364\" rel=\"noopener noreferrer\">↗</a> <code>#3</code></li></ul>\n<h3>行业动态</h3>\n<ul><li>Anthropic 宣布自主开发药物，专家提醒 AI 仍难替代实验流程 <a href=\"https://www.ithome.com/0/972/606.htm\" rel=\"noopener noreferrer\">↗</a> <code>#4</code></li><li>报道称 Midjourney 动议要求好莱坞片厂全面披露内部 AI 使用 <a href=\"https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/\" rel=\"noopener noreferrer\">↗</a> <code>#5</code></li></ul>\n<hr>\n<h2>开发生态</h2>\n<h3><a href=\"https://x.com/ClaudeDevs/status/2072818299361263778\" rel=\"noopener noreferrer\">Anthropic上调Claude API速率限制并简化层级</a> <code>#1</code></h3>\n<blockquote>Anthropic近日宣布为所有用户提高 Claude Platform 上 API的调用频率上限，并简化了层级结构，不再基于API使用量分级。</blockquote>\n<p>Anthropic官方近期宣布已为所有用户提高Claude平台API的速率限制，并简化了层级，新的层级不再基于API使用量。最新的Sonnet和Haiku模型在最高层级提供5倍更高的速率限制，且各层级在Opus、Sonnet、Haiku模型上提供相同的每分钟请求数和令牌吞吐量，用户可根据任务选择模型而不受速率限制影响。层级提升自动进行，也可在Claude控制台手动申请。</p>\n<p><img src=\"https://assets.juya.uk/imagehub/aidaily/337c2706-dbdb-469e-8520-19b2d3bcb6df/4ad644c6-8706-424c-a7af-b727a62fd656/m001_8d8e9a88.png\" alt=\"\"></p>\n<p>相关链接：</p>\n<ul><li><a href=\"https://x.com/ClaudeDevs/status/2072818299361263778\" rel=\"noopener noreferrer\">https://x.com/ClaudeDevs/status/2072818299361263778</a></li></ul>\n<hr>\n<h3><a href=\"https://github.com/anthropics/claude-code/issues/74066\" rel=\"noopener noreferrer\">社区报告 Claude Code 疑似跨会话缓存泄漏，Agent输出无关内容</a> <code>#2</code></h3>\n<blockquote>据用户报告，Claude Code 出现疑似跨会话缓存泄漏，Agent突然谈论Minecraft等无关内容。社区讨论认为可能是{缓存隔离缺陷|&quot;缓存隔离缺陷&quot;}或模型幻觉，Anthropic尚未公开回应。</blockquote>\n<p>据GitHub Issue #74066，发起者milesrichardson-edb 在使用 Claude Code 出现疑似跨会话缓存泄漏，Agent突然谈论Minecraft等无关内容。涉及Sonnet 5模型，首次响应超5分钟后发生。本地排查未找到对应文本，排除本地泄漏；移动端响应包含墙面尺寸等注入内容，模型自检注入。社区讨论分歧，部分认为是模型幻觉，将文件名线索拼凑为输出；另分析指缓存隔离缺陷，如key错误、buffer未清零，多租户GPU共享缓存增加风险。另有用户报告伪造通知、他人文件等类似经历。Anthropic曾解释一起事件为内部上下文错误呈现，但未公开确认此次报告，发起者已上报。</p>\n<p><img src=\"https://assets.juya.uk/imagehub/aidaily/337c2706-dbdb-469e-8520-19b2d3bcb6df/5b550895-6819-4557-a071-adfc50aeb239/m001_6179c4f9.png\" alt=\"\"></p>\n<p>相关链接：</p>\n<ul><li><a href=\"https://github.com/anthropics/claude-code/issues/74066\" rel=\"noopener noreferrer\">https://github.com/anthropics/claude-code/issues/74066</a></li><li><a href=\"https://news.ycombinator.com/item?id=48785665\" rel=\"noopener noreferrer\">https://news.ycombinator.com/item?id=48785665</a></li></ul>\n<hr>\n<h3><a href=\"https://github.com/openai/codex/issues/30364\" rel=\"noopener noreferrer\">社区报告 Codex 推理token异常聚类或致复杂任务表现下降</a> <code>#3</code></h3>\n<blockquote>据多名开发者反映，GPT-5.5在Codex环境中的推理token数量出现异常聚类，频繁落在516及以518为步长的固定值上，导致部分复杂任务准确率下降。官方尚未回应，社区已提出临时规避方案。</blockquote>\n<p>近期，多位开发者在GitHub Issue和社交平台上报告，GPT-5.5在Codex产品中的推理输出token呈现反常的固定值聚类，主要集中在516以及1034、1552等以518为步长的值。聚合数据显示，gpt-5.5的精确516事件占比高达44%，远高于其他模型，且该比率在5月至6月间急剧上升，同时平均推理token强度明显下降，导致复杂任务错误率显著增加，已有大量用户复现此问题。对于原因，部分观点认为可能是系统提示机制导致的隐式截断，也有观点认为是批量推理优化所致，但OpenAI官方尚未对此公开说明。社区中已出现修改系统提示配置、使用特定工具或在提示词前端加入高强度推理指令等临时规避方法。</p>\n<p><img src=\"https://assets.juya.uk/imagehub/aidaily/337c2706-dbdb-469e-8520-19b2d3bcb6df/30d7d33a-2c63-4113-9c1c-fcb6c2008dae/m001_650a2212.png\" alt=\"\"></p>\n<p>相关链接：</p>\n<ul><li><a href=\"https://github.com/openai/codex/issues/30364\" rel=\"noopener noreferrer\">https://github.com/openai/codex/issues/30364</a></li><li><a href=\"https://github.com/openai/codex/issues/29353\" rel=\"noopener noreferrer\">https://github.com/openai/codex/issues/29353</a></li><li><a href=\"https://x.com/bdsqlsz/status/2073442704852226479\" rel=\"noopener noreferrer\">https://x.com/bdsqlsz/status/2073442704852226479</a></li></ul>\n<hr>\n<h2>行业动态</h2>\n<h3><a href=\"https://www.ithome.com/0/972/606.htm\" rel=\"noopener noreferrer\">Anthropic 宣布自主开发药物，专家提醒 AI 仍难替代实验流程</a> <code>#4</code></h3>\n<blockquote>Anthropic 近期宣布启动自主药物研发，重点攻克传统药企因回报有限而长期忽视的罕见病。但有专家提醒，AI 仍无法替代漫长实验与监管审批流程。</blockquote>\n<p>Anthropic 于本月初举行活动，宣布启动自主药物研发项目，重点针对传统药企评定为商业回报有限而长期缺乏投入的“被忽视疾病”。该自主项目将聚焦新药研发早期阶段和临床前研究，但 Anthropic 尚未公布首批具体研究疾病，也未说明未来若发现候选药物将自主推进还是合作完成后续流程。与此同时，多位业内专家指出，AI 虽能参与药物研发多个环节并提升效率，但迄今尚无完全由 AI 设计的新药完成全部临床试验并获批，候选药物的毒性、安全性、药效及人体临床试验验证难以被 AI 明显压缩，因此该项目距离产生临床成果仍有较长距离。</p>\n<p>相关链接：</p>\n<ul><li><a href=\"https://www.ithome.com/0/972/606.htm\" rel=\"noopener noreferrer\">https://www.ithome.com/0/972/606.htm</a></li></ul>\n<hr>\n<h3><a href=\"https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/\" rel=\"noopener noreferrer\">报道称 Midjourney 动议要求好莱坞片厂全面披露内部 AI 使用</a> <code>#5</code></h3>\n<blockquote>据报道，AI公司Midjourney在与好莱坞制片厂的版权诉讼中提交动议，要求法官强制{Disney|&quot;Disney&quot;}、{Universal|&quot;Universal&quot;}和{Warner Bros.|&quot;Warner Bros.&quot;}全面披露其自身的生成式AI使用情况，并指对方可能在内部同样使用未授权版权内容训练模型。</blockquote>\n<p>据TechCrunch报道，AI公司Midjourney在与Disney、Universal及Warner Bros.的版权诉讼中，近日提交动议要求法院撤销证据开示限制，以迫使三家制片厂披露其所有内部AI使用方式。此前法官裁定制片厂只需提供与“面向消费者”内容相关的生成式AI信息，但Midjourney认为这一限制“不公平”，并指制片厂可能在闭门开发同类图像生成AI，甚至同样利用未授权版权内容进行训练。Midjourney还要求对方提供其在该平台上使用过的所有提示词与生成结果，而非仅提供涉嫌侵权图像的提示词；制片厂首席律师则斥之为“钓鱼取证”，并重申诉讼目的仅是阻止未经授权使用其角色，并非阻碍AI技术发展。</p>\n<p>相关链接：</p>\n<ul><li><a href=\"https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/\" rel=\"noopener noreferrer\">https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/</a></li></ul>\n<hr>\n<p><strong>提示</strong>：内容由AI辅助创作，可能存在<strong>幻觉</strong>和<strong>错误</strong>。</p><hr style=\"border:0;border-top:1px solid #e5e7eb;margin:24px 0;\"><p style=\"color:#666b74;font-size:14px;\"><a href=\"https://daily.juya.uk/issues/2026-07-05/\">查看网页全文</a> · <a href=\"https://daily.juya.uk/markdown/2026-07-05.md\">查看 Markdown</a></p></div>",
+      "contentText": "AI 早报 2026-07-05 视频版 ： 哔哩哔哩 ｜ YouTube 概览 开发生态 Anthropic上调Claude API速率限制并简化层级 ↗ #1 社区报告 Claude Code 疑似跨会话缓存泄漏，Agent输出无关内容 ↗ #2 社区报告 Codex 推理token异常聚类或致复杂任务表现下降 ↗ #3 行业动态 Anthropic 宣布自主开发药物，专家提醒 AI 仍难替代实验流程 ↗ #4 报道称 Midjourney 动议要求好莱坞片厂全面披露内部 AI 使用 ↗ #5 开发生态 Anthropic上调Claude API速率限制并简化层级 #1 Anthropic近日宣布为所有用户提高 Claude Platform 上 API的调用频率上限，并简化了层级结构，不再基于API使用量分级。 Anthropic官方近期宣布已为所有用户提高Claude平台API的速率限制，并简化了层级，新的层级不再基于API使用量。最新的Sonnet和Haiku模型在最高层级提供5倍更高的速率限制，且各层级在Opus、Sonnet、Haiku模型上提供相同的每分钟请求数和令牌吞吐量，用户可根据任务选择模型而不受速率限制影响。层级提升自动进行，也可在Claude控制台手动申请。 相关链接： https://x.com/ClaudeDevs/status/2072818299361263778 社区报告 Claude Code 疑似跨会话缓存泄漏，Agent输出无关内容 #2 据用户报告，Claude Code 出现疑似跨会话缓存泄漏，Agent突然谈论Minecraft等无关内容。社区讨论认为可能是{缓存隔离缺陷|&quot;缓存隔离缺陷&quot;}或模型幻觉，Anthropic尚未公开回应。 据GitHub Issue #74066，发起者milesrichardson-edb 在使用 Claude Code 出现疑似跨会话缓存泄漏，Agent突然谈论Minecraft等无关内容。涉及Sonnet 5模型，首次响应超5分钟后发生。本地排查未找到对应文本，排除本地泄漏；移动端响应包含墙面尺寸等注入内容，模型自检注入。社区讨论分歧，部分认为是模型幻觉，将文件名线索拼凑为输出；另分析指缓存隔离缺陷，如key错误、buffer未清零，多租户GPU共享缓存增加风险。另有用户报告伪造通知、他人文件等类似经历。Anthropic曾解释一起事件为内部上下文错误呈现，但未公开确认此次报告，发起者已上报。 相关链接： https://github.com/anthropics/claude-code/issues/74066 https://news.ycombinator.com/item?id=48785665 社区报告 Codex 推理token异常聚类或致复杂任务表现下降 #3 据多名开发者反映，GPT-5.5在Codex环境中的推理token数量出现异常聚类，频繁落在516及以518为步长的固定值上，导致部分复杂任务准确率下降。官方尚未回应，社区已提出临时规避方案。 近期，多位开发者在GitHub Issue和社交平台上报告，GPT-5.5在Codex产品中的推理输出token呈现反常的固定值聚类，主要集中在516以及1034、1552等以518为步长的值。聚合数据显示，gpt-5.5的精确516事件占比高达44%，远高于其他模型，且该比率在5月至6月间急剧上升，同时平均推理token强度明显下降，导致复杂任务错误率显著增加，已有大量用户复现此问题。对于原因，部分观点认为可能是系统提示机制导致的隐式截断，也有观点认为是批量推理优化所致，但OpenAI官方尚未对此公开说明。社区中已出现修改系统提示配置、使用特定工具或在提示词前端加入高强度推理指令等临时规避方法。 相关链接： https://github.com/openai/codex/issues/30364 https://github.com/openai/codex/issues/29353 https://x.com/bdsqlsz/status/2073442704852226479 行业动态 Anthropic 宣布自主开发药物，专家提醒 AI 仍难替代实验流程 #4 Anthropic 近期宣布启动自主药物研发，重点攻克传统药企因回报有限而长期忽视的罕见病。但有专家提醒，AI 仍无法替代漫长实验与监管审批流程。 Anthropic 于本月初举行活动，宣布启动自主药物研发项目，重点针对传统药企评定为商业回报有限而长期缺乏投入的“被忽视疾病”。该自主项目将聚焦新药研发早期阶段和临床前研究，但 Anthropic 尚未公布首批具体研究疾病，也未说明未来若发现候选药物将自主推进还是合作完成后续流程。与此同时，多位业内专家指出，AI 虽能参与药物研发多个环节并提升效率，但迄今尚无完全由 AI 设计的新药完成全部临床试验并获批，候选药物的毒性、安全性、药效及人体临床试验验证难以被 AI 明显压缩，因此该项目距离产生临床成果仍有较长距离。 相关链接： https://www.ithome.com/0/972/606.htm 报道称 Midjourney 动议要求好莱坞片厂全面披露内部 AI 使用 #5 据报道，AI公司Midjourney在与好莱坞制片厂的版权诉讼中提交动议，要求法官强制{Disney|&quot;Disney&quot;}、{Universal|&quot;Universal&quot;}和{Warner Bros.|&quot;Warner Bros.&quot;}全面披露其自身的生成式AI使用情况，并指对方可能在内部同样使用未授权版权内容训练模型。 据TechCrunch报道，AI公司Midjourney在与Disney、Universal及Warner Bros.的版权诉讼中，近日提交动议要求法院撤销证据开示限制，以迫使三家制片厂披露其所有内部AI使用方式。此前法官裁定制片厂只需提供与“面向消费者”内容相关的生成式AI信息，但Midjourney认为这一限制“不公平”，并指制片厂可能在闭门开发同类图像生成AI，甚至同样利用未授权版权内容进行训练。Midjourney还要求对方提供其在该平台上使用过的所有提示词与生成结果，而非仅提供涉嫌侵权图像的提示词；制片厂首席律师则斥之为“钓鱼取证”，并重申诉讼目的仅是阻止未经授权使用其角色，并非阻碍AI技术发展。 相关链接： https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/ 提示 ：内容由AI辅助创作，可能存在 幻觉 和 错误 。 查看网页全文 · 查看 Markdown"
+    },
+    "aihot": null,
+    "aihotItems": null,
+    "hackernews": {
+      "source": "hackernews",
+      "fetchedAt": "2026-07-05T01:36:54.389Z",
+      "totalFetched": 50,
+      "highSignalCount": 30,
+      "threshold": 30,
+      "items": [
+        {
+          "id": 48783117,
+          "title": "The bottleneck might be the air in the room",
+          "url": "https://blog.mikebowler.ca/2026/07/03/co2-and-decision-making/",
+          "score": 760,
+          "descendants": 436,
+          "by": "gslin",
+          "time": "2026-07-04T06:32:28.000Z"
+        },
+        {
+          "id": 48786781,
+          "title": "Leaking YouTube creators' private videos",
+          "url": "https://javoriuski.com/post/youtube",
+          "score": 473,
+          "descendants": 266,
+          "by": "javxfps",
+          "time": "2026-07-04T16:45:10.000Z"
+        },
+        {
+          "id": 48782435,
+          "title": "Maybe you should learn something",
+          "url": "https://www.marginalia.nu/log/a_135_learn/",
+          "score": 420,
+          "descendants": 191,
+          "by": "tylerdane",
+          "time": "2026-07-04T03:36:03.000Z"
+        },
+        {
+          "id": 48784777,
+          "title": "Explanation of everything you can see in htop/top on Linux (2019)",
+          "url": "https://peteris.rocks/blog/htop/",
+          "score": 390,
+          "descendants": 52,
+          "by": "theanonymousone",
+          "time": "2026-07-04T12:00:57.000Z"
+        },
+        {
+          "id": 48788283,
+          "title": "Command and Conquer Generals natively ported to macOS, iPhone, iPad using Fable",
+          "url": "https://github.com/ammaarreshi/Generals-Mac-iOS-iPad/tree/main",
+          "score": 352,
+          "descendants": 140,
+          "by": "asronline",
+          "time": "2026-07-04T19:41:10.000Z"
+        },
+        {
+          "id": 48786838,
+          "title": "Google Books (or similar) all book scans – $200k bounty (2025)",
+          "url": "https://software.annas-archive.gl/AnnaArchivist/annas-archive/-/work_items/234",
+          "score": 334,
+          "descendants": 166,
+          "by": "Cider9986",
+          "time": "2026-07-04T16:51:26.000Z"
+        },
+        {
+          "id": 48785485,
+          "title": "Potential session/cache leakage between workspace instances or consumer accounts",
+          "url": "https://github.com/anthropics/claude-code/issues/74066",
+          "score": 270,
+          "descendants": 127,
+          "by": "chatmasta",
+          "time": "2026-07-04T14:03:40.000Z"
+        },
+        {
+          "id": 48783948,
+          "title": "Astrophysicists Puzzle over Webb’s New Universe",
+          "url": "https://www.quantamagazine.org/astrophysicists-puzzle-over-webbs-new-universe-20260702/",
+          "score": 193,
+          "descendants": 121,
+          "by": "jnord",
+          "time": "2026-07-04T09:08:09.000Z"
+        },
+        {
+          "id": 48746327,
+          "title": "The Vespa at 80",
+          "url": "https://www.cbc.ca/news/world/vespa-italy-postwar-design-9.7252641",
+          "score": 145,
+          "descendants": 135,
+          "by": "cf100clunk",
+          "time": "2026-07-01T13:22:19.000Z"
+        },
+        {
+          "id": 48781688,
+          "title": "MSI Center – How to gain SYSTEM privileges in seconds",
+          "url": "https://mrbruh.com/msicenter/",
+          "score": 139,
+          "descendants": 59,
+          "by": "MrBruh",
+          "time": "2026-07-04T00:57:44.000Z"
+        },
+        {
+          "id": 48786638,
+          "title": "Zig: All Package Management Functionality Moved from Compiler to Build System",
+          "url": "https://ziglang.org/devlog/2026/#2026-06-30",
+          "score": 137,
+          "descendants": 26,
+          "by": "tosh",
+          "time": "2026-07-04T16:30:10.000Z"
+        },
+        {
+          "id": 48789428,
+          "title": "GPT-5.5 Codex reasoning-token clustering may be leading to degraded performance",
+          "url": "https://github.com/openai/codex/issues/30364",
+          "score": 136,
+          "descendants": 44,
+          "by": "maille",
+          "time": "2026-07-04T21:51:09.000Z"
+        },
+        {
+          "id": 48787329,
+          "title": "Verizon is About to Break our Watches",
+          "url": "https://www.jefftk.com/p/verizon-is-about-to-break-our-watches",
+          "score": 134,
+          "descendants": 78,
+          "by": "jefftk",
+          "time": "2026-07-04T17:52:36.000Z"
+        },
+        {
+          "id": 48790066,
+          "title": "Scientists reverse brain aging, with a nasal spray",
+          "url": "https://stories.tamu.edu/news/2026/04/14/scientists-reverse-brain-aging-with-a-nasal-spray/",
+          "score": 116,
+          "descendants": 41,
+          "by": "cybermango",
+          "time": "2026-07-04T23:41:10.000Z"
+        },
+        {
+          "id": 48786245,
+          "title": "Fable created novel 4D splat format",
+          "url": "https://adamraudonis.github.io/splats4D/",
+          "score": 108,
+          "descendants": 40,
+          "by": "adamraudonis",
+          "time": "2026-07-04T15:49:08.000Z"
+        },
+        {
+          "id": 48786868,
+          "title": "Finland's last analogue landline phones go silent after 150 years",
+          "url": "https://www.euronews.com/next/2026/06/30/finlands-last-analogue-landline-phones-go-silent-after-150-years",
+          "score": 102,
+          "descendants": 25,
+          "by": "ohjeez",
+          "time": "2026-07-04T16:54:02.000Z"
+        },
+        {
+          "id": 48739446,
+          "title": "Breaking the Bird Barrier: Scientist Decodes Zebra Finch Language",
+          "url": "https://www.freepressjournal.in/education/breaking-the-bird-barrier-scientist-decodes-zebra-finch-language",
+          "score": 100,
+          "descendants": 31,
+          "by": "yyyk",
+          "time": "2026-06-30T21:27:15.000Z"
+        },
+        {
+          "id": 48785840,
+          "title": "Windows CE Dreamcast Community Edition (wince-dc)",
+          "url": "https://github.com/maximqaxd/wince-dc",
+          "score": 93,
+          "descendants": 17,
+          "by": "msephton",
+          "time": "2026-07-04T14:52:25.000Z"
+        },
+        {
+          "id": 48788599,
+          "title": "Better Models: Worse Tools",
+          "url": "https://lucumr.pocoo.org/2026/7/4/better-models-worse-tools/",
+          "score": 87,
+          "descendants": 27,
+          "by": "leemoore",
+          "time": "2026-07-04T20:16:22.000Z"
+        },
+        {
+          "id": 48737068,
+          "title": "Night Witches – all-female Soviet aviator regiment WW2",
+          "url": "https://en.wikipedia.org/wiki/Night_Witches",
+          "score": 87,
+          "descendants": 26,
+          "by": "gverrilla",
+          "time": "2026-06-30T18:24:52.000Z"
+        },
+        {
+          "id": 48784759,
+          "title": "The Common Lisp Cookbook – LispWorks Review",
+          "url": "https://lispcookbook.github.io/cl-cookbook/lispworks.html",
+          "score": 85,
+          "descendants": 0,
+          "by": "AlexeyBrin",
+          "time": "2026-07-04T11:57:41.000Z"
+        },
+        {
+          "id": 48738395,
+          "title": "Drone Physics",
+          "url": "https://iahmed.me/post/drone-physics/",
+          "score": 79,
+          "descendants": 23,
+          "by": "wrxd",
+          "time": "2026-06-30T19:57:37.000Z"
+        },
+        {
+          "id": 48746090,
+          "title": "Designing DB partitions you don't have to babysit",
+          "url": "https://explainanalyze.com/p/designing-partitioning-you-dont-have-to-babysit/",
+          "score": 59,
+          "descendants": 9,
+          "by": "rtolkachev",
+          "time": "2026-07-01T13:05:16.000Z"
+        },
+        {
+          "id": 48743462,
+          "title": "It's not me, it's the compiler",
+          "url": "https://parsa.wtf/cast/",
+          "score": 56,
+          "descendants": 10,
+          "by": "SVI",
+          "time": "2026-07-01T07:41:04.000Z"
+        },
+        {
+          "id": 48786880,
+          "title": "Plein Air",
+          "url": "https://art.joonas.wtf/",
+          "score": 56,
+          "descendants": 8,
+          "by": "bookofjoe",
+          "time": "2026-07-04T16:55:29.000Z"
+        },
+        {
+          "id": 48787201,
+          "title": "BareMetal RAM Dumper – Bare-metal x86 tool for Cold Boot Attack experiments",
+          "url": "https://github.com/pIat0n/BareMetal-RAM-Dumper",
+          "score": 53,
+          "descendants": 37,
+          "by": "liffik",
+          "time": "2026-07-04T17:37:21.000Z"
+        },
+        {
+          "id": 48786495,
+          "title": "Curveball",
+          "url": "https://mightyburger.net/projects/curveball/",
+          "score": 49,
+          "descendants": 11,
+          "by": "toilet",
+          "time": "2026-07-04T16:15:48.000Z"
+        },
+        {
+          "id": 48753160,
+          "title": "Neural Render Proxies for Interactive and Differentiable Lighting",
+          "url": "https://studios.disneyresearch.com/2026/07/01/neural-render-proxies-for-interactive-and-differentiable-lighting/",
+          "score": 49,
+          "descendants": 8,
+          "by": "tobr",
+          "time": "2026-07-01T21:10:16.000Z"
+        },
+        {
+          "id": 48789712,
+          "title": "Jellyfish can heal wounds in minutes. Scientists want their secrets",
+          "url": "https://www.mbl.edu/news/jellyfish-can-heal-wounds-minutes-scientists-want-their-secrets",
+          "score": 32,
+          "descendants": 4,
+          "by": "hhs",
+          "time": "2026-07-04T22:36:28.000Z"
+        },
+        {
+          "id": 48789416,
+          "title": "Australian influencer Lily Jay's tangled web of AI manipulation",
+          "url": "https://www.abc.net.au/news/2026-07-05/lily-jay-foundation-posts-ai-generated-misleading-videos/106866422",
+          "score": 32,
+          "descendants": 5,
+          "by": "phs318u",
+          "time": "2026-07-04T21:50:14.000Z"
+        }
+      ]
+    },
+    "githubTrending": {
+      "source": "github-trending",
+      "fetchedAt": "2026-07-05T01:36:54.194Z",
+      "count": 18,
+      "repos": [
+        {
+          "owner": "openai",
+          "name": "codex-plugin-cc",
+          "fullName": "openai/codex-plugin-cc",
+          "url": "https://github.com/openai/codex-plugin-cc",
+          "description": "Use Codex from Claude Code to review code or delegate tasks.",
+          "language": "JavaScript",
+          "totalStars": 24474,
+          "todayStars": 718
+        },
+        {
+          "owner": "JuliusBrussee",
+          "name": "caveman",
+          "fullName": "JuliusBrussee/caveman",
+          "url": "https://github.com/JuliusBrussee/caveman",
+          "description": "🪨 why use many token when few token do trick — Claude Code skill that cuts 65% of tokens by talking like caveman",
+          "language": "JavaScript",
+          "totalStars": 84001,
+          "todayStars": 1089
+        },
+        {
+          "owner": "alibaba",
+          "name": "page-agent",
+          "fullName": "alibaba/page-agent",
+          "url": "https://github.com/alibaba/page-agent",
+          "description": "JavaScript in-page GUI agent. Control web interfaces with natural language.",
+          "language": "TypeScript",
+          "totalStars": 23132,
+          "todayStars": 742
+        },
+        {
+          "owner": "usestrix",
+          "name": "strix",
+          "fullName": "usestrix/strix",
+          "url": "https://github.com/usestrix/strix",
+          "description": "Open-source AI penetration testing tool to find and fix your app’s vulnerabilities.",
+          "language": "Python",
+          "totalStars": 36074,
+          "todayStars": 1904
+        },
+        {
+          "owner": "ChromeDevTools",
+          "name": "chrome-devtools-mcp",
+          "fullName": "ChromeDevTools/chrome-devtools-mcp",
+          "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+          "description": "Chrome DevTools for coding agents",
+          "language": "TypeScript",
+          "totalStars": 45786,
+          "todayStars": 304
+        },
+        {
+          "owner": "Zackriya-Solutions",
+          "name": "meetily",
+          "fullName": "Zackriya-Solutions/meetily",
+          "url": "https://github.com/Zackriya-Solutions/meetily",
+          "description": "Privacy first, AI meeting assistant with 4x faster Parakeet/Whisper live transcription, speaker diarization, and Ollama summarization built on Rust. 100% local processing. no cloud required. Meetily (Meetly Ai - https://meetily.ai) is the #1 Self-hosted, Open-source Ai meeting note taker for macOS & Windows.",
+          "language": "Rust",
+          "totalStars": 15309,
+          "todayStars": 718
+        },
+        {
+          "owner": "asgeirtj",
+          "name": "system_prompts_leaks",
+          "fullName": "asgeirtj/system_prompts_leaks",
+          "url": "https://github.com/asgeirtj/system_prompts_leaks",
+          "description": "Extracted system prompts from Anthropic - Claude Fable 5, Opus 4.8, Claude Code, Claude Design. OpenAI - ChatGPT 5.5 Thinking, GPT 5.5 Instant, Codex. Google - Gemini 3.5 Flash, 3.1 Pro, Antigravity. xAI - Grok, Cursor, Copilot, VS Code, Perplexity, and more. Updated regularly.",
+          "language": "JavaScript",
+          "totalStars": 48947,
+          "todayStars": 471
+        },
+        {
+          "owner": "harvard-edge",
+          "name": "cs249r_book",
+          "fullName": "harvard-edge/cs249r_book",
+          "url": "https://github.com/harvard-edge/cs249r_book",
+          "description": "Machine Learning Systems",
+          "language": "Python",
+          "totalStars": 26576,
+          "todayStars": 443
+        },
+        {
+          "owner": "rommapp",
+          "name": "romm",
+          "fullName": "rommapp/romm",
+          "url": "https://github.com/rommapp/romm",
+          "description": "A beautiful, powerful, self-hosted rom manager and player.",
+          "language": "Python",
+          "totalStars": 10217,
+          "todayStars": 398
+        },
+        {
+          "owner": "ogulcancelik",
+          "name": "herdr",
+          "fullName": "ogulcancelik/herdr",
+          "url": "https://github.com/ogulcancelik/herdr",
+          "description": "agent multiplexer that lives in your terminal.",
+          "language": "Rust",
+          "totalStars": 11462,
+          "todayStars": 707
+        },
+        {
+          "owner": "dotnet",
+          "name": "skills",
+          "fullName": "dotnet/skills",
+          "url": "https://github.com/dotnet/skills",
+          "description": "Repository for skills to assist AI coding agents with .NET and C#",
+          "language": "C#",
+          "totalStars": 3811,
+          "todayStars": 59
+        },
+        {
+          "owner": "agentskills",
+          "name": "agentskills",
+          "fullName": "agentskills/agentskills",
+          "url": "https://github.com/agentskills/agentskills",
+          "description": "Specification and documentation for Agent Skills",
+          "language": "Python",
+          "totalStars": 22345,
+          "todayStars": 351
+        },
+        {
+          "owner": "immich-app",
+          "name": "immich",
+          "fullName": "immich-app/immich",
+          "url": "https://github.com/immich-app/immich",
+          "description": "High performance self-hosted photo and video management solution.",
+          "language": "TypeScript",
+          "totalStars": 105639,
+          "todayStars": 201
+        },
+        {
+          "owner": "chthollyphile",
+          "name": "folia-major",
+          "fullName": "chthollyphile/folia-major",
+          "url": "https://github.com/chthollyphile/folia-major",
+          "description": "专注于绚丽的歌词动画效果的本地音乐/navidrome/第三方网易云播放器",
+          "language": "TypeScript",
+          "totalStars": 989,
+          "todayStars": 175
+        },
+        {
+          "owner": "mattpocock",
+          "name": "skills",
+          "fullName": "mattpocock/skills",
+          "url": "https://github.com/mattpocock/skills",
+          "description": "Skills for Real Engineers. Straight from my .claude directory.",
+          "language": "Shell",
+          "totalStars": 156582,
+          "todayStars": 973
+        },
+        {
+          "owner": "CoplayDev",
+          "name": "unity-mcp",
+          "fullName": "CoplayDev/unity-mcp",
+          "url": "https://github.com/CoplayDev/unity-mcp",
+          "description": "Unity MCP acts as a bridge between AI assistants and your Unity Editor. Give your LLM tools to manage assets, control scenes, edit scripts, and automate tasks within Unity.",
+          "language": "C#",
+          "totalStars": 11609,
+          "todayStars": 69
+        },
+        {
+          "owner": "alirezarezvani",
+          "name": "claude-skills",
+          "fullName": "alirezarezvani/claude-skills",
+          "url": "https://github.com/alirezarezvani/claude-skills",
+          "description": "337 Claude Code skills & agent skills & plugins (30+ Agents, 70+ custom commands, 330+ skills, customizable references, scripts)for Claude Code, Codex, Gemini CLI, Cursor, and 8 more coding agents — engineering, marketing, product, compliance, C-level advisory, research, business operations, commercial & finance, and your daily productivity skills.",
+          "language": "Python",
+          "totalStars": 20169,
+          "todayStars": 136
+        },
+        {
+          "owner": "crynta",
+          "name": "terax-ai",
+          "fullName": "crynta/terax-ai",
+          "url": "https://github.com/crynta/terax-ai",
+          "description": "Lightweight (7MB) Terminal-first AI-native dev workspace",
+          "language": "TypeScript",
+          "totalStars": 8061,
+          "todayStars": 62
+        }
+      ]
+    }
+  },
+  "fetchSummary": {
+    "juya": "ok",
+    "aihotDaily": "failed",
+    "aihotItems": "failed",
+    "hackernews": "ok (30 stories >= 30pts)",
+    "githubTrending": "ok (18 repos)"
+  }
+}
