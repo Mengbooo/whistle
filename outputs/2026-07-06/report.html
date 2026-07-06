@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Kami">
+  <meta name="description" content="低噪音互联网工作日报，聚焦 AI 工具、Agent 开发生态、平台基础设施、产品增长与合规边界。">
+  <meta name="keywords" content="Whistle,互联网日报,AI,Agent,开发工具,合规">
+  <title>Whistle 互联网日报｜2026-07-06</title>
+  <style>
+    :root {
+      --parchment: #f5f4ed;
+      --ivory: #faf9f5;
+      --warm-sand: #e8e6dc;
+      --brand: #1B365D;
+      --brand-light: #2D5A8A;
+      --near-black: #141413;
+      --dark-warm: #3d3d3a;
+      --olive: #504e49;
+      --stone: #6b6a64;
+      --border: #e8e6dc;
+      --border-soft: #e5e3d8;
+      --tag-blue: #EEF2F7;
+      --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+      --sans: var(--serif);
+      --mono: "JetBrains Mono", "SF Mono", Consolas, "TsangerJinKai02", "Source Han Serif SC", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--parchment);
+      color: var(--near-black);
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0.12pt;
+      -webkit-font-smoothing: antialiased;
+    }
+    @page {
+      size: A4;
+      margin: 14mm 13mm 16mm;
+      background: #f5f4ed;
+    }
+    @media print {
+      body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .page { max-width: none; padding: 0; }
+      .item, .note, .section-title { break-inside: avoid; page-break-inside: avoid; }
+      a { color: var(--brand); text-decoration: none; }
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 56px 42px 72px;
+    }
+    header {
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border-soft);
+      margin-bottom: 34px;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.35;
+      letter-spacing: 0.8pt;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      color: var(--near-black);
+      font-size: 34px;
+      line-height: 1.18;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .intro {
+      max-width: 780px;
+      margin: 14px 0 0;
+      color: var(--olive);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      background: var(--tag-blue);
+      color: var(--brand);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 500;
+      letter-spacing: 0.2pt;
+    }
+    .section-title {
+      margin: 30px 0 14px;
+      padding-left: 10px;
+      border-left: 3px solid var(--brand);
+      border-radius: 2px;
+      color: var(--near-black);
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .section-note {
+      margin: -4px 0 12px;
+      color: var(--stone);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .item {
+      margin: 0 0 12px;
+      padding: 15px 18px 14px;
+      background: var(--ivory);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 1px 0 #eeeade;
+    }
+    .item h3 {
+      margin: 0 0 8px;
+      color: var(--near-black);
+      font-size: 17px;
+      line-height: 1.32;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .item p {
+      margin: 0;
+      color: var(--dark-warm);
+      font-size: 14.5px;
+      line-height: 1.58;
+    }
+    .source {
+      margin-top: 10px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    a {
+      color: var(--brand);
+      text-decoration: none;
+      border-bottom: 1px solid #D0DCE9;
+    }
+    a:hover { color: var(--brand-light); }
+    .note {
+      margin: 0 0 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #faf9f5;
+      color: var(--dark-warm);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+    .action-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .action-list .note { margin: 0; }
+    .role {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--brand);
+      font-weight: 500;
+    }
+    footer {
+      margin-top: 36px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-soft);
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    @media (max-width: 720px) {
+      .page { padding: 34px 18px 48px; }
+      h1 { font-size: 27px; }
+      .intro { font-size: 15px; }
+      .section-title { font-size: 20px; }
+      .action-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Daily Intelligence · 2026-07-06 · Asia/Shanghai</p>
+      <h1>Whistle 互联网日报｜2026-07-06</h1>
+      <p class="intro">今天的有效信号集中在三个方向：开源大模型与 Agent 工具继续向生产工作流靠近；平台级 AI 投入开始暴露算力、成本和交付约束；监管侧同时关注加密通信、智能信息服务和版权证据边界。本期按 juya 与 AI HOT 的编辑判断为主，结合 HN 高分讨论与 GitHub Trending，去重后保留 26 条工作相关信息。</p>
+      <div class="meta-row">
+        <span class="tag">正文 26 条</span>
+        <span class="tag">juya · AI HOT · HN · GitHub Trending</span>
+        <span class="tag">Agent 与平台基础设施</span>
+        <span class="tag">冷静 · 中立 · 反噪音</span>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">今日头条</h2>
+      <article class="item">
+        <h3>美团 LongCat-2.0 以 MIT 许可开源，国内大模型竞争继续转向工程可用性</h3>
+        <p>美团宣布 LongCat-2.0 完全开源，开放 1.6T MoE 模型权重与推理代码，支持 1M token 上下文，并强调长文本、任务路由专家和 Agent/Reasoning/Interaction 分组能力。对研发团队来说，重点不只是参数规模，而是 MIT 许可、推理代码、GPU 与 NPU 部署路径能否降低二次开发和私有化实验门槛；短期可以把它纳入长上下文、代码任务和本地部署评测池，长期看开源模型的竞争会越来越围绕“能否进入真实工具链”展开。</p>
+        <div class="source">来源：<a href="https://x.com/Meituan_LongCat/status/2073768940078317713">美团 LongCat</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>Claude Code 与 Codex 相关异常被集中讨论，AI 编程工具需要进入可靠性审计</h3>
+        <p>juya 收录了两类开发者反馈：Claude Code 被报告疑似跨会话缓存泄漏，Codex 环境中 GPT-5.5 推理 token 出现固定值聚类并影响复杂任务表现。两件事都尚需官方确认，但它们指向同一个工作问题：Agent 工具已经接近生产流程，团队不能只看“能不能写代码”，还要看上下文隔离、推理预算、日志追踪和失败回退。敏感仓库应优先使用最小权限、隔离工作区和人工审查，复杂任务也要保留基准样例，避免把模型波动误当成个体提示词问题。</p>
+        <div class="source">来源：<a href="https://github.com/anthropics/claude-code/issues/74066">Claude Code Issue</a>、<a href="https://github.com/openai/codex/issues/30364">Codex Issue</a>、juya-ai-daily</div>
+      </article>
+      <article class="item">
+        <h3>Meta 谈千兆瓦级 AI 集群，同时 NVIDIA 下一代机架传出延迟，算力扩张进入交付检验期</h3>
+        <p>AI HOT 收录的行业信号显示，扎克伯格称 Meta 正建设 Prometheus 级别的千兆瓦以上 AI 集群，并讨论数千亿美元资本投入；同日 SemiAnalysis 称 NVIDIA Kyber NVL144 延迟超过 12 个月至 2028 年。前者说明头部平台仍在用资本和基础设施换模型能力，后者提醒供应链和系统架构不会无限同步扩张。对依赖大模型 API、训练平台或 GPU 采购的团队，2026 年下半年应把成本、容量、可替代供应和模型降级策略放进基础设施规划。</p>
+        <div class="source">来源：<a href="https://x.com/rohanpaul_ai/status/2073834219659534816">Rohan Paul</a>、<a href="https://x.com/SemiAnalysis_/status/2073874671498387899">SemiAnalysis</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>欧盟 Chat Control 与中国智能信息服务草案并行推进，合规边界继续收紧</h3>
+        <p>欧盟理事会被报道通过快速程序推进 Chat Control 2.0，要求科技公司对加密通信进行扫描；中国网信办也就《互联网信息服务管理办法》修订稿再次征求意见，新增“智能信息服务”专章，涉及训练数据来源公示、合成内容标识和算法舆论治理。两者政策背景不同，但都在把平台的技术实现、内容识别和责任边界推到产品层。做通信、内容社区、AI 助手和跨境服务的团队，应提前梳理数据处理、标识、申诉、开关和区域化策略，而不是等法规落地后再补流程。</p>
+        <div class="source">来源：<a href="https://www.heise.de/en/news/Chat-Control-1-0-EU-Council-forces-messenger-scans-via-fast-track-11353659.html">Heise</a>、<a href="https://www.ithome.com/0/972/341.htm">IT之家</a>、AI HOT、HN</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">AI 与新工具</h2>
+      <article class="item">
+        <h3>Anthropic 提高 Claude API 速率限制，企业接入的瓶颈从额度转向治理</h3>
+        <p>Anthropic 宣布提高 Claude Platform API 调用频率上限，并简化层级结构，最高层级的 Sonnet 与 Haiku 获得 5 倍速率提升，且不同模型在同层级下有一致吞吐配置。对内部知识库、客服、代码助手和批处理任务来说，这会改善并发和排队体验，但也意味着团队更快暴露成本、权限和质量监控问题。接入方可以重新压测限流、重试、缓存和降级逻辑，避免调用能力提升后把治理短板放大。</p>
+        <div class="source">来源：<a href="https://x.com/ClaudeDevs/status/2072818299361263778">Claude Developers</a>、juya-ai-daily</div>
+      </article>
+      <article class="item">
+        <h3>LlamaIndex legal-kb 展示文件系统式 Agent 检索，复杂知识库开始标准化工具接口</h3>
+        <p>LlamaIndex 发布 legal-kb 参考应用，基于 Index v2 和 LlamaParse Platform，为 Agent 提供 retrieve、findFiles、readFile、grepFile 四类文件系统风格工具，并要求先定位文件清单再读取和检索。这个设计比“直接问向量库”更接近工程师查资料的过程，适合法律、财务、合同和合规文档等高引用场景。团队可借鉴它把知识库拆成可审计工具链：检索、精确查找、原文读取和引用返回分层处理，减少模型凭印象回答。</p>
+        <div class="source">来源：<a href="https://www.marktechpost.com/2026/07/05/llamaindex-legal-kb-agentic-retrieval-over-index-v2-with-retrieve-find-read-and-grep-tools">MarkTechPost</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>Vidu S1 推出实时交互视频模型，AI 输出形态继续向可视化和可操作演进</h3>
+        <p>生数科技发布 Vidu S1，主打实时视频通话、语音控制视频走向和无限时长连续互动，在 540P 下实现 25FPS 实时生成。它不只是视频生成效率提升，更像是把“生成内容”推进到“可持续互动场景”中。对教育、陪伴、游戏、营销和虚拟角色产品，值得观察的是交互闭环而不是单次画质；AI 输出可能继续从原始文本演进到 Markdown、HTML，再到实时视觉化、结构化、可交互的视频或模拟界面。</p>
+        <div class="source">来源：<a href="https://mp.weixin.qq.com/s/RuukpnoOA2tI0ERCNrLgtQ">生数科技</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>Safari MCP Server 让浏览器调试进入 Agent 工具链</h3>
+        <p>Safari Technology Preview 推出 Safari MCP Server，允许 MCP 客户端连接 Safari 窗口，获取 DOM、网络请求、截图、控制台信息，并执行 JavaScript。对前端开发者而言，这把浏览器从“人手动检查的界面”变成 Agent 可读取和操作的环境，可用于调试、可访问性检查和性能分析。短期适合在非生产账号和测试环境试用，长期看浏览器厂商会把 Agent 可观测性做成开发者工具的基本能力。</p>
+        <div class="source">来源：<a href="https://webkit.org/blog/18136/introducing-the-safari-mcp-server-for-web-developers">WebKit</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>阿里 Page Agent 以 DOM 文本映射操作网页，适合自有产品内嵌 AI 副驾</h3>
+        <p>阿里巴巴开源 Page Agent，一个嵌入网页的 JavaScript 客户端库，通过 FlatDomTree 文本映射让纯文本模型直接点击、填表和操作 DOM，而不是依赖截图和多模态模型。它继承当前用户会话，适合自有后台、表单系统和 SaaS 产品尝试自然语言操作，但也要求风险动作必须有服务端校验和确认。相比外部浏览器自动化，这类 in-page GUI Agent 更接近未来产品内置副驾的形态。</p>
+        <div class="source">来源：<a href="https://www.marktechpost.com/2026/07/02/meet-alibabas-page-agent-a-javascript-in-page-gui-agent-that-controls-web-interfaces-with-natural-language-through-the-dom">MarkTechPost</a>、<a href="https://github.com/alibaba/page-agent">GitHub Trending</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>面壁 ForgeTrain 用 AI 自动生成训练框架，AIWare 工程开始进入基础设施层</h3>
+        <p>面壁智能发布 ForgeTrain，称其可针对特定模型和硬件自动生成生产级预训练代码，并在 8 小时内追平 Megatron-LM，1.5 至 2 天内稳定反超，模型 FLOPS 利用率提升约 8% 到 10%。这类工具的价值不在“AI 写了训练代码”的新鲜感，而在于将硬件适配、并行策略和性能调优变成可迭代流程。对模型团队而言，值得跟进的是自动化训练基础设施能否缩短新硬件和新模型的工程磨合期。</p>
+        <div class="source">来源：<a href="https://mp.weixin.qq.com/s/JVBbqU1O967ktzfEPuDERQ">面壁智能</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>NVIDIA ASPIRE 展示自我改进机器人框架，Agent 能力向实体任务迁移</h3>
+        <p>NVIDIA 与多所大学提出 ASPIRE，通过协调器、执行器、闭环执行引擎、技能库和进化搜索，让编程智能体编写并优化机器人控制程序，在多个机器人任务上显著提升零样本成功率。它说明 Agent 的价值不只在屏幕内自动化，也在逐步进入具身任务的程序合成和技能复用。对机器人和工业自动化团队，短期可关注技能库和闭环评估方法，长期则要判断哪些实体任务可以被拆成可验证、可回滚的程序片段。</p>
+        <div class="source">来源：<a href="https://www.marktechpost.com/2026/07/03/nvidia-ai-introduces-aspire-a-self-improving-robotics-framework-reaching-31-zero-shot-on-libero-pro-long-tasks">MarkTechPost</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>Meetily 登顶 GitHub Trending，本地优先 AI 会议助手仍有明确需求</h3>
+        <p>Meetily 今日在 GitHub Trending 获得 1400 多颗星，主打本地处理、实时转写、说话人分离和 Ollama 摘要，强调不依赖云端。会议助手已是拥挤赛道，但开源、自托管和隐私优先仍有清晰用户群，尤其适合企业内部会议、客户访谈和敏感项目复盘。产品团队可以从中看到一个稳定信号：AI 办公工具的竞争不会只围绕模型效果，部署边界、数据留存和可控性会持续影响采购决策。</p>
+        <div class="source">来源：<a href="https://github.com/Zackriya-Solutions/meetily">GitHub Trending</a></div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">大厂与平台动态</h2>
+      <article class="item">
+        <h3>Microsoft 新设 Frontier Company，企业 AI 交付继续向现场工程模式靠拢</h3>
+        <p>Microsoft 据报成立 Frontier Company，投入 25 亿美元并派驻 6000 名 AI 工程师到企业客户现场，共同设计、部署和持续改进 AI 系统。这说明大厂已经意识到企业 AI 的难点不在“卖 API”，而在流程重构、系统集成和结果交付。对 B2B 团队和系统集成商，这是明确竞争信号：客户会越来越要求厂商对落地结果负责，而不是只提供模型、平台或咨询方案。</p>
+        <div class="source">来源：<a href="https://the-decoder.com/microsoft-launches-2-5-billion-frontier-company-to-embed-6000-ai-engineers-inside-enterprise-clients">The Decoder</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>企业限制旗舰模型使用，AI 工具成本开始进入常态化管理</h3>
+        <p>AI HOT 收录的报道显示，花旗、Adobe、Atlassian、亚马逊等企业限制员工使用部分旗舰模型，转向低成本模型或更严格的配额，原因是 AI 工具开销快速上升。这个变化会影响开发工具、Copilot、知识库和内部 Agent 的推广节奏：组织会从“鼓励试用”转向“按任务分配模型”。研发管理者应开始建立模型分层策略，把高价模型留给复杂规划、审查和综合判断，把低价模型用于机械改写、检索整理和批量任务。</p>
+        <div class="source">来源：<a href="https://www.ithome.com/0/971/937.htm">IT之家</a>、AI HOT</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">产品与增长观察</h2>
+      <article class="item">
+        <h3>一款自闭症儿童沟通应用从等候区获得强反馈，垂直痛点仍能产生清晰 PMF</h3>
+        <p>HN 热门文章讲述一位父亲为非语言自闭症儿子开发沟通应用，在言语治疗室被其他家长和治疗师强烈认可，从而意外发现产品市场匹配。这个故事的工作价值不在情绪本身，而在于它提醒产品团队：在通用 AI 工具泛滥时，真正深的垂直需求往往来自对用户场景的长期陪伴和具体限制的理解。做医疗、教育、无障碍和家庭工具的团队，可以优先观察“用户是否愿意在真实场景中立刻替换旧工具”，而不是只看注册和点赞。</p>
+        <div class="source">来源：<a href="https://extelligence.substack.com/p/i-accidentally-started-a-small-business">Extelligence</a>、AI HOT、HN</div>
+      </article>
+      <article class="item">
+        <h3>26000 名学生研究提示 AI 学习工具存在长期成本，教育产品不能只优化作业效率</h3>
+        <p>The Decoder 收录的研究追踪 26000 名中学生，发现 AI 使用可提高作业分数并缩短完成时间，但闭卷考试和升学考试成绩下降，完整影响约两年才显现。对教育产品和校园 AI 工具来说，这意味着“更快完成作业”不能直接等同于学习效果提升。产品设计应更重视解释、练习、延迟反馈和无辅助评估，而不是只把 AI 作为答案生产器；监管和学校采购也可能更关注长期学习结果。</p>
+        <div class="source">来源：<a href="https://the-decoder.com/a-26000-student-study-shows-ais-hidden-learning-cost-takes-two-full-years-to-surface">The Decoder</a>、AI HOT</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">开发者与工程实践</h2>
+      <article class="item">
+        <h3>Senior SWE-Bench 评估高级工程任务，Agent 能力提升但仍远未替代资深工程师</h3>
+        <p>Senior SWE-Bench 用功能开发和 Bug 修复任务评估 AI Agent 的高级工程能力，榜单显示 Claude Opus 4.8 搭配 Mini-SWE-Agent 通过率为 24.0%，Sonnet 5 为 19.4%，GPT-5.5 为 16.0%。这个基准比简单补丁任务更接近真实工程，因为任务常涉及多文件、运行时信息和品味判断。团队可把它作为预期校准：Agent 适合承担检索、初稿、机械修改和部分修复，但高级工程判断仍需要人类审查、测试和架构约束。</p>
+        <div class="source">来源：<a href="https://senior-swe-bench.snorkel.ai/">Senior SWE-Bench</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>“短绳 AI 编程法”强调人类持续审查，适合当前 Agent 开发现实</h3>
+        <p>HN 热门文章总结使用 AI 编码 Agent 的短绳方法：先规划和拆分任务，不使用放任式自动执行，每次变更前审查 diff，每个子任务后提交，并进行人工与 AI 双重 PR 审查。这套方法并不新奇，但与今天的工具可靠性讨论互相印证。对研发团队，当前更稳妥的做法是把 AI 当成高产但需要监督的协作者，把提交边界、测试门槛、回滚点和审查责任写进流程。</p>
+        <div class="source">来源：<a href="https://blog.okturtles.org/2026/07/short-leash-ai-method">okturtles</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>Strix 与 AI 安全工具走热，自动化渗透测试成为 Agent 的高相关落点</h3>
+        <p>GitHub Trending 中 Strix 获得超过 1100 今日星标，定位为开源 AI 渗透测试工具，用于发现并修复应用漏洞。安全是 Agent 工具最容易形成闭环的场景之一，因为目标、证据、复现和修复都相对结构化，但也最需要权限控制和审计。工程团队可以在隔离环境评估这类工具，用于辅助资产扫描、漏洞复现和修复建议，而不是让其直接进入生产网络执行高风险动作。</p>
+        <div class="source">来源：<a href="https://github.com/usestrix/strix">GitHub Trending</a></div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">投融资与行业机会</h2>
+      <article class="item">
+        <h3>可灵 AI 获大额注资并计划赴港上市，视频生成进入资本和算力双重竞赛</h3>
+        <p>快手公告显示，北京可灵获得初始投资者 20.28 亿美元注资，并有额外投资者追加认购，总认购上限约 30 亿美元，投后估值 180 亿美元，快手预计未来 12 个月内启动可灵 AI 赴港上市。视频生成仍是资本关注焦点，但商业化压力也会同步提高。内容工具、广告、电商和 IP 运营团队应关注视频生成从“素材能力”走向“生产流程”的速度，尤其是成本、版权、审核和工作流集成。</p>
+        <div class="source">来源：<a href="https://www.ithome.com/0/971/954.htm">IT之家</a>、AI HOT</div>
+      </article>
+      <article class="item">
+        <h3>宇树科技科创板 IPO 注册获同意，机器人产业进入资本市场检验期</h3>
+        <p>证监会同意宇树科技首次公开发行股票并在科创板上市的注册申请。宇树是国内头部足式和人形机器人企业，核心优势包括关节电机、减速器、控制器等关键部件自研，以及成本控制能力。对产业观察者而言，这不是单一公司事件，而是机器人硬件、供应链和具身智能商业化进入公开市场定价的节点；相关团队应关注上市后披露的收入结构、毛利、研发投入和交付场景，而不是只看演示视频热度。</p>
+        <div class="source">来源：<a href="https://www.ithome.com/0/971/790.htm">IT之家</a>、AI HOT</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">政策监管与合规</h2>
+      <article class="item">
+        <h3>Midjourney 要求片厂披露内部 AI 使用，版权诉讼开始反向审视传统内容方</h3>
+        <p>TechCrunch 报道称，Midjourney 在与 Disney、Universal、Warner Bros. 的版权诉讼中提交动议，要求三家片厂披露内部生成式 AI 使用情况，包括提示词和生成结果。这个动作说明 AI 版权争议不再只是“模型公司如何训练”，也会追问权利方自身是否使用同类技术以及如何管理素材。对内容、设计和营销团队，当前应建立生成记录、素材授权和输出归档机制，以便在合作、维权或审计时说明来源边界。</p>
+        <div class="source">来源：<a href="https://techcrunch.com/2026/07/04/midjourney-wants-hollywood-studios-to-reveal-the-details-of-their-ai-usage/">TechCrunch</a>、juya-ai-daily</div>
+      </article>
+      <article class="item">
+        <h3>全球首例 AI Agent 勒索攻击报告提醒企业检查暴露服务与凭证治理</h3>
+        <p>Sysdig 被报道记录到 AI Agent “JADEPUFFER”自动完成的勒索攻击，利用暴露的 Langflow 服务漏洞和多类云平台凭证，横向移动到数据库与配置服务，并在失败后自主分析和修复操作。即使具体“首例”表述仍需谨慎，这类案例已经足够提醒企业：Agent 化攻击会放大已知漏洞、默认密码、凭证泄漏和过宽权限的连锁影响。安全团队应优先清理暴露 AI 服务、密钥环境变量、对象存储默认配置和云账号权限。</p>
+        <div class="source">来源：<a href="https://www.ithome.com/0/972/424.htm">IT之家</a>、AI HOT</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">社交热度观察</h2>
+      <p class="section-note">本板块承接高讨论但行动性弱于核心工作信号的信息，不参与头条排序。</p>
+      <article class="item">
+        <h3>Organic Maps 在 HN 获 796 分，开源、离线和隐私仍是地图产品的强情绪信号</h3>
+        <p>Organic Maps 成为 HN 今日最高分帖子，讨论集中在离线地图、开源和隐私体验。这对大多数互联网团队不是直接行动项，但它反映了开发者社区对基础工具“可控、可离线、少追踪”的持续偏好。做工具型产品时，隐私与本地能力仍可以成为差异化卖点，尤其是在用户已经疲劳于云端账号和订阅绑定的场景。</p>
+        <div class="source">来源：<a href="https://organicmaps.app/">Organic Maps</a>、HN</div>
+      </article>
+      <article class="item">
+        <h3>OpenPrinter 和 Flipper Zero 相关讨论走热，硬件可控性话题仍能激发社区参与</h3>
+        <p>HN 中 OpenPrinter 获 384 分，Flipper Zero 开发路线获 225 分，两者都与硬件工具的开放性、可维护性和开发生态有关。它们不构成核心互联网业务信号，但对开发者社区和硬件创业者有参考价值：开放接口、可修复性和生态路线说明，仍然是高参与社区产品的重要信任基础。</p>
+        <div class="source">来源：<a href="https://www.opentools.studio/">OpenPrinter</a>、<a href="https://blog.flipper.net/future-of-flipper-zero-development/">Flipper Zero</a>、HN</div>
+      </article>
+      <article class="item">
+        <h3>GitHub Trending 被 Agent 技能、系统提示和多 Agent 工具占据，生态兴趣高于成熟度</h3>
+        <p>今日 GitHub Trending 中，codex-plugin-cc、system_prompts_leaks、taste-skill、claude-skills、herdr、caveman、planning-with-files 等项目集中出现，说明开发者正围绕 Agent 编排、提示词、技能包和上下文管理快速实验。它们大多还不应直接视为生产方案，但能说明生态正在从“单个聊天窗口”转向“可安装能力、可组合工具和长期任务状态”。团队可观察设计模式，但不宜把星标热度等同于可靠性。</p>
+        <div class="source">来源：<a href="https://github.com/openai/codex-plugin-cc">codex-plugin-cc</a>、<a href="https://github.com/ogulcancelik/herdr">herdr</a>、<a href="https://github.com/OthmanAdi/planning-with-files">planning-with-files</a>、GitHub Trending</div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">今日行动建议</h2>
+      <div class="action-list">
+        <div class="note"><span class="role">产品</span>评估自有产品是否适合加入 in-page Agent、实时视觉交互或本地优先能力；先从低风险、可撤销、可审计的流程开始。</div>
+        <div class="note"><span class="role">研发</span>为 AI 编程工具建立最小权限、隔离工作区、提交粒度和基准任务，避免把 Agent 直接接入敏感仓库和生产凭证。</div>
+        <div class="note"><span class="role">运营与增长</span>关注教育、会议、无障碍沟通等垂直场景的真实替换意愿，不把社交热度当成 PMF 证据。</div>
+        <div class="note"><span class="role">管理者</span>把 AI 工具成本纳入预算治理，建立模型分层和使用审计；同时为政策、版权和数据留存准备可解释流程。</div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">去噪说明</h2>
+      <div class="note">本期合并了 juya 与 AI HOT 中重复出现的 Claude/Codex、Chat Control、Page Agent、Agent 工具链等主题；HN 中纯技术怀旧、游戏、个人博客和低相关硬件内容多数过滤，仅保留分数极高或能反映开发者社区偏好的条目进入社交热度观察。GitHub Trending 中星标很高但工作相关性弱的娱乐、照片管理、课程资料类项目未进入核心板块。</div>
+    </section>
+
+    <section>
+      <h2 class="section-title">抓取异常</h2>
+      <div class="note">本期四个精选源均抓取成功：juya-ai-daily、AI HOT daily、AI HOT items、Hacker News Firebase API、GitHub Trending。未发现需要影响正文编排的抓取异常。</div>
+    </section>
+
+    <footer>
+      Whistle 互联网日报由本地精选源与编辑判断生成。内容保持冷静、中立、克制，优先服务产品、研发、增长、商业化、基础设施与合规决策。
+    </footer>
+  </main>
+</body>
+</html>
