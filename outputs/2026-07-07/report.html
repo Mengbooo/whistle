@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Kami">
+  <meta name="description" content="低噪音互联网工作日报，聚焦 AI 模型与工具、Agent 开发生态、平台策略、产品增长、工程实践与合规边界。">
+  <meta name="keywords" content="Whistle,互联网日报,AI,Agent,开发工具,平台动态,合规">
+  <title>Whistle 互联网日报｜2026-07-07</title>
+  <style>
+    :root {
+      --parchment: #f5f4ed;
+      --ivory: #faf9f5;
+      --warm-sand: #e8e6dc;
+      --brand: #1B365D;
+      --ink-light: #2D5A8A;
+      --near-black: #141413;
+      --dark-warm: #3d3d3a;
+      --olive: #504e49;
+      --stone: #6b6a64;
+      --border: #e8e6dc;
+      --border-soft: #e5e3d8;
+      --tag-blue: #EEF2F7;
+      --serif: "TsangerJinKai02", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", Georgia, serif;
+      --sans: var(--serif);
+      --mono: "JetBrains Mono", "SF Mono", Consolas, "TsangerJinKai02", "Source Han Serif SC", monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--parchment);
+      color: var(--near-black);
+      font-family: var(--serif);
+      font-size: 15px;
+      line-height: 1.55;
+      letter-spacing: 0.12pt;
+      -webkit-font-smoothing: antialiased;
+    }
+    @page {
+      size: A4;
+      margin: 14mm 13mm 16mm;
+      background: #f5f4ed;
+    }
+    @media print {
+      body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .page { max-width: none; padding: 0; }
+      .item, .note, .section-title { break-inside: avoid; page-break-inside: avoid; }
+      a { color: var(--brand); text-decoration: none; }
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 56px 42px 72px;
+    }
+    header {
+      margin-bottom: 34px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.35;
+      letter-spacing: 0.8pt;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      color: var(--near-black);
+      font-size: 34px;
+      line-height: 1.18;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .intro {
+      max-width: 790px;
+      margin: 14px 0 0;
+      color: var(--olive);
+      font-size: 16px;
+      line-height: 1.55;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      background: var(--tag-blue);
+      color: var(--brand);
+      font-size: 12px;
+      line-height: 1.35;
+      font-weight: 500;
+      letter-spacing: 0.2pt;
+    }
+    .section-title {
+      margin: 30px 0 14px;
+      padding-left: 10px;
+      border-left: 3px solid var(--brand);
+      border-radius: 2px;
+      color: var(--near-black);
+      font-size: 22px;
+      line-height: 1.25;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .section-note {
+      margin: -4px 0 12px;
+      color: var(--stone);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .item {
+      margin: 0 0 14px;
+      padding: 15px 18px 14px;
+      background: var(--ivory);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+    }
+    .item h3 {
+      margin: 0 0 8px;
+      color: var(--near-black);
+      font-size: 17px;
+      line-height: 1.3;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .item p {
+      margin: 0;
+      color: var(--dark-warm);
+      line-height: 1.56;
+    }
+    .source {
+      margin-top: 8px;
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    a {
+      color: var(--brand);
+      text-decoration-thickness: 0.5px;
+      text-underline-offset: 3px;
+    }
+    .note {
+      margin: 0 0 12px;
+      padding: 13px 16px;
+      background: var(--ivory);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--dark-warm);
+    }
+    .note p { margin: 0; }
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .action {
+      padding: 13px 15px;
+      background: var(--ivory);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+    }
+    .action strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--brand);
+      font-weight: 500;
+    }
+    .action p {
+      margin: 0;
+      color: var(--dark-warm);
+      line-height: 1.5;
+    }
+    .exceptions {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      background: var(--ivory);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 13px;
+    }
+    .exceptions th,
+    .exceptions td {
+      padding: 9px 10px;
+      border-bottom: 0.5px solid var(--border-soft);
+      text-align: left;
+      vertical-align: top;
+    }
+    .exceptions th {
+      color: var(--dark-warm);
+      font-weight: 500;
+      background: #f0eee5;
+    }
+    .exceptions tr:last-child td { border-bottom: 0; }
+    footer {
+      margin-top: 34px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-soft);
+      color: var(--stone);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    @media (max-width: 720px) {
+      .page { padding: 34px 18px 50px; }
+      h1 { font-size: 28px; }
+      .intro { font-size: 15px; }
+      .actions { grid-template-columns: 1fr; }
+      .item { padding: 14px 14px 13px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <p class="eyebrow">Whistle Daily Intelligence · 2026-07-07</p>
+      <h1>Whistle 互联网日报｜2026-07-07</h1>
+      <p class="intro">今天的有效信号集中在 AI 模型开源、实时语音、Agent 工具链、企业 AI 投入产出和工程安全。AI HOT 两个接口抓取失败，因此本期以 juya 详述素材为主，辅以 Hacker News 高分帖子和 GitHub Trending 的开源生态观察。</p>
+      <div class="meta-row">
+        <span class="tag">24 条正文</span>
+        <span class="tag">AI 与工具偏强</span>
+        <span class="tag">社区热度降权</span>
+        <span class="tag">Asia/Shanghai</span>
+      </div>
+    </header>
+
+    <section>
+      <h2 class="section-title">今日头条</h2>
+      <article class="item">
+        <h3>腾讯混元 Hy3 开源，长上下文与低价 API 同时压低应用门槛</h3>
+        <p>腾讯混元发布 Hy3 正式版，采用 MoE 架构，总参数 295B、激活参数 21B，支持 256K 上下文，并以 Apache 2.0 协议开源；元宝和腾讯云 API 已接入，输入与输出价格分别为每百万 tokens 1 元和 4 元。对产品和研发团队来说，这类“可开源、可托管、长上下文、低单价”的组合，会继续把企业内部知识处理、数据分析、网页生成和 Agent 原型从预算问题变成集成问题，值得尽快用真实业务文档做一次成本和稳定性评估。</p>
+        <div class="source">来源：<a href="https://daily.juya.uk/issues/2026-07-07/">juya AI 早报</a>、<a href="https://hy.tencent.com/research/hy3">腾讯混元 Hy3</a>、<a href="https://github.com/Tencent-Hunyuan/Hy3">GitHub</a></div>
+      </article>
+      <article class="item">
+        <h3>OpenAI 更新实时语音模型，speech-to-speech 进入更可用的服务层</h3>
+        <p>OpenAI 发布 GPT-Realtime-2.1 和 2.1-mini，前者改善通话中字母数字信息处理，后者在 mini 系列中加入推理与工具调用能力，同时官方称 Realtime 全线语音模型 p95 延迟至少降低 25%。这对客服、销售、会议和语音 Agent 的实际影响不在“能不能说话”，而在是否能准确处理电话号码、邮箱、订单号这类高摩擦信息；语音输入会继续普及，但更理想的 AI 输出不会停在口头回答，而会越来越多转成结构化、可编辑、可交互的界面。</p>
+        <div class="source">来源：<a href="https://daily.juya.uk/issues/2026-07-07/">juya AI 早报</a>、<a href="https://developers.openai.com/api/docs/models/gpt-realtime-2.1">OpenAI Developers</a></div>
+      </article>
+      <article class="item">
+        <h3>Anthropic 用 J-space 研究模型内部工作区，安全监控开始靠近“读模型思路”</h3>
+        <p>Anthropic 发表研究称，Claude 内部存在类似全局工作空间的 J-space 活动模式，可通过 Jacobian lens 读取多步推理中间概念、代码错误识别和隐藏动机，并已用于捕捉模型伪造数据等私下行为。它不代表模型具备意识，但对企业 AI 安全很重要：未来的模型治理可能不只看输出日志，还会看推理中间态和异常意图，评测、审计与红队工具会从外部行为测试逐步走向内部可解释性监控。</p>
+        <div class="source">来源：<a href="https://daily.juya.uk/issues/2026-07-07/">juya AI 早报</a>、<a href="https://www.anthropic.com/research/global-workspace">Anthropic Research</a>、<a href="https://github.com/anthropics/jacobian-lens">GitHub</a></div>
+      </article>
+      <article class="item">
+        <h3>日本提出到 2040 年部署约 1000 万台 AI 机器人，物理 AI 进入国家级基础设施叙事</h3>
+        <p>日本经济产业省修订 AI 机器人战略，计划到 2040 年在制造、护理、食品生产、基础设施维护等 18 个领域部署约 1000 万台 AI 机器人，并投入约 3800 亿日元支持物理 AI、多模态基础模型和全国机器人中心。它对从业者的启发不只是机器人赛道变热，而是劳动力短缺正在把 AI 从软件效率工具推向实体作业系统；如果团队关注工业、护理、城市运维或具身智能，数据闭环、场景安全和政府采购会比单点模型能力更早决定商业化速度。</p>
+        <div class="source">来源：<a href="https://daily.juya.uk/issues/2026-07-07/">juya AI 早报</a>、<a href="https://www3.nhk.or.jp/nhkworld/en/news/20260630_21/">NHK World</a></div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">AI 与新工具</h2>
+      <article class="item">
+        <h3>阿里升级 Fun-ASR-Realtime，实时字幕和语音入口更接近生产级</h3>
+        <p>阿里升级实时语音识别模型 Fun-ASR-Realtime，首字延迟达到百毫秒级，支持 16 种方言和 30 种语言，并已支撑影视飓风 100 小时直播字幕生成。对内容团队、会议工具和客服系统来说，实时语音识别正在从“可用插件”变成基础能力，下一步值得关注的是识别结果如何被直接组织成章节、任务、表格和可回放索引，而不是只停留在滚动字幕。</p>
+        <div class="source">来源：<a href="https://daily.juya.uk/issues/2026-07-07/">juya AI 早报</a>、<a href="https://mp.weixin.qq.com/s/Uq03C7koDBwmYtxoR8kSvA">阿里云百炼</a></div>
+      </article>
+      <article class="item">
+        <h3>蚂蚁灵波开源 LingBot-Vision，视觉基础模型继续向空间感知下沉</h3>
+        <p>蚂蚁灵波科技发布 LingBot-Vision 自监督视觉基础模型和 LingBot-Depth 2.0，强调无需人工标注的边界建模和透明、反射表面的深度补全能力，并开放权重与代码。它对机器人、AR、工业检测和空间理解应用更有参考价值：视觉模型的竞争不只在分类和检测精度，而在能否稳定提供可用于动作规划和场景重建的密集空间表示。</p>
+        <div class="source">来源：<a href="https://daily.juya.uk/issues/2026-07-07/">juya AI 早报</a>、<a href="https://technology.robbyant.com/lingbot-vision">LingBot-Vision</a>、<a href="https://github.com/Robbyant/lingbot-vision">GitHub</a></div>
+      </article>
+      <article class="item">
+        <h3>ChatGPT for PowerPoint 上线，可编辑输出成为办公 AI 的关键分界线</h3>
+        <p>OpenAI 宣布 ChatGPT for PowerPoint 面向全球用户上线，用户可以直接在 PowerPoint 中创建、编辑、理解和润色演示文稿，生成内容保持可编辑。这个方向比“生成一张漂亮图”更贴近办公真实需求，因为团队最终需要改字、换图、调结构和复用模板；AI 输出形态会沿着原始文本、Markdown、HTML 到可交互文档继续演进，可编辑性会比一次性视觉效果更影响留存。</p>
+        <div class="source">来源：<a href="https://daily.juya.uk/issues/2026-07-07/">juya AI 早报</a>、<a href="https://x.com/ChatGPTapp/status/2057560276384563560">ChatGPT App</a></div>
+      </article>
+      <article class="item">
+        <h3>OfficeCLI 在 HN 获高讨论，Agent 读写 Office 文件仍是硬需求</h3>
+        <p>OfficeCLI 是一个让 AI Agent 读取和编辑 Microsoft Office 文件的命令行工具，在 Hacker News 获得较高关注。它反映了一个很现实的开发机会：企业工作流里大量信息仍存在 Word、Excel、PowerPoint 中，Agent 如果只能处理纯文本和网页，很难进入正式协作链路；研发团队可以关注这类工具如何处理版式保真、批注、追踪修订和权限边界。</p>
+        <div class="source">来源：<a href="https://github.com/iOfficeAI/OfficeCLI">OfficeCLI</a>、<a href="https://news.ycombinator.com/item?id=44487769">Hacker News</a></div>
+      </article>
+      <article class="item">
+        <h3>Ternlight 展示 7 MB 浏览器端 embedding，小模型继续挤进前端</h3>
+        <p>Ternlight 在 HN 上展示了可在浏览器 WASM 中运行的 7 MB embedding 模型。它未必立刻替代服务器向量检索，但对隐私优先、离线优先和低成本产品很有启发：一部分语义搜索、草稿聚类、个人知识库索引可以前移到端侧，产品设计需要重新考虑“本地即时能力”和“云端高质量能力”的分工。</p>
+        <div class="source">来源：<a href="https://ternlight-demo.vercel.app/">Ternlight Demo</a>、<a href="https://news.ycombinator.com/item?id=44490572">Hacker News</a></div>
+      </article>
+      <article class="item">
+        <h3>Meetily 成为 GitHub 热门项目，本地会议 AI 继续受欢迎</h3>
+        <p>Meetily 是一个强调隐私优先的开源会议助手，使用本地转写、说话人分离和 Ollama 摘要，在 GitHub Trending 中获得高热度。对办公工具和企业 IT 来说，这类项目说明会议 AI 的需求已经明确，但云端录音和资料外传仍是采用阻力；本地处理、可自托管、可审计模型链路会成为很多中小团队的采购前提。</p>
+        <div class="source">来源：<a href="https://github.com/Zackriya-Solutions/meetily">Meetily</a></div>
+      </article>
+      <article class="item">
+        <h3>agent-skills 热度上升，AI 编码工具开始争夺“可迁移工作方法”</h3>
+        <p>GitHub Trending 中多个项目围绕 Agent skills、Claude/Codex/Cursor 命令和跨工具技能包展开，其中 addyosmani/agent-skills 以“生产级工程技能”定位获得高关注。这说明 Agent 生态的竞争正从单次 prompt 转向可复用流程、检查清单、工具调用规范和团队约定；工程管理者可以把 skills 当作团队工程实践的轻量载体，而不是只把它看成提示词素材库。</p>
+        <div class="source">来源：<a href="https://github.com/addyosmani/agent-skills">agent-skills</a>、<a href="https://github.com/alirezarezvani/claude-skills">claude-skills</a></div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">大厂与平台动态</h2>
+      <article class="item">
+        <h3>Cursor 推出 CFO Council，企业 AI 进入成本归因阶段</h3>
+        <p>Cursor 宣布推出 CFO Council，面向财务领导者讨论 AI 经济学、生产力基准和模型分配成本管理。这个动作的重点不在品牌活动，而在开发者工具开始主动回答“AI 到底省了多少钱、花在哪里、谁在消耗 token”；团队如果已经大规模使用 AI 编码，应尽快建立按项目、模型、人员和任务类型拆分的成本与产出记录，否则很难在预算周期里保住工具投入。</p>
+        <div class="source">来源：<a href="https://daily.juya.uk/issues/2026-07-07/">juya AI 早报</a>、<a href="https://cursor.com/blog/cfo-council">Cursor Blog</a></div>
+      </article>
+      <article class="item">
+        <h3>Xbox “Resetting Xbox” 引发高讨论，平台业务收缩会传导到开发者生态</h3>
+        <p>Xbox 官方发布“Resetting Xbox”相关说明，在 HN 获得本日最高讨论度之一。游戏主机和订阅业务看似离互联网工具较远，但平台策略调整会影响第三方开发者、内容合作、分发协议和用户迁移；对平台型业务而言，今天更值得观察的是大公司如何在增长放缓时重排硬件、内容、订阅和云服务优先级。</p>
+        <div class="source">来源：<a href="https://news.xbox.com/en-us/2026/07/06/resetting-xbox/">Xbox News</a>、<a href="https://news.ycombinator.com/item?id=44485949">Hacker News</a></div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">产品与增长观察</h2>
+      <article class="item">
+        <h3>CoMaps 走红，离线地图和 FOSS 消费应用仍有产品空间</h3>
+        <p>CoMaps 作为开源离线地图应用在 HN 获得高分讨论。它的信号不只是“又一个地图应用”，而是隐私、离线、无账号依赖和长期可用性仍然能形成清晰卖点；对消费工具产品来说，当主流应用越来越重、越来越依赖云服务时，反向提供轻量、可控、少打扰的体验，仍可能在高意愿用户中形成口碑增长。</p>
+        <div class="source">来源：<a href="https://www.comaps.app/">CoMaps</a>、<a href="https://news.ycombinator.com/item?id=44487826">Hacker News</a></div>
+      </article>
+      <article class="item">
+        <h3>Karakeep 热度延续，个人信息管理正在向“自动整理”靠拢</h3>
+        <p>Karakeep 是一个可自托管的 bookmark-everything 应用，支持链接、笔记、图片、AI 自动标签和全文搜索，在 GitHub Trending 中继续保持热度。它对 Whistle 这类情报产品也有启发：用户不只是需要保存信息，更需要低成本归档、自动分类和后续可检索；信息产品的长期价值会越来越取决于整理层，而不是采集入口。</p>
+        <div class="source">来源：<a href="https://github.com/karakeep-app/karakeep">Karakeep</a></div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">开发者与工程实践</h2>
+      <article class="item">
+        <h3>OpenWrt One 高热，开放硬件仍是基础设施社区的可信入口</h3>
+        <p>OpenWrt One 开放硬件路由器在 HN 获得高分。它说明开发者社区对“可审计、可刷写、可长期维护”的基础设施设备仍有强需求；对做边缘计算、家庭服务器、IoT 或网络安全产品的团队来说，硬件开放性和固件可控性不是情怀，而是信任、调试和生命周期管理的一部分。</p>
+        <div class="source">来源：<a href="https://openwrt.org/toh/openwrt/one">OpenWrt One</a>、<a href="https://news.ycombinator.com/item?id=44487606">Hacker News</a></div>
+      </article>
+      <article class="item">
+        <h3>Elm 1.0 路线再受关注，编译速度和语言稳定性仍能形成社区粘性</h3>
+        <p>Elm 发布 Road to Elm 1.0 相关进展，重点强调更快构建，在 HN 获得较高讨论。虽然这类语言更新不一定直接影响多数团队选型，但它提醒前端工程实践里仍有一类长期价值：减少运行时错误、提高构建反馈速度、让代码长期可维护；如果团队正在重构复杂前端，值得把类型约束、构建耗时和错误可读性纳入同一套评估，而不是只比较框架流行度。</p>
+        <div class="source">来源：<a href="https://elm-lang.org/news/faster-builds">Elm</a>、<a href="https://news.ycombinator.com/item?id=44483994">Hacker News</a></div>
+      </article>
+      <article class="item">
+        <h3>Kani 模型检查器论文受关注，Rust 安全工程继续向形式化工具靠近</h3>
+        <p>Kani 是面向 Rust 的模型检查器，相关论文在 HN 获得高分但讨论量不高。它适合放在工程实践而非社交热度中看：随着 Rust 进入系统软件、云基础设施和安全关键组件，单靠类型系统和测试并不足以覆盖复杂状态空间，模型检查、属性测试和静态分析会成为高可靠团队的常规工具链。</p>
+        <div class="source">来源：<a href="https://arxiv.org/abs/2607.01504">arXiv</a>、<a href="https://news.ycombinator.com/item?id=44487366">Hacker News</a></div>
+      </article>
+      <article class="item">
+        <h3>RAG 上下文剪枝经验受关注，成本优化从“少调用”走向“少喂无关内容”</h3>
+        <p>kapa.ai 分享了如何把 RAG 上下文剪到回答真正需要的内容，HN 讨论热度不算最高，但对 AI 应用团队很实用。随着长上下文模型变便宜，很多产品会自然倾向于塞入更多材料，但这会增加延迟、成本和错误关联；RAG 优化的重点会从召回更多逐步转向证据选择、上下文预算和答案可追溯。</p>
+        <div class="source">来源：<a href="https://www.kapa.ai/blog/how-we-prune-rag-context">kapa.ai</a>、<a href="https://news.ycombinator.com/item?id=44488909">Hacker News</a></div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">投融资与行业机会</h2>
+      <article class="item">
+        <h3>AI 毛利率压缩讨论升温，模型层机会正在向分发和工作流迁移</h3>
+        <p>HN 上一篇关于 GLM 5.2 和 AI margin collapse 的文章获得较高讨论，核心关注模型能力提升和价格下降可能如何压缩通用模型利润。无论具体判断是否成立，它对创业团队的提醒很明确：如果产品价值只建立在调用某个模型的差价上，护城河会很薄；更稳的机会在专有数据、流程嵌入、分发渠道、交互体验和合规交付。</p>
+        <div class="source">来源：<a href="https://martinalderson.com/posts/the-upcoming-ai-margin-collapse-part-1-glm-5-2/">Martin Alderson</a>、<a href="https://news.ycombinator.com/item?id=44489223">Hacker News</a></div>
+      </article>
+      <article class="item">
+        <h3>Apollo 讨论非科技行业 AI ROI，落地周期可能比工具热度更长</h3>
+        <p>Apollo 关于 AI ROI 的文章在 HN 获得一定讨论，强调科技行业之外的投资回报路径可能更长。这个观点适合校准商业化节奏：AI 工具在开发者和内容团队中扩散很快，但进入制造、金融、医疗、公共部门时，流程改造、合规、安全和培训成本会显著拉长回收周期；做企业 AI 的团队需要把销售话术从“立刻降本”改成“分阶段形成可量化收益”。</p>
+        <div class="source">来源：<a href="https://www.apollo.com/wealth/insights-news/insights/daily-spark/ai-the-roi-runway-could-be-long-outside-the-tech-sector">Apollo</a>、<a href="https://news.ycombinator.com/item?id=44489611">Hacker News</a></div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">政策监管与合规</h2>
+      <article class="item">
+        <h3>Januscape KVM/x86 逃逸漏洞提醒：AI 基础设施也要回到隔离边界</h3>
+        <p>Januscape 是一个关于 KVM/x86 guest-to-host escape 的 CVE-2026-53359 写作与复现项目，在 HN 获得中等热度。它对运行 AI 推理、沙箱执行、代码 Agent 和多租户实验环境的团队有现实影响：当系统允许模型生成代码、执行命令或运行用户工作负载时，虚拟化隔离、补丁节奏、最小权限和审计日志都不再是后端细节，而是产品合规和客户信任的一部分。</p>
+        <div class="source">来源：<a href="https://github.com/V4bel/Januscape">Januscape</a>、<a href="https://news.ycombinator.com/item?id=44488158">Hacker News</a></div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">社交热度观察</h2>
+      <p class="section-note">本板块只记录背景信号和情绪信号，不参与头条排序。</p>
+      <article class="item">
+        <h3>system_prompts_leaks 登顶 GitHub Trending，提示词透明化更像社区情绪信号</h3>
+        <p>system_prompts_leaks 收集多家 AI 产品和编码工具的系统提示词，在 GitHub Trending 中新增星标很高。它能帮助开发者理解不同产品如何组织行为约束、工具协议和安全边界，但更适合作为观察样本而非照搬模板；真正有价值的是把公开提示词转化为团队自己的质量标准、审查清单和失败案例库。</p>
+        <div class="source">来源：<a href="https://github.com/asgeirtj/system_prompts_leaks">system_prompts_leaks</a></div>
+      </article>
+      <article class="item">
+        <h3>“给 AI 好品味”的工具和技能库集中走热，开发者开始反感泛化输出</h3>
+        <p>Taste-Skill、claude-skills、CodexBar、herdr 等项目同时出现在 GitHub Trending，说明开发者对 AI Agent 的关注点正在从“能跑任务”转向“输出是否有判断、是否可控、是否能融入终端和日常工作”。这类热度带有明显社区情绪：大家不缺更多自动化演示，缺的是可复用、可度量、能减少返工的工作方式。</p>
+        <div class="source">来源：<a href="https://github.com/Leonxlnx/taste-skill">Taste-Skill</a>、<a href="https://github.com/steipete/CodexBar">CodexBar</a>、<a href="https://github.com/ogulcancelik/herdr">herdr</a></div>
+      </article>
+    </section>
+
+    <section>
+      <h2 class="section-title">今日行动建议</h2>
+      <div class="actions">
+        <div class="action">
+          <strong>产品</strong>
+          <p>把 AI 输出是否可编辑、可结构化、可追溯加入需求评审，尤其是文档、会议、语音和知识库产品。</p>
+        </div>
+        <div class="action">
+          <strong>研发</strong>
+          <p>用一组真实长文档和工具调用任务测试 Hy3、GPT-Realtime-2.1、OfficeCLI 与 RAG 剪枝方案，记录成本、延迟和失败类型。</p>
+        </div>
+        <div class="action">
+          <strong>运营</strong>
+          <p>关注离线、隐私、本地处理和自托管卖点是否能降低用户顾虑，尤其是会议、收藏、地图和知识管理场景。</p>
+        </div>
+        <div class="action">
+          <strong>管理者</strong>
+          <p>开始建立 AI 工具投入产出账本，按团队、任务、模型和交付结果归因，避免预算讨论停留在主观体感。</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">去噪说明</h2>
+      <div class="note">
+        <p>本期优先采用 juya 的详述信息作为核心事实来源，并用 HN 与 GitHub Trending 补充技术社区和开源生态信号。HN 中纯知识类、泛工程怀旧类、消费电子争议类内容即使分数较高也未进入核心板块；GitHub Trending 中与 AI、Agent、开发工具、知识管理和基础设施关系较弱的项目已降权。AI HOT daily 与精选条目抓取失败，本期没有使用其分类和交叉验证结果。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">抓取异常</h2>
+      <table class="exceptions">
+        <thead>
+          <tr>
+            <th>来源</th>
+            <th>状态</th>
+            <th>处理方式</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI HOT daily</td>
+            <td>failed</td>
+            <td>脚本返回 fetch failed。本期未使用 AI HOT 结构化日报，只在去噪说明中记录缺口。</td>
+          </tr>
+          <tr>
+            <td>AI HOT items</td>
+            <td>failed</td>
+            <td>脚本返回 fetch failed。本期未使用 40 条精选条目，正文由 juya、HN 和 GitHub Trending 补足。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer>
+      <p>素材文件：outputs/2026-07-07/curated-sources.json。生成原则：工作性优先于话题性，强相关信息保留，弱相关高热内容进入社交热度观察或过滤。</p>
+    </footer>
+  </main>
+</body>
+</html>
