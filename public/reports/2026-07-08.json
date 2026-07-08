@@ -1,0 +1,428 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-08",
+  "title": "Whistle 互联网日报｜2026-07-08",
+  "summary": "今天的主线不是单一模型参数竞赛，而是 AI 工具进入更可执行、更可计费、更需治理的阶段。GitHub、Google、Anthropic 都在把 Agent 从聊天窗口推向桌面、后台任务、跨设备和远程工具链；Cloudflare 尝试把网页、API 与 MCP 工具直接接入按量收费；同时，提示注入、模型访问限制和安全对齐研究提醒团队，Agent 化越深入，权限边界、审计与合规越不能后补。",
+  "theme": "Agent 工作流进入可执行与可治理阶段",
+  "topline": [
+    "Agent 正从对话界面走向桌面端、后台执行、跨设备协作和远程 MCP 工具链。",
+    "AI 变现开始下沉到 API、网页和 MCP 路由层，按量计费可能成为工具生态的新基础设施。",
+    "提示注入、模型出口管制和安全对齐脆弱性正在把 AI 工具治理推到研发流程前台。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "今天最值得关注的是 Agent 基础设施、工具变现和 AI 安全边界的同步推进。",
+      "items": [
+        {
+          "title": "GitHub Copilot 桌面应用面向所有用户开放，并支持 BYOK",
+          "summary": "GitHub 将 Copilot 桌面应用开放给 Free、Education、Business 和 Enterprise 用户，覆盖 macOS、Windows 与 Linux，并允许用户用自带模型密钥运行，不必一定绑定 Copilot 订阅。这意味着 AI 编程入口正在从 IDE 插件扩展为独立桌面工作台，个人开发者可以低成本试用，企业则需要重新检查组织策略、模型密钥管理和本地开发权限边界。",
+          "sourceName": "GitHub Changelog",
+          "sourceUrl": "https://github.blog/changelog/2026-07-07-github-copilot-app-available-to-all/",
+          "publishedAt": "2026-07-07T00:00:00.000Z",
+          "tags": [
+            "AI 编程",
+            "开发工具",
+            "BYOK"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google 为 Gemini API Managed Agents 增加后台执行、远程 MCP 与凭证刷新",
+          "summary": "Google 给 Gemini API 的 Managed Agents 增加后台执行、远程 MCP 服务器、自定义函数调用和凭证刷新能力，开发者可以把长任务异步提交、混合使用内置沙箱工具与本地业务逻辑，并在后续交互中更新网络凭证。它把 Agent 从一次性请求推进到可持续运行的任务单元，适合做企业内部自动化、数据处理和跨系统编排，但也要求团队提前设计状态恢复、权限续期和人工审核点。",
+          "sourceName": "Google Blog",
+          "sourceUrl": "https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "Agent",
+            "Gemini API",
+            "MCP"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Cloudflare 推出 Monetization Gateway，网页、API 与 MCP 工具可按用量收费",
+          "summary": "Cloudflare 发布 Monetization Gateway，允许客户对受 Cloudflare 保护的网页、数据集、API 或 MCP 工具设置按用量收费规则，并通过 x402 协议用稳定币在边缘完成支付验证和结算。对开发者和内容提供方来说，这降低了为机器访问、数据接口和 Agent 工具加收费层的门槛；如果落地顺利，AI 时代的内容分发可能从广告和订阅，进一步走向面向 Agent 的细粒度付费调用。",
+          "sourceName": "Cloudflare Blog",
+          "sourceUrl": "https://blog.cloudflare.com/monetization-gateway/",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "商业化",
+            "API",
+            "MCP",
+            "支付"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "GitLost 暴露 GitHub AI Agent 跨仓库提示注入风险",
+          "summary": "Noma Labs 披露 GitLost：攻击者可在同一组织的公共仓库 Issue 中植入恶意指令，诱导基于 Claude 或 GitHub Copilot 的 Agent 读取并泄露私有仓库内容。这个案例把 Agent 安全问题从“模型会不会听错”推进到“工具权限是否天然过大”，使用代码 Agent 的团队应把公共输入、私有仓库、组织级 token 和跨仓库读取权限拆开治理，而不是只依赖模型防护提示。",
+          "sourceName": "Noma Security",
+          "sourceUrl": "https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos",
+          "publishedAt": "2026-07-08T08:29:47.091Z",
+          "tags": [
+            "AI 安全",
+            "提示注入",
+            "GitHub"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "工具更新集中在 Agent 执行、视觉/视频输出、本地优先工作台和模型效率。",
+      "items": [
+        {
+          "title": "Claude Cowork 开始向网页端和移动端扩展",
+          "summary": "Anthropic 宣布 Claude Cowork 将逐步登陆网页和移动端，Max 用户会先进入测试，用户提交任务后可关闭设备，Claude 继续在后台推进，并在需要决策时向手机发起确认。这个方向比单纯聊天更接近日常知识工作的真实节奏，尤其适合运营、内容、销售和管理类跨文件任务；团队试用时应重点观察它在审批、追问和任务中断恢复上的可靠性。",
+          "sourceName": "Claude Blog",
+          "sourceUrl": "https://claude.com/blog/cowork-web-mobile",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "Claude",
+            "Agent",
+            "移动端"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Meta 发布 Agentic 图像模型 Muse Image，并预览 Muse Video",
+          "summary": "Meta Superintelligence Labs 发布 Muse Image 和 Muse Video 预览版，Muse Image 可在推理中调用搜索与代码工具，支持精确编辑、多参考图像合成，并借助 Instagram 公开内容理解社交语境。生成式媒体正在从“出一张图”变成带工具调用和上下文理解的创作流程，视觉输出也会越来越结构化、可编辑、可分发，产品团队应关注它对社媒素材、广告创意和创作者工作台的影响。",
+          "sourceName": "Meta AI",
+          "sourceUrl": "https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "图像生成",
+            "视频生成",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "NotebookLM 面向所有用户上线 Short Video Overviews",
+          "summary": "Google NotebookLM 的 Short Video Overviews 已在移动端和网页端面向所有英语用户推出，用户可以把资料转成更短的视频概览。它说明 AI 输出形态正在从文本摘要继续向多模态、可快速消费的内容单元演进；对知识库、教育和企业培训产品来说，下一步不是简单增加“视频生成”按钮，而是把来源可追溯、结构化脚本和可编辑片段放进流程。",
+          "sourceName": "NotebookLM",
+          "sourceUrl": "https://x.com/NotebookLM/status/2074551227594264799",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "NotebookLM",
+            "视频摘要",
+            "知识工具"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Rowboat 成为 HN 热帖：本地优先桌面 AI 助手连接邮件、会议、Slack 与代码",
+          "summary": "Rowboat 是一个开源、本地优先的桌面 AI 助手，把邮件、会议、Slack 等信息索引为类似 Obsidian 的知识图谱，并提供会议记录、浏览器、邮件客户端和可调用 Claude Code 或 Codex 的代码模式。它反映了个人 AI 工作台的另一路线：不把记忆完全托管给云端，而是用 Markdown、本地模型和 MCP 连接工具；重视数据控制的团队可以把它作为本地 Agent 架构参考。",
+          "sourceName": "GitHub",
+          "sourceUrl": "https://github.com/rowboatlabs/rowboat",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "本地优先",
+            "桌面助手",
+            "MCP"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "MIRA 展示 20 FPS 可玩多人世界模型",
+          "summary": "General Intuition 与 Kyutai Labs 构建的 MIRA 用公开机器人数据训练，可根据四名玩家按键实时生成类似 Rocket League 的多人画面，演示帧率达到 20 FPS，并公开技术报告和代码。它暂时更像研究与原型信号，但方向重要：AI 输出可能从文本、Markdown、HTML 继续走向可交互的视频和模拟环境，游戏、训练仿真和产品原型工具都值得持续跟踪。",
+          "sourceName": "X：Ethan Mollick",
+          "sourceUrl": "https://x.com/emollick/status/2074348274136346871",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "世界模型",
+            "视频生成",
+            "交互"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Cohere 开源阿拉伯语语音识别模型 Cohere Transcribe Arabic",
+          "summary": "Cohere 发布 2B 参数的阿拉伯语自动语音识别模型，支持阿拉伯语、英语、方言和语码转换，并以 Apache 2.0 开放权重。对多语言客服、内容审核和区域化语音产品来说，这类垂直语言模型比通用大模型更容易形成成本和准确率优势；如果业务面向中东市场，值得把它纳入离线评测。",
+          "sourceName": "Cohere Blog",
+          "sourceUrl": "https://cohere.com/blog/transcribe-arabic",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "语音识别",
+            "开源模型",
+            "多语言"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "小米 MiMo 开放 MiMo-V2.5-ASR API，国内按音频时长计费",
+          "summary": "小米 MiMo 开放 V2.5-ASR 语音识别 API，支持中英双语、多种中文方言、中英语码混合和强噪声多人场景，价格为国内每小时 0.5 元，并可纳入 Token Plan 订阅。低价 ASR 会进一步降低会议纪要、客服质检、内容转写的产品门槛，团队评估时应把真实噪声、方言覆盖和数据合规放在单价之前。",
+          "sourceName": "小米 MiMo",
+          "sourceUrl": "https://mimo.xiaomi.com/mimo-v2-5-asr",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "ASR",
+            "语音",
+            "API"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Liquid AI 开源 Antidoom，针对推理模型重复循环做定向修复",
+          "summary": "Liquid AI 开源 Antidoom，用 Final Token Preference Optimization 定位循环开始的 token 并训练模型选择替代项，在多个推理模型上显著降低重复循环率。它对应用层的启发是，长推理不只需要更大上下文，也需要可观测的失败模式和轻量修补机制；做 Agent 或代码生成产品时，应把循环检测、停止条件和重试策略纳入基础设施。",
+          "sourceName": "MarkTechPost",
+          "sourceUrl": "https://www.marktechpost.com/2026/07/07/liquid-ai-antidoom-doom-loops-ftpo",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "推理模型",
+            "可靠性",
+            "开源"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台侧的变化集中在模型成本、访问边界和开放生态。",
+      "items": [
+        {
+          "title": "微软被曝在 Copilot 中用自研 MAI 模型替换部分外部模型以降本",
+          "summary": "The Decoder 报道称，微软正在 Excel、Outlook 等 Copilot 场景中逐步使用自研 MAI 模型替代 OpenAI 和 Anthropic 模型，以降低推理支出，并可能未来把第三方模型做成付费附加项。即使报道细节仍需持续验证，这一方向也符合平台经济逻辑：模型供应会从单一最佳模型走向路由、分层和成本控制，企业采购 Copilot 类产品时应关注默认模型、可选模型和价格结构是否变化。",
+          "sourceName": "The Decoder",
+          "sourceUrl": "https://the-decoder.com/copilot-goes-cheap-as-microsoft-phases-out-openai-and-anthropic-models-to-cut-costs",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "Microsoft",
+            "Copilot",
+            "模型成本"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Claude Fable 5 促销访问延长至 7 月 12 日",
+          "summary": "Anthropic 将 Claude Fable 5 的限时促销访问延长至 7 月 12 日，付费订阅用户仍可把每周额度最多 50% 用于调用该模型。对团队来说，这类短期开放窗口适合做高难任务评测，而不是马上迁移生产流程；更稳妥的做法是记录它在复杂代码、规划和多步推理中的边际收益，再决定是否纳入模型路由。",
+          "sourceName": "Claude Help Center",
+          "sourceUrl": "https://support.claude.com/en/articles/15424964-claude-fable-5-promotional-access",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "Claude",
+            "模型评测",
+            "订阅"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "支付宝 AI 开放平台正式开放，一次接入可跨终端提供服务",
+          "summary": "juya 早报收录支付宝 AI 开放平台正式开放，强调一次接入后可跨终端提供服务。对国内开发者而言，值得关注的不是“又一个 AI 平台”，而是支付、生活服务和小程序生态里是否会出现新的分发入口；如果平台能把身份、支付、服务履约和 Agent 能力打通，商业化闭环会比单纯模型 API 更直接。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://www.juya.ai/",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "支付宝",
+            "平台生态",
+            "AI 开放平台"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "产品层面更值得看的是 AI 工作流如何进入知识工作和内容分发。",
+      "items": [
+        {
+          "title": "Claude Cowork 使用数据显示，业务流程与运营占比高于软件开发",
+          "summary": "Anthropic 基于 120 万次匿名会话样本称，Claude Cowork 最大用途是业务流程与运营，占 33.4%，内容创作与文案占 16.4%，软件开发仅占 8.7%。这组数据提醒产品团队，Agent 的高频价值不一定首先出现在写代码，而是在整理报告、核对表格、汇总反馈、制作文档等横跨工具的工作中；面向企业的 AI 产品应优先寻找可闭环的流程，而不是只包装一个通用聊天入口。",
+          "sourceName": "Claude Blog",
+          "sourceUrl": "https://claude.com/blog/how-people-are-using-claude-cowork",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "知识工作",
+            "运营",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "FDE 热潮显示 AI 商业化瓶颈从模型能力转向部署能力",
+          "summary": "Tomer Tunguz 汇总称，AI 公司过去 12 个月承诺约 97.5 亿美元建设前部署工程团队，微软、亚马逊、Salesforce、OpenAI、Anthropic 和 Google Cloud 分别采用内部调配、独立实体或伙伴基金等方式。这个信号比单笔融资更有工作意义：客户缺的不是“更会演示的模型”，而是能把模型接进流程、权限、数据和变更管理的人；创业公司如果卖企业 AI，应把交付、培训和反馈数据机制设计成产品的一部分。",
+          "sourceName": "Tomer Tunguz",
+          "sourceUrl": "https://www.tomtunguz.com/the-10b-fde-boom",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "企业 AI",
+            "部署工程",
+            "商业化"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程信号集中在代码 Agent、存储成本、AI 审计和本地工具生态。",
+      "items": [
+        {
+          "title": "Claude Code 官方解释模型选择与 effort level 的取舍",
+          "summary": "Anthropic 发布 Claude Code 指南，强调模型决定能力边界，effort level 控制单次任务中读取文件、验证步骤和多步推进的投入。对研发团队来说，这比“用最大模型解决一切”更可操作：简单任务用默认或低 effort 控成本，复杂改动先补上下文，再根据失败原因判断是换更强模型还是提高 effort，并把测试运行纳入提示和流程规范。",
+          "sourceName": "Claude Blog",
+          "sourceUrl": "https://claude.com/blog/claude-model-and-effort-level-in-claude-code",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "Claude Code",
+            "工程实践",
+            "模型路由"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Hugging Face Storage 成为 SkyPilot 一级后端，主打跨云零出站费",
+          "summary": "Hugging Face Storage 已成为 SkyPilot 一级后端，用户可通过 hf:// URL 把 Bucket、模型、数据集或 Space 仓库挂载到跨云训练任务中，并利用 Hugging Face 不收出站费的特点降低数据读取成本。对做多云 GPU 调度的团队来说，这类存储与调度整合比单点云优惠更有长期价值，尤其适合频繁移动数据集、检查点和模型变体的训练流程。",
+          "sourceName": "Hugging Face Blog",
+          "sourceUrl": "https://huggingface.co/blog/skypilot-hf-storage",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "云成本",
+            "训练基础设施",
+            "存储"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "AI 审计代理在 Cloudflare CIRCL 中发现并验证 7 个漏洞",
+          "summary": "zkSecurity 介绍其 AI 审计代理 zkao 持续扫描 Cloudflare CIRCL 密码学库，并发现 7 个已被上游修复的真实漏洞，多数获得 HackerOne 确认。它并不意味着 AI 可以替代安全工程师，但说明“AI 生成候选发现 + 自动复现 + 人工确认”的流程开始具备生产价值；安全团队可以先在低风险库和历史漏洞集上评估召回率与误报成本。",
+          "sourceName": "zkSecurity Blog",
+          "sourceUrl": "https://blog.zksecurity.xyz/posts/circl-bugs",
+          "publishedAt": "2026-07-08T04:29:33.609Z",
+          "tags": [
+            "安全审计",
+            "AI Agent",
+            "漏洞"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "GitHub Trending 出现多类 Agent 工具：skills、沙箱、Office 自动化与 Codex 状态栏",
+          "summary": "今日 GitHub Trending 中，agent-skills、TencentCloud CubeSandbox、OfficeCLI、CodexBar、awesome-claude-code 等项目集中出现，分别覆盖编码 Agent 技能、轻量沙箱、Office 文件自动化和使用统计。单个项目未必都能成为标准，但组合信号清楚：开发者生态正在围绕 Agent 的技能复用、执行隔离、文件操作和成本可视化补基础设施，做内部平台的团队可优先关注这些可迁移能力。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/addyosmani/agent-skills",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "开源生态",
+            "Agent",
+            "开发工具"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "本期融资信息较少，保留一个与企业 AI 交付相关的行业机会信号。",
+      "items": [
+        {
+          "title": "企业 AI 的机会窗口转向部署、集成和垂直工作流",
+          "summary": "FDE 投入上升和 Claude Cowork 使用数据互相印证：模型能力已足够触发企业试点，但真正付费的部分在流程改造、权限接入、数据清洗、培训和持续运营。对创业者而言，机会不只在再做一个通用 Agent，而在选定一个高频业务流程，把模型调用、人工审批、审计记录和结果交付做成完整闭环；这类产品短期更像服务，长期才可能沉淀为软件。",
+          "sourceName": "Tomer Tunguz",
+          "sourceUrl": "https://www.tomtunguz.com/the-10b-fde-boom",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "行业机会",
+            "企业服务",
+            "AI 交付"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "合规信号主要围绕模型访问、用户伤害责任和开发工具数据外传。",
+      "items": [
+        {
+          "title": "报道称中国考虑限制海外访问最强国产 AI 模型",
+          "summary": "AI HOT 收录报道称，中国有关部门正与多家模型企业讨论限制外国访问先进国产 AI 模型，范围可能覆盖闭源 API 和可下载权重，并把模型外泄纳入更严厉的安全框架。该消息仍需等待正式政策确认，但对依赖跨境模型供应的团队已经构成规划信号：模型选型不应只看价格和榜单，还要评估地域可用性、权重托管、数据出境和替代供应商。",
+          "sourceName": "X：Rohan Paul",
+          "sourceUrl": "https://x.com/rohanpaul_ai/status/2074512389526237609",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "模型访问",
+            "出口管制",
+            "合规"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "加拿大不列颠哥伦比亚省拟起诉 OpenAI，焦点在高风险对话上报责任",
+          "summary": "加拿大不列颠哥伦比亚省宣布拟起诉 OpenAI，指控其未向执法部门上报一名 ChatGPT 用户此前的暴力相关对话，该用户后来制造校园枪击案。诉讼本身仍需法院判断，但它把 AI 产品的责任边界推向更具体的问题：当系统识别出自伤、伤人或公共安全风险时，平台应如何记录、升级、人工复核和依法处理，面向消费者的 AI 产品需要把安全运营流程写进产品设计。",
+          "sourceName": "IT之家",
+          "sourceUrl": "https://www.ithome.com/0/974/169.htm",
+          "publishedAt": "2026-07-08T09:55:17.000Z",
+          "tags": [
+            "OpenAI",
+            "安全责任",
+            "合规"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "这些信息讨论度高，但更多是背景信号，不应挤占核心工作排序。",
+      "items": [
+        {
+          "title": "HN 高热讨论集中在 Chat Control、车内监控和开放地图维护",
+          "summary": "Hacker News 今日最高分帖子包括 StreetComplete、欧盟 Chat Control 解释、欧盟新车驾驶员监控摄像头等，分数均远高于普通技术帖。它们不是直接的 AI 产品更新，但共同指向数据收集、隐私和公共基础设施治理的长期张力；对互联网团队而言，这是背景舆情信号，说明用户对“默认被监控”和“平台化治理”的敏感度仍在上升。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://fightchatcontrol.eu/chat-control-overview",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
+          "tags": [
+            "隐私",
+            "社区讨论",
+            "平台治理"
+          ],
+          "importance": "low"
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "audience": "产品",
+      "text": "梳理现有 AI 功能是否仍停留在聊天入口，优先找一个可后台执行、可审批、可追踪结果的工作流做小范围实验。"
+    },
+    {
+      "audience": "研发",
+      "text": "检查代码 Agent 的仓库权限、组织 token、公共 Issue 输入和私有仓库读取边界，避免把用户可控文本直接放进高权限执行链。"
+    },
+    {
+      "audience": "运营",
+      "text": "关注 NotebookLM 短视频概览和 Muse 这类多模态输出，把知识库内容改造成脚本、片段和可复用素材，而不是只做文本摘要。"
+    },
+    {
+      "audience": "管理者",
+      "text": "评估企业 AI 项目时，把部署工程、培训、权限接入和持续运营列入预算，不要只按模型调用成本估算 ROI。"
+    },
+    {
+      "audience": "创业者",
+      "text": "优先选择一个具体垂直流程做 Agent 闭环，明确输入来源、人工确认点、交付物和审计记录，再考虑横向扩展。"
+    }
+  ],
+  "noiseNote": "本期去重时合并了 juya 与 AI HOT 中重复出现的 Claude Cowork、Gemini Managed Agents、Meta Muse、NotebookLM、Liquid AI、微软 MAI 等条目；过滤了消费电子、泛科技趣闻、低相关游戏和纯语言/系统优化讨论。HN 中分数较高但工作相关性弱的内容只保留为社交热度背景，不进入头条和核心板块。",
+  "sourceStatus": {
+    "juya": "ok",
+    "aihotDaily": "ok",
+    "aihotItems": "ok (40 items)",
+    "hackernews": "ok (43 stories >= 30pts)",
+    "githubTrending": "ok (13 repos)"
+  },
+  "fetchErrors": [],
+  "generatedAt": "2026-07-08T10:31:38Z"
+}
