@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { reportToIndexEntry, stripHtml } from "./report-renderer.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
@@ -47,14 +48,29 @@ async function buildReportsIndex() {
   const reports = [];
   for (const file of files.filter((item) => /^\d{4}-\d{2}-\d{2}\.html$/.test(item)).sort().reverse()) {
     const date = file.replace(".html", "");
-    const html = await fs.readFile(path.join(reportsDir, file), "utf8");
-    reports.push({
-      date,
-      title: `Whistle 互联网日报｜${date}`,
-      summary: extractSummary(html),
-      reportPath: `reports/${file}`,
-      pdfPath: `assets/report-${date}.pdf`,
-    });
+    const jsonPath = path.join(reportsDir, `${date}.json`);
+    try {
+      const report = JSON.parse(await fs.readFile(jsonPath, "utf8"));
+      reports.push(
+        reportToIndexEntry(report, {
+          reportPath: `reports/${file}`,
+          pdfPath: `assets/report-${date}.pdf`,
+        }),
+      );
+    } catch (error) {
+      const html = await fs.readFile(path.join(reportsDir, file), "utf8");
+      reports.push({
+        date,
+        title: `Whistle 互联网日报｜${date}`,
+        summary: stripHtml(extractSummary(html)),
+        theme: "",
+        category: "历史日报",
+        tags: [],
+        itemCount: null,
+        reportPath: `reports/${file}`,
+        pdfPath: `assets/report-${date}.pdf`,
+      });
+    }
   }
 
   await fs.mkdir(path.dirname(generatedPath), { recursive: true });
