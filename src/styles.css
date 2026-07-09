@@ -10,7 +10,7 @@
   --faint: #737373;
   --accent: #8ab4ff;
   --max: 1420px;
-  --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 * {
@@ -295,13 +295,13 @@ h1 {
 .media {
   position: relative;
   display: block;
-  aspect-ratio: 1.22;
+  aspect-ratio: 1;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 8px;
   background:
-    radial-gradient(circle at 25% 35%, rgba(1, 47, 227, 0.72), transparent 34%),
-    radial-gradient(circle at 70% 68%, rgba(1, 47, 227, 0.34), transparent 28%),
+    radial-gradient(circle at 25% 35%, rgba(1, 193, 147, 0.72), transparent 34%),
+    radial-gradient(circle at 70% 68%, rgba(1, 193, 147, 0.34), transparent 28%),
     #020515;
 }
 
@@ -324,10 +324,16 @@ h1 {
   background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.58));
 }
 
-.media__title,
-.media__links {
+.media__header {
   position: absolute;
+  top: 18px;
+  left: 18px;
   z-index: 4;
+  display: flex;
+  max-width: calc(100% - 36px);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .media__click-target {
@@ -337,25 +343,22 @@ h1 {
 }
 
 .media__title {
-  top: 18px;
-  left: 18px;
-  max-width: calc(100% - 36px);
-  color: rgba(255, 255, 255, 0.94);
+  color: #fff;
   font-size: clamp(16px, 1.9vw, 19px);
   font-weight: 520;
   line-height: 1.18;
   letter-spacing: -0.04em;
   overflow-wrap: anywhere;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.28);
   text-wrap: balance;
 }
 
 .media__links {
-  top: 48px;
-  left: 18px;
   display: flex;
   gap: 10px;
-  color: rgba(255, 255, 255, 0.86);
+  color: rgba(255, 255, 255, 0.95);
   font-size: 13px;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.28);
 }
 
 .media__links a {
@@ -374,7 +377,7 @@ h1 {
   left: 18px;
   z-index: 3;
   margin: 0;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.9);
   display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
@@ -382,6 +385,7 @@ h1 {
   font-size: clamp(13px, 1.45vw, 15px);
   line-height: 1.58;
   pointer-events: none;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.3);
 }
 
 .report-card__body {
@@ -405,6 +409,10 @@ h1 {
   color: var(--muted);
   font-size: 15px;
   line-height: 1.65;
+}
+
+.report-card .media__summary {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .report-card h3 a:hover {
@@ -541,7 +549,7 @@ h1 {
   min-width: 118px;
   border: 0;
   border-radius: 999px;
-  background: #012fe3;
+  background: #01c193;
   color: #fff;
   cursor: pointer;
   font-size: 16px;
@@ -731,21 +739,23 @@ h1 {
   }
 
   .media {
-    aspect-ratio: 1.08;
+    aspect-ratio: 1;
   }
 
   .media__title {
-    top: 14px;
-    left: 14px;
-    max-width: calc(100% - 28px);
     font-size: 15px;
     line-height: 1.14;
     letter-spacing: -0.035em;
   }
 
-  .media__links {
-    top: 58px;
+  .media__header {
+    top: 14px;
     left: 14px;
+    max-width: calc(100% - 28px);
+    gap: 12px;
+  }
+
+  .media__links {
     gap: 8px;
     font-size: 12px;
   }

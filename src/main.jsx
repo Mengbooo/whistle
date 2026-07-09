@@ -25,7 +25,7 @@ const coverStyles = [
   "plasma",
   "iridescence",
 ];
-const coverColor = "#012fe3";
+const coverColor = "#01c193";
 
 const coverVertexShader = `
 attribute vec2 aPosition;
@@ -166,8 +166,8 @@ void main() {
 
   pattern = clamp(pattern + softNoise(tex * 2.0) * 0.1, 0.0, 1.0);
 
-  vec3 base = mix(vec3(0.015), uColor, 0.72);
-  vec3 light = mix(uColor, vec3(1.0), 0.24);
+  vec3 base = mix(vec3(0.045), uColor, 0.78);
+  vec3 light = mix(uColor, vec3(1.0), 0.3);
   vec3 colRgb = mix(base, light, pattern) - rnd / 18.0 * uNoiseIntensity;
   vec4 col = vec4(colRgb, 1.0);
   col.a = 1.0;
@@ -346,12 +346,14 @@ function ReportCard({ report, index, prefix = "." }) {
       <div className="media">
         <ShaderCover params={coverParams} />
         <a className="media__click-target" href={linkTo(prefix, report.reportPath)} aria-label={`阅读 ${report.title}`} />
-        <a className="media__title" href={linkTo(prefix, report.reportPath)}>
-          {report.title}
-        </a>
-        <div className="media__links">
-          <a href={linkTo(prefix, report.reportPath)}>阅读</a>
-          <a href={linkTo(prefix, report.pdfPath)}>PDF ↗</a>
+        <div className="media__header">
+          <a className="media__title" href={linkTo(prefix, report.reportPath)}>
+            {report.title}
+          </a>
+          <div className="media__links">
+            <a href={linkTo(prefix, report.reportPath)}>阅读</a>
+            <a href={linkTo(prefix, report.pdfPath)}>PDF ↗</a>
+          </div>
         </div>
         <p className="media__summary">{report.summary}</p>
       </div>

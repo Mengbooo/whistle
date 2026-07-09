@@ -16,35 +16,21 @@
       --text: #f4f4f4;
       --muted: #a5a5a5;
       --faint: #737373;
-      --accent: #8ab4ff;
+      --accent: #01c193;
       --max: 1180px;
       --serif: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
-      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
     body { font-family: var(--sans); line-height: 1.72; -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
     a:hover { color: #fff; border-bottom-color: #fff; }
-    .site-header {
-      position: sticky; top: 0; z-index: 10;
-      display: flex; align-items: center; justify-content: space-between;
-      max-width: calc(var(--max) + 80px); margin: 0 auto; padding: 22px 40px;
-      background: rgba(0,0,0,.82); backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--line-soft);
-    }
-    .brand { font-weight: 650; letter-spacing: -.02em; }
-    .nav { display: flex; gap: 28px; color: var(--muted); font-size: 14px; }
-    .nav a { border: 0; }
-    .nav a:hover { color: var(--text); }
-    .hero {
-      max-width: 860px; margin: 0 auto; padding: 86px 28px 58px; text-align: center;
-    }
-    .kicker { margin: 0 0 18px; color: var(--muted); font-size: 13px; }
-    h1 { margin: 0; font-size: clamp(38px, 6vw, 76px); line-height: 1.04; letter-spacing: -.055em; }
-    .summary { max-width: 720px; margin: 24px auto 0; color: #cfcfcf; font-size: 18px; line-height: 1.7; }
-    .hero-meta { margin-top: 22px; color: var(--faint); font-size: 13px; }
-    .hero-actions { display: flex; justify-content: center; gap: 12px; margin-top: 30px; }
+    .hero { width: 100%; padding: 0 0 58px; text-align: left; }
+    h1 { margin: 0; font-size: clamp(26px, 3vw, 38px); font-weight: 560; line-height: 1.06; letter-spacing: -.05em; }
+    .summary { max-width: 720px; margin: 24px 0 0; color: var(--text); font-size: 18px; line-height: 1.7; }
+    .hero-meta { margin-top: 22px; color: var(--text); font-size: 13px; }
+    .hero-actions { display: flex; justify-content: flex-start; gap: 12px; margin-top: 30px; }
     .button {
       display: inline-flex; align-items: center; justify-content: center;
       min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
@@ -52,16 +38,14 @@
     }
     .button--ghost { background: transparent; color: var(--text); }
     .layout {
-      display: grid; grid-template-columns: 190px minmax(0, 760px) 80px;
-      gap: 58px; max-width: var(--max); margin: 0 auto; padding: 0 40px 90px;
+      display: grid; grid-template-columns: 190px minmax(0, 760px);
+      gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
     }
     .toc { position: sticky; top: 86px; align-self: start; color: var(--muted); font-size: 13px; }
-    .toc strong { display: block; margin-bottom: 12px; color: var(--text); font-size: 13px; }
-    .toc a { display: block; margin: 0 0 9px; padding: 5px 0; border: 0; color: var(--muted); }
+    .toc strong { display: block; margin-bottom: 8px; color: var(--text); font-size: 13px; }
+    .toc a { display: block; margin: 0 0 3px; padding: 3px 0; border: 0; color: var(--muted); line-height: 1.35; transition: color .16s ease; }
+    .toc a[aria-current="true"] { color: var(--text); }
     .toc a:hover { color: var(--text); }
-    .share { position: sticky; top: 86px; align-self: start; color: var(--muted); font-size: 13px; }
-    .share span { display: block; margin-bottom: 14px; }
-    .share a { display: block; width: 30px; height: 30px; margin-bottom: 8px; border: 1px solid var(--line); border-radius: 50%; text-align: center; line-height: 28px; color: var(--text); }
     .topline {
       margin-bottom: 54px; padding: 26px; border: 1px solid var(--line); border-radius: 12px;
       background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
@@ -70,7 +54,6 @@
     .topline ul { margin: 0; padding-left: 20px; color: #d8d8d8; }
     .report-section { padding: 46px 0; border-top: 1px solid var(--line); }
     .section-heading { margin-bottom: 28px; }
-    .section-heading p { margin: 0 0 7px; color: var(--accent); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
     .section-heading h2 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; }
     .section-heading span { display: block; margin-top: 8px; color: var(--muted); }
     .section-items { display: grid; gap: 26px; }
@@ -79,8 +62,10 @@
     .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
     .tags span { color: var(--accent); font-size: 12px; }
     .report-item h3 { margin: 0; font-size: 22px; line-height: 1.35; letter-spacing: -.025em; }
-    .report-item p { margin: 10px 0 0; color: #d0d0d0; font-size: 15px; }
-    .item-meta { margin-top: 10px; color: var(--faint); font-size: 13px; }
+    .report-item h3 a { border: 0; }
+    .report-item h3 a span { color: var(--accent); font-size: .82em; }
+    .report-item p { margin: 10px 0 0; color: var(--text); font-size: 15px; }
+    .item-meta { margin-top: 10px; color: var(--muted); font-size: 13px; }
     .empty, .note { margin: 0; color: var(--muted); }
     .action-list { display: grid; gap: 12px; }
     .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: #d0d0d0; }
@@ -91,11 +76,9 @@
     .status-grid span { margin-top: 4px; color: var(--muted); font-size: 13px; }
     .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
     @media (max-width: 980px) {
-      .site-header { padding: 18px 22px; }
-      .nav { gap: 16px; }
-      .layout { display: block; padding: 0 24px 72px; }
-      .toc, .share { display: none; }
-      .hero { padding-top: 66px; text-align: left; }
+      .layout { display: block; padding: 66px 24px 72px; }
+      .toc { display: none; }
+      .hero { padding: 0 0 58px; }
       .hero-actions { justify-content: flex-start; }
       .report-item { grid-template-columns: 1fr; gap: 8px; }
       .item-index { display: none; }
@@ -103,7 +86,7 @@
     }
     @media print {
       :root { color-scheme: light; --bg: #fff; --text: #111; --muted: #555; --faint: #666; --line: #ddd; --line-soft: #eee; --panel: #f7f7f7; --accent: #1B365D; }
-      .site-header, .toc, .share, .hero-actions { display: none; }
+      .toc, .hero-actions { display: none; }
       .hero { text-align: left; padding: 10mm 0 8mm; }
       .layout { display: block; padding: 0; }
       .report-section { page-break-inside: avoid; }
@@ -112,41 +95,24 @@
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="/">Whistle 互联网日报</a>
-    <nav class="nav" aria-label="站点导航">
-      <a href="/">日报</a>
-      <a href="/archive/">归档</a>
-      <a href="/subscribe/">订阅</a>
-      <a href="/subscribe/">RSS</a>
-    </nav>
-  </header>
-
   <main>
-    <section class="hero">
-      <p class="kicker">日报 · 2026-07-08</p>
-      <h1>Whistle 互联网日报｜2026-07-08</h1>
-      <p class="summary">今天的主线不是单一模型参数竞赛，而是 AI 工具进入更可执行、更可计费、更需治理的阶段。GitHub、Google、Anthropic 都在把 Agent 从聊天窗口推向桌面、后台任务、跨设备和远程工具链；Cloudflare 尝试把网页、API 与 MCP 工具直接接入按量收费；同时，提示注入、模型访问限制和安全对齐研究提醒团队，Agent 化越深入，权限边界、审计与合规越不能后补。</p>
-      <p class="hero-meta">Agent 工作流进入可执行与可治理阶段 · 25 条信号 · 生成于 2026/7/8 18:31:38</p>
-      <div class="hero-actions">
-        <a class="button" href="/assets/report-2026-07-08.pdf">下载 PDF</a>
-        <a class="button button--ghost" href="/archive/">查看归档</a>
-      </div>
-    </section>
-
     <div class="layout">
       <aside class="toc">
         <strong>目录</strong>
         <a href="#section-headline">今日头条</a><a href="#section-ai-tools">AI 与新工具</a><a href="#section-platforms">大厂与平台动态</a><a href="#section-product-growth">产品与增长观察</a><a href="#section-engineering">开发者与工程实践</a><a href="#section-funding">投融资与行业机会</a><a href="#section-policy">政策监管与合规</a><a href="#section-social-buzz">社交热度观察</a><a href="#section-actions">今日行动建议</a><a href="#section-noise">去噪说明</a>
       </aside>
       <article>
-        <section class="topline">
-                <h2>今日主线</h2>
-                <ul><li>Agent 正从对话界面走向桌面端、后台执行、跨设备协作和远程 MCP 工具链。</li><li>AI 变现开始下沉到 API、网页和 MCP 路由层，按量计费可能成为工具生态的新基础设施。</li><li>提示注入、模型出口管制和安全对齐脆弱性正在把 AI 工具治理推到研发流程前台。</li></ul>
-              </section>
+        <section class="hero">
+          <h1>Whistle 互联网日报｜2026-07-08</h1>
+          <p class="summary">今天的主线不是单一模型参数竞赛，而是 AI 工具进入更可执行、更可计费、更需治理的阶段。GitHub、Google、Anthropic 都在把 Agent 从聊天窗口推向桌面、后台任务、跨设备和远程工具链；Cloudflare 尝试把网页、API 与 MCP 工具直接接入按量收费；同时，提示注入、模型访问限制和安全对齐研究提醒团队，Agent 化越深入，权限边界、审计与合规越不能后补。</p>
+          <p class="hero-meta">25 条信号 · 2026/7/8 18:31:38</p>
+          <div class="hero-actions">
+            <a class="button button--ghost" href="/assets/report-2026-07-08.pdf">下载 PDF</a>
+            <a class="button button--ghost" href="/archive/">查看归档</a>
+          </div>
+        </section>
         <section class="report-section" id="section-headline">
     <div class="section-heading">
-      <p>headline</p>
       <h2>今日头条</h2>
       <span>今天最值得关注的是 Agent 基础设施、工具变现和 AI 安全边界的同步推进。</span>
     </div>
@@ -154,42 +120,41 @@
     <div class="item-index">01</div>
     <div class="item-body">
       <div class="tags"><span>AI 编程</span><span>开发工具</span><span>BYOK</span></div>
-      <h3>GitHub Copilot 桌面应用面向所有用户开放，并支持 BYOK</h3>
+      <h3><a href="https://github.blog/changelog/2026-07-07-github-copilot-app-available-to-all/" target="_blank" rel="noreferrer">GitHub Copilot 桌面应用面向所有用户开放，并支持 BYOK <span aria-hidden="true">↗</span></a></h3>
       <p>GitHub 将 Copilot 桌面应用开放给 Free、Education、Business 和 Enterprise 用户，覆盖 macOS、Windows 与 Linux，并允许用户用自带模型密钥运行，不必一定绑定 Copilot 订阅。这意味着 AI 编程入口正在从 IDE 插件扩展为独立桌面工作台，个人开发者可以低成本试用，企业则需要重新检查组织策略、模型密钥管理和本地开发权限边界。</p>
-      <div class="item-meta"><a href="https://github.blog/changelog/2026-07-07-github-copilot-app-available-to-all/" target="_blank" rel="noreferrer">GitHub Changelog</a> · 2026-07-07T00:00:00.000Z</div>
+      <div class="item-meta">GitHub Changelog · 2026-07-07</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">02</div>
     <div class="item-body">
       <div class="tags"><span>Agent</span><span>Gemini API</span><span>MCP</span></div>
-      <h3>Google 为 Gemini API Managed Agents 增加后台执行、远程 MCP 与凭证刷新</h3>
+      <h3><a href="https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api" target="_blank" rel="noreferrer">Google 为 Gemini API Managed Agents 增加后台执行、远程 MCP 与凭证刷新 <span aria-hidden="true">↗</span></a></h3>
       <p>Google 给 Gemini API 的 Managed Agents 增加后台执行、远程 MCP 服务器、自定义函数调用和凭证刷新能力，开发者可以把长任务异步提交、混合使用内置沙箱工具与本地业务逻辑，并在后续交互中更新网络凭证。它把 Agent 从一次性请求推进到可持续运行的任务单元，适合做企业内部自动化、数据处理和跨系统编排，但也要求团队提前设计状态恢复、权限续期和人工审核点。</p>
-      <div class="item-meta"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api" target="_blank" rel="noreferrer">Google Blog</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Google Blog · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">03</div>
     <div class="item-body">
       <div class="tags"><span>商业化</span><span>API</span><span>MCP</span><span>支付</span></div>
-      <h3>Cloudflare 推出 Monetization Gateway，网页、API 与 MCP 工具可按用量收费</h3>
+      <h3><a href="https://blog.cloudflare.com/monetization-gateway/" target="_blank" rel="noreferrer">Cloudflare 推出 Monetization Gateway，网页、API 与 MCP 工具可按用量收费 <span aria-hidden="true">↗</span></a></h3>
       <p>Cloudflare 发布 Monetization Gateway，允许客户对受 Cloudflare 保护的网页、数据集、API 或 MCP 工具设置按用量收费规则，并通过 x402 协议用稳定币在边缘完成支付验证和结算。对开发者和内容提供方来说，这降低了为机器访问、数据接口和 Agent 工具加收费层的门槛；如果落地顺利，AI 时代的内容分发可能从广告和订阅，进一步走向面向 Agent 的细粒度付费调用。</p>
-      <div class="item-meta"><a href="https://blog.cloudflare.com/monetization-gateway/" target="_blank" rel="noreferrer">Cloudflare Blog</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Cloudflare Blog · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">04</div>
     <div class="item-body">
       <div class="tags"><span>AI 安全</span><span>提示注入</span><span>GitHub</span></div>
-      <h3>GitLost 暴露 GitHub AI Agent 跨仓库提示注入风险</h3>
+      <h3><a href="https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos" target="_blank" rel="noreferrer">GitLost 暴露 GitHub AI Agent 跨仓库提示注入风险 <span aria-hidden="true">↗</span></a></h3>
       <p>Noma Labs 披露 GitLost：攻击者可在同一组织的公共仓库 Issue 中植入恶意指令，诱导基于 Claude 或 GitHub Copilot 的 Agent 读取并泄露私有仓库内容。这个案例把 Agent 安全问题从“模型会不会听错”推进到“工具权限是否天然过大”，使用代码 Agent 的团队应把公共输入、私有仓库、组织级 token 和跨仓库读取权限拆开治理，而不是只依赖模型防护提示。</p>
-      <div class="item-meta"><a href="https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos" target="_blank" rel="noreferrer">Noma Security</a> · 2026-07-08T08:29:47.091Z</div>
+      <div class="item-meta">Noma Security · 2026-07-08 16:29</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-ai-tools">
     <div class="section-heading">
-      <p>ai-tools</p>
       <h2>AI 与新工具</h2>
       <span>工具更新集中在 Agent 执行、视觉/视频输出、本地优先工作台和模型效率。</span>
     </div>
@@ -197,78 +162,77 @@
     <div class="item-index">01</div>
     <div class="item-body">
       <div class="tags"><span>Claude</span><span>Agent</span><span>移动端</span></div>
-      <h3>Claude Cowork 开始向网页端和移动端扩展</h3>
+      <h3><a href="https://claude.com/blog/cowork-web-mobile" target="_blank" rel="noreferrer">Claude Cowork 开始向网页端和移动端扩展 <span aria-hidden="true">↗</span></a></h3>
       <p>Anthropic 宣布 Claude Cowork 将逐步登陆网页和移动端，Max 用户会先进入测试，用户提交任务后可关闭设备，Claude 继续在后台推进，并在需要决策时向手机发起确认。这个方向比单纯聊天更接近日常知识工作的真实节奏，尤其适合运营、内容、销售和管理类跨文件任务；团队试用时应重点观察它在审批、追问和任务中断恢复上的可靠性。</p>
-      <div class="item-meta"><a href="https://claude.com/blog/cowork-web-mobile" target="_blank" rel="noreferrer">Claude Blog</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Claude Blog · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">02</div>
     <div class="item-body">
       <div class="tags"><span>图像生成</span><span>视频生成</span><span>Agent</span></div>
-      <h3>Meta 发布 Agentic 图像模型 Muse Image，并预览 Muse Video</h3>
+      <h3><a href="https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/" target="_blank" rel="noreferrer">Meta 发布 Agentic 图像模型 Muse Image，并预览 Muse Video <span aria-hidden="true">↗</span></a></h3>
       <p>Meta Superintelligence Labs 发布 Muse Image 和 Muse Video 预览版，Muse Image 可在推理中调用搜索与代码工具，支持精确编辑、多参考图像合成，并借助 Instagram 公开内容理解社交语境。生成式媒体正在从“出一张图”变成带工具调用和上下文理解的创作流程，视觉输出也会越来越结构化、可编辑、可分发，产品团队应关注它对社媒素材、广告创意和创作者工作台的影响。</p>
-      <div class="item-meta"><a href="https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/" target="_blank" rel="noreferrer">Meta AI</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Meta AI · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">03</div>
     <div class="item-body">
       <div class="tags"><span>NotebookLM</span><span>视频摘要</span><span>知识工具</span></div>
-      <h3>NotebookLM 面向所有用户上线 Short Video Overviews</h3>
+      <h3><a href="https://x.com/NotebookLM/status/2074551227594264799" target="_blank" rel="noreferrer">NotebookLM 面向所有用户上线 Short Video Overviews <span aria-hidden="true">↗</span></a></h3>
       <p>Google NotebookLM 的 Short Video Overviews 已在移动端和网页端面向所有英语用户推出，用户可以把资料转成更短的视频概览。它说明 AI 输出形态正在从文本摘要继续向多模态、可快速消费的内容单元演进；对知识库、教育和企业培训产品来说，下一步不是简单增加“视频生成”按钮，而是把来源可追溯、结构化脚本和可编辑片段放进流程。</p>
-      <div class="item-meta"><a href="https://x.com/NotebookLM/status/2074551227594264799" target="_blank" rel="noreferrer">NotebookLM</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">NotebookLM · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">04</div>
     <div class="item-body">
       <div class="tags"><span>本地优先</span><span>桌面助手</span><span>MCP</span></div>
-      <h3>Rowboat 成为 HN 热帖：本地优先桌面 AI 助手连接邮件、会议、Slack 与代码</h3>
+      <h3><a href="https://github.com/rowboatlabs/rowboat" target="_blank" rel="noreferrer">Rowboat 成为 HN 热帖：本地优先桌面 AI 助手连接邮件、会议、Slack 与代码 <span aria-hidden="true">↗</span></a></h3>
       <p>Rowboat 是一个开源、本地优先的桌面 AI 助手，把邮件、会议、Slack 等信息索引为类似 Obsidian 的知识图谱，并提供会议记录、浏览器、邮件客户端和可调用 Claude Code 或 Codex 的代码模式。它反映了个人 AI 工作台的另一路线：不把记忆完全托管给云端，而是用 Markdown、本地模型和 MCP 连接工具；重视数据控制的团队可以把它作为本地 Agent 架构参考。</p>
-      <div class="item-meta"><a href="https://github.com/rowboatlabs/rowboat" target="_blank" rel="noreferrer">GitHub</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">GitHub · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">05</div>
     <div class="item-body">
       <div class="tags"><span>世界模型</span><span>视频生成</span><span>交互</span></div>
-      <h3>MIRA 展示 20 FPS 可玩多人世界模型</h3>
+      <h3><a href="https://x.com/emollick/status/2074348274136346871" target="_blank" rel="noreferrer">MIRA 展示 20 FPS 可玩多人世界模型 <span aria-hidden="true">↗</span></a></h3>
       <p>General Intuition 与 Kyutai Labs 构建的 MIRA 用公开机器人数据训练，可根据四名玩家按键实时生成类似 Rocket League 的多人画面，演示帧率达到 20 FPS，并公开技术报告和代码。它暂时更像研究与原型信号，但方向重要：AI 输出可能从文本、Markdown、HTML 继续走向可交互的视频和模拟环境，游戏、训练仿真和产品原型工具都值得持续跟踪。</p>
-      <div class="item-meta"><a href="https://x.com/emollick/status/2074348274136346871" target="_blank" rel="noreferrer">X：Ethan Mollick</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">X：Ethan Mollick · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">06</div>
     <div class="item-body">
       <div class="tags"><span>语音识别</span><span>开源模型</span><span>多语言</span></div>
-      <h3>Cohere 开源阿拉伯语语音识别模型 Cohere Transcribe Arabic</h3>
+      <h3><a href="https://cohere.com/blog/transcribe-arabic" target="_blank" rel="noreferrer">Cohere 开源阿拉伯语语音识别模型 Cohere Transcribe Arabic <span aria-hidden="true">↗</span></a></h3>
       <p>Cohere 发布 2B 参数的阿拉伯语自动语音识别模型，支持阿拉伯语、英语、方言和语码转换，并以 Apache 2.0 开放权重。对多语言客服、内容审核和区域化语音产品来说，这类垂直语言模型比通用大模型更容易形成成本和准确率优势；如果业务面向中东市场，值得把它纳入离线评测。</p>
-      <div class="item-meta"><a href="https://cohere.com/blog/transcribe-arabic" target="_blank" rel="noreferrer">Cohere Blog</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Cohere Blog · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">07</div>
     <div class="item-body">
       <div class="tags"><span>ASR</span><span>语音</span><span>API</span></div>
-      <h3>小米 MiMo 开放 MiMo-V2.5-ASR API，国内按音频时长计费</h3>
+      <h3><a href="https://mimo.xiaomi.com/mimo-v2-5-asr" target="_blank" rel="noreferrer">小米 MiMo 开放 MiMo-V2.5-ASR API，国内按音频时长计费 <span aria-hidden="true">↗</span></a></h3>
       <p>小米 MiMo 开放 V2.5-ASR 语音识别 API，支持中英双语、多种中文方言、中英语码混合和强噪声多人场景，价格为国内每小时 0.5 元，并可纳入 Token Plan 订阅。低价 ASR 会进一步降低会议纪要、客服质检、内容转写的产品门槛，团队评估时应把真实噪声、方言覆盖和数据合规放在单价之前。</p>
-      <div class="item-meta"><a href="https://mimo.xiaomi.com/mimo-v2-5-asr" target="_blank" rel="noreferrer">小米 MiMo</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">小米 MiMo · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">08</div>
     <div class="item-body">
       <div class="tags"><span>推理模型</span><span>可靠性</span><span>开源</span></div>
-      <h3>Liquid AI 开源 Antidoom，针对推理模型重复循环做定向修复</h3>
+      <h3><a href="https://www.marktechpost.com/2026/07/07/liquid-ai-antidoom-doom-loops-ftpo" target="_blank" rel="noreferrer">Liquid AI 开源 Antidoom，针对推理模型重复循环做定向修复 <span aria-hidden="true">↗</span></a></h3>
       <p>Liquid AI 开源 Antidoom，用 Final Token Preference Optimization 定位循环开始的 token 并训练模型选择替代项，在多个推理模型上显著降低重复循环率。它对应用层的启发是，长推理不只需要更大上下文，也需要可观测的失败模式和轻量修补机制；做 Agent 或代码生成产品时，应把循环检测、停止条件和重试策略纳入基础设施。</p>
-      <div class="item-meta"><a href="https://www.marktechpost.com/2026/07/07/liquid-ai-antidoom-doom-loops-ftpo" target="_blank" rel="noreferrer">MarkTechPost</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">MarkTechPost · 2026-07-08</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-platforms">
     <div class="section-heading">
-      <p>platforms</p>
       <h2>大厂与平台动态</h2>
       <span>平台侧的变化集中在模型成本、访问边界和开放生态。</span>
     </div>
@@ -276,33 +240,32 @@
     <div class="item-index">01</div>
     <div class="item-body">
       <div class="tags"><span>Microsoft</span><span>Copilot</span><span>模型成本</span></div>
-      <h3>微软被曝在 Copilot 中用自研 MAI 模型替换部分外部模型以降本</h3>
+      <h3><a href="https://the-decoder.com/copilot-goes-cheap-as-microsoft-phases-out-openai-and-anthropic-models-to-cut-costs" target="_blank" rel="noreferrer">微软被曝在 Copilot 中用自研 MAI 模型替换部分外部模型以降本 <span aria-hidden="true">↗</span></a></h3>
       <p>The Decoder 报道称，微软正在 Excel、Outlook 等 Copilot 场景中逐步使用自研 MAI 模型替代 OpenAI 和 Anthropic 模型，以降低推理支出，并可能未来把第三方模型做成付费附加项。即使报道细节仍需持续验证，这一方向也符合平台经济逻辑：模型供应会从单一最佳模型走向路由、分层和成本控制，企业采购 Copilot 类产品时应关注默认模型、可选模型和价格结构是否变化。</p>
-      <div class="item-meta"><a href="https://the-decoder.com/copilot-goes-cheap-as-microsoft-phases-out-openai-and-anthropic-models-to-cut-costs" target="_blank" rel="noreferrer">The Decoder</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">The Decoder · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">02</div>
     <div class="item-body">
       <div class="tags"><span>Claude</span><span>模型评测</span><span>订阅</span></div>
-      <h3>Claude Fable 5 促销访问延长至 7 月 12 日</h3>
+      <h3><a href="https://support.claude.com/en/articles/15424964-claude-fable-5-promotional-access" target="_blank" rel="noreferrer">Claude Fable 5 促销访问延长至 7 月 12 日 <span aria-hidden="true">↗</span></a></h3>
       <p>Anthropic 将 Claude Fable 5 的限时促销访问延长至 7 月 12 日，付费订阅用户仍可把每周额度最多 50% 用于调用该模型。对团队来说，这类短期开放窗口适合做高难任务评测，而不是马上迁移生产流程；更稳妥的做法是记录它在复杂代码、规划和多步推理中的边际收益，再决定是否纳入模型路由。</p>
-      <div class="item-meta"><a href="https://support.claude.com/en/articles/15424964-claude-fable-5-promotional-access" target="_blank" rel="noreferrer">Claude Help Center</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Claude Help Center · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">03</div>
     <div class="item-body">
       <div class="tags"><span>支付宝</span><span>平台生态</span><span>AI 开放平台</span></div>
-      <h3>支付宝 AI 开放平台正式开放，一次接入可跨终端提供服务</h3>
+      <h3><a href="https://www.juya.ai/" target="_blank" rel="noreferrer">支付宝 AI 开放平台正式开放，一次接入可跨终端提供服务 <span aria-hidden="true">↗</span></a></h3>
       <p>juya 早报收录支付宝 AI 开放平台正式开放，强调一次接入后可跨终端提供服务。对国内开发者而言，值得关注的不是“又一个 AI 平台”，而是支付、生活服务和小程序生态里是否会出现新的分发入口；如果平台能把身份、支付、服务履约和 Agent 能力打通，商业化闭环会比单纯模型 API 更直接。</p>
-      <div class="item-meta"><a href="https://www.juya.ai/" target="_blank" rel="noreferrer">juya-ai-daily</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">juya-ai-daily · 2026-07-08</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-product-growth">
     <div class="section-heading">
-      <p>product-growth</p>
       <h2>产品与增长观察</h2>
       <span>产品层面更值得看的是 AI 工作流如何进入知识工作和内容分发。</span>
     </div>
@@ -310,24 +273,23 @@
     <div class="item-index">01</div>
     <div class="item-body">
       <div class="tags"><span>知识工作</span><span>运营</span><span>Agent</span></div>
-      <h3>Claude Cowork 使用数据显示，业务流程与运营占比高于软件开发</h3>
+      <h3><a href="https://claude.com/blog/how-people-are-using-claude-cowork" target="_blank" rel="noreferrer">Claude Cowork 使用数据显示，业务流程与运营占比高于软件开发 <span aria-hidden="true">↗</span></a></h3>
       <p>Anthropic 基于 120 万次匿名会话样本称，Claude Cowork 最大用途是业务流程与运营，占 33.4%，内容创作与文案占 16.4%，软件开发仅占 8.7%。这组数据提醒产品团队，Agent 的高频价值不一定首先出现在写代码，而是在整理报告、核对表格、汇总反馈、制作文档等横跨工具的工作中；面向企业的 AI 产品应优先寻找可闭环的流程，而不是只包装一个通用聊天入口。</p>
-      <div class="item-meta"><a href="https://claude.com/blog/how-people-are-using-claude-cowork" target="_blank" rel="noreferrer">Claude Blog</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Claude Blog · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">02</div>
     <div class="item-body">
       <div class="tags"><span>企业 AI</span><span>部署工程</span><span>商业化</span></div>
-      <h3>FDE 热潮显示 AI 商业化瓶颈从模型能力转向部署能力</h3>
+      <h3><a href="https://www.tomtunguz.com/the-10b-fde-boom" target="_blank" rel="noreferrer">FDE 热潮显示 AI 商业化瓶颈从模型能力转向部署能力 <span aria-hidden="true">↗</span></a></h3>
       <p>Tomer Tunguz 汇总称，AI 公司过去 12 个月承诺约 97.5 亿美元建设前部署工程团队，微软、亚马逊、Salesforce、OpenAI、Anthropic 和 Google Cloud 分别采用内部调配、独立实体或伙伴基金等方式。这个信号比单笔融资更有工作意义：客户缺的不是“更会演示的模型”，而是能把模型接进流程、权限、数据和变更管理的人；创业公司如果卖企业 AI，应把交付、培训和反馈数据机制设计成产品的一部分。</p>
-      <div class="item-meta"><a href="https://www.tomtunguz.com/the-10b-fde-boom" target="_blank" rel="noreferrer">Tomer Tunguz</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Tomer Tunguz · 2026-07-08</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-engineering">
     <div class="section-heading">
-      <p>engineering</p>
       <h2>开发者与工程实践</h2>
       <span>工程信号集中在代码 Agent、存储成本、AI 审计和本地工具生态。</span>
     </div>
@@ -335,42 +297,41 @@
     <div class="item-index">01</div>
     <div class="item-body">
       <div class="tags"><span>Claude Code</span><span>工程实践</span><span>模型路由</span></div>
-      <h3>Claude Code 官方解释模型选择与 effort level 的取舍</h3>
+      <h3><a href="https://claude.com/blog/claude-model-and-effort-level-in-claude-code" target="_blank" rel="noreferrer">Claude Code 官方解释模型选择与 effort level 的取舍 <span aria-hidden="true">↗</span></a></h3>
       <p>Anthropic 发布 Claude Code 指南，强调模型决定能力边界，effort level 控制单次任务中读取文件、验证步骤和多步推进的投入。对研发团队来说，这比“用最大模型解决一切”更可操作：简单任务用默认或低 effort 控成本，复杂改动先补上下文，再根据失败原因判断是换更强模型还是提高 effort，并把测试运行纳入提示和流程规范。</p>
-      <div class="item-meta"><a href="https://claude.com/blog/claude-model-and-effort-level-in-claude-code" target="_blank" rel="noreferrer">Claude Blog</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Claude Blog · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">02</div>
     <div class="item-body">
       <div class="tags"><span>云成本</span><span>训练基础设施</span><span>存储</span></div>
-      <h3>Hugging Face Storage 成为 SkyPilot 一级后端，主打跨云零出站费</h3>
+      <h3><a href="https://huggingface.co/blog/skypilot-hf-storage" target="_blank" rel="noreferrer">Hugging Face Storage 成为 SkyPilot 一级后端，主打跨云零出站费 <span aria-hidden="true">↗</span></a></h3>
       <p>Hugging Face Storage 已成为 SkyPilot 一级后端，用户可通过 hf:// URL 把 Bucket、模型、数据集或 Space 仓库挂载到跨云训练任务中，并利用 Hugging Face 不收出站费的特点降低数据读取成本。对做多云 GPU 调度的团队来说，这类存储与调度整合比单点云优惠更有长期价值，尤其适合频繁移动数据集、检查点和模型变体的训练流程。</p>
-      <div class="item-meta"><a href="https://huggingface.co/blog/skypilot-hf-storage" target="_blank" rel="noreferrer">Hugging Face Blog</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Hugging Face Blog · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">03</div>
     <div class="item-body">
       <div class="tags"><span>安全审计</span><span>AI Agent</span><span>漏洞</span></div>
-      <h3>AI 审计代理在 Cloudflare CIRCL 中发现并验证 7 个漏洞</h3>
+      <h3><a href="https://blog.zksecurity.xyz/posts/circl-bugs" target="_blank" rel="noreferrer">AI 审计代理在 Cloudflare CIRCL 中发现并验证 7 个漏洞 <span aria-hidden="true">↗</span></a></h3>
       <p>zkSecurity 介绍其 AI 审计代理 zkao 持续扫描 Cloudflare CIRCL 密码学库，并发现 7 个已被上游修复的真实漏洞，多数获得 HackerOne 确认。它并不意味着 AI 可以替代安全工程师，但说明“AI 生成候选发现 + 自动复现 + 人工确认”的流程开始具备生产价值；安全团队可以先在低风险库和历史漏洞集上评估召回率与误报成本。</p>
-      <div class="item-meta"><a href="https://blog.zksecurity.xyz/posts/circl-bugs" target="_blank" rel="noreferrer">zkSecurity Blog</a> · 2026-07-08T04:29:33.609Z</div>
+      <div class="item-meta">zkSecurity Blog · 2026-07-08 12:29</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">04</div>
     <div class="item-body">
       <div class="tags"><span>开源生态</span><span>Agent</span><span>开发工具</span></div>
-      <h3>GitHub Trending 出现多类 Agent 工具：skills、沙箱、Office 自动化与 Codex 状态栏</h3>
+      <h3><a href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noreferrer">GitHub Trending 出现多类 Agent 工具：skills、沙箱、Office 自动化与 Codex 状态栏 <span aria-hidden="true">↗</span></a></h3>
       <p>今日 GitHub Trending 中，agent-skills、TencentCloud CubeSandbox、OfficeCLI、CodexBar、awesome-claude-code 等项目集中出现，分别覆盖编码 Agent 技能、轻量沙箱、Office 文件自动化和使用统计。单个项目未必都能成为标准，但组合信号清楚：开发者生态正在围绕 Agent 的技能复用、执行隔离、文件操作和成本可视化补基础设施，做内部平台的团队可优先关注这些可迁移能力。</p>
-      <div class="item-meta"><a href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noreferrer">GitHub Trending</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">GitHub Trending · 2026-07-08</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-funding">
     <div class="section-heading">
-      <p>funding</p>
       <h2>投融资与行业机会</h2>
       <span>本期融资信息较少，保留一个与企业 AI 交付相关的行业机会信号。</span>
     </div>
@@ -378,15 +339,14 @@
     <div class="item-index">01</div>
     <div class="item-body">
       <div class="tags"><span>行业机会</span><span>企业服务</span><span>AI 交付</span></div>
-      <h3>企业 AI 的机会窗口转向部署、集成和垂直工作流</h3>
+      <h3><a href="https://www.tomtunguz.com/the-10b-fde-boom" target="_blank" rel="noreferrer">企业 AI 的机会窗口转向部署、集成和垂直工作流 <span aria-hidden="true">↗</span></a></h3>
       <p>FDE 投入上升和 Claude Cowork 使用数据互相印证：模型能力已足够触发企业试点，但真正付费的部分在流程改造、权限接入、数据清洗、培训和持续运营。对创业者而言，机会不只在再做一个通用 Agent，而在选定一个高频业务流程，把模型调用、人工审批、审计记录和结果交付做成完整闭环；这类产品短期更像服务，长期才可能沉淀为软件。</p>
-      <div class="item-meta"><a href="https://www.tomtunguz.com/the-10b-fde-boom" target="_blank" rel="noreferrer">Tomer Tunguz</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Tomer Tunguz · 2026-07-08</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-policy">
     <div class="section-heading">
-      <p>policy</p>
       <h2>政策监管与合规</h2>
       <span>合规信号主要围绕模型访问、用户伤害责任和开发工具数据外传。</span>
     </div>
@@ -394,24 +354,23 @@
     <div class="item-index">01</div>
     <div class="item-body">
       <div class="tags"><span>模型访问</span><span>出口管制</span><span>合规</span></div>
-      <h3>报道称中国考虑限制海外访问最强国产 AI 模型</h3>
+      <h3><a href="https://x.com/rohanpaul_ai/status/2074512389526237609" target="_blank" rel="noreferrer">报道称中国考虑限制海外访问最强国产 AI 模型 <span aria-hidden="true">↗</span></a></h3>
       <p>AI HOT 收录报道称，中国有关部门正与多家模型企业讨论限制外国访问先进国产 AI 模型，范围可能覆盖闭源 API 和可下载权重，并把模型外泄纳入更严厉的安全框架。该消息仍需等待正式政策确认，但对依赖跨境模型供应的团队已经构成规划信号：模型选型不应只看价格和榜单，还要评估地域可用性、权重托管、数据出境和替代供应商。</p>
-      <div class="item-meta"><a href="https://x.com/rohanpaul_ai/status/2074512389526237609" target="_blank" rel="noreferrer">X：Rohan Paul</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">X：Rohan Paul · 2026-07-08</div>
     </div>
   </article>
 <article class="report-item">
     <div class="item-index">02</div>
     <div class="item-body">
       <div class="tags"><span>OpenAI</span><span>安全责任</span><span>合规</span></div>
-      <h3>加拿大不列颠哥伦比亚省拟起诉 OpenAI，焦点在高风险对话上报责任</h3>
+      <h3><a href="https://www.ithome.com/0/974/169.htm" target="_blank" rel="noreferrer">加拿大不列颠哥伦比亚省拟起诉 OpenAI，焦点在高风险对话上报责任 <span aria-hidden="true">↗</span></a></h3>
       <p>加拿大不列颠哥伦比亚省宣布拟起诉 OpenAI，指控其未向执法部门上报一名 ChatGPT 用户此前的暴力相关对话，该用户后来制造校园枪击案。诉讼本身仍需法院判断，但它把 AI 产品的责任边界推向更具体的问题：当系统识别出自伤、伤人或公共安全风险时，平台应如何记录、升级、人工复核和依法处理，面向消费者的 AI 产品需要把安全运营流程写进产品设计。</p>
-      <div class="item-meta"><a href="https://www.ithome.com/0/974/169.htm" target="_blank" rel="noreferrer">IT之家</a> · 2026-07-08T09:55:17.000Z</div>
+      <div class="item-meta">IT之家 · 2026-07-08 17:55</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-social-buzz">
     <div class="section-heading">
-      <p>social-buzz</p>
       <h2>社交热度观察</h2>
       <span>这些信息讨论度高，但更多是背景信号，不应挤占核心工作排序。</span>
     </div>
@@ -419,15 +378,14 @@
     <div class="item-index">01</div>
     <div class="item-body">
       <div class="tags"><span>隐私</span><span>社区讨论</span><span>平台治理</span></div>
-      <h3>HN 高热讨论集中在 Chat Control、车内监控和开放地图维护</h3>
+      <h3><a href="https://fightchatcontrol.eu/chat-control-overview" target="_blank" rel="noreferrer">HN 高热讨论集中在 Chat Control、车内监控和开放地图维护 <span aria-hidden="true">↗</span></a></h3>
       <p>Hacker News 今日最高分帖子包括 StreetComplete、欧盟 Chat Control 解释、欧盟新车驾驶员监控摄像头等，分数均远高于普通技术帖。它们不是直接的 AI 产品更新，但共同指向数据收集、隐私和公共基础设施治理的长期张力；对互联网团队而言，这是背景舆情信号，说明用户对“默认被监控”和“平台化治理”的敏感度仍在上升。</p>
-      <div class="item-meta"><a href="https://fightchatcontrol.eu/chat-control-overview" target="_blank" rel="noreferrer">Hacker News</a> · 2026-07-08T00:00:00.000Z</div>
+      <div class="item-meta">Hacker News · 2026-07-08</div>
     </div>
   </article></div>
   </section>
         <section class="report-section" id="section-actions">
     <div class="section-heading">
-      <p>actions</p>
       <h2>今日行动建议</h2>
     </div>
     <div class="action-list">
@@ -451,7 +409,6 @@
   </section>
         <section class="report-section report-section--muted" id="section-noise">
     <div class="section-heading">
-      <p>noise</p>
       <h2>去噪说明</h2>
     </div>
     <p class="note">本期去重时合并了 juya 与 AI HOT 中重复出现的 Claude Cowork、Gemini Managed Agents、Meta Muse、NotebookLM、Liquid AI、微软 MAI 等条目；过滤了消费电子、泛科技趣闻、低相关游戏和纯语言/系统优化讨论。HN 中分数较高但工作相关性弱的内容只保留为社交热度背景，不进入头条和核心板块。</p>
@@ -463,24 +420,43 @@
                 <span>ok</span>
               </div><div>
                 <strong>aihotItems</strong>
-                <span>ok</span>
+                <span>ok (40 items)</span>
               </div><div>
                 <strong>hackernews</strong>
-                <span>ok</span>
+                <span>ok (43 stories &gt;= 30pts)</span>
               </div><div>
                 <strong>githubTrending</strong>
-                <span>ok</span>
+                <span>ok (13 repos)</span>
               </div></div>
   </section>
       </article>
-      <aside class="share">
-        <span>分享</span>
-        <a href="https://twitter.com/intent/tweet?text=Whistle%20%E4%BA%92%E8%81%94%E7%BD%91%E6%97%A5%E6%8A%A5%EF%BD%9C2026-07-08">X</a>
-        <a href="mailto:?subject=Whistle%20%E4%BA%92%E8%81%94%E7%BD%91%E6%97%A5%E6%8A%A5%EF%BD%9C2026-07-08">↗</a>
-      </aside>
     </div>
   </main>
 
   <footer class="footer">© 2026 Whistle. 低噪音互联网与 AI 日报。</footer>
+  <script>
+    (() => {
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = links
+        .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))
+        .filter((item) => item.section);
+      if (!sections.length) return;
+
+      const updateActiveToc = () => {
+        const threshold = Math.max(120, window.innerHeight * 0.28);
+        let active = null;
+        for (const item of sections) {
+          const rect = item.section.getBoundingClientRect();
+          if (rect.top <= threshold && rect.bottom > 80) active = item;
+        }
+        links.forEach((link) => link.removeAttribute("aria-current"));
+        if (active) active.link.setAttribute("aria-current", "true");
+      };
+
+      updateActiveToc();
+      window.addEventListener("scroll", updateActiveToc, { passive: true });
+      window.addEventListener("resize", updateActiveToc);
+    })();
+  </script>
 </body>
 </html>

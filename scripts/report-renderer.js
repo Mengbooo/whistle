@@ -204,22 +204,45 @@ function renderMeta(parts) {
   return parts.filter(Boolean).map(escapeHtml).join(" · ");
 }
 
+function formatPublishedAt(value) {
+  if (!value) return "";
+  const text = String(value);
+  const dateOnly = text.match(/^(\d{4}-\d{2}-\d{2})(?:T00:00:00(?:\.000)?Z)?$/);
+  if (dateOnly) return dateOnly[1];
+
+  const date = new Date(text);
+  if (Number.isNaN(date.getTime())) return text;
+
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day} ${values.hour}:${values.minute}`;
+}
+
 function renderTags(tags) {
   if (!tags.length) return "";
   return `<div class="tags">${tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>`;
 }
 
 function renderItem(item, index) {
-  const source = item.sourceUrl
-    ? `<a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(item.sourceName || "来源")}</a>`
-    : escapeHtml(item.sourceName || "来源");
+  const title = item.sourceUrl
+    ? `<a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(item.title)} <span aria-hidden="true">↗</span></a>`
+    : escapeHtml(item.title);
+  const meta = renderMeta([item.sourceName, formatPublishedAt(item.publishedAt)]);
   return `<article class="report-item">
     <div class="item-index">${String(index + 1).padStart(2, "0")}</div>
     <div class="item-body">
       ${renderTags(item.tags)}
-      <h3>${escapeHtml(item.title)}</h3>
+      <h3>${title}</h3>
       <p>${escapeHtml(item.summary)}</p>
-      <div class="item-meta">${source}${item.publishedAt ? ` · ${escapeHtml(item.publishedAt)}` : ""}</div>
+      ${meta ? `<div class="item-meta">${meta}</div>` : ""}
     </div>
   </article>`;
 }
@@ -230,7 +253,6 @@ function renderSection(section) {
     : `<p class="empty">本期无强信号。</p>`;
   return `<section class="report-section" id="${sectionAnchor(section.id)}">
     <div class="section-heading">
-      <p>${escapeHtml(section.id)}</p>
       <h2>${escapeHtml(section.title)}</h2>
       ${section.summary ? `<span>${escapeHtml(section.summary)}</span>` : ""}
     </div>
@@ -242,7 +264,6 @@ function renderActions(actions) {
   if (!actions.length) return "";
   return `<section class="report-section" id="section-actions">
     <div class="section-heading">
-      <p>actions</p>
       <h2>今日行动建议</h2>
     </div>
     <div class="action-list">
@@ -269,7 +290,6 @@ function renderSourceStatus(report) {
   if (!statuses.length && !report.noiseNote) return "";
   return `<section class="report-section report-section--muted" id="section-noise">
     <div class="section-heading">
-      <p>noise</p>
       <h2>去噪说明</h2>
     </div>
     ${report.noiseNote ? `<p class="note">${escapeHtml(report.noiseNote)}</p>` : ""}
@@ -325,35 +345,21 @@ export function renderReportHtml(input) {
       --text: #f4f4f4;
       --muted: #a5a5a5;
       --faint: #737373;
-      --accent: #8ab4ff;
+      --accent: #01c193;
       --max: 1180px;
       --serif: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
-      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
     body { font-family: var(--sans); line-height: 1.72; -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
     a:hover { color: #fff; border-bottom-color: #fff; }
-    .site-header {
-      position: sticky; top: 0; z-index: 10;
-      display: flex; align-items: center; justify-content: space-between;
-      max-width: calc(var(--max) + 80px); margin: 0 auto; padding: 22px 40px;
-      background: rgba(0,0,0,.82); backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--line-soft);
-    }
-    .brand { font-weight: 650; letter-spacing: -.02em; }
-    .nav { display: flex; gap: 28px; color: var(--muted); font-size: 14px; }
-    .nav a { border: 0; }
-    .nav a:hover { color: var(--text); }
-    .hero {
-      max-width: 860px; margin: 0 auto; padding: 86px 28px 58px; text-align: center;
-    }
-    .kicker { margin: 0 0 18px; color: var(--muted); font-size: 13px; }
-    h1 { margin: 0; font-size: clamp(38px, 6vw, 76px); line-height: 1.04; letter-spacing: -.055em; }
-    .summary { max-width: 720px; margin: 24px auto 0; color: #cfcfcf; font-size: 18px; line-height: 1.7; }
-    .hero-meta { margin-top: 22px; color: var(--faint); font-size: 13px; }
-    .hero-actions { display: flex; justify-content: center; gap: 12px; margin-top: 30px; }
+    .hero { width: 100%; padding: 0 0 58px; text-align: left; }
+    h1 { margin: 0; font-size: clamp(26px, 3vw, 38px); font-weight: 560; line-height: 1.06; letter-spacing: -.05em; }
+    .summary { max-width: 720px; margin: 24px 0 0; color: var(--text); font-size: 18px; line-height: 1.7; }
+    .hero-meta { margin-top: 22px; color: var(--text); font-size: 13px; }
+    .hero-actions { display: flex; justify-content: flex-start; gap: 12px; margin-top: 30px; }
     .button {
       display: inline-flex; align-items: center; justify-content: center;
       min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
@@ -361,16 +367,14 @@ export function renderReportHtml(input) {
     }
     .button--ghost { background: transparent; color: var(--text); }
     .layout {
-      display: grid; grid-template-columns: 190px minmax(0, 760px) 80px;
-      gap: 58px; max-width: var(--max); margin: 0 auto; padding: 0 40px 90px;
+      display: grid; grid-template-columns: 190px minmax(0, 760px);
+      gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
     }
     .toc { position: sticky; top: 86px; align-self: start; color: var(--muted); font-size: 13px; }
-    .toc strong { display: block; margin-bottom: 12px; color: var(--text); font-size: 13px; }
-    .toc a { display: block; margin: 0 0 9px; padding: 5px 0; border: 0; color: var(--muted); }
+    .toc strong { display: block; margin-bottom: 8px; color: var(--text); font-size: 13px; }
+    .toc a { display: block; margin: 0 0 3px; padding: 3px 0; border: 0; color: var(--muted); line-height: 1.35; transition: color .16s ease; }
+    .toc a[aria-current="true"] { color: var(--text); }
     .toc a:hover { color: var(--text); }
-    .share { position: sticky; top: 86px; align-self: start; color: var(--muted); font-size: 13px; }
-    .share span { display: block; margin-bottom: 14px; }
-    .share a { display: block; width: 30px; height: 30px; margin-bottom: 8px; border: 1px solid var(--line); border-radius: 50%; text-align: center; line-height: 28px; color: var(--text); }
     .topline {
       margin-bottom: 54px; padding: 26px; border: 1px solid var(--line); border-radius: 12px;
       background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
@@ -379,7 +383,6 @@ export function renderReportHtml(input) {
     .topline ul { margin: 0; padding-left: 20px; color: #d8d8d8; }
     .report-section { padding: 46px 0; border-top: 1px solid var(--line); }
     .section-heading { margin-bottom: 28px; }
-    .section-heading p { margin: 0 0 7px; color: var(--accent); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
     .section-heading h2 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; }
     .section-heading span { display: block; margin-top: 8px; color: var(--muted); }
     .section-items { display: grid; gap: 26px; }
@@ -388,8 +391,10 @@ export function renderReportHtml(input) {
     .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
     .tags span { color: var(--accent); font-size: 12px; }
     .report-item h3 { margin: 0; font-size: 22px; line-height: 1.35; letter-spacing: -.025em; }
-    .report-item p { margin: 10px 0 0; color: #d0d0d0; font-size: 15px; }
-    .item-meta { margin-top: 10px; color: var(--faint); font-size: 13px; }
+    .report-item h3 a { border: 0; }
+    .report-item h3 a span { color: var(--accent); font-size: .82em; }
+    .report-item p { margin: 10px 0 0; color: var(--text); font-size: 15px; }
+    .item-meta { margin-top: 10px; color: var(--muted); font-size: 13px; }
     .empty, .note { margin: 0; color: var(--muted); }
     .action-list { display: grid; gap: 12px; }
     .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: #d0d0d0; }
@@ -400,11 +405,9 @@ export function renderReportHtml(input) {
     .status-grid span { margin-top: 4px; color: var(--muted); font-size: 13px; }
     .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
     @media (max-width: 980px) {
-      .site-header { padding: 18px 22px; }
-      .nav { gap: 16px; }
-      .layout { display: block; padding: 0 24px 72px; }
-      .toc, .share { display: none; }
-      .hero { padding-top: 66px; text-align: left; }
+      .layout { display: block; padding: 66px 24px 72px; }
+      .toc { display: none; }
+      .hero { padding: 0 0 58px; }
       .hero-actions { justify-content: flex-start; }
       .report-item { grid-template-columns: 1fr; gap: 8px; }
       .item-index { display: none; }
@@ -412,7 +415,7 @@ export function renderReportHtml(input) {
     }
     @media print {
       :root { color-scheme: light; --bg: #fff; --text: #111; --muted: #555; --faint: #666; --line: #ddd; --line-soft: #eee; --panel: #f7f7f7; --accent: #1B365D; }
-      .site-header, .toc, .share, .hero-actions { display: none; }
+      .toc, .hero-actions { display: none; }
       .hero { text-align: left; padding: 10mm 0 8mm; }
       .layout { display: block; padding: 0; }
       .report-section { page-break-inside: avoid; }
@@ -421,59 +424,57 @@ export function renderReportHtml(input) {
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="/">Whistle 互联网日报</a>
-    <nav class="nav" aria-label="站点导航">
-      <a href="/">日报</a>
-      <a href="/archive/">归档</a>
-      <a href="/subscribe/">订阅</a>
-      <a href="/subscribe/">RSS</a>
-    </nav>
-  </header>
-
   <main>
-    <section class="hero">
-      <p class="kicker">日报 · ${escapeHtml(report.date)}</p>
-      <h1>${escapeHtml(report.title)}</h1>
-      <p class="summary">${summary}</p>
-      <p class="hero-meta">${renderMeta([
-        report.theme,
-        `${itemCount} 条信号`,
-        `生成于 ${new Date(report.generatedAt).toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" })}`,
-      ])}</p>
-      <div class="hero-actions">
-        <a class="button" href="${pdfHref}">下载 PDF</a>
-        <a class="button button--ghost" href="/archive/">查看归档</a>
-      </div>
-    </section>
-
     <div class="layout">
       <aside class="toc">
         <strong>目录</strong>
         ${toc.map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("")}
       </aside>
       <article>
-        ${
-          report.topline.length
-            ? `<section class="topline">
-                <h2>今日主线</h2>
-                <ul>${report.topline.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
-              </section>`
-            : ""
-        }
+        <section class="hero">
+          <h1>${escapeHtml(report.title)}</h1>
+          <p class="summary">${summary}</p>
+          <p class="hero-meta">${renderMeta([
+            `${itemCount} 条信号`,
+            new Date(report.generatedAt).toLocaleString("zh-CN", { timeZone: "Asia/Shanghai" }),
+          ])}</p>
+          <div class="hero-actions">
+            <a class="button button--ghost" href="${pdfHref}">下载 PDF</a>
+            <a class="button button--ghost" href="/archive/">查看归档</a>
+          </div>
+        </section>
         ${report.sections.map(renderSection).join("\n")}
         ${renderActions(report.actions)}
         ${renderSourceStatus(report)}
       </article>
-      <aside class="share">
-        <span>分享</span>
-        <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(report.title)}">X</a>
-        <a href="mailto:?subject=${encodeURIComponent(report.title)}">↗</a>
-      </aside>
     </div>
   </main>
 
   <footer class="footer">© ${new Date(report.date).getFullYear()} Whistle. 低噪音互联网与 AI 日报。</footer>
+  <script>
+    (() => {
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = links
+        .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))
+        .filter((item) => item.section);
+      if (!sections.length) return;
+
+      const updateActiveToc = () => {
+        const threshold = Math.max(120, window.innerHeight * 0.28);
+        let active = null;
+        for (const item of sections) {
+          const rect = item.section.getBoundingClientRect();
+          if (rect.top <= threshold && rect.bottom > 80) active = item;
+        }
+        links.forEach((link) => link.removeAttribute("aria-current"));
+        if (active) active.link.setAttribute("aria-current", "true");
+      };
+
+      updateActiveToc();
+      window.addEventListener("scroll", updateActiveToc, { passive: true });
+      window.addEventListener("resize", updateActiveToc);
+    })();
+  </script>
 </body>
 </html>`;
 }
@@ -493,7 +494,7 @@ export function buildEmailHtml(input, { reportUrl = "" } = {}) {
 
   return `<!doctype html>
 <html lang="zh-CN">
-  <body style="margin:0;padding:0;background:#000;color:#f4f4f4;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <body style="margin:0;padding:0;background:#000;color:#f4f4f4;font-family:'Google Sans',Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#000;">
       <tr>
         <td align="center" style="padding:32px 16px;">
