@@ -355,6 +355,18 @@ export function renderReportHtml(input) {
     body { font-family: var(--sans); line-height: 1.72; -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
     a:hover { color: #fff; border-bottom-color: #fff; }
+    .back-link {
+      position: fixed;
+      top: 28px;
+      left: 32px;
+      z-index: 10;
+      border: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+    .back-link:hover { color: var(--text); }
     .hero { width: 100%; padding: 0 0 58px; text-align: left; }
     h1 { margin: 0; font-size: clamp(26px, 3vw, 38px); font-weight: 560; line-height: 1.06; letter-spacing: -.05em; }
     .summary { max-width: 720px; margin: 24px 0 0; color: var(--text); font-size: 18px; line-height: 1.7; }
@@ -457,6 +469,7 @@ export function renderReportHtml(input) {
     .status-grid span { margin-top: 4px; color: var(--muted); font-size: 13px; }
     .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
     @media (max-width: 980px) {
+      .back-link { position: static; display: inline-block; margin: 22px 24px 0; }
       .layout { display: block; padding: 66px 24px 72px; }
       .toc { display: none; }
       .hero { padding: 0 0 58px; }
@@ -475,7 +488,7 @@ export function renderReportHtml(input) {
       :root { color-scheme: dark; }
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       html, body { background: var(--bg) !important; color: var(--text) !important; }
-      .toc, .hero-actions, script { display: none !important; }
+      .back-link, .toc, .hero-actions, script { display: none !important; }
       .hero { text-align: left; padding: 0 0 42px; }
       .layout { display: block; max-width: 760px; margin: 0; padding: 12mm; }
       .report-section { break-inside: auto; page-break-inside: auto; padding: 38px 0; }
@@ -489,6 +502,7 @@ export function renderReportHtml(input) {
   </style>
 </head>
 <body>
+  <a class="back-link" href="/archive/" aria-label="返回归档">← 返回</a>
   <main>
     <div class="layout">
       <aside class="toc">
