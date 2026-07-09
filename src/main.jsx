@@ -655,22 +655,6 @@ function ArchivePage() {
 }
 
 function SubscribePage() {
-  const [email, setEmail] = useState("");
-  const trimmedEmail = email.trim();
-  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail);
-  const silkParams = useMemo(
-    () => ({
-      color: coverColor,
-      noiseIntensity: 0.7,
-      rotation: 0,
-      scale: 1,
-      speed: 1,
-      style: 0,
-      styleName: "silk",
-    }),
-    [],
-  );
-
   return (
     <Shell active="订阅">
       <main className="page subscribe-page">
@@ -684,19 +668,17 @@ function SubscribePage() {
               </label>
               <div className="subscribe-field">
                 <input
-                  aria-invalid={trimmedEmail.length > 0 && !isEmailValid}
+                  disabled
                   id="email"
                   name="email"
-                  onChange={(event) => setEmail(event.target.value)}
                   placeholder="邮箱"
                   type="email"
-                  value={email}
                 />
-                <button disabled={!isEmailValid} type="submit">
-                  <ShaderCover params={silkParams} />
+                <button disabled type="submit">
                   <span>订阅</span>
                 </button>
               </div>
+              <p className="subscribe-notice">当前邮件系统尚不完善，暂时不开放订阅功能</p>
             </form>
           </section>
         </div>
