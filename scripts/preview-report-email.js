@@ -19,11 +19,10 @@ async function main() {
   const date = process.env.WHISTLE_DATE || todayInShanghai();
   const baseUrl = (process.env.REPORT_BASE_URL || "http://localhost:5173").replace(/\/+$/, "");
   const reportUrl = `${baseUrl}/reports/${date}.html`;
-  const pdfUrl = `${baseUrl}/assets/report-${date}.pdf`;
   const report = JSON.parse(
     await fs.readFile(path.join(root, "outputs", date, "report.json"), "utf8"),
   );
-  const html = buildEmailHtml(report, { pdfUrl, reportUrl });
+  const html = buildEmailHtml(report, { reportUrl });
   const targets = [
     path.join(root, "outputs", date, "email-preview.html"),
     path.join(root, "public", "reports", `${date}-email-preview.html`),

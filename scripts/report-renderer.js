@@ -470,11 +470,17 @@ export function renderReportHtml(input) {
       .status-grid, .action-item { grid-template-columns: 1fr; }
     }
     @media print {
-      :root { color-scheme: light; --bg: #fff; --text: #111; --muted: #555; --faint: #666; --line: #ddd; --line-soft: #eee; --panel: #f7f7f7; --accent: #1B365D; }
-      .toc, .hero-actions { display: none; }
-      .hero { text-align: left; padding: 10mm 0 8mm; }
-      .layout { display: block; padding: 0; }
-      .report-section { page-break-inside: avoid; }
+      :root { color-scheme: dark; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html, body { background: var(--bg) !important; color: var(--text) !important; }
+      .toc, .hero-actions, script { display: none !important; }
+      .hero { text-align: left; padding: 0 0 42px; }
+      .layout { display: block; max-width: 760px; margin: 0; padding: 0; }
+      .report-section { break-inside: auto; page-break-inside: auto; padding: 38px 0; }
+      .section-heading { break-after: avoid; page-break-after: avoid; }
+      .report-item { break-inside: avoid; page-break-inside: avoid; }
+      .item-insight { border-left-color: rgba(1, 193, 147, .55); }
+      .footer { display: none; }
       a { color: inherit; border: 0; }
     }
   </style>
@@ -544,7 +550,7 @@ function splitEmailSummary(summary = "") {
   ].filter(Boolean);
 }
 
-export function buildEmailHtml(input, { pdfUrl = "", reportUrl = "" } = {}) {
+export function buildEmailHtml(input, { reportUrl = "" } = {}) {
   const { report, errors } = validateReport(input);
   if (errors.length) {
     throw new Error(`Invalid report.json:\n${errors.map((error) => `- ${error}`).join("\n")}`);
@@ -553,9 +559,6 @@ export function buildEmailHtml(input, { pdfUrl = "", reportUrl = "" } = {}) {
   const actions = [
     reportUrl
       ? `<a href="${escapeHtml(reportUrl)}" style="display:inline-block;margin:0 10px 10px 0;padding:10px 16px;border:1px solid #fff;border-radius:999px;background:#fff;color:#000;text-decoration:none;font-size:14px;font-weight:700;">阅读网页版 →</a>`
-      : "",
-    pdfUrl
-      ? `<a href="${escapeHtml(pdfUrl)}" style="display:inline-block;margin:0 0 10px 0;padding:10px 16px;border:1px solid #333;border-radius:999px;background:transparent;color:#f4f4f4;text-decoration:none;font-size:14px;font-weight:700;">下载 PDF</a>`
       : "",
   ].filter(Boolean).join("");
 

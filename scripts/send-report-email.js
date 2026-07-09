@@ -28,7 +28,6 @@ async function main() {
   const date = process.env.WHISTLE_DATE || todayInShanghai();
   const baseUrl = (process.env.REPORT_BASE_URL || "https://daily.bolaxious.cn").replace(/\/+$/, "");
   const reportUrl = `${baseUrl}/reports/${date}.html`;
-  const pdfUrl = `${baseUrl}/assets/report-${date}.pdf`;
   const outDir = path.join(root, "outputs", date);
   const pdfPath = path.join(outDir, "report.pdf");
   const jsonPath = path.join(outDir, "report.json");
@@ -37,7 +36,7 @@ async function main() {
     fs.readFile(jsonPath, "utf8"),
   ]);
   const report = JSON.parse(rawJson);
-  const emailHtml = buildEmailHtml(report, { pdfUrl, reportUrl });
+  const emailHtml = buildEmailHtml(report, { reportUrl });
 
   const resend = new Resend(apiKey);
   const result = await resend.emails.send({
