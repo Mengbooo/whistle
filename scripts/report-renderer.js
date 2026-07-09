@@ -240,8 +240,15 @@ function splitSentences(value = "") {
 
 function splitSummary(summary = "") {
   const sentences = splitSentences(summary);
-  if (sentences.length <= 2) {
+  if (sentences.length <= 1) {
     return { fact: summary, insight: "" };
+  }
+
+  if (sentences.length === 2) {
+    return {
+      fact: sentences[0],
+      insight: sentences[1],
+    };
   }
 
   let factCount = 1;
