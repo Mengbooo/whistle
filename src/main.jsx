@@ -269,8 +269,10 @@ function createCoverProgram(gl) {
 
 function ShaderCover({ params }) {
   const canvasRef = useRef(null);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    setIsReady(false);
     const canvas = canvasRef.current;
     const gl = canvas?.getContext("webgl", { antialias: false, alpha: false });
     if (!canvas || !gl) return undefined;
@@ -306,6 +308,7 @@ function ShaderCover({ params }) {
     gl.uniform1f(uniforms.scale, params.scale);
     gl.uniform1f(uniforms.speed, params.speed);
     gl.uniform1f(uniforms.style, params.style);
+    let didReveal = false;
 
     const render = (now) => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -319,6 +322,10 @@ function ShaderCover({ params }) {
 
       gl.uniform1f(uniforms.time, reduceMotion ? 0.18 : (now - start) / 1000);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      if (!didReveal) {
+        didReveal = true;
+        setIsReady(true);
+      }
       if (!reduceMotion) frame = requestAnimationFrame(render);
     };
 
@@ -331,11 +338,26 @@ function ShaderCover({ params }) {
     };
   }, [params.color, params.noiseIntensity, params.rotation, params.scale, params.speed, params.style]);
 
-  return <canvas aria-hidden="true" className="shader-canvas" data-cover-style={params.styleName} ref={canvasRef} />;
+  return (
+    <canvas
+      aria-hidden="true"
+      className={`shader-canvas${isReady ? " is-ready" : ""}`}
+      data-cover-style={params.styleName}
+      ref={canvasRef}
+    />
+  );
 }
 
 function Shell({ children, active = "日报" }) {
   return children;
+}
+
+function PageBackLink({ href = "./", label = "返回首页" }) {
+  return (
+    <a className="page-back-link" href={href}>
+      ← {label}
+    </a>
+  );
 }
 
 function ReportCard({ report, index, prefix = "." }) {
@@ -580,6 +602,7 @@ function ArchivePage() {
   return (
     <Shell active="归档">
       <main className="page">
+        <PageBackLink href="../" />
         <section className="archive-hero">
           <h1>日报归档</h1>
           <p className="intro">按日期保存的 Whistle 互联网日报。未来日报会使用结构化内容协议，历史日报保留原始输出。</p>
@@ -651,29 +674,32 @@ function SubscribePage() {
   return (
     <Shell active="订阅">
       <main className="page subscribe-page">
-        <section className="subscribe-hero">
-          <h1>订阅 Whistle</h1>
-          <form className="subscribe-form" onSubmit={(event) => event.preventDefault()}>
-            <label className="sr-only" htmlFor="email">
-              邮箱
-            </label>
-            <div className="subscribe-field">
-              <input
-                aria-invalid={trimmedEmail.length > 0 && !isEmailValid}
-                id="email"
-                name="email"
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="邮箱"
-                type="email"
-                value={email}
-              />
-              <button disabled={!isEmailValid} type="submit">
-                <ShaderCover params={silkParams} />
-                <span>订阅</span>
-              </button>
-            </div>
-          </form>
-        </section>
+        <div className="subscribe-shell">
+          <PageBackLink href="../" />
+          <section className="subscribe-hero">
+            <h1>订阅 Whistle</h1>
+            <form className="subscribe-form" onSubmit={(event) => event.preventDefault()}>
+              <label className="sr-only" htmlFor="email">
+                邮箱
+              </label>
+              <div className="subscribe-field">
+                <input
+                  aria-invalid={trimmedEmail.length > 0 && !isEmailValid}
+                  id="email"
+                  name="email"
+                  onChange={(event) => setEmail(event.target.value)}
+                  placeholder="邮箱"
+                  type="email"
+                  value={email}
+                />
+                <button disabled={!isEmailValid} type="submit">
+                  <ShaderCover params={silkParams} />
+                  <span>订阅</span>
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
       </main>
     </Shell>
   );

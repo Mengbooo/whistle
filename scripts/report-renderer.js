@@ -356,10 +356,8 @@ export function renderReportHtml(input) {
     a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
     a:hover { color: #fff; border-bottom-color: #fff; }
     .back-link {
-      position: fixed;
-      top: 28px;
-      left: 32px;
-      z-index: 10;
+      display: inline-block;
+      margin: 0 0 34px;
       border: 0;
       color: var(--muted);
       font-size: 13px;
@@ -469,7 +467,6 @@ export function renderReportHtml(input) {
     .status-grid span { margin-top: 4px; color: var(--muted); font-size: 13px; }
     .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
     @media (max-width: 980px) {
-      .back-link { position: static; display: inline-block; margin: 22px 24px 0; }
       .layout { display: block; padding: 66px 24px 72px; }
       .toc { display: none; }
       .hero { padding: 0 0 58px; }
@@ -502,7 +499,6 @@ export function renderReportHtml(input) {
   </style>
 </head>
 <body>
-  <a class="back-link" href="/archive/" aria-label="返回归档">← 返回</a>
   <main>
     <div class="layout">
       <aside class="toc">
@@ -510,6 +506,7 @@ export function renderReportHtml(input) {
         ${toc.map((item) => `<a href="${item.href}">${escapeHtml(item.label)}</a>`).join("")}
       </aside>
       <article>
+        <a class="back-link" href="/archive/" aria-label="返回归档">← 返回</a>
         <section class="hero">
           <h1>${escapeHtml(report.title)}</h1>
           <p class="summary">${summary}</p>
