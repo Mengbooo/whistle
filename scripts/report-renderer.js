@@ -533,93 +533,46 @@ export function renderReportHtml(input) {
 </html>`;
 }
 
-export function buildEmailHtml(input, { reportUrl = "" } = {}) {
+function splitEmailSummary(summary = "") {
+  const sentences = splitSentences(summary);
+  if (sentences.length <= 1) return [String(summary || "").trim()].filter(Boolean);
+  if (sentences.length <= 3) return sentences;
+  return [
+    sentences[0],
+    sentences.slice(1, -1).join(""),
+    sentences[sentences.length - 1],
+  ].filter(Boolean);
+}
+
+export function buildEmailHtml(input, { pdfUrl = "", reportUrl = "" } = {}) {
   const { report, errors } = validateReport(input);
   if (errors.length) {
     throw new Error(`Invalid report.json:\n${errors.map((error) => `- ${error}`).join("\n")}`);
   }
-  const featuredSections = report.sections
-    .map((section) => ({ ...section, items: section.items.slice(0, 2) }))
-    .filter((section) => section.items.length)
-    .slice(0, 5);
-  const cta = reportUrl
-    ? `<a href="${escapeHtml(reportUrl)}" style="display:inline-block;padding:12px 18px;border-radius:999px;background:#fff;color:#000;text-decoration:none;font-size:14px;font-weight:700;">阅读网页版 →</a>`
-    : "";
+  const summaryParagraphs = splitEmailSummary(report.summary);
+  const actions = [
+    reportUrl
+      ? `<a href="${escapeHtml(reportUrl)}" style="display:inline-block;margin:0 10px 10px 0;padding:10px 16px;border:1px solid #fff;border-radius:999px;background:#fff;color:#000;text-decoration:none;font-size:14px;font-weight:700;">阅读网页版 →</a>`
+      : "",
+    pdfUrl
+      ? `<a href="${escapeHtml(pdfUrl)}" style="display:inline-block;margin:0 0 10px 0;padding:10px 16px;border:1px solid #333;border-radius:999px;background:transparent;color:#f4f4f4;text-decoration:none;font-size:14px;font-weight:700;">下载 PDF</a>`
+      : "",
+  ].filter(Boolean).join("");
 
   return `<!doctype html>
 <html lang="zh-CN">
-  <body style="margin:0;padding:0;background:#000;color:#f4f4f4;font-family:'Google Sans',Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <body style="margin:0;padding:0;background:#000;color:#f4f4f4;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#000;">
       <tr>
-        <td align="center" style="padding:32px 16px;">
-          <table role="presentation" width="680" cellspacing="0" cellpadding="0" style="width:100%;max-width:680px;border:1px solid #222;background:#030303;">
+        <td align="left" style="padding:32px 18px;">
+          <table role="presentation" width="640" cellspacing="0" cellpadding="0" style="width:100%;max-width:640px;">
             <tr>
-              <td style="padding:34px 36px 24px;border-bottom:1px solid #242424;">
-                <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td style="font-size:20px;font-weight:700;color:#fff;">Whistle</td>
-                    <td align="right" style="font-size:13px;color:#888;">${escapeHtml(report.date)}</td>
-                  </tr>
-                </table>
-                <p style="margin:18px 0 0;color:#aaa;font-size:14px;">每日互联网与 AI 简报</p>
-              </td>
-            </tr>
-            <tr>
-              <td align="center" style="padding:48px 36px 40px;border-bottom:1px solid #242424;">
-                <h1 style="margin:0;color:#fff;font-size:42px;line-height:1.15;letter-spacing:-1.6px;">${escapeHtml(report.title)}</h1>
-                <p style="margin:18px auto 0;max-width:560px;color:#bbb;font-size:16px;line-height:1.7;">${escapeHtml(report.summary)}</p>
-                <div style="margin-top:26px;">${cta}</div>
-              </td>
-            </tr>
-            ${
-              report.topline.length
-                ? `<tr>
-                    <td style="padding:34px 36px;border-bottom:1px solid #242424;">
-                      <h2 style="margin:0 0 16px;color:#fff;font-size:24px;">1. 今日主线</h2>
-                      <ul style="margin:0;padding-left:20px;color:#d0d0d0;font-size:15px;line-height:1.8;">
-                        ${report.topline.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-                      </ul>
-                    </td>
-                  </tr>`
-                : ""
-            }
-            <tr>
-              <td style="padding:34px 36px 10px;">
-                <h2 style="margin:0 0 22px;color:#fff;font-size:24px;">2. 今日速览</h2>
-              </td>
-            </tr>
-            ${featuredSections
-              .map(
-                (section) => `<tr>
-                  <td style="padding:0 36px 26px;">
-                    <p style="margin:0 0 10px;color:#8ab4ff;font-size:13px;">${escapeHtml(section.title)}</p>
-                    ${section.items
-                      .map(
-                        (item) => `<div style="padding:0 0 22px;margin:0 0 22px;border-bottom:1px solid #242424;">
-                          <h3 style="margin:0;color:#fff;font-size:20px;line-height:1.35;">${escapeHtml(item.title)}</h3>
-                          <p style="margin:10px 0 0;color:#c8c8c8;font-size:15px;line-height:1.7;">${escapeHtml(item.summary)}</p>
-                          <p style="margin:12px 0 0;color:#777;font-size:13px;">来源：${
-                            item.sourceUrl
-                              ? `<a href="${escapeHtml(item.sourceUrl)}" style="color:#aaa;text-decoration:underline;">${escapeHtml(item.sourceName)}</a>`
-                              : escapeHtml(item.sourceName)
-                          }</p>
-                        </div>`,
-                      )
-                      .join("")}
-                  </td>
-                </tr>`,
-              )
-              .join("")}
-            <tr>
-              <td align="center" style="padding:30px 36px 36px;color:#8a8a8a;font-size:13px;line-height:1.7;">
-                <p style="margin:0 0 18px;">感谢阅读。低噪音、高信号，保留真正影响工作的互联网变化。</p>
-                <p style="margin:0;">
-                  <a href="${escapeHtml(reportUrl.replace(/\/reports\/[^/]+$/, "/archive/"))}" style="color:#cfcfcf;text-decoration:none;">查看归档</a>
-                  <span style="padding:0 14px;color:#444;">|</span>
-                  <a href="${escapeHtml(reportUrl.replace(/\/reports\/[^/]+$/, "/subscribe/"))}" style="color:#cfcfcf;text-decoration:none;">取消订阅</a>
-                  <span style="padding:0 14px;color:#444;">|</span>
-                  <a href="${escapeHtml(reportUrl.replace(/\/reports\/[^/]+$/, "/rss.xml"))}" style="color:#cfcfcf;text-decoration:none;">RSS</a>
-                </p>
+              <td align="left" style="padding:0;">
+                <h1 style="margin:0;color:#fff;font-size:28px;line-height:1.25;font-weight:600;letter-spacing:-0.3px;">${escapeHtml(report.title)}</h1>
+                <div style="margin-top:22px;color:#d4d4d4;font-size:16px;line-height:1.8;">
+                  ${summaryParagraphs.map((paragraph) => `<p style="margin:0 0 14px;">${escapeHtml(paragraph)}</p>`).join("")}
+                </div>
+                ${actions ? `<div style="margin-top:24px;">${actions}</div>` : ""}
               </td>
             </tr>
           </table>
