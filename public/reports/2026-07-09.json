@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "date": "2026-07-09",
   "title": "Whistle 互联网日报｜2026-07-09",
-  "summary": "今天有几类事值得放在一起看。模型层面，SpaceXAI 与 Cursor 推出 Grok 4.5，OpenAI 发布全双工语音模型 GPT-Live，并确认 GPT-5.6 Sol 获美国商务部批准后将公开发布；字节、Mistral、蚂蚁灵波也在图像、导航、具身视频和世界模型上给出新版本。工具层面，Google AI Studio、Cloudflare Drop、Claude Code、Hugging Face vLLM 后端都在降低开发和部署门槛。另一侧，GitLost、HalluSquatting、Claude Code 风险提示、SWE-Bench Pro 缺陷审计，把 Agent 权限、评测可信度和模型发布审查重新推到前面。这些变化共同指向一个现实：AI 产品正在从聊天框走向语音、代码、部署、机器人和交互式场景，但权限、成本、评测和监管会直接决定它们进入生产环境的速度。",
+  "summary": "今天有几类事值得放在一起看。模型层面，SpaceXAI 与 Cursor 推出 Grok 4.5，OpenAI 发布 GPT-Live 全双工语音模型，并确认 GPT-5.6 Sol 获美国商务部批准后公开发布；字节、Mistral、蚂蚁灵波也在图像、导航和具身世界模型上给出新版本。工具层面，Google AI Studio、Cloudflare Drop、Claude Code、Hugging Face vLLM 后端都在降低开发和部署门槛。另一侧，GitLost、HalluSquatting 和 SWE-Bench Pro 缺陷审计，把 Agent 权限、评测可信度和模型发布审查重新推到前面。AI 产品正在从聊天框走向语音、代码、部署、机器人和交互式场景，权限、成本、评测和监管会影响进入生产环境的速度。",
   "theme": "AI 工具进入语音、代码、部署和具身场景",
   "topline": [
     "SpaceXAI 与 Cursor 发布 Grok 4.5，面向编程、智能体任务和知识工作，并已上线 Cursor、Grok Build 与 API。",
@@ -143,7 +143,7 @@
         },
         {
           "title": "Robbyant 发布 LingBot-VLA 2.0，统一多机器人动作表示",
-          "summary": "Robbyant 推出 LingBot-VLA 2.0，一个 6B 参数的开源视觉-语言-动作基础模型，以 Qwen3-VL-4B-Instruct 为骨干，采用 MoE 动作专家架构，并用 55 维规范向量统一不同机器人的状态和动作。训练数据包括约 6 万小时高质量数据，其中 5 万小时为机器人轨迹，1 万小时为第一人称人类视频，覆盖 20 种机器人配置；权重、代码和技术报告以 Apache-2.0 许可证开放。多机器人动作空间被统一后，VLA 模型更容易跨平台迁移，机器人数据格式和动作规范会成为开源具身模型的重要基础设施。",
+          "summary": "Robbyant 推出 LingBot-VLA 2.0，一个 6B 参数的开源视觉-语言-动作基础模型，以 Qwen3-VL-4B-Instruct 为骨干，采用 MoE 动作专家架构，并用 55 维规范向量统一不同机器人的状态和动作。训练数据包括约 6 万小时高质量数据，其中 5 万小时为机器人轨迹，1 万小时为第一人称人类视频，覆盖 20 种机器人配置；权重、代码和技术报告以 Apache-2.0 许可证开放。多机器人动作空间被统一后，VLA 模型跨平台迁移的阻力会下降，机器人数据格式和动作规范会成为开源具身模型的重要基础设施。",
           "sourceName": "MarkTechPost",
           "sourceUrl": "https://www.marktechpost.com/2026/07/08/lingbot-vla-2-0",
           "publishedAt": "2026-07-09T00:45:39.000Z",
@@ -169,7 +169,7 @@
         },
         {
           "title": "Hugging Face 宣布 transformers vLLM 后端达到原生速度",
-          "summary": "Hugging Face 宣布 transformers 的 vLLM 后端已与手写原生 vLLM 实现速度相当，部分场景甚至更快。测试覆盖 Qwen3-4B 单 GPU、Qwen3-32B 张量并行、Qwen3-235B-A22B-FP8 MoE 数据和专家并行，后端通过 torch.fx 静态分析图、AST 重写和动态层融合支持张量、管道、专家并行及 torch.compile，用户只需添加 `--model-impl transformers` 标志。模型作者无需移植原生 vLLM 代码即可获得高速推理，模型发布和推理部署之间的工程摩擦会下降。",
+          "summary": "Hugging Face 宣布 transformers 的 vLLM 后端已与手写原生 vLLM 实现速度相当，部分场景甚至更快。测试覆盖 Qwen3-4B 单 GPU、Qwen3-32B 张量并行、Qwen3-235B-A22B-FP8 MoE 数据和专家并行，后端通过 torch.fx 静态分析图、AST 重写和动态层融合支持张量、管道、专家并行及 torch.compile，用户只需添加 `--model-impl transformers` 标志。模型作者无需移植原生 vLLM 代码即可获得高速推理，模型发布到推理部署之间的工程摩擦会下降。",
           "sourceName": "Hugging Face Blog",
           "sourceUrl": "https://huggingface.co/blog/native-speed-vllm-transformers-backend",
           "publishedAt": "2026-07-08T00:00:00.000Z",
@@ -182,7 +182,7 @@
         },
         {
           "title": "Rowboat 开源本地优先桌面 AI 助手",
-          "summary": "Rowboat 是一个开源、本地优先的桌面 AI 助手，可把邮件、会议、Slack 等数据索引为 Obsidian 风格知识图谱，并提供持久上下文记忆。它内置邮件客户端、浏览器、会议记录器和代码模式，可调用 Claude Code 或 Codex 代理，也支持通过 MCP 接入 Exa 搜索、GitHub 等外部工具，数据以 Markdown 格式本地存储。个人 AI 工作台开始把本地数据、长期记忆、MCP 工具和代码代理放在同一桌面入口，供应商锁定和数据外传边界因此更容易被显式呈现。",
+          "summary": "Rowboat 是一个开源、本地优先的桌面 AI 助手，可把邮件、会议、Slack 等数据索引为 Obsidian 风格知识图谱，并提供持久上下文记忆。它内置邮件客户端、浏览器、会议记录器和代码模式，可调用 Claude Code 或 Codex 代理，也支持通过 MCP 接入 Exa 搜索、GitHub 等外部工具，数据以 Markdown 格式本地存储。个人 AI 工作台开始把本地数据、长期记忆、MCP 工具和代码代理放在同一桌面入口，供应商锁定和数据外传边界因此会被显式呈现。",
           "sourceName": "GitHub",
           "sourceUrl": "https://github.com/rowboatlabs/rowboat",
           "publishedAt": "2026-07-07T16:10:44.000Z",
@@ -195,10 +195,10 @@
         },
         {
           "title": "Microsoft Flint 在 HN 获得关注，尝试让 AI 代理输出可视化图表语言",
-          "summary": "Microsoft Flint 作为可视化语言在 Hacker News 获得 281 分讨论，它面向 AI 代理生成图表和结构化视觉表达。相比直接输出纯文本，图表语言让代理能以更稳定的语法描述数据关系和视觉布局。AI 输出形态从原始文本走向 Markdown、HTML 和可交互界面时，像 Flint 这样的中间表示会影响代理生成内容的可验证性和可渲染性。",
+          "summary": "Microsoft Flint 作为可视化语言在 Hacker News 获得 283 分讨论，它面向 AI 代理生成图表和结构化视觉表达。相比直接输出纯文本，图表语言让代理能以稳定语法描述数据关系和视觉布局。AI 输出形态从原始文本走向 Markdown、HTML 和可交互界面时，像 Flint 这样的中间表示会影响代理生成内容的可验证性和可渲染性。",
           "sourceName": "Hacker News",
           "sourceUrl": "https://microsoft.github.io/flint-chart/#/",
-          "publishedAt": "2026-07-09T00:00:00.000Z",
+          "publishedAt": "2026-07-08T17:46:12.000Z",
           "tags": [
             "可视化",
             "Agent",
@@ -287,7 +287,7 @@
         },
         {
           "title": "YC CEO 用 AI 每日部署 3.7 万行代码引发质量讨论",
-          "summary": "Y Combinator CEO Garry Tan 在 X 上称，他与 AI 编码代理每天在五个项目中部署 3.7 万行代码，并保持连续 72 天发布。随后开发者 Gregorein 审查其网站前端代码，指出页面加载 169 次请求、总计 6.42MB 数据，并包含测试文件、未使用控制器、多种格式 Logo 和未压缩旧 PNG 等问题。这个讨论把 AI 编码的增长叙事拉回代码质量、前端性能和工程清理，产出数量本身并不能替代可维护性。",
+          "summary": "Y Combinator CEO Garry Tan 在 X 上称，他与 AI 编码代理每天在五个项目中部署 3.7 万行代码，并保持连续 72 天发布。随后开发者 Gregorein 审查其网站前端代码，指出页面加载 169 次请求、总计 6.42MB 数据，并包含测试文件、未使用控制器、多种格式 Logo 和未压缩旧 PNG 等问题。这个讨论把 AI 编码的增长叙事拉回代码质量、前端性能和工程清理，产出数量本身不能替代可维护性。",
           "sourceName": "Fast Company",
           "sourceUrl": "https://www.fastcompany.com/91520702/y-combinator-garry-tan-agentic-ai-social-media",
           "publishedAt": "2026-07-07T17:52:12.864Z",
@@ -464,7 +464,7 @@
         },
         {
           "title": "工信部发布 Claude Code 后门安全风险提示",
-          "summary": "中国工信部相关风险提示称，Claude Code 2.1.91 至 2.1.196 版本内置监控机制，未经用户同意向远程服务器回传用户地域、身份标识等敏感信息，并提示相关单位排查受影响版本、控制开发工具外联权限和监测流量。该信息来自 AI HOT 收录的 X 消息，需注意官方原文链路和具体版本事实仍需进一步核验。开发工具如果具备代码读取、命令执行和远程通信能力，数据外传、版本审计和网络权限会直接进入合规范围。",
+          "summary": "中国工信部相关风险提示称，Claude Code 2.1.91 至 2.1.196 版本内置监控机制，未经用户同意向远程服务器回传用户地域、身份标识等敏感信息，并提示相关单位排查受影响版本、控制开发工具外联权限和监测流量。该信息来自 AI HOT 收录的 X 消息，官方原文链路和具体版本事实仍需进一步核验。开发工具如果具备代码读取、命令执行和远程通信能力，数据外传、版本审计和网络权限会直接进入合规范围。",
           "sourceName": "AI HOT Daily",
           "sourceUrl": "https://x.com/xiaohu/status/2074736623284256881",
           "publishedAt": "2026-07-08T06:05:32.000Z",
@@ -478,9 +478,9 @@
         {
           "title": "GitHub 加入联盟，要求修订 California AI Transparency Act 以保护开源",
           "summary": "GitHub 加入一个联盟，呼吁对 California AI Transparency Act 进行针对性修订，以解决该法案与开源许可之间的冲突，并与国际透明度框架保持一致，同时保留监管意图。AI 透明度监管如果直接套用到开源模型、开源数据或开源软件包，可能影响许可证兼容、模型发布和社区协作方式。平台方开始把开源例外、披露义务和国际框架一致性作为监管讨论的一部分。",
-          "sourceName": "AI HOT Daily",
-          "sourceUrl": "https://daily.juya.uk/issues/2026-07-09/",
-          "publishedAt": "2026-07-09T00:00:00.000Z",
+          "sourceName": "GitHub Blog",
+          "sourceUrl": "https://github.blog/news-insights/company-news/github-availability-report-june-2026",
+          "publishedAt": "2026-07-08T00:00:00.000Z",
           "tags": [
             "GitHub",
             "开源",
@@ -540,32 +540,12 @@
   "actions": [],
   "noiseNote": "本期优先采用 juya 与 AI HOT daily 的完整新闻事实，并用 AI HOT items、HN 与 GitHub Trending 补充链接、数字和社区热度。去重合并了 Grok 4.5、GPT-Live、Seedream 5.0 Pro、GRAM、SWE-Bench Pro 等多源重复条目；过滤了弱相关消费电子、泛娱乐、低事实密度传闻和与互联网工作判断关系较弱的 HN 热帖。HN 纯工程内容只有在分数较高或与开发工具基础设施直接相关时保留，部分高热但话题性较强的内容放入社交热度观察。",
   "fetchErrors": [],
-  "sourceStatus": [
-    {
-      "name": "juya",
-      "status": "ok",
-      "detail": ""
-    },
-    {
-      "name": "aihotDaily",
-      "status": "ok",
-      "detail": ""
-    },
-    {
-      "name": "aihotItems",
-      "status": "ok (40 items)",
-      "detail": ""
-    },
-    {
-      "name": "hackernews",
-      "status": "ok (42 stories >= 30pts)",
-      "detail": ""
-    },
-    {
-      "name": "githubTrending",
-      "status": "ok (16 repos)",
-      "detail": ""
-    }
-  ],
-  "generatedAt": "2026-07-09T09:55:00.000Z"
+  "sourceStatus": {
+    "juya": "ok",
+    "aihotDaily": "ok",
+    "aihotItems": "ok (40 items)",
+    "hackernews": "ok (42 stories >= 30pts)",
+    "githubTrending": "ok (16 repos)"
+  },
+  "generatedAt": "2026-07-09T10:00:01.681Z"
 }
