@@ -334,6 +334,17 @@ export function renderReportHtml(input) {
   <meta name="description" content="${summary}">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <title>${escapeHtml(report.title)}</title>
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem("whistle-theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        }
+      } catch {}
+    })();
+  </script>
   <style>
     :root {
       color-scheme: dark;
@@ -346,15 +357,67 @@ export function renderReportHtml(input) {
       --muted: #a5a5a5;
       --faint: #737373;
       --accent: #01c193;
+      --button-bg: #fff;
+      --button-text: #000;
+      --button-hover-border: #fff;
+      --theme-bg: rgba(0,0,0,.74);
       --max: 1180px;
       --serif: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
       --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #fff;
+      --panel: #f7f7f7;
+      --panel-soft: #f0f0f0;
+      --line: #dcdcdc;
+      --line-soft: #ececec;
+      --text: #0b0b0b;
+      --muted: #555;
+      --faint: #777;
+      --accent: #012fe3;
+      --button-bg: #000;
+      --button-text: #fff;
+      --button-hover-border: #000;
+      --theme-bg: rgba(255,255,255,.78);
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
     body { font-family: var(--sans); line-height: 1.72; -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
-    a:hover { color: #fff; border-bottom-color: #fff; }
+    a:hover { color: var(--text); border-bottom-color: var(--text); }
+    .theme-bar {
+      position: fixed;
+      top: 24px;
+      right: max(40px, calc((100vw - var(--max)) / 2 + 40px));
+      z-index: 30;
+      pointer-events: none;
+    }
+    .theme-toggle {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--theme-bg);
+      color: var(--text);
+      cursor: pointer;
+      pointer-events: auto;
+      transition: border-color .16s ease, transform .16s ease;
+    }
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .theme-toggle:hover { border-color: var(--button-hover-border); transform: translateY(-1px); }
+    :root[data-theme="light"] .theme-toggle { color: #000; }
+    :root:not([data-theme="light"]) .theme-toggle { color: #fff; }
     .back-link {
       display: inline-block;
       margin: 0 0 34px;
@@ -373,11 +436,11 @@ export function renderReportHtml(input) {
     .button {
       display: inline-flex; align-items: center; justify-content: center;
       min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
-      background: #fff; color: #000; font-size: 14px; font-weight: 600;
+      background: var(--button-bg); color: var(--button-text); font-size: 14px; font-weight: 600;
       transition: border-color .16s ease, color .16s ease, background .16s ease;
     }
     .button--ghost { background: transparent; color: var(--text); }
-    .button:hover { border-color: #fff; }
+    .button:hover { border-color: var(--button-hover-border); }
     .layout {
       display: grid; grid-template-columns: 190px minmax(0, 760px);
       gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
@@ -392,7 +455,7 @@ export function renderReportHtml(input) {
       background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
     }
     .topline h2 { margin: 0 0 16px; font-size: 24px; letter-spacing: -.025em; }
-    .topline ul { margin: 0; padding-left: 20px; color: #d8d8d8; }
+    .topline ul { margin: 0; padding-left: 20px; color: var(--muted); }
     .report-section { padding: 54px 0; border-top: 1px solid var(--line); }
     .section-heading { margin-bottom: 30px; }
     .section-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
@@ -436,12 +499,12 @@ export function renderReportHtml(input) {
     .report-item h3 a span { color: var(--accent); font-size: .82em; }
     .item-copy { margin-top: 12px; display: grid; gap: 10px; }
     .report-item p { margin: 0; color: var(--text); font-size: 15px; }
-    .item-fact { color: #e2e2e2; line-height: 1.82; }
+    .item-fact { color: var(--text); line-height: 1.82; }
     .item-insight {
       position: relative;
       padding-left: 16px;
-      border-left: 2px solid rgba(1, 193, 147, .42);
-      color: #bdbdbd !important;
+      border-left: 2px solid rgba(1, 47, 227, .42);
+      color: var(--muted) !important;
       line-height: 1.76;
     }
     .item-insight span {
@@ -459,7 +522,7 @@ export function renderReportHtml(input) {
     .report-section--featured .item-index { color: var(--muted); }
     .empty, .note { margin: 0; color: var(--muted); }
     .action-list { display: grid; gap: 12px; }
-    .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: #d0d0d0; }
+    .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: var(--muted); }
     .action-item strong { color: var(--text); }
     .status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
     .status-grid div { padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
@@ -468,6 +531,7 @@ export function renderReportHtml(input) {
     .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
     @media (max-width: 980px) {
       .layout { display: block; padding: 66px 24px 72px; }
+      .theme-bar { top: 18px; right: 24px; }
       .toc { display: none; }
       .hero { padding: 0 0 58px; }
       .hero-actions { justify-content: flex-start; }
@@ -485,20 +549,43 @@ export function renderReportHtml(input) {
       :root { color-scheme: dark; }
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       html, body { background: var(--bg) !important; color: var(--text) !important; }
-      .back-link, .toc, .hero-actions, script { display: none !important; }
+      :root, :root[data-theme="light"] {
+        color-scheme: dark;
+        --bg: #000;
+        --panel: #0d0d0d;
+        --panel-soft: #151515;
+        --line: #242424;
+        --line-soft: #1a1a1a;
+        --text: #f4f4f4;
+        --muted: #a5a5a5;
+        --faint: #737373;
+        --accent: #01c193;
+      }
+      .theme-bar, .back-link, .toc, .hero-actions, script { display: none !important; }
       .hero { text-align: left; padding: 0 0 42px; }
       .layout { display: block; max-width: 760px; margin: 0; padding: 12mm; }
       .report-section { break-inside: auto; page-break-inside: auto; padding: 38px 0; }
       .section-heading { break-after: avoid; page-break-after: avoid; }
       .report-item { break-inside: auto; page-break-inside: auto; }
       .item-kicker, .report-item h3 { break-after: avoid; page-break-after: avoid; }
-      .item-insight { border-left-color: rgba(1, 193, 147, .55); }
+      .item-insight { border-left-color: rgba(1, 47, 227, .55); }
       .footer { display: none; }
       a { color: inherit; border: 0; }
     }
   </style>
 </head>
 <body>
+  <div class="theme-bar">
+    <button class="theme-toggle" data-theme-toggle type="button" aria-label="切换到亮色模式" title="切换到亮色模式">
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M12 2v2"></path>
+        <path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"></path>
+        <path d="M16 12a4 4 0 0 0-4-4"></path>
+        <path d="m19 5-1.256 1.256"></path>
+        <path d="M20 12h2"></path>
+      </svg>
+    </button>
+  </div>
   <main>
     <div class="layout">
       <aside class="toc">
@@ -527,6 +614,25 @@ export function renderReportHtml(input) {
   <footer class="footer">© ${new Date(report.date).getFullYear()} Whistle. 低噪音互联网与 AI 日报。</footer>
   <script>
     (() => {
+      const themeKey = "whistle-theme";
+      const themeButton = document.querySelector("[data-theme-toggle]");
+      const setTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        try { localStorage.setItem(themeKey, theme); } catch {}
+        if (themeButton) {
+          const label = theme === "dark" ? "切换到亮色模式" : "切换到暗色模式";
+          themeButton.setAttribute("aria-label", label);
+          themeButton.setAttribute("title", label);
+        }
+      };
+      let currentTheme = document.documentElement.dataset.theme || "dark";
+      setTheme(currentTheme);
+      themeButton?.addEventListener("click", () => {
+        currentTheme = currentTheme === "dark" ? "light" : "dark";
+        setTheme(currentTheme);
+      });
+
       const links = Array.from(document.querySelectorAll(".toc a"));
       const sections = links
         .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))

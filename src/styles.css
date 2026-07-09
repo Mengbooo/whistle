@@ -9,8 +9,39 @@
   --muted: #a8a8a8;
   --faint: #737373;
   --accent: #8ab4ff;
+  --cover-accent: #01c193;
+  --header-bg: rgba(0, 0, 0, 0.84);
+  --control-bg: #050505;
+  --button-bg: #fff;
+  --button-text: #000;
+  --button-hover-border: #fff;
+  --card-fallback: #02130f;
+  --card-noise: rgba(1, 193, 147, 0.14);
+  --card-overlay: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.58));
   --max: 1420px;
   --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #fff;
+  --panel: #fafafa;
+  --panel-strong: #f3f3f3;
+  --line: #dcdcdc;
+  --line-soft: #ececec;
+  --text: #0b0b0b;
+  --muted: #555;
+  --faint: #777;
+  --accent: #012fe3;
+  --cover-accent: #012fe3;
+  --header-bg: rgba(255, 255, 255, 0.84);
+  --control-bg: #fff;
+  --button-bg: #000;
+  --button-text: #fff;
+  --button-hover-border: #000;
+  --card-fallback: #edf1ff;
+  --card-noise: rgba(1, 47, 227, 0.18);
+  --card-overlay: linear-gradient(180deg, transparent 43%, rgba(0, 0, 0, 0.62));
 }
 
 * {
@@ -50,9 +81,54 @@ input {
   max-width: var(--max);
   margin: 0 auto;
   padding: 24px 56px 22px;
-  background: rgba(0, 0, 0, 0.84);
+  background: var(--header-bg);
   border-bottom: 1px solid var(--line-soft);
   backdrop-filter: blur(18px);
+}
+
+.theme-toggle {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  color: var(--text);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+
+.theme-toggle svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:root[data-theme="light"] .theme-toggle {
+  color: #000;
+}
+
+:root:not([data-theme="light"]) .theme-toggle {
+  color: #fff;
+}
+
+.theme-toggle:hover {
+  border-color: var(--button-hover-border);
+  transform: translateY(-1px);
+}
+
+.page-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
 }
 
 .brand {
@@ -130,7 +206,7 @@ h1 {
 .intro {
   max-width: 760px;
   margin: 22px 0 0;
-  color: #cfcfcf;
+  color: var(--muted);
   font-size: 18px;
   line-height: 1.72;
 }
@@ -148,10 +224,10 @@ h1 {
   justify-content: center;
   min-height: 42px;
   padding: 0 20px;
-  border: 1px solid #fff;
+  border: 1px solid var(--button-bg);
   border-radius: 999px;
-  background: #fff;
-  color: #000;
+  background: var(--button-bg);
+  color: var(--button-text);
   font-size: 14px;
   font-weight: 700;
   transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease;
@@ -165,7 +241,7 @@ h1 {
 
 .button:hover,
 .load-more:hover {
-  border-color: #fff;
+  border-color: var(--button-hover-border);
 }
 
 .feed-controls {
@@ -254,7 +330,7 @@ h1 {
   min-height: 34px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: #050505;
+  background: var(--control-bg);
   color: var(--text);
   cursor: pointer;
   padding: 0 44px 0 16px;
@@ -263,7 +339,7 @@ h1 {
 }
 
 .view-controls select:focus-visible {
-  border-color: #fff;
+  border-color: var(--button-hover-border);
 }
 
 .search-control input {
@@ -271,7 +347,7 @@ h1 {
   width: 142px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: #050505;
+  background: var(--control-bg);
   color: var(--text);
   outline: none;
   padding: 0 16px;
@@ -283,7 +359,7 @@ h1 {
 }
 
 .search-control input:focus-visible {
-  border-color: #fff;
+  border-color: var(--button-hover-border);
 }
 
 .select-shell {
@@ -298,8 +374,8 @@ h1 {
   right: 16px;
   width: 7px;
   height: 7px;
-  border-right: 1.5px solid #d8d8d8;
-  border-bottom: 1.5px solid #d8d8d8;
+  border-right: 1.5px solid var(--muted);
+  border-bottom: 1.5px solid var(--muted);
   content: "";
   pointer-events: none;
   transform: translateY(-62%) rotate(45deg);
@@ -322,9 +398,9 @@ h1 {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background-color: #02130f;
+  background-color: var(--card-fallback);
   background-image:
-    radial-gradient(circle at 1px 1px, rgba(1, 193, 147, 0.14) 1px, transparent 0);
+    radial-gradient(circle at 1px 1px, var(--card-noise) 1px, transparent 0);
   background-size: 6px 6px;
 }
 
@@ -349,9 +425,7 @@ h1 {
   z-index: 1;
 }
 
-.media::after {
-  background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.58));
-}
+.media::after { background: var(--card-overlay); }
 
 .media__header {
   position: absolute;
@@ -457,8 +531,8 @@ h1 {
 .load-more {
   min-width: 136px;
   border-color: #2c2c2c;
-  background: #1d1d1d;
-  color: #fff;
+  background: var(--button-bg);
+  color: var(--button-text);
 }
 
 .pagination {
@@ -486,8 +560,8 @@ h1 {
 
 .page-button:hover,
 .page-button[aria-current="page"] {
-  border-color: #fff;
-  color: #fff;
+  border-color: var(--button-hover-border);
+  color: var(--text);
 }
 
 .page-button:disabled {
@@ -516,7 +590,7 @@ h1 {
   overflow: hidden;
   padding-top: 0;
   padding-bottom: 0;
-  background: #000;
+  background: var(--bg);
 }
 
 .subscribe-shell {
@@ -558,8 +632,8 @@ h1 {
   align-items: center;
   min-height: 64px;
   border-radius: 999px;
-  background: #050505;
-  border: 1px solid #303030;
+  background: var(--control-bg);
+  border: 1px solid var(--line);
   overflow: hidden;
 }
 
@@ -569,7 +643,7 @@ h1 {
   min-height: 62px;
   border: 0;
   background: transparent;
-  color: #fff;
+  color: var(--text);
   padding: 0 142px 0 22px;
   font-size: 16px;
   outline: none;
@@ -581,7 +655,7 @@ h1 {
 }
 
 .subscribe-field:focus-within {
-  border-color: #fff;
+  border-color: var(--button-hover-border);
 }
 
 .subscribe-form button {
@@ -592,7 +666,7 @@ h1 {
   min-width: 118px;
   border: 0;
   border-radius: 999px;
-  background: #01c193;
+  background: var(--accent);
   color: #fff;
   cursor: pointer;
   font-size: 16px;
@@ -602,7 +676,7 @@ h1 {
 
 .subscribe-form button:disabled {
   cursor: not-allowed;
-  background: #1d1d1d;
+  background: var(--panel-strong);
   color: var(--faint);
   opacity: 1;
 }
@@ -703,6 +777,11 @@ h1 {
 }
 
 @media (max-width: 980px) {
+  .theme-bar {
+    top: 18px;
+    right: 22px;
+  }
+
   .site-header {
     grid-template-columns: 1fr auto;
     padding: 20px 22px;

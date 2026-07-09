@@ -1,10 +1,12 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import reports from "./reports.generated.json";
 import "./styles.css";
 
 const page = document.getElementById("root")?.dataset.page || "home";
 const latest = reports[0] || null;
+const themeStorageKey = "whistle-theme";
+const ThemeContext = createContext({ theme: "dark", setTheme: () => {}, nextTheme: "light" });
 
 const categories = ["全部"];
 const sortOptions = [
@@ -25,7 +27,8 @@ const coverStyles = [
   "plasma",
   "iridescence",
 ];
-const coverColor = "#01c193";
+const darkCoverColor = "#01c193";
+const lightCoverColor = "#012fe3";
 
 const coverVertexShader = `
 attribute vec2 aPosition;
@@ -218,6 +221,13 @@ function hexToRgb(hex) {
   return [0, 2, 4].map((offset) => parseInt(normalized.slice(offset, offset + 2), 16) / 255);
 }
 
+function initialTheme() {
+  if (typeof window === "undefined") return "dark";
+  const stored = window.localStorage?.getItem(themeStorageKey);
+  if (stored === "light" || stored === "dark") return stored;
+  return "dark";
+}
+
 function randomInRange(random, min, max) {
   return min + random() * (max - min);
 }
@@ -227,7 +237,8 @@ function coverParamsFor(report, index) {
   const random = seededRandom(seed);
   const styleIndex = Math.floor(random() * coverStyles.length);
   return {
-    color: coverColor,
+    color: darkCoverColor,
+    lightColor: lightCoverColor,
     noiseIntensity: randomInRange(random, 0.1, 2.2),
     rotation: randomInRange(random, -Math.PI, Math.PI),
     scale: randomInRange(random, 0.35, 1.35),
@@ -270,6 +281,8 @@ function createCoverProgram(gl) {
 function ShaderCover({ params }) {
   const canvasRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
+  const { theme } = useContext(ThemeContext);
+  const activeColor = theme === "light" ? params.lightColor : params.color;
 
   useEffect(() => {
     setIsReady(false);
@@ -292,7 +305,7 @@ function ShaderCover({ params }) {
       style: gl.getUniformLocation(program, "uStyle"),
       time: gl.getUniformLocation(program, "uTime"),
     };
-    const rgb = hexToRgb(params.color);
+    const rgb = hexToRgb(activeColor);
     const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     let frame = 0;
     let start = performance.now();
@@ -336,7 +349,7 @@ function ShaderCover({ params }) {
       gl.deleteBuffer(buffer);
       gl.deleteProgram(program);
     };
-  }, [params.color, params.noiseIntensity, params.rotation, params.scale, params.speed, params.style]);
+  }, [activeColor, params.noiseIntensity, params.rotation, params.scale, params.speed, params.style]);
 
   return (
     <canvas
@@ -348,8 +361,51 @@ function ShaderCover({ params }) {
   );
 }
 
-function Shell({ children, active = "日报" }) {
-  return children;
+function ThemeIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M12 2v2" />
+      <path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715" />
+      <path d="M16 12a4 4 0 0 0-4-4" />
+      <path d="m19 5-1.256 1.256" />
+      <path d="M20 12h2" />
+    </svg>
+  );
+}
+
+function Shell({ children }) {
+  const [theme, setTheme] = useState(initialTheme);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage?.setItem(themeStorageKey, theme);
+  }, [theme]);
+
+  const nextTheme = theme === "dark" ? "light" : "dark";
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme, nextTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+function ThemeToggle() {
+  const { theme, setTheme, nextTheme } = useContext(ThemeContext);
+  const label = theme === "dark" ? "切换到亮色模式" : "切换到暗色模式";
+
+  return (
+    <button
+      aria-label={label}
+      className="theme-toggle"
+      onClick={() => setTheme(nextTheme)}
+      title={label}
+      type="button"
+    >
+      <ThemeIcon />
+    </button>
+  );
 }
 
 function PageBackLink({ href = "./", label = "返回首页" }) {
@@ -529,7 +585,10 @@ function HomePage() {
     <Shell active="日报">
       <main className="page">
         <section className="hero">
-          <h1>Whistle 互联网日报</h1>
+          <div className="page-title-row">
+            <h1>Whistle 互联网日报</h1>
+            <ThemeToggle />
+          </div>
           <p className="intro">
             面向互联网工作群体的低噪音日报，保留会影响产品、研发、增长、商业化、基础设施与合规判断的信号。
           </p>
@@ -604,7 +663,10 @@ function ArchivePage() {
       <main className="page">
         <PageBackLink href="../" />
         <section className="archive-hero">
-          <h1>日报归档</h1>
+          <div className="page-title-row">
+            <h1>日报归档</h1>
+            <ThemeToggle />
+          </div>
           <p className="intro">按日期保存的 Whistle 互联网日报。未来日报会使用结构化内容协议，历史日报保留原始输出。</p>
         </section>
 
@@ -661,7 +723,10 @@ function SubscribePage() {
         <div className="subscribe-shell">
           <PageBackLink href="../" />
           <section className="subscribe-hero">
-            <h1>订阅 Whistle</h1>
+            <div className="page-title-row">
+              <h1>订阅 Whistle</h1>
+              <ThemeToggle />
+            </div>
             <form className="subscribe-form" onSubmit={(event) => event.preventDefault()}>
               <label className="sr-only" htmlFor="email">
                 邮箱
