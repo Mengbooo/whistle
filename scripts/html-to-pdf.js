@@ -27,12 +27,13 @@ async function main() {
   await page.pdf({
     path: pdfPath,
     format: "A4",
+    preferCSSPageSize: true,
     printBackground: true,
     margin: {
-      top: "12mm",
-      right: "12mm",
-      bottom: "14mm",
-      left: "12mm",
+      top: "0",
+      right: "0",
+      bottom: "0",
+      left: "0",
     },
   });
   await browser.close();

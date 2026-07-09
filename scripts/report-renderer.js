@@ -332,6 +332,7 @@ export function renderReportHtml(input) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${summary}">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <title>${escapeHtml(report.title)}</title>
   <style>
     :root {
@@ -470,15 +471,17 @@ export function renderReportHtml(input) {
       .status-grid, .action-item { grid-template-columns: 1fr; }
     }
     @media print {
+      @page { size: A4; margin: 0; }
       :root { color-scheme: dark; }
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       html, body { background: var(--bg) !important; color: var(--text) !important; }
       .toc, .hero-actions, script { display: none !important; }
       .hero { text-align: left; padding: 0 0 42px; }
-      .layout { display: block; max-width: 760px; margin: 0; padding: 0; }
+      .layout { display: block; max-width: 760px; margin: 0; padding: 12mm; }
       .report-section { break-inside: auto; page-break-inside: auto; padding: 38px 0; }
       .section-heading { break-after: avoid; page-break-after: avoid; }
-      .report-item { break-inside: avoid; page-break-inside: avoid; }
+      .report-item { break-inside: auto; page-break-inside: auto; }
+      .item-kicker, .report-item h3 { break-after: avoid; page-break-after: avoid; }
       .item-insight { border-left-color: rgba(1, 193, 147, .55); }
       .footer { display: none; }
       a { color: inherit; border: 0; }
