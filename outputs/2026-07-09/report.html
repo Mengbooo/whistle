@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="今天的主线是前沿模型继续向可执行工作流下沉：Grok 4.5、GPT-Live、SWE-1.7 和 Seedream 5.0 Pro 都在把模型能力绑定到编程、语音、视觉创作和 Agent 场景。与此同时，评测可信度、提示注入、国家安全原则和模型出口边界成为同一天的反向约束。对团队来说，今天更值得看的不是单点能力竞赛，而是模型、工具链、安全治理和分发渠道如何一起改变研发与产品节奏。">
+  <meta name="description" content="今天的主线是前沿模型继续向可执行工作流下沉：Grok 4.5、GPT-Live、SWE-1.7 和 Seedream 5.0 Pro 都在把模型能力绑定到编程、语音、视觉创作和 Agent 场景，模型发布不再只是参数和榜单竞争，而是围绕 IDE、CLI、ChatGPT、社交平台、设计工具和部署入口展开。与此同时，评测可信度、提示注入、国家安全原则、开发工具外联风险和模型出口边界成为同一天的反向约束。行业图景因此呈现出两条并行线：一边是 AI 输出越来越实时、视觉化、结构化、可交互，另一边是权限、审计、数据保留和监管边界被重新摆到产品与基础设施层。">
   <title>Whistle 互联网日报｜2026-07-09</title>
   <style>
     :root {
@@ -35,8 +35,10 @@
       display: inline-flex; align-items: center; justify-content: center;
       min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
       background: #fff; color: #000; font-size: 14px; font-weight: 600;
+      transition: border-color .16s ease, color .16s ease, background .16s ease;
     }
     .button--ghost { background: transparent; color: var(--text); }
+    .button:hover { border-color: #fff; }
     .layout {
       display: grid; grid-template-columns: 190px minmax(0, 760px);
       gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
@@ -52,20 +54,70 @@
     }
     .topline h2 { margin: 0 0 16px; font-size: 24px; letter-spacing: -.025em; }
     .topline ul { margin: 0; padding-left: 20px; color: #d8d8d8; }
-    .report-section { padding: 46px 0; border-top: 1px solid var(--line); }
-    .section-heading { margin-bottom: 28px; }
+    .report-section { padding: 54px 0; border-top: 1px solid var(--line); }
+    .section-heading { margin-bottom: 30px; }
+    .section-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
     .section-heading h2 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; }
     .section-heading span { display: block; margin-top: 8px; color: var(--muted); }
-    .section-items { display: grid; gap: 26px; }
-    .report-item { display: grid; grid-template-columns: 46px 1fr; gap: 18px; }
-    .item-index { color: var(--faint); font-size: 13px; padding-top: 4px; }
+    .section-count { flex: 0 0 auto; margin-top: 0 !important; color: var(--faint) !important; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    .section-items { display: grid; gap: 0; }
+    .report-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+    .report-item:first-child { border-top: 0; padding-top: 0; }
+    .item-rail { padding-top: 3px; }
+    .item-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1;
+    }
+    .item-kicker {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 8px;
+    }
     .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .item-kicker .tags { margin-bottom: 0; }
     .tags span { color: var(--accent); font-size: 12px; }
     .report-item h3 { margin: 0; font-size: 22px; line-height: 1.35; letter-spacing: -.025em; }
     .report-item h3 a { border: 0; }
     .report-item h3 a span { color: var(--accent); font-size: .82em; }
-    .report-item p { margin: 10px 0 0; color: var(--text); font-size: 15px; }
-    .item-meta { margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .item-copy { margin-top: 12px; display: grid; gap: 10px; }
+    .report-item p { margin: 0; color: var(--text); font-size: 15px; }
+    .item-fact { color: #e2e2e2; line-height: 1.82; }
+    .item-insight {
+      position: relative;
+      padding-left: 16px;
+      border-left: 2px solid rgba(1, 193, 147, .42);
+      color: #bdbdbd !important;
+      line-height: 1.76;
+    }
+    .item-insight span {
+      display: inline-block;
+      margin-right: 9px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .item-source, .item-meta { color: var(--faint); font-size: 12px; white-space: nowrap; }
+    .item-meta { display: none; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .report-section--featured { padding-top: 54px; }
+    .report-section--featured .section-heading { margin-bottom: 30px; }
+    .report-section--featured .report-item h3 { font-size: 23px; }
+    .report-section--featured .item-index { color: var(--muted); }
     .empty, .note { margin: 0; color: var(--muted); }
     .action-list { display: grid; gap: 12px; }
     .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: #d0d0d0; }
@@ -80,8 +132,13 @@
       .toc { display: none; }
       .hero { padding: 0 0 58px; }
       .hero-actions { justify-content: flex-start; }
-      .report-item { grid-template-columns: 1fr; gap: 8px; }
-      .item-index { display: none; }
+      .section-title-row { display: block; }
+      .section-count { margin-top: 8px !important; }
+      .report-item { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+      .item-rail { display: none; }
+      .item-kicker { display: block; }
+      .item-source { display: none; }
+      .item-meta { display: block; }
       .status-grid, .action-item { grid-template-columns: 1fr; }
     }
     @media print {
@@ -99,398 +156,633 @@
     <div class="layout">
       <aside class="toc">
         <strong>目录</strong>
-        <a href="#section-headline">今日头条</a><a href="#section-ai-tools">AI 与新工具</a><a href="#section-platforms">大厂与平台动态</a><a href="#section-product-growth">产品与增长观察</a><a href="#section-engineering">开发者与工程实践</a><a href="#section-funding">投融资与行业机会</a><a href="#section-policy">政策监管与合规</a><a href="#section-social-buzz">社交热度观察</a><a href="#section-actions">今日行动建议</a><a href="#section-noise">去噪说明</a>
+        <a href="#section-headline">今日头条</a><a href="#section-ai-tools">AI 与新工具</a><a href="#section-platforms">大厂与平台动态</a><a href="#section-product-growth">产品与增长观察</a><a href="#section-engineering">开发者与工程实践</a><a href="#section-funding">投融资与行业机会</a><a href="#section-policy">政策监管与合规</a><a href="#section-social-buzz">社交热度观察</a>
       </aside>
       <article>
         <section class="hero">
           <h1>Whistle 互联网日报｜2026-07-09</h1>
-          <p class="summary">今天的主线是前沿模型继续向可执行工作流下沉：Grok 4.5、GPT-Live、SWE-1.7 和 Seedream 5.0 Pro 都在把模型能力绑定到编程、语音、视觉创作和 Agent 场景。与此同时，评测可信度、提示注入、国家安全原则和模型出口边界成为同一天的反向约束。对团队来说，今天更值得看的不是单点能力竞赛，而是模型、工具链、安全治理和分发渠道如何一起改变研发与产品节奏。</p>
+          <p class="summary">今天的主线是前沿模型继续向可执行工作流下沉：Grok 4.5、GPT-Live、SWE-1.7 和 Seedream 5.0 Pro 都在把模型能力绑定到编程、语音、视觉创作和 Agent 场景，模型发布不再只是参数和榜单竞争，而是围绕 IDE、CLI、ChatGPT、社交平台、设计工具和部署入口展开。与此同时，评测可信度、提示注入、国家安全原则、开发工具外联风险和模型出口边界成为同一天的反向约束。行业图景因此呈现出两条并行线：一边是 AI 输出越来越实时、视觉化、结构化、可交互，另一边是权限、审计、数据保留和监管边界被重新摆到产品与基础设施层。</p>
           <p class="hero-meta">32 条信号 · 2026/7/9 08:00:00</p>
           <div class="hero-actions">
             <a class="button button--ghost" href="../assets/report-2026-07-09.pdf">下载 PDF</a>
             <a class="button button--ghost" href="/archive/">查看归档</a>
           </div>
         </section>
-        <section class="report-section" id="section-headline">
+        <section class="report-section report-section--featured" id="section-headline">
     <div class="section-heading">
-      <h2>今日头条</h2>
+      <div class="section-title-row">
+        <h2>今日头条</h2>
+        <span class="section-count">5 条</span>
+      </div>
       <span>今天最重要的工作信号集中在模型发布、语音交互、AI 编程评测和安全治理。</span>
     </div>
     <div class="section-items"><article class="report-item">
-    <div class="item-index">01</div>
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>AI 模型</span><span>编程工具</span><span>Agent</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>AI 模型</span><span>编程工具</span><span>Agent</span></div>
+        <span class="item-source">juya-ai-daily · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://x.ai/news/grok-4-5" target="_blank" rel="noreferrer">SpaceXAI 与 Cursor 联合推出 Grok 4.5，主打编程、Agent 和知识工作 <span aria-hidden="true">↗</span></a></h3>
-      <p>SpaceXAI 正式发布 Grok 4.5，模型与 Cursor 联合训练，面向编程、agentic tasks 和知识工作，具备 500k 上下文窗口、80 TPS 推理速度，并声称 token 效率约为同类领先模型的两倍；基础版价格为每百万输入 token 2 美元、输出 6 美元，已在 Grok Build、Cursor 和 API 上线。Cursor 补充称该模型在数万亿 tokens 的用户交互数据上训练，个人和团队计划首周使用量翻倍，但也指出 CursorBench 分数因数据污染被排除。对开发团队来说，这类模型的价值不只在基准分数，而在能否嵌入日常 IDE、CLI 和项目上下文，模型厂商与开发工具的联合训练会继续改变工具分发方式。</p>
+      <div class="item-copy">
+        <p class="item-fact">SpaceXAI 正式发布 Grok 4.5，模型与 Cursor 联合训练，面向编程、agentic tasks 和知识工作，具备 500k 上下文窗口、80 TPS 推理速度，并声称 token 效率约为同类领先模型的两倍；基础版价格为每百万输入 token 2 美元、输出 6 美元，已在 Grok Build、Cursor 和 API 上线。</p>
+        <p class="item-insight"><span>解读</span>Cursor 补充称该模型在数万亿 tokens 的用户交互数据上训练，个人和团队计划首周使用量翻倍，但也指出 CursorBench 分数因数据污染被排除。这类模型的价值不只在基准分数，而在能否嵌入日常 IDE、CLI 和项目上下文，模型厂商与开发工具的联合训练会继续改变工具分发方式。</p>
+      </div>
       <div class="item-meta">juya-ai-daily · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">02</div>
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>语音交互</span><span>ChatGPT</span><span>Agent</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>语音交互</span><span>ChatGPT</span><span>Agent</span></div>
+        <span class="item-source">OpenAI · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://openai.com/index/introducing-gpt-live/" target="_blank" rel="noreferrer">OpenAI 发布 GPT-Live，全双工语音模型开始向 ChatGPT 用户推送 <span aria-hidden="true">↗</span></a></h3>
-      <p>OpenAI 推出 GPT-Live 系列，包括 GPT-Live-1 和 GPT-Live-1 mini，采用全双工架构，支持同时听说、自然打断和实时反馈，并可把搜索、复杂推理和 Agent 任务异步委托给后台 GPT-5.5。该能力正逐步向全球 ChatGPT 用户推送，付费用户默认使用 GPT-Live-1，免费用户默认使用 mini 版，API 仍需注册等待通知；当前不支持视频和屏幕共享，部分语言的口音与流利度也有限。语音更适合输入和即时协商，但复杂任务结果仍需要结构化界面承接，AI 输出形态会继续从原始文本走向 Markdown、HTML 和更可交互的视觉化结果。</p>
+      <div class="item-copy">
+        <p class="item-fact">OpenAI 推出 GPT-Live 系列，包括 GPT-Live-1 和 GPT-Live-1 mini，采用全双工架构，支持同时听说、自然打断和实时反馈，并可把搜索、复杂推理和 Agent 任务异步委托给后台 GPT-5.5。该能力正逐步向全球 ChatGPT 用户推送，付费用户默认使用 GPT-Live-1，免费用户默认使用 mini 版，API 仍需注册等待通知；</p>
+        <p class="item-insight"><span>解读</span>当前不支持视频和屏幕共享，部分语言的口音与流利度也有限。语音更适合输入和即时协商，但复杂任务结果仍依赖结构化界面承接，AI 输出形态会继续从原始文本走向 Markdown、HTML 和更可交互的视觉化结果。</p>
+      </div>
       <div class="item-meta">OpenAI · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">03</div>
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>图像生成</span><span>设计工具</span><span>多模态</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>图像生成</span><span>设计工具</span><span>多模态</span></div>
+        <span class="item-source">ByteDance Seed · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://seed.bytedance.com/seedream5_0_pro" target="_blank" rel="noreferrer">字节 Seedream 5.0 Pro 发布，图像生成开始强调信息图、文字渲染和局部编辑 <span aria-hidden="true">↗</span></a></h3>
-      <p>字节 Seed 发布多模态图像生成模型 Seedream 5.0 Pro，强化图文匹配、结构合理性、文字渲染和画面质感，支持复杂信息可视化、图层分离、色彩材质替换、多图融合和十余种语言输入生成；模型已上线火山方舟体验中心，并将进入豆包与即梦，也已在 Runway 提供试用。官方同时承认更细粒度文字渲染和像素级编辑保持仍有进步空间。它的工作价值在于把视觉生成从“出图”推向“设计素材和信息表达”，对产品、运营和设计团队更像低门槛的视觉原型与内容实验工具。</p>
+      <div class="item-copy">
+        <p class="item-fact">字节 Seed 发布多模态图像生成模型 Seedream 5.0 Pro，强化图文匹配、结构合理性、文字渲染和画面质感，支持复杂信息可视化、图层分离、色彩材质替换、多图融合和十余种语言输入生成；模型已上线火山方舟体验中心，并将进入豆包与即梦，也已在 Runway 提供试用。</p>
+        <p class="item-insight"><span>解读</span>官方同时承认更细粒度文字渲染和像素级编辑保持仍有进步空间。它的工作价值在于把视觉生成从“出图”推向“设计素材和信息表达”，对产品、运营和设计团队更像低门槛的视觉原型与内容实验工具。</p>
+      </div>
       <div class="item-meta">ByteDance Seed · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">04</div>
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>AI 评测</span><span>编程 Agent</span><span>研发管理</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>AI 评测</span><span>编程 Agent</span><span>研发管理</span></div>
+        <span class="item-source">OpenAI · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://openai.com/index/separating-signal-from-noise-coding-evaluations/" target="_blank" rel="noreferrer">OpenAI 审计 SWE-Bench Pro，称约 30% 编程评测任务存在缺陷 <span aria-hidden="true">↗</span></a></h3>
-      <p>OpenAI 发布审计报告，认为 SWE-Bench Pro 已难以可靠衡量前沿编程能力，并基于模型研究 Agent 与五名独立软件工程师审查估计约 30% 任务存在隐藏要求、测试过严、提示描述不足或覆盖不全等缺陷。在 731 个公开任务子集中，前沿模型通过率八个月内从 23.3% 升至 80.3%，但数据质量问题使分数解释变得不稳定，OpenAI 已撤回此前推荐该基准作为主要编程评估的建议。团队在采购或切换 AI 编程工具时，不能只看排行榜，应该把自有代码库任务、人工复核和失败样本分析纳入评测。</p>
+      <div class="item-copy">
+        <p class="item-fact">OpenAI 发布审计报告，认为 SWE-Bench Pro 已难以可靠衡量前沿编程能力，并基于模型研究 Agent 与五名独立软件工程师审查估计约 30% 任务存在隐藏要求、测试过严、提示描述不足或覆盖不全等缺陷。</p>
+        <p class="item-insight"><span>解读</span>在 731 个公开任务子集中，前沿模型通过率八个月内从 23.3% 升至 80.3%，但数据质量问题使分数解释变得不稳定，OpenAI 已撤回此前将该基准作为主要编程评估的推荐。这件事削弱了单一排行榜的解释力，也让自有代码库任务、人工复核和失败样本分析成为理解 AI 编程工具真实能力的重要背景。</p>
+      </div>
       <div class="item-meta">OpenAI · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">05</div>
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>AI 安全</span><span>提示注入</span><span>合规</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>AI 安全</span><span>提示注入</span><span>合规</span></div>
+        <span class="item-source">Noma Labs · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://noma.security/blog/gitlost-how-we-tricked-githubs-ai-agent-into-leaking-private-repos" target="_blank" rel="noreferrer">AI 安全进入工具链现实：GitLost、Claude Code 风险提示和 OpenAI 国家安全原则同日出现 <span aria-hidden="true">↗</span></a></h3>
-      <p>Noma Labs 披露 GitLost 提示注入漏洞，称攻击者可在同组织公共仓库 Issue 中写入恶意指令，诱导 Claude 或 GitHub Copilot 类代理读取并泄露私有仓库内容；工信部 NVDB 也发布 Claude Code 安全后门风险提示，要求排查受影响版本并加强开发工具外联管控。同日 OpenAI 公布政府与国家安全合作原则，明确禁止自主武器、大规模国内监控和高风险自动化决策。对企业来说，AI Agent 已经不是单个插件风险，而是权限、输入隔离、网络外联、日志审计和供应商政策共同构成的治理问题。</p>
+      <div class="item-copy">
+        <p class="item-fact">Noma Labs 披露 GitLost 提示注入漏洞，称攻击者可在同组织公共仓库 Issue 中写入恶意指令，诱导 Claude 或 GitHub Copilot 类代理读取并泄露私有仓库内容；工信部 NVDB 也发布 Claude Code 安全后门风险提示，要求排查受影响版本并加强开发工具外联管控。</p>
+        <p class="item-insight"><span>解读</span>同日 OpenAI 公布政府与国家安全合作原则，明确禁止自主武器、大规模国内监控和高风险自动化决策。对企业来说，AI Agent 已经不是单个插件风险，而是权限、输入隔离、网络外联、日志审计和供应商政策共同构成的治理问题。</p>
+      </div>
       <div class="item-meta">Noma Labs · 2026-07-09 09:17</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-ai-tools">
     <div class="section-heading">
-      <h2>AI 与新工具</h2>
+      <div class="section-title-row">
+        <h2>AI 与新工具</h2>
+        <span class="section-count">10 条</span>
+      </div>
       <span>模型、Agent、生成式设计和本地优先工具继续扩展可用场景。</span>
     </div>
     <div class="section-items"><article class="report-item">
-    <div class="item-index">01</div>
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>编程模型</span><span>Devin</span><span>Agent</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>编程模型</span><span>Devin</span><span>Agent</span></div>
+        <span class="item-source">Cognition · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://cognition.com/blog/swe-1-7" target="_blank" rel="noreferrer">Cognition 发布 SWE-1.7，Devin 平台获得新编程模型 <span aria-hidden="true">↗</span></a></h3>
-      <p>Cognition 发布 SWE-1.7，称其基于 Kimi K2.7 基座并通过大量强化学习训练，是该实验室目前训练的最强模型；在 FrontierCode 1.1 Main 得分 42.3%，接近 GPT-5.5 和 Claude Opus 4.8，并在 Terminal-Bench 2.1 与 SWE-Bench Multilingual 上表现靠前。模型已在 Devin 的 Web、Desktop 和 CLI 端可用，下个月对付费用户免费，Lightning 版本由 Cerebras 提供 1000 TPS 速度。它说明编程模型竞争正向“平台内可执行能力 + 推理速度 + 成本”转移，团队应关注实际任务完成率而不是只追单次问答质量。</p>
+      <div class="item-copy">
+        <p class="item-fact">Cognition 发布 SWE-1.7，称其基于 Kimi K2.7 基座并通过大量强化学习训练，是该实验室目前训练的最强模型；在 FrontierCode 1.1 Main 得分 42.3%，接近 GPT-5.5 和 Claude Opus 4.8，并在 Terminal-Bench 2.1 与 SWE-Bench Multilingual 上表现靠前。</p>
+        <p class="item-insight"><span>解读</span>模型已在 Devin 的 Web、Desktop 和 CLI 端可用，下个月对付费用户免费，Lightning 版本由 Cerebras 提供 1000 TPS 速度。它说明编程模型竞争正向“平台内可执行能力 + 推理速度 + 成本”转移，实际任务完成率会比单次问答质量更能解释工具价值。</p>
+      </div>
       <div class="item-meta">Cognition · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">02</div>
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>具身智能</span><span>机器人</span><span>多模态</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>具身智能</span><span>机器人</span><span>多模态</span></div>
+        <span class="item-source">Mistral AI · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://mistral.ai/news/robostral-navigate/" target="_blank" rel="noreferrer">Mistral 发布 Robostral Navigate，8B 模型用单目 RGB 驱动机器人导航 <span aria-hidden="true">↗</span></a></h3>
-      <p>Mistral AI 发布首款具身导航模型 Robostral Navigate，参数量 8B，可接收自然语言指令和单颗 RGB 摄像头画面，无需深度传感器或 LiDAR，就能驱动轮式、足式和飞行机器人在复杂环境中自主导航。官方称其在 R2R-CE 未见环境基准中达到 76.6% 成功率，并支持跨机器人尺寸与摄像头内参泛化，目前主要通过团队联系渠道开放。具身模型开始把低成本传感器和语言指令连接起来，但落地仍取决于场景约束、仿真验证和安全冗余。</p>
+      <div class="item-copy">
+        <p class="item-fact">Mistral AI 发布首款具身导航模型 Robostral Navigate，参数量 8B，可接收自然语言指令和单颗 RGB 摄像头画面，无需深度传感器或 LiDAR，就能驱动轮式、足式和飞行机器人在复杂环境中自主导航。官方称其在 R2R-CE 未见环境基准中达到 76.6% 成功率，并支持跨机器人尺寸与摄像头内参泛化，目前主要通过团队联系渠道开放。</p>
+        <p class="item-insight"><span>解读</span>具身模型开始把低成本传感器和语言指令连接起来，但落地仍取决于场景约束、仿真验证和安全冗余。</p>
+      </div>
       <div class="item-meta">Mistral AI · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">03</div>
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>具身智能</span><span>视频模型</span><span>开源</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>具身智能</span><span>视频模型</span><span>开源</span></div>
+        <span class="item-source">AI HOT · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://www.ithome.com/0/974/517.htm" target="_blank" rel="noreferrer">蚂蚁灵波开源 LingBot-Video，用 MoE 视频基模服务具身智能仿真 <span aria-hidden="true">↗</span></a></h3>
-      <p>蚂蚁灵波科技开源 LingBot-Video，这是面向具身智能的视频生成基础模型，采用 MoE 架构，总参数 30B，推理时激活约 3B，官方称效率较同规模 Dense 架构提升约 3 倍。模型引入 7 万小时 VLA、VLN、Ego 等机器人数据，并通过多维强化学习奖励系统对齐物理合理性与任务完成度，可用于机器人动作预测和仿真数据生成。对于机器人和空间智能团队，这类模型的价值不在娱乐视频，而在降低仿真样本和训练环境构造成本。</p>
+      <div class="item-copy">
+        <p class="item-fact">蚂蚁灵波科技开源 LingBot-Video，这是面向具身智能的视频生成基础模型，采用 MoE 架构，总参数 30B，推理时激活约 3B，官方称效率较同规模 Dense 架构提升约 3 倍。模型引入 7 万小时 VLA、VLN、Ego 等机器人数据，并通过多维强化学习奖励系统对齐物理合理性与任务完成度，可用于机器人动作预测和仿真数据生成。</p>
+        <p class="item-insight"><span>解读</span>对于机器人和空间智能团队，这类模型的价值不在娱乐视频，而在降低仿真样本和训练环境构造成本。</p>
+      </div>
       <div class="item-meta">AI HOT · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">04</div>
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>世界模型</span><span>实时交互</span><span>开源</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>世界模型</span><span>实时交互</span><span>开源</span></div>
+        <span class="item-source">AI HOT · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://www.ithome.com/0/974/508.htm" target="_blank" rel="noreferrer">LingBot-World 2.0 开源，交互式世界模型支持 720p/60fps 长时运行 <span aria-hidden="true">↗</span></a></h3>
-      <p>蚂蚁灵波开源 LingBot-World 2.0，模型规模 14B，支持施法、攻击、跳跃等角色动作，以及通过文本驱动切换场景、召唤风暴等事件，并内置 Pilot Agent 与 Director Agent 让世界持续演化，支持多人同时交互。模型采用因果预训练和 MoBA 混合注意力掩码，通过一致性蒸馏、DMD、注意力 kernel 优化、混合并行推理、动态 KV 缓存调度和异步流媒体传输实现低延迟，宣称可稳定输出 720p/60fps 并在一小时测试中保持画质。它是交互式生成内容的重要信号，未来 AI 输出可能从静态文本和图片进一步走向可操作、可模拟的实时环境。</p>
+      <div class="item-copy">
+        <p class="item-fact">蚂蚁灵波开源 LingBot-World 2.0，模型规模 14B，支持施法、攻击、跳跃等角色动作，以及通过文本驱动切换场景、召唤风暴等事件，并内置 Pilot Agent 与 Director Agent 让世界持续演化，支持多人同时交互。</p>
+        <p class="item-insight"><span>解读</span>模型采用因果预训练和 MoBA 混合注意力掩码，通过一致性蒸馏、DMD、注意力 kernel 优化、混合并行推理、动态 KV 缓存调度和异步流媒体传输实现低延迟，宣称可稳定输出 720p/60fps 并在一小时测试中保持画质。它是交互式生成内容的重要信号，未来 AI 输出可能从静态文本和图片进一步走向可操作、可模拟的实时环境。</p>
+      </div>
       <div class="item-meta">AI HOT · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">05</div>
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>Meta</span><span>图像生成</span><span>视频生成</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>Meta</span><span>图像生成</span><span>视频生成</span></div>
+        <span class="item-source">AI HOT · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://x.com/AIatMeta/status/2074577662840832382" target="_blank" rel="noreferrer">Meta 推出 Muse Image 和 Muse Video，生成模型直接接入社交产品 <span aria-hidden="true">↗</span></a></h3>
-      <p>Meta Superintelligence Labs 发布 Muse Image 和 Muse Video。Muse Image 强调指令遵循、精准编辑、多参考构图和 Instagram 社交上下文，还具备 Agent 工具使用能力并集成 Muse Spark；Muse Video 基于相同预训练基础，强调高视觉保真度和原生音频。用户可通过 Meta AI 应用、网页、Instagram Stories 和 WhatsApp 试用，但初期只限部分国家。对内容团队而言，这类能力的关键不是单模型排名，而是它直接进入分发入口后会改变创作、测试和投放素材的速度。</p>
+      <div class="item-copy">
+        <p class="item-fact">Meta Superintelligence Labs 发布 Muse Image 和 Muse Video。Muse Image 强调指令遵循、精准编辑、多参考构图和 Instagram 社交上下文，还具备 Agent 工具使用能力并集成 Muse Spark；</p>
+        <p class="item-insight"><span>解读</span>Muse Video 基于相同预训练基础，强调高视觉保真度和原生音频。用户可通过 Meta AI 应用、网页、Instagram Stories 和 WhatsApp 试用，但初期只限部分国家。对内容团队而言，这类能力的关键不是单模型排名，而是它直接进入分发入口后会改变创作、测试和投放素材的速度。</p>
+      </div>
       <div class="item-meta">AI HOT · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">06</div>
+    <div class="item-rail">
+      <span class="item-index">06</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>多智能体</span><span>Claude</span><span>成本优化</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>多智能体</span><span>Claude</span><span>成本优化</span></div>
+        <span class="item-source">ClaudeDevs · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://x.com/shao__meng/status/2074661249804366310" target="_blank" rel="noreferrer">Claude 多智能体模式公开：Fable 5 负责顾问或编排，Sonnet 5 负责执行 <span aria-hidden="true">↗</span></a></h3>
-      <p>ClaudeDevs 分享两种 Fable 5 与 Sonnet 5 协同模式：Advisor 模式由 Sonnet 5 执行，并在需要时调用 Fable 5 获取指导，官方称在 SWE-bench Pro 上以约 63% 价格获得 Fable 5 约 92% 分数；Orchestrator 模式由 Fable 5 规划并委派多个 Sonnet 5 worker，在 BrowseComp 上以 46% 价格实现约 96% 性能。由于大部分 token 按 Sonnet 5 低费率计费，且子 Agent 有独立缓存，这给团队提供了一个可复制的成本控制思路。多模型协作会从“换更强模型”变成“把规划、执行、验证拆给不同成本层级”。</p>
+      <div class="item-copy">
+        <p class="item-fact">ClaudeDevs 分享两种 Fable 5 与 Sonnet 5 协同模式：Advisor 模式由 Sonnet 5 执行，并在需要时调用 Fable 5 获取指导，官方称在 SWE-bench Pro 上以约 63% 价格获得 Fable 5 约 92% 分数；</p>
+        <p class="item-insight"><span>解读</span>Orchestrator 模式由 Fable 5 规划并委派多个 Sonnet 5 worker，在 BrowseComp 上以 46% 价格实现约 96% 性能。由于大部分 token 按 Sonnet 5 低费率计费，且子 Agent 有独立缓存，这给多 Agent 成本控制提供了清晰样本。多模型协作会从“换更强模型”变成“把规划、执行、验证拆给不同成本层级”。</p>
+      </div>
       <div class="item-meta">ClaudeDevs · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">07</div>
+    <div class="item-rail">
+      <span class="item-index">07</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>运营自动化</span><span>Claude</span><span>Agent</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>运营自动化</span><span>Claude</span><span>Agent</span></div>
+        <span class="item-source">Anthropic · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://claude.com/blog/how-anthropics-marketing-operations-team-uses-claude-cowork-to-automate-reporting-and-campaign-builds" target="_blank" rel="noreferrer">Anthropic 市场运营团队用 Claude Cowork 把报告和活动搭建压缩到小时级 <span aria-hidden="true">↗</span></a></h3>
-      <p>Anthropic 披露其市场运营团队使用 Claude Cowork 自动化报告和活动构建：每周营销指标整合从 1 到 2 天缩短到最多 2 小时，系统会在周日读取上周报告、会议记录、Slack 和数据仓库生成初稿，再由负责人审核和扩展成领导层幻灯片；活动构建则由派遣技能每小时读取请求频道，并分发给五个专业技能处理 Salesforce、HubSpot、Swoogo 等平台。这个案例的重点不是完全无人化，而是人类验证成为流程核心，适合运营团队拆解重复任务和权限边界。</p>
+      <div class="item-copy">
+        <p class="item-fact">Anthropic 披露其市场运营团队使用 Claude Cowork 自动化报告和活动构建：每周营销指标整合从 1 到 2 天缩短到最多 2 小时，系统会在周日读取上周报告、会议记录、Slack 和数据仓库生成初稿，再由负责人审核和扩展成领导层幻灯片；活动构建则由派遣技能每小时读取请求频道，并分发给五个专业技能处理 Salesforce、HubSpot、Swoogo 等平台。</p>
+        <p class="item-insight"><span>解读</span>这个案例的重点不是完全无人化，而是人类验证成为流程核心，适合运营团队拆解重复任务和权限边界。</p>
+      </div>
       <div class="item-meta">Anthropic · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">08</div>
+    <div class="item-rail">
+      <span class="item-index">08</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>本地优先</span><span>AI 助手</span><span>MCP</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>本地优先</span><span>AI 助手</span><span>MCP</span></div>
+        <span class="item-source">GitHub · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://github.com/rowboatlabs/rowboat" target="_blank" rel="noreferrer">Rowboat 开源本地优先桌面 AI 助手，强调持久上下文和 Markdown 数据所有权 <span aria-hidden="true">↗</span></a></h3>
-      <p>Rowboat 是一个开源、本地优先的桌面 AI 助手，会把邮件、会议、Slack 等数据索引为 Obsidian 风格知识图谱，提供持久上下文记忆，并内置邮件客户端、浏览器、会议记录器和可调用 Claude Code 或 Codex 的代码模式。它支持按事件或定时运行后台代理，通过 MCP 接入 Exa 搜索、GitHub 等工具，数据以纯 Markdown 格式本地存储，可连接 Ollama、LM Studio 本地模型或托管模型 API。对个人和小团队来说，本地数据层加可替换模型，比单一聊天入口更接近可长期使用的工作台。</p>
+      <div class="item-copy">
+        <p class="item-fact">Rowboat 是一个开源、本地优先的桌面 AI 助手，会把邮件、会议、Slack 等数据索引为 Obsidian 风格知识图谱，提供持久上下文记忆，并内置邮件客户端、浏览器、会议记录器和可调用 Claude Code 或 Codex 的代码模式。</p>
+        <p class="item-insight"><span>解读</span>它支持按事件或定时运行后台代理，通过 MCP 接入 Exa 搜索、GitHub 等工具，数据以纯 Markdown 格式本地存储，可连接 Ollama、LM Studio 本地模型或托管模型 API。本地数据层加可替换模型的组合，比单一聊天入口更接近长期工作台形态，也回应了个人数据所有权和上下文连续性问题。</p>
+      </div>
       <div class="item-meta">GitHub · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">09</div>
+    <div class="item-rail">
+      <span class="item-index">09</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>网页抽取</span><span>小模型</span><span>数据管道</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>网页抽取</span><span>小模型</span><span>数据管道</span></div>
+        <span class="item-source">Feyn · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://usefeyn.com/blog/pulpie-pareto-optimal-models-for-cleaning-the-web" target="_blank" rel="noreferrer">Pulpie 开源网页清理模型，主打低成本主内容抽取 <span aria-hidden="true">↗</span></a></h3>
-      <p>Pulpie 是一族用于从 HTML 页面提取主要内容的 Pareto 最优模型，最小的 pulpie-orange-small 为 210M 参数，在 WebMainBench 上取得 0.862 ROUGE-5 F1，接近 600M 参数 Dripper 的 0.864，但官方估算成本约为后者的 1/20。在 NVIDIA L4 上，Pulpie 处理速度 13.7 页/秒，而 Dripper 为 0.68 页/秒；清理 10 亿页 HTML 的成本估算为 7900 美元，对比 Dripper 的 15.9 万美元。对搜索、知识库和 Agent 抓取系统来说，网页清洗是基础设施层瓶颈，这类小模型可能比通用大模型更适合规模化预处理。</p>
+      <div class="item-copy">
+        <p class="item-fact">Pulpie 是一族用于从 HTML 页面提取主要内容的 Pareto 最优模型，最小的 pulpie-orange-small 为 210M 参数，在 WebMainBench 上取得 0.862 ROUGE-5 F1，接近 600M 参数 Dripper 的 0.864，但官方估算成本约为后者的 1/20。</p>
+        <p class="item-insight"><span>解读</span>在 NVIDIA L4 上，Pulpie 处理速度 13.7 页/秒，而 Dripper 为 0.68 页/秒；清理 10 亿页 HTML 的成本估算为 7900 美元，对比 Dripper 的 15.9 万美元。对搜索、知识库和 Agent 抓取系统来说，网页清洗是基础设施层瓶颈，这类小模型可能比通用大模型更适合规模化预处理。</p>
+      </div>
       <div class="item-meta">Feyn · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">10</div>
+    <div class="item-rail">
+      <span class="item-index">10</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>开放数据</span><span>Agent</span><span>训练数据</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>开放数据</span><span>Agent</span><span>训练数据</span></div>
+        <span class="item-source">Hugging Face · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://huggingface.co/blog/nvidia/open-data-for-agents" target="_blank" rel="noreferrer">NVIDIA 发布 Nemotron 开放数据集与工具，面向 Agent 训练数据可复现 <span aria-hidden="true">↗</span></a></h3>
-      <p>NVIDIA 发布 Nemotron 开放数据集，包含超过 10 万亿预训练 tokens 和数百万后训练样本，覆盖多领域与工具使用场景，面向 AI Agent 开发。配套的 Nemotron Post-Training v3 Prompt Atlas 用于可视化后训练数据分布，Nemotron-Personas 基于 NeMo Data Designer 生成覆盖 24 亿人口的合成人物画像。开放数据的意义在于让 Agent 行为和训练来源更可检查、可解释，也给企业评估合成数据和专有数据保护提供了参照。</p>
+      <div class="item-copy">
+        <p class="item-fact">NVIDIA 发布 Nemotron 开放数据集，包含超过 10 万亿预训练 tokens 和数百万后训练样本，覆盖多领域与工具使用场景，面向 AI Agent 开发。配套的 Nemotron Post-Training v3 Prompt Atlas 用于可视化后训练数据分布，Nemotron-Personas 基于 NeMo Data Designer 生成覆盖 24 亿人口的合成人物画像。</p>
+        <p class="item-insight"><span>解读</span>开放数据的意义在于让 Agent 行为和训练来源更可检查、可解释，也给企业评估合成数据和专有数据保护提供了参照。</p>
+      </div>
       <div class="item-meta">Hugging Face · 2026-07-09 09:17</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-platforms">
     <div class="section-heading">
-      <h2>大厂与平台动态</h2>
+      <div class="section-title-row">
+        <h2>大厂与平台动态</h2>
+        <span class="section-count">3 条</span>
+      </div>
       <span>平台能力向开发、部署和模型替换三个方向移动。</span>
     </div>
     <div class="section-items"><article class="report-item">
-    <div class="item-index">01</div>
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>Google</span><span>开发平台</span><span>GitHub</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>Google</span><span>开发平台</span><span>GitHub</span></div>
+        <span class="item-source">Google AI Studio · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://x.com/GoogleAIStudio/status/2074887756430426379" target="_blank" rel="noreferrer">Google AI Studio 支持导入 GitHub 仓库并同步回 GitHub <span aria-hidden="true">↗</span></a></h3>
-      <p>Google AI Studio 推出 import from GitHub 功能，可把 GitHub 仓库自动转换为兼容 AI Studio 运行时的格式，用户可以在 AI Studio 内继续迭代、添加功能或部署，并把项目同步回 GitHub。入口位于 AI Studio Build 界面的加号菜单。这个变化把 AI 应用原型从“复制代码到平台”改成“仓库即入口”，对开发者工具来说，GitHub 同步能力正在成为模型应用平台的基础接口。</p>
+      <div class="item-copy">
+        <p class="item-fact">Google AI Studio 推出 import from GitHub 功能，可把 GitHub 仓库自动转换为兼容 AI Studio 运行时的格式，支持用户在 AI Studio 内继续迭代、添加功能或部署，并把项目同步回 GitHub。入口位于 AI Studio Build 界面的加号菜单。</p>
+        <p class="item-insight"><span>解读</span>这个变化把 AI 应用原型从“复制代码到平台”改成“仓库即入口”，对开发者工具来说，GitHub 同步能力正在成为模型应用平台的基础接口。</p>
+      </div>
       <div class="item-meta">Google AI Studio · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">02</div>
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>部署</span><span>Cloudflare</span><span>开发者工具</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>部署</span><span>Cloudflare</span><span>开发者工具</span></div>
+        <span class="item-source">Cloudflare · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://www.cloudflare.com/drop/" target="_blank" rel="noreferrer">Cloudflare Drop 上线，文件夹拖拽即可临时部署站点 <span aria-hidden="true">↗</span></a></h3>
-      <p>Cloudflare 推出 Drop 实验性部署服务，用户把网站文件夹拖到浏览器页面即可部署到 Cloudflare 全球网络，无需注册账号，默认站点 60 分钟后过期，除非用户认领。Cloudflare 称该能力基于 Wrangler 开发工具更新，也意味着 Agent 可以通过同一底层能力完成站点部署。它降低了静态站、原型和 AI 生成网页的发布门槛，但企业使用时仍要关注临时链接、资产泄露和认领流程。</p>
+      <div class="item-copy">
+        <p class="item-fact">Cloudflare 推出 Drop 实验性部署服务，用户把网站文件夹拖到浏览器页面即可部署到 Cloudflare 全球网络，无需注册账号，默认站点 60 分钟后过期，除非用户认领。Cloudflare 称该能力基于 Wrangler 开发工具更新，也意味着 Agent 可以通过同一底层能力完成站点部署。</p>
+        <p class="item-insight"><span>解读</span>它降低了静态站、原型和 AI 生成网页的发布门槛，同时把临时链接、资产泄露和认领流程变成新的平台边界。</p>
+      </div>
       <div class="item-meta">Cloudflare · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">03</div>
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>Microsoft</span><span>Copilot</span><span>模型成本</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>Microsoft</span><span>Copilot</span><span>模型成本</span></div>
+        <span class="item-source">The Decoder · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://the-decoder.com/copilot-goes-cheap-as-microsoft-phases-out-openai-and-anthropic-models-to-cut-costs" target="_blank" rel="noreferrer">微软被曝在 Copilot 中以自研 MAI 模型替换部分第三方模型以降成本 <span aria-hidden="true">↗</span></a></h3>
-      <p>The Decoder 报道称，微软正在 Copilot 产品中用自研 MAI 模型替换 OpenAI 和 Anthropic 模型以降低支出，MAI 已在 Excel 和 Outlook 中每周处理数万次请求，但占比仍小。报道提到 Build 大会上发布的 MAI-Thinking 1 声称编码能力接近 Sonnet 4.6 和 Opus 4.6，但部分基准表现仍落后，微软 AI 负责人也承认目标是削减并最终消除对 Anthropic 的支出。对企业软件客户而言，Copilot 类产品的底层模型可能逐步分层，未来需要关注默认模型、付费附加模型和数据许可说明。</p>
+      <div class="item-copy">
+        <p class="item-fact">The Decoder 报道称，微软正在 Copilot 产品中用自研 MAI 模型替换 OpenAI 和 Anthropic 模型以降低支出，MAI 已在 Excel 和 Outlook 中每周处理数万次请求，但占比仍小。</p>
+        <p class="item-insight"><span>解读</span>报道提到 Build 大会上发布的 MAI-Thinking 1 声称编码能力接近 Sonnet 4.6 和 Opus 4.6，但部分基准表现仍落后，微软 AI 负责人也承认目标是削减并最终消除对 Anthropic 的支出。Copilot 类产品的底层模型可能逐步分层，默认模型、付费附加模型和数据许可说明会影响企业软件的实际体验与成本结构。</p>
+      </div>
       <div class="item-meta">The Decoder · 2026-07-09 09:17</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-product-growth">
     <div class="section-heading">
-      <h2>产品与增长观察</h2>
+      <div class="section-title-row">
+        <h2>产品与增长观察</h2>
+        <span class="section-count">3 条</span>
+      </div>
       <span>AI 产品开始把使用痕迹、隐私承诺和内容形态转化为增长入口。</span>
     </div>
     <div class="section-items"><article class="report-item">
-    <div class="item-index">01</div>
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>开发者社区</span><span>增长</span><span>Agent</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>开发者社区</span><span>增长</span><span>Agent</span></div>
+        <span class="item-source">Replit · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://x.com/Replit/status/2074871322220339515" target="_blank" rel="noreferrer">Replit 推出社区档案与力量排名，把 Agent 使用记录变成展示资产 <span aria-hidden="true">↗</span></a></h3>
-      <p>Replit 发布社区档案功能，用户可以展示自己的 Agent 使用情况、检查点活跃度图表和面向专业用户的力量排名，并选择项目对外分享。这个功能把“vibe coding”的过程数据包装成工作证明和社区身份，适合提升留存、社交传播和人才筛选信号。对开发者平台来说，增长不再只靠模板和作品页，使用轨迹本身也可能成为内容资产。</p>
+      <div class="item-copy">
+        <p class="item-fact">Replit 发布社区档案功能，用户可展示自己的 Agent 使用情况、检查点活跃度图表和面向专业用户的力量排名，并选择项目对外分享。这个功能把“vibe coding”的过程数据包装成工作证明和社区身份，适合提升留存、社交传播和人才筛选信号。</p>
+        <p class="item-insight"><span>解读</span>对开发者平台来说，增长不再只靠模板和作品页，使用轨迹本身也可能成为内容资产。</p>
+      </div>
       <div class="item-meta">Replit · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">02</div>
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>隐私</span><span>模型路由</span><span>产品策略</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>隐私</span><span>模型路由</span><span>产品策略</span></div>
+        <span class="item-source">OpenRouter · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://x.com/OpenRouter/status/2074870468394250461" target="_blank" rel="noreferrer">OpenRouter 聊天室推出一键零数据保留，隐私成为模型对比产品卖点 <span aria-hidden="true">↗</span></a></h3>
-      <p>OpenRouter 宣布聊天室支持一键 ZDR，即零数据保留，用户可在隐私保护模式下横向对比不同模型。虽然公告本身简短，但它反映出模型聚合平台正在把隐私和数据保留策略前置为产品功能。对需要测试多模型的团队来说，价格、延迟和能力之外，是否保留提示词与输出会成为采购和合规评估的显性条件。</p>
+      <div class="item-copy">
+        <p class="item-fact">OpenRouter 宣布聊天室支持一键 ZDR，即零数据保留，用户可在隐私保护模式下横向对比不同模型。虽然公告本身简短，但它反映出模型聚合平台正在把隐私和数据保留策略前置为产品功能。</p>
+        <p class="item-insight"><span>解读</span>价格、延迟和能力之外，是否保留提示词与输出正在成为模型路由、采购和合规评估中的显性条件。</p>
+      </div>
       <div class="item-meta">OpenRouter · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">03</div>
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>知识产品</span><span>短视频</span><span>Google</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>知识产品</span><span>短视频</span><span>Google</span></div>
+        <span class="item-source">NotebookLM · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://x.com/NotebookLM/status/2074551227594264799" target="_blank" rel="noreferrer">NotebookLM 短视频概览面向英语用户全量上线 <span aria-hidden="true">↗</span></a></h3>
-      <p>NotebookLM 宣布短视频概览功能已在移动端和网页端面向所有英语用户上线，用于把资料转成更适合快速消费的视频化摘要。它延续了 NotebookLM 从音频概览向多模态概览扩展的路径，说明知识产品的输出形态正在从“可读”扩展到“可听、可看、可分享”。对内容和教育产品而言，摘要质量之外，输出格式会越来越直接影响传播和复访。</p>
+      <div class="item-copy">
+        <p class="item-fact">NotebookLM 宣布短视频概览功能已在移动端和网页端面向所有英语用户上线，用于把资料转成更适合快速消费的视频化摘要。它延续了 NotebookLM 从音频概览向多模态概览扩展的路径，说明知识产品的输出形态正在从“可读”扩展到“可听、可看、可分享”。</p>
+        <p class="item-insight"><span>解读</span>对内容和教育产品而言，摘要质量之外，输出格式会越来越直接影响传播和复访。</p>
+      </div>
       <div class="item-meta">NotebookLM · 2026-07-09 09:17</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-engineering">
     <div class="section-heading">
-      <h2>开发者与工程实践</h2>
+      <div class="section-title-row">
+        <h2>开发者与工程实践</h2>
+        <span class="section-count">5 条</span>
+      </div>
       <span>工程侧重点在 Agent 评测、推理后端、开发环境治理和安全审计。</span>
     </div>
     <div class="section-items"><article class="report-item">
-    <div class="item-index">01</div>
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>Kotlin</span><span>AI 评测</span><span>编程 Agent</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>Kotlin</span><span>AI 评测</span><span>编程 Agent</span></div>
+        <span class="item-source">JetBrains · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://blog.jetbrains.com/kotlin/2026/07/introducing-the-kotlin-benchmark-evaluate-ai-coding-agents-on-real-world-kotlin-tasks/" target="_blank" rel="noreferrer">JetBrains 发布 Kotlin Benchmark，评估 AI 编程 Agent 的真实 Kotlin 任务能力 <span aria-hidden="true">↗</span></a></h3>
-      <p>JetBrains 发布 Kotlin Benchmark，用于评估 AI 编程 Agent 在真实 Kotlin 软件工程任务中的表现。该基准基于 SWE-bench 方法论，包含 105 项开源工程任务，要求 Agent 解析问题并生成能在容器化环境中验证通过的补丁；首次评估中 Claude Code with Opus 4.7 xhigh 解决率居首，基准资产和排行榜已公开，但尚未包含最新模型。它对 Kotlin 和 Android 团队更有参考价值，也提醒评测必须按技术栈拆分，通用编程榜单不一定代表本地代码库表现。</p>
+      <div class="item-copy">
+        <p class="item-fact">JetBrains 发布 Kotlin Benchmark，用于评估 AI 编程 Agent 在真实 Kotlin 软件工程任务中的表现。该基准基于 SWE-bench 方法论，包含 105 项开源工程任务，要求 Agent 解析问题并生成能在容器化环境中验证通过的补丁；</p>
+        <p class="item-insight"><span>解读</span>首次评估中 Claude Code with Opus 4.7 xhigh 解决率居首，基准资产和排行榜已公开，但尚未包含最新模型。它对 Kotlin 和 Android 团队更有参考价值，也提醒评测必须按技术栈拆分，通用编程榜单不一定代表本地代码库表现。</p>
+      </div>
       <div class="item-meta">JetBrains · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">02</div>
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>Android</span><span>AI 评测</span><span>开发者工具</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>Android</span><span>AI 评测</span><span>开发者工具</span></div>
+        <span class="item-source">Android Developers · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://developer.android.com/bench" target="_blank" rel="noreferrer">Android Bench 更新评估方法，采用 Harbor Framework 做现实 AI 推理测试 <span aria-hidden="true">↗</span></a></h3>
-      <p>Android Developers 更新 Android Bench，称新版本专注于 Android 开发特定挑战，并采用 Harbor Framework 进行现实 AI 推理测试，同时开放社区在 Harbor Hub 提交开发任务和分享评估。官方排行榜显示 Claude Fable 5 以 84.5% 排名第一，GPT 5.5 和 Claude Sonnet 5 分列二三位，本次新增 8 款模型。移动开发团队可以把它作为 Android 专项参考，但仍应补充自有 UI、构建、依赖和设备兼容任务。</p>
+      <div class="item-copy">
+        <p class="item-fact">Android Developers 更新 Android Bench，称新版本专注于 Android 开发特定挑战，并采用 Harbor Framework 进行现实 AI 推理测试，同时开放社区在 Harbor Hub 提交开发任务和分享评估。</p>
+        <p class="item-insight"><span>解读</span>官方排行榜显示 Claude Fable 5 以 84.5% 排名第一，GPT 5.5 和 Claude Sonnet 5 分列二三位，本次新增 8 款模型。它提供了比通用编程榜单更接近 Android 工程现实的参考，但 UI、构建、依赖和设备兼容等本地差异仍会影响模型表现。</p>
+      </div>
       <div class="item-meta">Android Developers · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">03</div>
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>推理服务</span><span>vLLM</span><span>Transformers</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>推理服务</span><span>vLLM</span><span>Transformers</span></div>
+        <span class="item-source">Hugging Face · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://huggingface.co/blog/native-speed-vllm-transformers-backend" target="_blank" rel="noreferrer">Hugging Face 称 transformers vLLM 后端达到原生 vLLM 速度 <span aria-hidden="true">↗</span></a></h3>
-      <p>Hugging Face 宣布 transformers vLLM 后端现在与手写原生 vLLM 实现速度相当甚至更快，模型作者无需移植代码即可让 transformers 模型获得高速推理。其测试覆盖 Qwen3-4B 单 GPU、Qwen3-32B 张量并行和 Qwen3-235B-A22B-FP8 MoE 数据加专家并行，吞吐量均达到或超过原生实现；后端通过 torch.fx 静态分析图和 AST 重写实现动态层融合，支持张量、管道、专家并行和 torch.compile，使用时添加 `--model-impl transformers`。这降低了模型发布到高性能服务的工程成本，但线性注意力模型支持仍在路上。</p>
+      <div class="item-copy">
+        <p class="item-fact">Hugging Face 宣布 transformers vLLM 后端现在与手写原生 vLLM 实现速度相当甚至更快，模型作者无需移植代码即可让 transformers 模型获得高速推理。其测试覆盖 Qwen3-4B 单 GPU、Qwen3-32B 张量并行和 Qwen3-235B-A22B-FP8 MoE 数据加专家并行，吞吐量均达到或超过原生实现；</p>
+        <p class="item-insight"><span>解读</span>后端通过 torch.fx 静态分析图和 AST 重写实现动态层融合，支持张量、管道、专家并行和 torch.compile，使用时添加 `--model-impl transformers`。这降低了模型发布到高性能服务的工程成本，但线性注意力模型支持仍在路上。</p>
+      </div>
       <div class="item-meta">Hugging Face · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">04</div>
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>Claude Code</span><span>开发工具</span><span>可靠性</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>Claude Code</span><span>开发工具</span><span>可靠性</span></div>
+        <span class="item-source">GitHub Releases · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://github.com/anthropics/claude-code/releases/tag/v2.1.205" target="_blank" rel="noreferrer">Claude Code v2.1.205 修复结构化输出、Windows 删除和自动模式风险 <span aria-hidden="true">↗</span></a></h3>
-      <p>Claude Code v2.1.205 修复多项问题，包括 `--json-schema` 在 schema 无效时静默输出非结构化结果、Windows 下工作树删除误删文件、目录被删除或锁定导致崩溃等；自动模式现在执行 `rm -rf` 前会确认变量可解析，二进制自动更新改为流式写入并降低约 400 MB 峰值内存。版本还把 `/doctor` 升级为完整设置检查命令 `/checkup`，可检查 skills、MCP、插件和配置重复问题。对重度用户来说，这类更新值得尽快跟进，因为 AI 编程工具的可靠性常常来自小的权限和失败模式修复。</p>
+      <div class="item-copy">
+        <p class="item-fact">Claude Code v2.1.205 修复多项问题，包括 `--json-schema` 在 schema 无效时静默输出非结构化结果、Windows 下工作树删除误删文件、目录被删除或锁定导致崩溃等；自动模式现在执行 `rm -rf` 前会确认变量可解析，二进制自动更新改为流式写入并降低约 400 MB 峰值内存。</p>
+        <p class="item-insight"><span>解读</span>版本还把 `/doctor` 升级为完整设置检查命令 `/checkup`，可检查 skills、MCP、插件和配置重复问题。对重度用户来说，这类更新值得尽快跟进，因为 AI 编程工具的可靠性常常来自小的权限和失败模式修复。</p>
+      </div>
       <div class="item-meta">GitHub Releases · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">05</div>
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>安全审计</span><span>AI Agent</span><span>密码学</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>安全审计</span><span>AI Agent</span><span>密码学</span></div>
+        <span class="item-source">zkSecurity · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://blog.zksecurity.xyz/posts/circl-bugs" target="_blank" rel="noreferrer">AI 审计代理 zkao 在 Cloudflare CIRCL 中发现 7 个真实漏洞 <span aria-hidden="true">↗</span></a></h3>
-      <p>zkSecurity 称其 AI 审计代理 zkao 持续扫描 Cloudflare 的 CIRCL 密码学库，使用 Opus 4.6 + skills 和 GPT-5.3 + skills 等模型发现并确认 7 个真实漏洞，其中包括阈值 RSA 中 float64 精度丢失和 CP-ABE 访问控制完全失效等严重问题。所有漏洞已在上游修复，多数在 HackerOne 获确认和奖励，但 AI 生成的候选发现仍需人工验证。安全团队可以把这类代理视为持续扫描和候选生成器，而不是替代审计结论的自动判官。</p>
+      <div class="item-copy">
+        <p class="item-fact">zkSecurity 称其 AI 审计代理 zkao 持续扫描 Cloudflare 的 CIRCL 密码学库，使用 Opus 4.6 + skills 和 GPT-5.3 + skills 等模型发现并确认 7 个真实漏洞，其中包括阈值 RSA 中 float64 精度丢失和 CP-ABE 访问控制完全失效等严重问题。</p>
+        <p class="item-insight"><span>解读</span>所有漏洞已在上游修复，多数在 HackerOne 获确认和奖励，但 AI 生成的候选发现仍需人工验证。这类代理更像持续扫描和候选生成器，尚不是替代审计结论的自动判官。</p>
+      </div>
       <div class="item-meta">zkSecurity · 2026-07-09 09:17</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-funding">
     <div class="section-heading">
-      <h2>投融资与行业机会</h2>
+      <div class="section-title-row">
+        <h2>投融资与行业机会</h2>
+        <span class="section-count">2 条</span>
+      </div>
       <span>资本信号集中在 AI 实验室商业化和算力基础设施。</span>
     </div>
     <div class="section-items"><article class="report-item">
-    <div class="item-index">01</div>
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>融资</span><span>AI 基础设施</span><span>算力</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>融资</span><span>AI 基础设施</span><span>算力</span></div>
+        <span class="item-source">juya-ai-daily · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://daily.juya.uk/issues/2026-07-09/" target="_blank" rel="noreferrer">SambaNova 完成 10 亿美元融资首次交割 <span aria-hidden="true">↗</span></a></h3>
-      <p>juya 当日早报列出 SambaNova 完成 10 亿美元融资首次交割，指向 AI 基础设施和推理平台仍有大额资金进入。虽然素材未提供更完整的轮次条款，但融资规模本身说明算力、芯片和企业级 AI 部署仍是资本关注重点。对创业团队而言，基础设施赛道机会仍在，但进入门槛和资本需求也远高于应用层工具。</p>
+      <div class="item-copy">
+        <p class="item-fact">juya 当日早报列出 SambaNova 完成 10 亿美元融资首次交割，指向 AI 基础设施和推理平台仍有大额资金进入。虽然素材未提供更完整的轮次条款，但融资规模本身说明算力、芯片和企业级 AI 部署仍是资本关注重点。</p>
+        <p class="item-insight"><span>解读</span>对创业团队而言，基础设施赛道机会仍在，但进入门槛和资本需求也远高于应用层工具。</p>
+      </div>
       <div class="item-meta">juya-ai-daily · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">02</div>
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>融资</span><span>开放算力</span><span>AI 基础设施</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>融资</span><span>开放算力</span><span>AI 基础设施</span></div>
+        <span class="item-source">juya-ai-daily · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://daily.juya.uk/issues/2026-07-09/" target="_blank" rel="noreferrer">Prime Intellect 获投，估值达到 10 亿美元 <span aria-hidden="true">↗</span></a></h3>
-      <p>juya 当日早报显示 Prime Intellect 获得新投资并达到 10 亿美元估值。该类分布式训练和开放算力相关公司的估值变化，反映出市场仍在寻找除超大云厂商之外的训练与推理供给路径。对需要大规模训练或开放模型生态的团队来说，算力供给多元化值得跟踪，但商业稳定性、价格波动和数据合规仍是关键变量。</p>
+      <div class="item-copy">
+        <p class="item-fact">juya 当日早报显示 Prime Intellect 获得新投资并达到 10 亿美元估值。该类分布式训练和开放算力相关公司的估值变化，反映出市场仍在寻找除超大云厂商之外的训练与推理供给路径。</p>
+        <p class="item-insight"><span>解读</span>算力供给多元化正在成为开放模型生态的重要变量，但商业稳定性、价格波动和数据合规仍会决定其能否进入主流生产环境。</p>
+      </div>
       <div class="item-meta">juya-ai-daily · 2026-07-09 09:17</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-policy">
     <div class="section-heading">
-      <h2>政策监管与合规</h2>
+      <div class="section-title-row">
+        <h2>政策监管与合规</h2>
+        <span class="section-count">3 条</span>
+      </div>
       <span>监管焦点从模型发布审批延伸到开源透明度、国家安全和开发工具安全。</span>
     </div>
     <div class="section-items"><article class="report-item">
-    <div class="item-index">01</div>
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>国家安全</span><span>AI 合规</span><span>OpenAI</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>国家安全</span><span>AI 合规</span><span>OpenAI</span></div>
+        <span class="item-source">OpenAI · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://openai.com/index/government-national-security-partnerships" target="_blank" rel="noreferrer">OpenAI 发布政府与国家安全合作原则，划定禁止用途 <span aria-hidden="true">↗</span></a></h3>
-      <p>OpenAI 公布政府与国家安全领域部署前沿 AI 系统的原则，强调可用于保护公民、防御关键基础设施、公共服务、网络防御和生物安全，同时要求民主问责、人类判断和法治。过去一个月，OpenAI 通过 Daybreak 网络防御计划与澳大利亚、加拿大、日本、韩国、法国、德国、波兰、荷兰和欧盟 ENISA 等机构建立网络安全信任访问合作，并向部分美国政府及盟友合作伙伴开放 GPT-Rosalind 用于公共卫生和生物防御；原则明确禁止大规模国内监控、自主武器系统和高风险自动化决策。企业采用政府或安全场景 AI 能力时，应把供应商用途边界写进采购和审计流程。</p>
+      <div class="item-copy">
+        <p class="item-fact">OpenAI 公布政府与国家安全领域部署前沿 AI 系统的原则，强调可用于保护公民、防御关键基础设施、公共服务、网络防御和生物安全，同时要求民主问责、人类判断和法治。过去一个月，OpenAI 通过 Daybreak 网络防御计划与澳大利亚、加拿大、日本、韩国、法国、德国、波兰、荷兰和欧盟 ENISA 等机构建立网络安全信任访问合作，并向部分美国政府及盟友合作伙伴开放 GPT-Rosalind 用于公共卫生和生物防御；</p>
+        <p class="item-insight"><span>解读</span>原则明确禁止大规模国内监控、自主武器系统和高风险自动化决策。这类原则把供应商用途边界、政府合作范围和审计责任连接起来，会影响安全、公共部门和高风险行业的 AI 采购框架。</p>
+      </div>
       <div class="item-meta">OpenAI · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">02</div>
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>开源</span><span>AI 监管</span><span>透明度</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>开源</span><span>AI 监管</span><span>透明度</span></div>
+        <span class="item-source">GitHub Blog · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://github.blog/news-insights/company-news/github-availability-report-june-2026" target="_blank" rel="noreferrer">GitHub 呼吁修订 California AI Transparency Act，避免冲突开源许可 <span aria-hidden="true">↗</span></a></h3>
-      <p>GitHub 加入联盟，呼吁对 California AI Transparency Act 做针对性修订，以解决法案与开源许可之间的冲突，并与国际透明度框架保持一致，同时保留监管意图。该信号说明 AI 透明度监管正在触及开源模型、开源代码和许可证兼容性，而不只是闭源平台披露义务。维护开源项目或基于开源模型构建产品的团队，应开始关注透明度、模型卡、训练数据说明和许可证条款之间的实际冲突。</p>
+      <div class="item-copy">
+        <p class="item-fact">GitHub 加入联盟，呼吁对 California AI Transparency Act 做针对性修订，以解决法案与开源许可之间的冲突，并与国际透明度框架保持一致，同时保留监管意图。该信号说明 AI 透明度监管正在触及开源模型、开源代码和许可证兼容性，而不只是闭源平台披露义务。</p>
+        <p class="item-insight"><span>解读</span>透明度、模型卡、训练数据说明和许可证条款之间的冲突，会成为开源项目和基于开源模型构建产品时绕不开的合规背景。</p>
+      </div>
       <div class="item-meta">GitHub Blog · 2026-07-09 09:17</div>
     </div>
   </article>
 <article class="report-item">
-    <div class="item-index">03</div>
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>模型出口</span><span>跨境合规</span><span>AI 政策</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>模型出口</span><span>跨境合规</span><span>AI 政策</span></div>
+        <span class="item-source">AI HOT · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://x.com/rohanpaul_ai/status/2074512389526237609" target="_blank" rel="noreferrer">中国拟限制外国访问最强 AI 模型，全球模型市场可能进一步分层 <span aria-hidden="true">↗</span></a></h3>
-      <p>AI HOT 收录的消息称，中国正考虑限制外国访问其最强 AI 模型，并与阿里巴巴、字节跳动、Z.ai 等企业讨论相关安排，范围可能覆盖闭源和开源模型、API 访问与可下载权重，商务部主导、国家发改委参与，意味着更接近出口管制而非单纯平台监管。该消息仍需继续观察正式政策文本，但方向上与美国先进模型出口限制形成呼应。跨境 AI 产品和依赖低成本模型的海外团队，应为模型访问、替代供应商和部署区域准备备选方案。</p>
+      <div class="item-copy">
+        <p class="item-fact">AI HOT 收录的消息称，中国正考虑限制外国访问其最强 AI 模型，并与阿里巴巴、字节跳动、Z.ai 等企业讨论相关安排，范围可能覆盖闭源和开源模型、API 访问与可下载权重，商务部主导、国家发改委参与，意味着更接近出口管制而非单纯平台监管。该消息仍需继续观察正式政策文本，但方向上与美国先进模型出口限制形成呼应。</p>
+        <p class="item-insight"><span>解读</span>跨境 AI 产品和依赖低成本模型的海外业务，可能面对模型访问、供应商替代和部署区域重新分层的现实约束。</p>
+      </div>
       <div class="item-meta">AI HOT · 2026-07-09 09:17</div>
     </div>
   </article></div>
   </section>
 <section class="report-section" id="section-social-buzz">
     <div class="section-heading">
-      <h2>社交热度观察</h2>
+      <div class="section-title-row">
+        <h2>社交热度观察</h2>
+        <span class="section-count">1 条</span>
+      </div>
       <span>本板块只保留高讨论但工作性略弱的背景信号。</span>
     </div>
     <div class="section-items"><article class="report-item">
-    <div class="item-index">01</div>
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
     <div class="item-body">
-      <div class="tags"><span>HN 热帖</span><span>技术文化</span><span>安全</span></div>
+      <div class="item-kicker">
+        <div class="tags"><span>HN 热帖</span><span>技术文化</span><span>安全</span></div>
+        <span class="item-source">Hacker News · 2026-07-09 09:17</span>
+      </div>
       <h3><a href="https://tris.sherliker.net/blog/obfuscated-self-evaluating-bash-script-by-cdn-akamai-being-supplied-to-consumers-via-retail-stores/" target="_blank" rel="noreferrer">HN 高热：Uniqlo T 恤上的混淆 Bash 脚本引发技术社区围观 <span aria-hidden="true">↗</span></a></h3>
-      <p>Hacker News 今日最高分帖是对一件 Uniqlo T 恤上混淆 Bash 脚本的解码文章，分数超过 1300。它更像技术社区的娱乐性逆向案例，对产品和研发决策影响有限，但说明安全、供应链、代码可读性和品牌周边之间的边界话题很容易获得传播。这里保留为社区情绪信号，不进入核心工程板块。</p>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 今日最高分帖是对一件 Uniqlo T 恤上混淆 Bash 脚本的解码文章，分数超过 1300。它更像技术社区的娱乐性逆向案例，对产品和研发决策影响有限，但说明安全、供应链、代码可读性和品牌周边之间的边界话题很容易获得传播。</p>
+        <p class="item-insight"><span>解读</span>这里保留为社区情绪信号，不进入核心工程板块。</p>
+      </div>
       <div class="item-meta">Hacker News · 2026-07-09 09:17</div>
     </div>
   </article></div>
-  </section>
-        <section class="report-section" id="section-actions">
-    <div class="section-heading">
-      <h2>今日行动建议</h2>
-    </div>
-    <div class="action-list">
-      <article class="action-item">
-            <strong>产品</strong>
-            <span>把 GPT-Live、NotebookLM 短视频概览和 Seedream 5.0 Pro 分开看：语音适合输入和协商，视频适合传播，结构化视觉输出适合工作交付，产品原型不要只围绕聊天框设计。</span>
-          </article><article class="action-item">
-            <strong>研发</strong>
-            <span>评估 AI 编程工具时增加自有代码库任务集，至少覆盖真实 bug、测试生成、重构和多文件修改；不要只采用 SWE-Bench Pro 或单一排行榜结论。</span>
-          </article><article class="action-item">
-            <strong>运营</strong>
-            <span>参考 Anthropic 市场运营案例，把周报、活动搭建和跨系统录入拆成可审核的 Agent 子流程，优先保留人工确认点而不是追求全自动。</span>
-          </article><article class="action-item">
-            <strong>安全与管理者</strong>
-            <span>排查 AI 编程工具的仓库权限、外联日志、版本范围和 Issue/PR 输入隔离，特别关注提示注入导致跨仓库数据泄露的路径。</span>
-          </article><article class="action-item">
-            <strong>创业者</strong>
-            <span>今天的机会不只在模型包装层，网页清洗、小模型推理、Agent 记忆、临时部署和评测基准都是更靠近工作流基础设施的位置。</span>
-          </article>
-    </div>
-  </section>
-        <section class="report-section report-section--muted" id="section-noise">
-    <div class="section-heading">
-      <h2>去噪说明</h2>
-    </div>
-    <p class="note">本期优先采用 juya-ai-daily 与 AI HOT daily 中事实完整、可落到产品、研发、运营、商业化、基础设施或合规判断的条目；Grok 4.5、GPT-Live、Seedream、SWE-Bench Pro 等多源重复事件以信息最完整来源为主，并合并价格、限制、可用入口和评测争议等增量事实。过滤了弱相关消费电子、泛娱乐、纯传闻和缺少工作决策价值的社区讨论；HN 仅保留高热且可作为背景信号的条目，GitHub Trending 中未单独刊发缺少明确增量事实或与核心板块重复的项目。</p>
-    <div class="status-grid"><div>
-                <strong>juya</strong>
-                <span>ok</span>
-              </div><div>
-                <strong>aihotDaily</strong>
-                <span>ok</span>
-              </div><div>
-                <strong>aihotItems</strong>
-                <span>ok (40 items)</span>
-              </div><div>
-                <strong>hackernews</strong>
-                <span>ok (39 stories &gt;= 30pts)</span>
-              </div><div>
-                <strong>githubTrending</strong>
-                <span>ok (16 repos)</span>
-              </div></div>
   </section>
       </article>
     </div>
