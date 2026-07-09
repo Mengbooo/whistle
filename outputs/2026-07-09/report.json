@@ -2,13 +2,13 @@
   "schemaVersion": 1,
   "date": "2026-07-09",
   "title": "Whistle 互联网日报｜2026-07-09",
-  "summary": "今天的主线是前沿模型继续向可执行工作流下沉：Grok 4.5、GPT-Live、SWE-1.7 和 Seedream 5.0 Pro 都在把模型能力绑定到编程、语音、视觉创作和 Agent 场景，模型发布不再只是参数和榜单竞争，而是围绕 IDE、CLI、ChatGPT、社交平台、设计工具和部署入口展开。与此同时，评测可信度、提示注入、国家安全原则、开发工具外联风险和模型出口边界成为同一天的反向约束。行业图景因此呈现出两条并行线：一边是 AI 输出越来越实时、视觉化、结构化、可交互，另一边是权限、审计、数据保留和监管边界被重新摆到产品与基础设施层。",
+  "summary": "今天有几类事值得放在一起看。Grok 4.5、GPT-Live、SWE-1.7、Seedream 5.0 Pro 和一批具身模型同时出现，说明模型发布正在和 IDE、CLI、ChatGPT、图像工具、机器人仿真、社交分发入口绑定得更紧。另一边，OpenAI 审计 SWE-Bench Pro、Anthropic 研究可移除知识模块，GitLost 提示注入、Claude Code 风险提示和国家安全原则也把安全、评测和权限问题拉回工程现场。生成式 AI 的输出不只停留在文字，语音、信息图、实时世界模型和可交互界面都在扩展；但这些能力进入真实工作后，数据保留、工具外联、模型访问和监管边界会更早出现在产品与基础设施设计里。",
   "theme": "模型能力进入工作流，安全与评测约束同步抬升",
   "topline": [
-    "Grok 4.5、SWE-1.7 与多项编程基准更新显示，AI 编程竞争已经从聊天模型转向 IDE、CLI、Agent 平台和评测体系的组合竞争。",
-    "GPT-Live 把语音交互推向全双工和后台委托任务，语音入口更像实时操作层，但复杂输出仍会继续向视觉化、结构化、可交互界面演进。",
-    "Seedream 5.0 Pro、LingBot-World 与 LingBot-Video 说明生成模型正在从单张图和短视频，扩展到信息图、像素级编辑、世界模型和具身仿真。",
-    "OpenAI、Anthropic、工信部和安全研究共同把 AI 安全拉回工程现实：评测数据、工具权限、提示注入、国家安全用途和模型访问边界正在变成可审计机制问题。"
+    "Grok 4.5、SWE-1.7 与多项编程基准更新显示，AI 编程竞争正在围绕 IDE、CLI、Agent 平台和评测体系展开。",
+    "GPT-Live 把语音交互推向全双工和后台任务委托，复杂结果仍会依赖结构化、视觉化、可交互界面承接。",
+    "Seedream 5.0 Pro、LingBot-World 与 LingBot-Video 将生成模型从单张图和短视频扩展到信息图、像素级编辑、世界模型和具身仿真。",
+    "OpenAI、Anthropic、工信部和安全研究共同提示，评测数据、工具权限、提示注入、国家安全用途和模型访问边界正在成为可审计机制问题。"
   ],
   "sections": [
     {
@@ -44,7 +44,7 @@
         },
         {
           "title": "字节 Seedream 5.0 Pro 发布，图像生成开始强调信息图、文字渲染和局部编辑",
-          "summary": "字节 Seed 发布多模态图像生成模型 Seedream 5.0 Pro，强化图文匹配、结构合理性、文字渲染和画面质感，支持复杂信息可视化、图层分离、色彩材质替换、多图融合和十余种语言输入生成；模型已上线火山方舟体验中心，并将进入豆包与即梦，也已在 Runway 提供试用。官方同时承认更细粒度文字渲染和像素级编辑保持仍有进步空间。它的工作价值在于把视觉生成从“出图”推向“设计素材和信息表达”，对产品、运营和设计团队更像低门槛的视觉原型与内容实验工具。",
+          "summary": "字节 Seed 发布多模态图像生成模型 Seedream 5.0 Pro，强化图文匹配、结构合理性、文字渲染和画面质感，支持复杂信息可视化、图层分离、色彩材质替换、多图融合和十余种语言输入生成；模型已上线火山方舟体验中心，并将进入豆包与即梦，也已在 Runway 提供试用。官方同时承认更细粒度文字渲染和像素级编辑保持仍有进步空间。它把视觉生成从“出图”推向“设计素材和信息表达”，会影响内容生产、原型验证和多语言视觉资产的制作方式。",
           "sourceName": "ByteDance Seed",
           "sourceUrl": "https://seed.bytedance.com/seedream5_0_pro",
           "publishedAt": "2026-07-09T01:17:05.000Z",
@@ -155,7 +155,7 @@
         },
         {
           "title": "Claude 多智能体模式公开：Fable 5 负责顾问或编排，Sonnet 5 负责执行",
-          "summary": "ClaudeDevs 分享两种 Fable 5 与 Sonnet 5 协同模式：Advisor 模式由 Sonnet 5 执行，并在需要时调用 Fable 5 获取指导，官方称在 SWE-bench Pro 上以约 63% 价格获得 Fable 5 约 92% 分数；Orchestrator 模式由 Fable 5 规划并委派多个 Sonnet 5 worker，在 BrowseComp 上以 46% 价格实现约 96% 性能。由于大部分 token 按 Sonnet 5 低费率计费，且子 Agent 有独立缓存，这给多 Agent 成本控制提供了清晰样本。多模型协作会从“换更强模型”变成“把规划、执行、验证拆给不同成本层级”。",
+          "summary": "ClaudeDevs 分享两种 Fable 5 与 Sonnet 5 协同模式：Advisor 模式由 Sonnet 5 执行，并在特定步骤调用 Fable 5 获取指导，官方称在 SWE-bench Pro 上以约 63% 价格获得 Fable 5 约 92% 分数；Orchestrator 模式由 Fable 5 规划并委派多个 Sonnet 5 worker，在 BrowseComp 上以 46% 价格实现约 96% 性能。由于大部分 token 按 Sonnet 5 低费率计费，且子 Agent 有独立缓存，这给多 Agent 成本控制提供了清晰样本。多模型协作会从“换更强模型”变成“把规划、执行、验证拆给不同成本层级”。",
           "sourceName": "ClaudeDevs",
           "sourceUrl": "https://x.com/shao__meng/status/2074661249804366310",
           "publishedAt": "2026-07-09T01:17:05.000Z",
@@ -480,6 +480,32 @@
             "安全"
           ],
           "importance": "low"
+        },
+        {
+          "title": "GitHub Trending：Agent 技能与求职自动化项目获得高星增长",
+          "summary": "GitHub Trending 今日显示，MadsLorentzen/ai-job-search 当日新增 5079 星，项目把 Claude Code 用于职位评估、简历定制、求职信撰写和面试准备；addyosmani/agent-skills 当日新增 1297 星，定位为面向 AI 编码代理的工程技能集合。这些项目热度更偏社区采纳和开发者试验信号，说明“把 Agent 能力封装成可复用技能或垂直流程”正在吸引大量关注，但仍需看真实使用后的维护成本和成功率。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/MadsLorentzen/ai-job-search",
+          "publishedAt": "2026-07-09T09:34:59.533Z",
+          "tags": [
+            "GitHub Trending",
+            "Agent",
+            "开源"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "GitHub Trending：OfficeCLI 和 CubeSandbox 反映 Agent 工具链补齐基础能力",
+          "summary": "iOfficeAI/OfficeCLI 当日新增 1717 星，提供面向 AI Agent 的 Word、Excel、PowerPoint 读写和自动化能力，单二进制运行且不依赖 Office 安装；TencentCloud/CubeSandbox 当日新增 564 星，定位为即时、并发、安全、轻量的 AI Agent 沙箱。它们不是单一模型能力更新，而是补齐 Agent 处理办公文件和执行代码时所依赖的工具层。热度说明开发者正在把注意力从聊天界面转向文件、沙箱、权限和运行环境。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/iOfficeAI/OfficeCLI",
+          "publishedAt": "2026-07-09T09:34:59.533Z",
+          "tags": [
+            "GitHub Trending",
+            "Agent 工具链",
+            "开源"
+          ],
+          "importance": "medium"
         }
       ]
     }
@@ -505,7 +531,7 @@
     },
     {
       "name": "hackernews",
-      "status": "ok (41 stories >= 30pts)",
+      "status": "ok (42 stories >= 30pts)",
       "detail": ""
     },
     {
@@ -514,5 +540,5 @@
       "detail": ""
     }
   ],
-  "generatedAt": "2026-07-09T00:00:00.000Z"
+  "generatedAt": "2026-07-09T09:36:43.230Z"
 }
