@@ -231,17 +231,51 @@ function renderTags(tags) {
   return `<div class="tags">${tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</div>`;
 }
 
+function splitSentences(value = "") {
+  return String(value)
+    .replace(/\s+/g, " ")
+    .trim()
+    .match(/[^。！？!?；;]+[。！？!?；;]?/g)?.map((sentence) => sentence.trim()).filter(Boolean) || [];
+}
+
+function splitSummary(summary = "") {
+  const sentences = splitSentences(summary);
+  if (sentences.length <= 2) {
+    return { fact: summary, insight: "" };
+  }
+
+  let factCount = 1;
+  const firstTwoLength = sentences.slice(0, 2).join("").length;
+  if (firstTwoLength <= 190 || sentences[0].length < 90) {
+    factCount = 2;
+  }
+
+  return {
+    fact: sentences.slice(0, factCount).join(""),
+    insight: sentences.slice(factCount).join(""),
+  };
+}
+
 function renderItem(item, index) {
   const title = item.sourceUrl
     ? `<a href="${escapeHtml(item.sourceUrl)}" target="_blank" rel="noreferrer">${escapeHtml(item.title)} <span aria-hidden="true">↗</span></a>`
     : escapeHtml(item.title);
   const meta = renderMeta([item.sourceName, formatPublishedAt(item.publishedAt)]);
+  const { fact, insight } = splitSummary(item.summary);
   return `<article class="report-item">
-    <div class="item-index">${String(index + 1).padStart(2, "0")}</div>
+    <div class="item-rail">
+      <span class="item-index">${String(index + 1).padStart(2, "0")}</span>
+    </div>
     <div class="item-body">
-      ${renderTags(item.tags)}
+      <div class="item-kicker">
+        ${renderTags(item.tags)}
+        ${meta ? `<span class="item-source">${meta}</span>` : ""}
+      </div>
       <h3>${title}</h3>
-      <p>${escapeHtml(item.summary)}</p>
+      <div class="item-copy">
+        <p class="item-fact">${escapeHtml(fact)}</p>
+        ${insight ? `<p class="item-insight"><span>解读</span>${escapeHtml(insight)}</p>` : ""}
+      </div>
       ${meta ? `<div class="item-meta">${meta}</div>` : ""}
     </div>
   </article>`;
@@ -251,60 +285,22 @@ function renderSection(section) {
   const items = section.items.length
     ? section.items.map(renderItem).join("\n")
     : `<p class="empty">本期无强信号。</p>`;
-  return `<section class="report-section" id="${sectionAnchor(section.id)}">
+  const sectionClassName = [
+    "report-section",
+    section.id === "headline" ? "report-section--featured" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const countLabel = section.items.length ? `${section.items.length} 条` : "本期无强信号";
+  return `<section class="${sectionClassName}" id="${sectionAnchor(section.id)}">
     <div class="section-heading">
-      <h2>${escapeHtml(section.title)}</h2>
+      <div class="section-title-row">
+        <h2>${escapeHtml(section.title)}</h2>
+        <span class="section-count">${escapeHtml(countLabel)}</span>
+      </div>
       ${section.summary ? `<span>${escapeHtml(section.summary)}</span>` : ""}
     </div>
     <div class="section-items">${items}</div>
-  </section>`;
-}
-
-function renderActions(actions) {
-  if (!actions.length) return "";
-  return `<section class="report-section" id="section-actions">
-    <div class="section-heading">
-      <h2>今日行动建议</h2>
-    </div>
-    <div class="action-list">
-      ${actions
-        .map(
-          (action) => `<article class="action-item">
-            ${action.audience ? `<strong>${escapeHtml(action.audience)}</strong>` : ""}
-            <span>${escapeHtml(action.text)}</span>
-          </article>`,
-        )
-        .join("")}
-    </div>
-  </section>`;
-}
-
-function renderSourceStatus(report) {
-  const statuses = report.sourceStatus.length
-    ? report.sourceStatus
-    : report.fetchErrors.map((error) => ({
-        name: error.source,
-        status: "failed",
-        detail: error.message,
-      }));
-  if (!statuses.length && !report.noiseNote) return "";
-  return `<section class="report-section report-section--muted" id="section-noise">
-    <div class="section-heading">
-      <h2>去噪说明</h2>
-    </div>
-    ${report.noiseNote ? `<p class="note">${escapeHtml(report.noiseNote)}</p>` : ""}
-    ${
-      statuses.length
-        ? `<div class="status-grid">${statuses
-            .map(
-              (item) => `<div>
-                <strong>${escapeHtml(item.name)}</strong>
-                <span>${escapeHtml(item.status)}${item.detail ? ` · ${escapeHtml(item.detail)}` : ""}</span>
-              </div>`,
-            )
-            .join("")}</div>`
-        : ""
-    }
   </section>`;
 }
 
@@ -318,10 +314,6 @@ export function renderReportHtml(input) {
       href: `#${sectionAnchor(section.id)}`,
       label: section.title,
     })),
-    ...(report.actions.length ? [{ href: "#section-actions", label: "今日行动建议" }] : []),
-    ...(report.noiseNote || report.sourceStatus.length || report.fetchErrors.length
-      ? [{ href: "#section-noise", label: "去噪说明" }]
-      : []),
   ];
   const itemCount = report.sections.reduce((sum, section) => sum + section.items.length, 0);
   const summary = escapeHtml(report.summary);
@@ -364,8 +356,10 @@ export function renderReportHtml(input) {
       display: inline-flex; align-items: center; justify-content: center;
       min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
       background: #fff; color: #000; font-size: 14px; font-weight: 600;
+      transition: border-color .16s ease, color .16s ease, background .16s ease;
     }
     .button--ghost { background: transparent; color: var(--text); }
+    .button:hover { border-color: #fff; }
     .layout {
       display: grid; grid-template-columns: 190px minmax(0, 760px);
       gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
@@ -381,20 +375,70 @@ export function renderReportHtml(input) {
     }
     .topline h2 { margin: 0 0 16px; font-size: 24px; letter-spacing: -.025em; }
     .topline ul { margin: 0; padding-left: 20px; color: #d8d8d8; }
-    .report-section { padding: 46px 0; border-top: 1px solid var(--line); }
-    .section-heading { margin-bottom: 28px; }
+    .report-section { padding: 54px 0; border-top: 1px solid var(--line); }
+    .section-heading { margin-bottom: 30px; }
+    .section-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
     .section-heading h2 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; }
     .section-heading span { display: block; margin-top: 8px; color: var(--muted); }
-    .section-items { display: grid; gap: 26px; }
-    .report-item { display: grid; grid-template-columns: 46px 1fr; gap: 18px; }
-    .item-index { color: var(--faint); font-size: 13px; padding-top: 4px; }
+    .section-count { flex: 0 0 auto; margin-top: 0 !important; color: var(--faint) !important; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    .section-items { display: grid; gap: 0; }
+    .report-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+    .report-item:first-child { border-top: 0; padding-top: 0; }
+    .item-rail { padding-top: 3px; }
+    .item-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1;
+    }
+    .item-kicker {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 8px;
+    }
     .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .item-kicker .tags { margin-bottom: 0; }
     .tags span { color: var(--accent); font-size: 12px; }
     .report-item h3 { margin: 0; font-size: 22px; line-height: 1.35; letter-spacing: -.025em; }
     .report-item h3 a { border: 0; }
     .report-item h3 a span { color: var(--accent); font-size: .82em; }
-    .report-item p { margin: 10px 0 0; color: var(--text); font-size: 15px; }
-    .item-meta { margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .item-copy { margin-top: 12px; display: grid; gap: 10px; }
+    .report-item p { margin: 0; color: var(--text); font-size: 15px; }
+    .item-fact { color: #e2e2e2; line-height: 1.82; }
+    .item-insight {
+      position: relative;
+      padding-left: 16px;
+      border-left: 2px solid rgba(1, 193, 147, .42);
+      color: #bdbdbd !important;
+      line-height: 1.76;
+    }
+    .item-insight span {
+      display: inline-block;
+      margin-right: 9px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .item-source, .item-meta { color: var(--faint); font-size: 12px; white-space: nowrap; }
+    .item-meta { display: none; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .report-section--featured { padding-top: 54px; }
+    .report-section--featured .section-heading { margin-bottom: 30px; }
+    .report-section--featured .report-item h3 { font-size: 23px; }
+    .report-section--featured .item-index { color: var(--muted); }
     .empty, .note { margin: 0; color: var(--muted); }
     .action-list { display: grid; gap: 12px; }
     .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: #d0d0d0; }
@@ -409,8 +453,13 @@ export function renderReportHtml(input) {
       .toc { display: none; }
       .hero { padding: 0 0 58px; }
       .hero-actions { justify-content: flex-start; }
-      .report-item { grid-template-columns: 1fr; gap: 8px; }
-      .item-index { display: none; }
+      .section-title-row { display: block; }
+      .section-count { margin-top: 8px !important; }
+      .report-item { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+      .item-rail { display: none; }
+      .item-kicker { display: block; }
+      .item-source { display: none; }
+      .item-meta { display: block; }
       .status-grid, .action-item { grid-template-columns: 1fr; }
     }
     @media print {
@@ -444,8 +493,6 @@ export function renderReportHtml(input) {
           </div>
         </section>
         ${report.sections.map(renderSection).join("\n")}
-        ${renderActions(report.actions)}
-        ${renderSourceStatus(report)}
       </article>
     </div>
   </main>
@@ -556,23 +603,6 @@ export function buildEmailHtml(input, { reportUrl = "" } = {}) {
                 </tr>`,
               )
               .join("")}
-            ${
-              report.actions.length
-                ? `<tr>
-                    <td style="padding:8px 36px 32px;border-bottom:1px solid #242424;">
-                      <h2 style="margin:0 0 16px;color:#fff;font-size:24px;">3. 今日行动建议</h2>
-                      ${report.actions
-                        .slice(0, 4)
-                        .map(
-                          (action) => `<p style="margin:0 0 12px;color:#d0d0d0;font-size:15px;line-height:1.7;">${
-                            action.audience ? `<strong style="color:#fff;">${escapeHtml(action.audience)}：</strong>` : ""
-                          }${escapeHtml(action.text)}</p>`,
-                        )
-                        .join("")}
-                    </td>
-                  </tr>`
-                : ""
-            }
             <tr>
               <td align="center" style="padding:30px 36px 36px;color:#8a8a8a;font-size:13px;line-height:1.7;">
                 <p style="margin:0 0 18px;">感谢阅读。低噪音、高信号，保留真正影响工作的互联网变化。</p>
