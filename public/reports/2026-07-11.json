@@ -1,0 +1,557 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-11",
+  "title": "Whistle 互联网日报｜2026-07-11",
+  "summary": "今天值得放在一起看的信息，主要集中在 AI 产品形态、开发工具和算力基础设施三处。OpenAI 发布 GPT-5.6、ChatGPT Work、新版桌面应用和 Sites，把模型、跨应用 Agent、Codex 与轻应用发布能力放进同一套入口；Meta、Google Cloud、ElevenLabs、腾讯和百度也分别更新模型、代码优化 Agent、对话监控层、浏览器控制工具和自媒体套件。工程侧，Bun 用 Rust 重写运行时，TypeScript 7.0 发布 Go 原生移植版，Claude Code 和 GitHub Copilot 的更新显示编码 Agent 正在进入文件编辑、PR 审查、浏览器交互和审计成本控制等具体环节。行业侧，Meta 讨论出租 AI 算力，Ollama 融资，法国对英伟达 CUDA 生态的调查接近正式指控，Apple 对 OpenAI 的商业机密诉讼也把 AI 硬件竞争中的人才、供应链和保密边界推到前台。",
+  "theme": "AI Agent 从模型能力进入产品入口和工程环节",
+  "topline": [
+    "OpenAI 同时发布 GPT-5.6、ChatGPT Work、新版桌面应用和 Sites，模型、Codex、跨应用操作与轻应用发布被放入统一产品入口。",
+    "Meta Muse Spark 1.1、Google AlphaEvolve、腾讯 BrowserSkill、Claude Code 应用内浏览器等更新，显示 Agent 工具正在补齐长上下文、浏览器、代码优化和可观测能力。",
+    "Bun 运行时转向 Rust、TypeScript 7.0 Go 原生移植版发布，基础开发工具把性能、安全和语言服务兼容性放在同一轮升级中处理。",
+    "Meta 讨论出租 AI 基础设施、Ollama 融资、法国调查英伟达 CUDA 生态，算力、开源模型运行和监管边界继续影响 AI 基础设施竞争。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "今日头条保留模型、Agent 产品、开发工具和基础设施四类最强工作信号。",
+      "items": [
+        {
+          "title": "OpenAI 发布 GPT-5.6 系列，分为 Sol、Terra 与 Luna",
+          "summary": "OpenAI 宣布 GPT-5.6 系列进入全面开放阶段，包含旗舰版 Sol、均衡版 Terra 和成本更低的 Luna。juya 素材显示，Sol 在编码、知识工作与网络安全等基准上达到官方所称 SOTA，并新增 ultra 设置，默认协调四个 Agent 并行处理复杂任务；API 定价按每百万 token 计费，Sol 为 5/30 美元，Terra 为 2.5/15 美元，Luna 为 1/6 美元。该系列还引入 Programmatic Tool Calling，减少工具调用中间数据往返，并把不同订阅层的模型与 ultra 权限拆开配置。模型发布不只是参数和榜单更新，它直接改变 ChatGPT、Codex 和企业 API 中复杂任务的成本、权限和安全访问边界。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://openai.com/index/gpt-5-6/",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "OpenAI",
+            "模型",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "ChatGPT Work 发布，Codex 并入新版 ChatGPT 桌面应用",
+          "summary": "OpenAI 发布由 GPT-5.6 和 Codex 驱动的 ChatGPT Work，可在网页、移动端和桌面端跨应用操作，创建成品文档和站点，并支持定时任务与计算机使用能力。新版 ChatGPT 桌面应用合并 Chat、Work 与 Codex 三个入口，支持 macOS 和 Windows；现有 Codex 应用更新后会变为新版应用，任务和项目保留，旧版 ChatGPT 桌面端将作为 ChatGPT Classic 继续获得模型与安全更新，但新的 Agent 功能只在新版应用提供。这个调整把聊天、写代码和跨应用任务从几个独立入口收束到一个桌面工作台，也让工作区管理员、订阅层和设备可用性成为 Agent 功能能否落地的前置条件。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://openai.com/zh-Hans-CN/index/chatgpt-for-your-most-ambitious-work/",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "OpenAI",
+            "ChatGPT Work",
+            "Codex"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Bun 完成从 Zig 到 Rust 的运行时重写",
+          "summary": "Bun 官方宣布运行时核心已从 Zig 全面重写为 Rust，相关代码合并到主分支，v1.4.0 将成为首个 Rust 版本，目前可通过 canary 版本获取。juya 记录称，这次重写由项目作者使用预发布版 Claude Fable 5 和 Claude Code 的 64 个并行工作流在 11 天内完成，目标是利用 Rust 所有权机制减少 use-after-free、double-free 和内存泄漏；官方数据称 v1.4.0 修复 128 个 bug，Linux 和 Windows 二进制体积缩减约 20%，部分 HTTP 吞吐量和应用构建速度提升 2% 至 5%。这条新闻同时涉及 AI 辅助大型代码迁移、运行时安全和性能取舍，HN 与 GitHub Trending 的高热度也显示开发者社区正在把它当作真实工程案例讨论。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://bun.com/blog/bun-in-rust",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "Bun",
+            "Rust",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Meta 讨论出租 AI 算力，资本支出和云业务边界被重新估算",
+          "summary": "Meta CEO 扎克伯格回应公司筹划云基础设施业务时否认“算力过剩”说法，称内部算力仍在满负荷使用，但当前市场对 AI 算力出价极高，将部分基础设施对外出租在财务上更划算。AI HOT 素材显示，Meta 正制定代号 Meta Compute 的云计算计划，可能包括开放模型访问和直接出租裸算力两条路线；公司 2026 年资本支出指引达到 1250 亿至 1450 亿美元，并计划 2026 年 9 月量产自研 AI 芯片，目标 2027 年部署算力提升至 14 吉瓦。这个表态把大模型公司的内部训练资源、外部云收入和资本开支回收周期连在一起，算力不再只是成本项，也开始被包装成可出租的基础设施产品。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.ithome.com/0/975/078.htm",
+          "publishedAt": "2026-07-10T07:26:10.000Z",
+          "tags": [
+            "Meta",
+            "AI 基础设施",
+            "云计算"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "AI 与新工具板块覆盖模型、Agent、开发工具、浏览器操作、内容生成和本地推理。",
+      "items": [
+        {
+          "title": "Meta 发布 Muse Spark 1.1 多模态推理模型和 Model API 预览版",
+          "summary": "Meta Superintelligence Labs 发布 Muse Spark 1.1 多模态推理模型，具备 100 万 token 上下文窗口，并能主动管理与压缩上下文，原生支持视频等多模态理解与音频检测。官方称它在大型复杂代码库任务上有明显改善，覆盖诊断修复、新功能实现和大迁移，并兼容规划模式与子 Agent 委派。开发者首次可通过公开预览的 Meta Model API 构建应用，模型也已上线 Meta AI 应用与网站。这让 Meta 的前沿模型从消费端入口延伸到开发者 API，长上下文和多模态能力会影响代码库分析、视频理解和跨应用导航等产品形态。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "Meta",
+            "多模态",
+            "API"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 推出 ChatGPT Sites 公开测试版",
+          "summary": "OpenAI 发布 ChatGPT Sites 公开测试版，允许用户在 ChatGPT Work 网页端或桌面端 Work 与 Codex 模式下，通过自然语言生成交互式网站或轻应用，并进行预览、修改、发布和 URL 分享。juya 素材显示，Pro、Pro Lite、Enterprise 和 Edu 用户率先获得访问权限，Plus 与 Business 将在随后几天推出，Free 和 Go 计划不可用；Enterprise 工作区默认关闭公开发布，需要管理员启用，测试期间不支持数据驻留和推理驻留，也暂不支持自定义域名。这个功能把 AI 输出从纯文本和 Markdown 推向 HTML 与可交互页面，发布、权限、域名和数据驻留限制会成为轻应用生成能否进入正式业务流程的边界。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "OpenAI",
+            "轻应用",
+            "ChatGPT Sites"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Claude Code 桌面版新增应用内浏览器",
+          "summary": "Claude Devs 宣布 Claude Code 桌面版加入应用内浏览器，Claude 可以调出文档、设计稿或其他网站，并像操作本地开发服务器一样阅读、点击和交互。AI HOT 素材显示，该浏览器采用沙盒机制且可配置，用户可选择会话是否持久保留。这个变化把编码 Agent 的上下文来源从文件系统和终端扩展到网页界面，文档查阅、设计稿核对和本地 Web 应用调试会被纳入同一个桌面会话中，同时沙盒与会话持久化设置也增加了权限管理和审计要求。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://x.com/ClaudeDevs/status/2075635283211772279",
+          "publishedAt": "2026-07-10T17:36:29.000Z",
+          "tags": [
+            "Claude Code",
+            "浏览器",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google Cloud 正式推出基于 Gemini 的 AlphaEvolve",
+          "summary": "Google Cloud 与 Google DeepMind 开发的 AI 代码优化 Agent AlphaEvolve 已正式发布，所有客户可通过 Gemini Enterprise Agent Platform 使用。juya 素材显示，AlphaEvolve 并不是从头重写代码，而是根据用户提供的基线算法和目标自动搜索更优解，并返回人类可读的优化代码。它把“代码优化”从提示词问答变成可指定目标、可比较输出的搜索过程，适用边界集中在算法、性能目标和可验证改进结果这些更容易度量的工程任务上。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://cloud.google.com/blog/products/ai-machine-learning/alphaevolve-is-available-for-everyone",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "Google Cloud",
+            "Gemini",
+            "代码优化"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "腾讯开源 BrowserSkill，让 Agent 操作已登录浏览器",
+          "summary": "腾讯在 GitHub 开源 BrowserSkill，允许支持 Shell 的 AI Agent 通过本地桥接层操作用户已登录的浏览器。项目由 bsk CLI、daemon 与浏览器扩展组成，Agent 任务运行在独立窗口，借用用户标签页需要显式授权，并内置 human-in-loop 机制；目前支持 macOS、Linux 和 Windows x64，兼容 Chrome 与 Edge，并对 Cursor、Claude Code 等 Agent 提供一键安装。它把浏览器自动化从无头脚本转成“使用真实登录态但需要授权”的模式，身份、会话和人工确认会成为这类工具能否处理真实 Web 任务的核心约束。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://github.com/Tencent/BrowserSkill",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "腾讯",
+            "BrowserSkill",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "ElevenLabs 推出 ElevenAgents Spotlight",
+          "summary": "ElevenLabs 发布 ElevenAgents Spotlight，将其定位为 ElevenAgents 的观察和改进层。该功能可以实时审查语音与聊天对话，跟踪成功率、延迟等指标并检测异常，自动将对话分组、评分情感，还支持用自然语言编写评估标准对对话进行自动评分；数据可流式传输至 Datadog、Grafana 等监控工具。它把语音和聊天 Agent 的质量管理纳入可观测系统，指标、分组、评分和日志输出会影响客服、销售和语音交互类 Agent 的上线方式。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://elevenlabs.io/blog/introducing-elevenagents-spotlight",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "ElevenLabs",
+            "Agent",
+            "可观测性"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "百度搭子发布个人版、自媒体套件、企业版和搭子联盟更新",
+          "summary": "百度搭子在成都 AI Day 发布四项更新：个人版新增浏览器调用、智能路由、多端共享记忆和更强 PPT 生成，并上架“一镜”数字人制作、“灵医”报告解读等 Skill。AI HOT 素材显示，智能路由使平均任务耗时下降 20%，Token 利用率提升 25%；自媒体专业套件覆盖选题到复盘，企业版加入团队协作和权限管理，搭子联盟已有中国联通等成员加入，上线三个月日均提问量增长 20 倍。这个产品组合把个人 Agent、内容生产套件、企业协作和生态伙伴放到同一场发布中，浏览器调用、记忆和权限管理成为国内 Agent 产品争夺高频工作场景的基础模块。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://mp.weixin.qq.com/s/Haqbjim9YGmRu1XpxG_VvA",
+          "publishedAt": "2026-07-10T13:58:07.000Z",
+          "tags": [
+            "百度",
+            "Agent",
+            "内容工具"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Perplexity 推出跨模型信用额度分析功能",
+          "summary": "Perplexity 推出 Computer Analytics，用户可以跨模型跟踪信用额度支出，功能已面向个人和企业用户开放，可在账户设置的 Analytics 下使用。虽然这是一项账户层更新，但它反映出多模型产品正在把成本透明度放进用户界面。模型切换、任务类型和额度消耗被放在同一个分析入口后，AI 搜索和研究工具的使用成本会从后台账单变成前台产品体验的一部分。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://x.com/perplexity_ai/status/2075599540640714863",
+          "publishedAt": "2026-07-10T15:14:27.000Z",
+          "tags": [
+            "Perplexity",
+            "成本分析",
+            "多模型"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "微软发布 Flint，可让 Agent 生成可编辑图表规格",
+          "summary": "微软研究院推出 Flint，一种面向 AI Agent 的可视化中间语言，用户提供数据、语义类型和图表类型后，Flint 编译器可推导坐标轴、配色、布局等底层参数。AI HOT 素材显示，它支持 46 种图表类型，可渲染到 Vega-Lite、ECharts 和 Chart.js，并提供 npm 包和 MCP 服务器。它把图表生成从“直接产出图片或代码”改为“先产出人类可编辑 spec，再渲染到多个后端”，这会降低 Agent 生成可审查、可复用可视化资产的难度。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://microsoft.github.io/flint-chart",
+          "publishedAt": "2026-07-09T21:46:19.253Z",
+          "tags": [
+            "Microsoft",
+            "可视化",
+            "MCP"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Google 发布 LiteRT.js，在浏览器中运行本地 AI 推理",
+          "summary": "Google 发布 LiteRT.js，这是 LiteRT 跨平台边缘 AI 运行时的新成员，面向 JavaScript 开发者，可直接在浏览器中运行机器学习模型。AI HOT 素材显示，LiteRT.js 基于 WebGPU 和即将推出的 WebNN 提供高性能推理，并支持回退到 WebAssembly CPU。浏览器端推理把一部分模型调用从服务器转移到用户设备，隐私、延迟和离线体验会随之改善，但模型大小、浏览器兼容性和设备性能仍会限制可用场景。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://developers.googleblog.com/litertjs-googles-high-performance-web-ai-inference",
+          "publishedAt": "2026-07-09T21:21:08.292Z",
+          "tags": [
+            "Google",
+            "Web AI",
+            "浏览器推理"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Thinking Machines Lab 阐述可定制 AI 与人机界面方向",
+          "summary": "Thinking Machines Lab 在官方博客中阐述其使命，称当前多数 AI 在少数地方训练后便冻结，无法被使用者塑造。该实验室正在训练具备多模态交互和可定制化能力的强模型，开发允许用户训练模型权重的工具，并构建拓宽人机沟通渠道的界面。文章没有发布具体产品，但它把模型微调、组织知识和人机界面放在同一套研发目标中，指向的是可被具体组织持续塑造的模型，而不是一次性调用的通用服务。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://thinkingmachines.ai/blog/the-future-worth-building-is-human",
+          "publishedAt": "2026-07-10T00:00:00.000Z",
+          "tags": [
+            "Thinking Machines Lab",
+            "可定制 AI",
+            "多模态"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台动态集中在 OpenAI 功能收束、微软 Copilot 模型、Meta 云计划和 Anthropic 使用回顾。",
+      "items": [
+        {
+          "title": "OpenAI 将 Atlas 浏览器能力转入 ChatGPT 桌面端和扩展",
+          "summary": "OpenAI 宣布弃用 Atlas 浏览器，将基于浏览器的 Agent 能力整合至 ChatGPT 和 Codex，Atlas 计划于 2026 年 8 月 9 日停止工作。juya 素材显示，ChatGPT 桌面应用将支持浏览器式 Agent 工作流，同时推出 ChatGPT Chrome 扩展提供网页辅助；Atlas 的书签、打开标签页和浏览历史不会自动迁移，各项功能可用性取决于套餐、地区、设备和工作区设置。这个迁移把独立浏览器产品撤回到桌面应用和扩展体系中，浏览器 Agent 由单独入口转为现有 ChatGPT 使用场景的一部分。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://help.openai.com/zh-hans-cn/articles/20001371-evolving-atlas-into-chatgpt-for-browser-based-agentic-work",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "OpenAI",
+            "浏览器",
+            "ChatGPT"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "GPT-5.6 成为 Microsoft 365 Copilot 首选模型",
+          "summary": "OpenAI 宣布 GPT-5.6 将作为 Microsoft 365 Copilot 的首选模型，覆盖 Word、Excel、PowerPoint、Chat 和 Cowork。AI HOT 素材显示，微软通过 OpenAI API 直接调用该模型服务 Microsoft 365 客户，官方强调用户可用更少提示轮次创建文档、分析数据、生成演示并完成跨职能协作。这个集成让新模型直接进入办公套件的默认 AI 层，模型升级会通过已有办公入口分发，而不是只在开发者 API 或独立聊天产品里体现。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://openai.com/index/gpt-5-6-preferred-model-microsoft-365-copilot",
+          "publishedAt": "2026-07-09T00:00:00.000Z",
+          "tags": [
+            "Microsoft 365 Copilot",
+            "OpenAI",
+            "办公软件"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Anthropic 推出 Claude Reflect 测试版",
+          "summary": "Anthropic 为 Claude 推出 Reflect 测试版，用户可回顾过去 1、3、6 或 12 个月的活动总结，内容包括关键主题、使用频率和任务类型。AI HOT 素材显示，该功能结合 4D AI Fluency Framework 提供协作分析，并支持设置静音时段或定时休息提醒；隐私方面，不涉及无痕对话和健康集成工具，也不提取连接工具中的底层文件。使用回顾把 AI 产品从单次对话延伸到长期行为分析，记忆开关、无痕范围和连接工具数据边界会直接影响用户对使用画像的接受程度。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.anthropic.com/news/reflect-with-claude",
+          "publishedAt": "2026-07-09T13:40:30.163Z",
+          "tags": [
+            "Anthropic",
+            "Claude",
+            "使用分析"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Meta 宣布在加拿大建设 1GW 数据中心",
+          "summary": "juya 日报记录，Meta 宣布在加拿大建设 1GW 数据中心，这与公司近期讨论 Meta Compute 云计划、自研 AI 芯片和 2027 年 14 吉瓦算力目标处在同一条基础设施扩张线上。单个 1GW 数据中心已经接近大型电力项目规模，选址、电力供应和跨境数据处理会成为模型训练与推理能力扩张的一部分。该信息与 Meta 对外出租算力的表态结合后，显示大厂正在把数据中心建设、模型 API 和裸算力供给放进同一个商业计算中。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://daily.juya.uk/issues/2026-07-10/",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "Meta",
+            "数据中心",
+            "算力"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "产品与增长观察保留轻应用发布、群聊下线和 AI 内容泛滥三个与分发及产品边界相关的信号。",
+      "items": [
+        {
+          "title": "OpenAI 停用 ChatGPT 群聊创建与加入功能",
+          "summary": "OpenAI 发布更新说明，宣布从当地时间 7 月 9 日起停止 ChatGPT 群聊相关功能，Web、iOS 和 Android 用户无法创建新群聊、将现有对话转为群聊或通过邀请链接加入群聊。现有群聊暂时可继续使用，后续转为只读状态后仍可访问历史消息、文件和图像，独立对话不受影响。这个调整说明 ChatGPT 的多人协作功能并未沿原路径继续扩张，OpenAI 当前把资源集中到 Work、Codex、桌面应用和 Sites 等任务型入口上。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "OpenAI",
+            "ChatGPT",
+            "产品策略"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "社交媒体 AI 生成内容增多，LinkedIn 长文占比超过 40%",
+          "summary": "Pangram 通过 Chrome 扩展收集超过 100 万条帖子并分析社交媒体中的 AI 生成内容，结果显示整体 AI 检测率为 13.8%，超过 250 词的长文中 25.72% 被判定完全由 AI 生成。AI HOT 素材显示，LinkedIn 最明显，超过 40% 长文帖子被标记为完全 AI 生成，占全部 AI 内容的 62%；X/Twitter 文章中 23.9% 完全 AI、22.9% 混合，Reddit 整体 AI 率为 4.4%，但顶层帖子达到 11.6%。如果检测结果接近真实情况，职业社交和长文内容平台的信任、推荐和反垃圾机制会面临更高压力，平台内容质量不再只取决于账号和互动指标。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.pangram.com/blog/ai-in-your-feed",
+          "publishedAt": "2026-07-09T21:46:29.789Z",
+          "tags": [
+            "社交平台",
+            "AI 内容",
+            "内容分发"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Runway 接入 Seedream 5.0 Pro，支持 14 种语言图像文字",
+          "summary": "Runway 宣布 Seedream 5.0 Pro 已登陆其平台，可通过提示词或参考图生成高细节图像，图像内文字清晰可读，并支持多达 14 种语言。这个更新把多语言文字渲染能力放入成熟视频和图像创作平台，海报、广告素材和多语言视觉内容生成的后期修字成本会受到影响。它属于创作工具层面的能力补齐，信号弱于模型和平台入口更新，但能反映图像模型正在处理长期存在的文字准确性问题。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://x.com/runwayml/status/2074982268175630814",
+          "publishedAt": "2026-07-08T22:21:38.000Z",
+          "tags": [
+            "Runway",
+            "图像生成",
+            "多语言"
+          ],
+          "importance": "low"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程板块聚焦语言工具链、编码 Agent、模型训练和开源项目热度。",
+      "items": [
+        {
+          "title": "TypeScript 7.0 发布 Go 原生移植版",
+          "summary": "TypeScript 团队正式发布 TypeScript 7.0，这是使用 Go 语言重写的原生移植版，官方称完整构建通常可实现 8 至 12 倍提速。juya 素材显示，新版引入共享内存多线程，新增 --checkers 等实验性并行配置，重写基于 Parcel 的 --watch 模式，并默认开启 TS 6.0 的严格模式及多项破坏性变更；但程序化 API 尚未就绪，Vue、Svelte 等嵌入式语言工作流无法使用其语言服务，相关项目仍对应 TS 6.0 兼容包。这个版本把性能跃迁与生态兼容风险同时带来，语言服务 API 是否稳定会影响编辑器、框架和构建工具的迁移节奏。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "TypeScript",
+            "Go",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Codex 支持文件编辑、PR 审查，并新增 Pro 与 Ultra 模式",
+          "summary": "OpenAI 为 ChatGPT Codex 带来面向开发者的更新，开发者可直接在应用内编辑 Markdown 和代码文件，通过内联注释让 Codex 修订选中内容，并在侧边栏查看和审查 GitHub Pull Request 及反馈差异。juya 素材显示，Codex 新增 Pro 和 Ultra 两种执行模式，支持一个项目内跨多个仓库工作，GPT-5.6 驱动下的 Computer Use 速度提升，任务活动与进度追踪也更清晰。Codex 的功能边界从生成代码扩展到编辑、审查、跨仓库操作和任务管理，版本控制、权限和审查结果展示成为编码 Agent 产品体验的一部分。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://daily.juya.uk/issues/2026-07-10/",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "Codex",
+            "PR 审查",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "GitHub Copilot 代码审查改用共享工具后成本上升，重写指令后降低约 20%",
+          "summary": "GitHub 在 Copilot 代码审查中尝试用 Copilot CLI 的共享代码探索工具替换原有专用工具，包括 grep、glob 和 view，结果审查成本上升、有效评论数量下降。AI HOT 素材显示，trace 分析发现问题不在工具本身，而在指令让智能体像通用编程助手一样大范围浏览仓库，没有从 diff 出发定向搜索；重写指令后，审查平均成本降低约 20%，同时保持相同审查质量。这个案例说明 Agent 工具链的性能不仅由工具能力决定，任务提示、搜索范围和默认行为会直接影响成本与输出质量。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://github.blog/ai-and-ml/github-copilot/better-tools-made-copilot-code-review-worse-heres-how-we-actually-improved-it",
+          "publishedAt": "2026-07-10T00:00:00.000Z",
+          "tags": [
+            "GitHub Copilot",
+            "代码审查",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "DeepSeek-V4 Flash 强化学习训练登陆 AMD MI355X GPU",
+          "summary": "LMSYS 披露，DeepSeek-V4 Flash 的强化学习训练已在 AMD Instinct MI355X GPU 上通过 Miles 框架获得支持，基于 ROCm 软件栈运行。AI HOT 素材显示，该 2840 亿参数 MoE 模型每 token 激活 130 亿参数，使用 SGLang 进行 rollout 生成、Megatron 进行策略更新，Miles 负责异步循环与权重同步；团队解决了模型对齐、量化状态在线更新和多节点并行稳定性问题，并在四个八 GPU 节点上完成端到端验证。这个进展表明大模型 RL 训练正在从单一硬件生态扩展到 AMD ROCm 栈，训练框架、推理引擎和权重同步能力会影响非英伟达集群的可用性。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.lmsys.org/blog/2026-07-10-rocm-miles-dsv4",
+          "publishedAt": "2026-07-10T17:19:11.037Z",
+          "tags": [
+            "DeepSeek",
+            "AMD",
+            "模型训练"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "投融资板块保留本地模型运行和 AI 基础设施商业化两条信号。",
+      "items": [
+        {
+          "title": "Ollama 融资 8800 万美元，继续推进混合推理和云服务",
+          "summary": "juya 日报记录，Ollama 宣布融资 8800 万美元，将推进无缝混合推理与云服务。AI HOT 补充显示，Ollama 目前拥有 890 万开发者、6.7 万集成，并与各大模型实验室及硬件供应商建立合作，B 轮融资由 Theory 领投。Ollama 的位置介于本地模型运行、开发者工具和云端推理之间，融资信号显示开源模型运行层本身正在形成商业化入口，而不是只作为模型实验的辅助工具存在。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.tomtunguz.com/ollama-series-b",
+          "publishedAt": "2026-07-09T00:00:00.000Z",
+          "tags": [
+            "Ollama",
+            "融资",
+            "本地模型"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Cerebras 宣布欧洲扩张，2027 年底算力扩至 200MW",
+          "summary": "juya 日报记录，Cerebras 宣布欧洲扩张，计划到 2027 年底将算力扩至 200MW。这个数字显示 AI 推理和训练基础设施的竞争正在从芯片单点扩展到区域性算力供给，数据中心容量、电力和客户交付能力成为模型服务商业化的一部分。与 Meta 讨论出租算力、Ollama 推进云服务放在一起看，AI 基础设施的商业模式正在覆盖裸算力、模型 API、本地运行和混合推理几种形态。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://daily.juya.uk/issues/2026-07-10/",
+          "publishedAt": "2026-07-10T02:17:20.000Z",
+          "tags": [
+            "Cerebras",
+            "算力",
+            "欧洲"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "合规板块保留 AI 硬件商业机密、CUDA 生态反垄断和 AI 滥用研究。",
+      "items": [
+        {
+          "title": "Apple 起诉 OpenAI 窃取商业机密",
+          "summary": "Apple 向美国加州北区联邦法院起诉 OpenAI，指控其窃取商业机密并违反合同。AI HOT 素材显示，诉状称 OpenAI 高级领导层包括首席硬件官 Tang Tan 指使前 Apple 员工在招聘过程中窃取机密，例如使用未发布产品项目代号、要求应聘者携带硬件组件参加面试；Apple 还指控前高级系统电气工程师 Chang Liu 离职加入 OpenAI 后未归还公司笔记本电脑，并用其下载机密技术文档。Apple 要求法院禁止 OpenAI 使用或披露相关商业机密并归还材料。诉讼把 AI 硬件竞争中的人才流动、面试流程、设备归还和专有工艺保护变成正式法律争议，硬件团队的保密边界会比纯软件招聘更难处理。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft",
+          "publishedAt": "2026-07-10T20:32:00.000Z",
+          "tags": [
+            "Apple",
+            "OpenAI",
+            "商业机密"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "法国对英伟达反垄断调查接近尾声，聚焦 CUDA 与 AI 云投资",
+          "summary": "法国竞争管理局确认，对英伟达的反垄断调查已接近尾声，即将发布正式异议声明。AI HOT 素材显示，调查聚焦两个问题：市场对 CUDA 平台的严重依赖，以及英伟达对 CoreWeave 等 AI 云计算公司的投资；英伟达占全球 AI 加速器超过 70% 份额，若被认定滥用市场支配地位，最高可被处以全球年营业额 10% 的罚款。法国可能成为首个准备正式指控英伟达的监管机构，这会把 AI 加速器竞争从芯片性能扩展到软件生态、云投资和平台绑定问题。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.ithome.com/0/974/744.htm",
+          "publishedAt": "2026-07-09T13:01:09.000Z",
+          "tags": [
+            "NVIDIA",
+            "反垄断",
+            "CUDA"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "研究记录博科圣地系统性使用前沿 AI",
+          "summary": "一份基于 2025 至 2026 年对尼日利亚东北部 27 名前博科圣地成员半结构化访谈的报告显示，该组织在 2024 年已系统性使用前沿 AI。AI HOT 素材显示，两大派系均使用 ChatGPT、Claude、Gemini、Grok、Meta AI 和 DeepSeek 辅助作战与日常运作，并通过专门小组和内部培训制度化；成员称曾绕过部分安全限制，将 AI 用于袭击策划、武器故障排查和爆炸装置设计。报告记录的实际使用仍限于常规手段，但它为模型安全、滥用监测和高风险查询限制提供了更具体的现实案例。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://casp.ac/reports/ai-enabled-terrorism",
+          "publishedAt": "2026-07-10T22:07:19.177Z",
+          "tags": [
+            "AI 安全",
+            "滥用",
+            "政策"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "社交热度观察只保留高讨论度但工作信号较弱或需要背景化理解的信息。",
+      "items": [
+        {
+          "title": "HN 对 GPT-5.6 的讨论超过 1500 分",
+          "summary": "Hacker News 上 OpenAI GPT-5.6 官方页面获得 1517 分和 1074 条评论，是今日技术社区热度最高的相关帖子。该讨论与 OpenAI 官方发布、juya 详述和 AI HOT 模型条目互相印证，但 HN 热度更多反映开发者对模型能力、成本、安全和宣传口径的集中争论。它适合作为情绪和采用意愿信号，不改变日报中对 GPT-5.6 以官方发布事实为主的排序。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://openai.com/index/gpt-5-6/",
+          "publishedAt": "2026-07-11T00:00:00.000Z",
+          "tags": [
+            "HN",
+            "OpenAI",
+            "社区热度"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Show HN：18 Words 获得超过 1000 分",
+          "summary": "Hacker News 的 Show HN 项目 18 Words 获得 1087 分和 347 条评论，热度仅次于 GPT-5.6。素材没有提供足够事实说明它对开发工具、平台规则或商业化产生直接影响，因此不放入核心板块。它反映 HN 当天对轻量互动产品的注意力，但目前更接近社区传播信号。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://18words.com/",
+          "publishedAt": "2026-07-11T00:00:00.000Z",
+          "tags": [
+            "HN",
+            "Show HN",
+            "社区热度"
+          ],
+          "importance": "low"
+        },
+        {
+          "title": "colibri 在低配电脑运行 GLM-5.2 的项目获得 HN 高分",
+          "summary": "HN 上 Show HN: Getting GLM 5.2 running on my slow computer 获得 830 分和 205 条评论，项目链接指向 JustVugg/colibri。AI HOT 补充称，colibri v1.0 以纯 C 实现、零运行时依赖，可在约 25GB RAM 的消费级电脑上运行 744B 参数的 GLM-5.2 MoE 模型；int4 量化后磁盘占用约 370GB，常驻内存约 9.9GB，并通过流式加载磁盘专家实现推理。该项目热度反映本地运行超大 MoE 模型的社区兴趣，但受磁盘、速度和实验性质限制，暂不等同于通用生产方案。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://github.com/JustVugg/colibri",
+          "publishedAt": "2026-07-11T00:00:00.000Z",
+          "tags": [
+            "HN",
+            "本地模型",
+            "开源"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "GitHub Trending 中 Agent Skills 和 OfficeCLI 热度突出",
+          "summary": "GitHub Trending 显示，mattpocock/skills 今日新增 1712 星，obra/superpowers 新增 1013 星，addyosmani/agent-skills 新增 1116 星，iOfficeAI/OfficeCLI 新增 1224 星。前三个项目都围绕 Agent Skills 或软件开发方法组织，OfficeCLI 则提供面向 AI Agent 的 Word、Excel、PowerPoint 读写与自动化能力。它们不是单一公司发布的大事件，但热度集中说明开源社区正在把 Agent 能力包装成可复用技能、方法和文件操作接口。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/iOfficeAI/OfficeCLI",
+          "publishedAt": "2026-07-11T01:30:43.781Z",
+          "tags": [
+            "GitHub Trending",
+            "Agent Skills",
+            "OfficeCLI"
+          ],
+          "importance": "normal"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "本期优先保留 juya 与 AI HOT 中事实完整、影响产品入口、开发工具、基础设施、商业化或监管边界的内容。重复报道按事实最完整来源合并，HN 纯技术或泛兴趣帖子除高分且与 AI、开发工具相关外未进入核心板块，消费电子、泛文化和弱相关历史科学内容已过滤。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (38 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (19 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-07-11T01:45:00.000Z"
+}
