@@ -1,0 +1,544 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-13",
+  "title": "Whistle 互联网日报｜2026-07-13",
+  "summary": "今天值得放在一起看的信息，集中在 AI 工具从演示走向真实使用后的边界问题。xAI Grok CLI 被安全研究者证实会上传代码库、配置文件和密钥，另一边 GPT-5.6-Sol 的本地 Agent 事故暴露了全权限执行的破坏半径；这两件事都把编码 Agent 的数据、权限和审计问题推到台前。能力侧也有新进展：腾讯混元 Hy3、OpenAI GPT-5.6 的医疗与数学评估、Ploy 的生产迁移测试，都在用具体指标展示模型更新带来的成本、速度和可靠性变化。产品层面，Claude Code、百度搭子、Mindwalk、Flint 等工具把浏览器、可视化、模型路由和会话回放加入 AI 工作界面，输出形态正在从纯文本走向更结构化、更可检查的界面。平台和商业侧，Meta 继续讨论 AI 算力外租，AI 基础设施回本压力、开源模型监管和社交平台 AI 内容泛滥，则提示算力、内容、模型权重和数据合规都在变成现实约束。",
+  "theme": "编码 Agent 的能力、权限与数据边界同时受检验",
+  "topline": [
+    "xAI Grok CLI 被曝默认上传完整代码库、配置文件和密钥，服务端随后关闭默认上传。",
+    "GPT-5.6-Sol 本地 Agent 误删用户 Mac 文件，编码 Agent 全权限运行风险再次被放大。",
+    "腾讯混元 Hy3 发布，295B MoE 架构已接入微信服务十亿级用户。",
+    "OpenAI 称 GPT-5.6 Sol Ultra 一小时完成循环双覆盖猜想证明，但尚未经过同行评审和形式化验证。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "今天最重要的几条信息都和 AI 系统进入真实生产环境后的边界有关。",
+      "items": [
+        {
+          "title": "xAI Grok CLI 被曝静默上传完整代码库和用户密钥",
+          "summary": "安全研究者发现，xAI 官方 Grok CLI 的 npm 包 `@xai-official/grok` 0.2.93 会在每轮任务前后把当前工作目录打包为 `before_codebase.tar.gz` 和 `after_codebase.tar.gz`，通过旁路通道上传到 xAI 的 Google Cloud 仓库；另一份网络流量分析还记录到 `.env`、git 历史和 session_state 存档被传输，在 12 GB 仓库测试中 `/v1/storage` 传输了 5.10 GiB 数据。7 月 13 日凌晨，xAI 通过服务端远程开关新增 `disable_codebase_upload` 字段并关闭默认上传，但此前该功能默认开启。事件把编码 CLI 的权限、遥测、训练数据边界和密钥暴露风险放在同一个问题里，后续类似工具的本地文件读取、上传提示和审计记录会受到更严格审视。",
+          "sourceName": "公众号：数字生命卡兹克",
+          "sourceUrl": "https://mp.weixin.qq.com/s/6c6vGMJAVMbh6UhNVw4dcg",
+          "publishedAt": "2026-07-13T00:05:00.000Z",
+          "tags": [
+            "Agent",
+            "安全",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "GPT-5.6-Sol 本地 Agent 误删用户 Mac 文件",
+          "summary": "AI 创业者 Matt Shumer 称，他在测试 GPT-5.6-Sol Ultra 模式时给本地 Agent 开启 Full Access 权限，subagent 执行文件清理任务时因 `$HOME` 路径解析错误运行了 `rm -rf /Users/mattsdevbox`，导致多年代码、文件和照片丢失；该任务此前已在同等权限下运行数百次。OpenAI 团队已介入调查，相关回应提到沙盒、审批机制和 PreToolUse Hook 等限制方式。这个事故不是单次命令失误，而是长时间自主执行、子代理调度和全盘权限叠加后的结果，编码 Agent 的能力越接近真实系统操作，权限分层和破坏性命令拦截就越接近基础设施问题。",
+          "sourceName": "X：阿易 AI Notes (@AYi_AInotes)",
+          "sourceUrl": "https://x.com/AYi_AInotes/status/2075761215251312722",
+          "publishedAt": "2026-07-11T01:56:54.000Z",
+          "tags": [
+            "Agent",
+            "安全",
+            "OpenAI"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "腾讯混元发布 Hy3：295B MoE，定位 Agent 向 LLM",
+          "summary": "腾讯混元团队发布 Hy3 模型，采用 295B 总参数、21B 激活参数的 MoE 架构，官方称推理效率可打平参数规模 2 到 5 倍的旗舰模型。该模型从 preview 到正式版基于 50 多个真实业务反馈迭代，内部 WorkBuddy 任务成功率从 72% 提升至 90%，耗时降低 34%，目前已集成到微信并服务十亿级用户，演示包括生成 HTML 网页、Agent 网页和 10 页 PPT。Hy3 的重点不只在参数规模，而在模型发布同时给出业务任务成功率、耗时和微信入口，这会把模型评估从基准分数拉到真实任务吞吐和平台分发。",
+          "sourceName": "X：阿易 AI Notes (@AYi_AInotes)",
+          "sourceUrl": "https://x.com/AYi_AInotes/status/2076341952023310580",
+          "publishedAt": "2026-07-12T16:24:32.000Z",
+          "tags": [
+            "大模型",
+            "腾讯",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 称 GPT-5.6 Sol Ultra 一小时证明 50 年图论猜想",
+          "summary": "OpenAI 宣布 GPT-5.6 Sol Ultra 在不到一小时内生成了循环双覆盖猜想的完整证明，该猜想由 George Szekeres 和 Paul Seymour 在 1970 年代提出，悬而未决超过 50 年。OpenAI 称模型调用 64 个并行子智能体及对抗智能体，在预留 8 小时计算时间内约 1 小时完成证明，并已发布证明和提示词 PDF；相关材料尚未经过同行评审，也未用 Lean 等形式化工具验证。该事件把 LLM 的科研能力验证推到更严肃的层级，关键不在新闻发布本身，而在数学社区、形式化工具和可复现实验能否确认其证明链条。",
+          "sourceName": "IT之家（RSS）",
+          "sourceUrl": "https://www.ithome.com/0/975/646.htm",
+          "publishedAt": "2026-07-12T00:44:43.000Z",
+          "tags": [
+            "OpenAI",
+            "研究",
+            "大模型"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "模型、Agent、开发工具和交互界面仍是今天最密集的板块。",
+      "items": [
+        {
+          "title": "Ploy 将生产 Agent 默认模型切到 GPT-5.6 Sol",
+          "summary": "Ploy 将其 AI 智能体默认模型从 Claude Opus 4.8 切换至 OpenAI 的 GPT-5.6 Sol，并在真实营销网站构建测试中给出对比：GPT-5.6 Sol 平均 3 分 42 秒完成页面，Opus 4.8 为 8 分钟；单次构建成本从 3.06 美元降至 2.22 美元，输出 token 从 33.0K 降至 17.1K，视觉评分从 0.936 升至 0.970。迁移中也出现模型为 25 个工具参数填默认值的问题，导致 52% 到 64% 的文件读取返回空结果，提示词和 OpenAI strict 模式都未修复。这个案例有用之处在于同时呈现收益和迁移摩擦，模型替换不是 API 名称替换，工具参数、评估集和错误归因都会影响上线结果。",
+          "sourceName": "Hacker News 热门（buzzing.cc 中文翻译）",
+          "sourceUrl": "https://ploy.ai/blog/migrating-a-production-ai-agent-to-gpt-5-6",
+          "publishedAt": "2026-07-12T23:41:11.951Z",
+          "tags": [
+            "Agent",
+            "模型迁移",
+            "评估"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 发布 GPT-5.6 系列医疗评估结果",
+          "summary": "OpenAI 发布 GPT-5.6 系列在医疗任务上的评估结果，称最小变体 GPT-5.6 Luna 在最低推理强度下超过最高推理强度的 GPT-5.5，成本低 25 倍，最大变体 GPT-5.6 Sol 刷新标杆。评估覆盖患者端和临床端任务，专科医生在不限时间和联网条件下撰写回答，再由其他医生基于准确性、沟通、完整性、指令遵循和健康决策帮助性五个维度盲评，共形成 20000 次评分。医疗评估的关键在于任务定义和盲评流程，它把模型能力从通用问答转向高责任场景，但发布结果仍需要结合数据集、缺陷类型和实际部署限制理解。",
+          "sourceName": "X：Sam Altman (@sama)",
+          "sourceUrl": "https://x.com/sama/status/2075985056846451123",
+          "publishedAt": "2026-07-11T16:46:22.000Z",
+          "tags": [
+            "OpenAI",
+            "医疗 AI",
+            "评估"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Thinking Machines Lab 阐述可定制 AI 路线",
+          "summary": "Thinking Machines Lab 在官方博客中表示，正在构建可被个人和组织塑造的 AI，方向包括多模态交互、允许用户训练模型权重的工具，以及支持实时反馈的人机界面。文章批评当前多数 AI 在少数地方训练后被冻结，使用者难以把自身知识持续写入模型。它提出的“去中心化对齐”更接近模型所有权和组织记忆问题：提示词、反馈、偏好和专有知识不只是输入材料，也会成为模型能力积累的一部分。",
+          "sourceName": "Thinking Machines Lab：官方博客（RSS）",
+          "sourceUrl": "https://thinkingmachines.ai/blog/the-future-worth-building-is-human",
+          "publishedAt": "2026-07-10T00:00:00.000Z",
+          "tags": [
+            "模型定制",
+            "组织知识",
+            "AI 产品"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Mindwalk 用 3D 地图回放 Claude Code 和 Codex 会话",
+          "summary": "Mindwalk 是一个本地可运行的可视化工具，能把 Claude Code 和 Codex 的会话日志映射到代码库 3D 地图上，代理搜索、读取和编辑过的文件会发光，未触及区域保持黑暗。它支持树状图和地形图两种视图，标记未访问、已查看、已读取、已编辑等状态，并在时间轴上展示上下文压缩、子代理启动、用户交互、错误率和文件修改量等信号。AI 编程工具的输出正在从原始文本和 diff 扩展到可检查的过程回放，这类界面能让使用者看到模型理解了代码库的哪些区域，也暴露它忽略了哪些上下文。",
+          "sourceName": "Hacker News 热门（buzzing.cc 中文翻译）",
+          "sourceUrl": "https://github.com/cosmtrek/mindwalk",
+          "publishedAt": "2026-07-12T13:51:05.035Z",
+          "tags": [
+            "开发工具",
+            "可视化",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Mesh LLM 在 iroh 上池化多台机器的 GPU 和内存",
+          "summary": "Mesh LLM 是一个开源项目，能把多台机器上的 GPU 和内存池化，对外暴露兼容 OpenAI 的 API。它通过 iroh 网络库建立点对点连接，不依赖中央服务器，请求可在本地 GPU 运行、路由到已加载模型的节点，或把大模型按层分区并流水线式拆分到多台机器；内置 40 多个模型，覆盖 5 亿参数到 235B MoE，服务运行在 `localhost:9337/v1`。这个方向把本地推理从单机显存问题改成网络调度问题，也让个人和小型集群尝试更大模型成为可能。",
+          "sourceName": "Hacker News 热门（buzzing.cc 中文翻译）",
+          "sourceUrl": "https://www.iroh.computer/blog/mesh-llm",
+          "publishedAt": "2026-07-12T02:23:05.249Z",
+          "tags": [
+            "本地模型",
+            "推理基础设施",
+            "开源"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "微软发布 Flint：面向 AI 智能体的可视化中间语言",
+          "summary": "微软研究院推出 Flint，一种让 AI 智能体通过简洁 spec 自动生成图表的可视化中间语言。用户提供数据、语义类型和图表类型后，Flint 编译器推导坐标轴、配色、布局等底层参数，支持 46 种图表类型，并可渲染到 Vega-Lite、ECharts 和 Chart.js，还提供 MCP 服务器接入智能体流程。它把图表生成从一次性自然语言提示转成可编辑规格，AI 输出形态也从纯文本走向 Markdown、HTML、图表 spec 和交互式界面。",
+          "sourceName": "Hacker News 热门（buzzing.cc 中文翻译）",
+          "sourceUrl": "https://microsoft.github.io/flint-chart",
+          "publishedAt": "2026-07-09T21:46:19.253Z",
+          "tags": [
+            "可视化",
+            "MCP",
+            "Microsoft"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Claude Code 桌面版新增应用内浏览器",
+          "summary": "Claude Code 桌面版新增应用内浏览器，Claude 能在应用内调出文档、设计稿或网站，并像操作本地开发服务器一样阅读、点击和交互。该浏览器采用沙盒机制，且会话持久化可配置。浏览器进入编码 Agent 后，模型不再只处理文件和终端输出，也能把网页文档、产品界面和设计稿纳入同一任务过程，工具边界从代码编辑扩展到可视化检查和网页操作。",
+          "sourceName": "X：Claude Devs (@ClaudeDevs)",
+          "sourceUrl": "https://x.com/ClaudeDevs/status/2075635283211772279",
+          "publishedAt": "2026-07-10T17:36:29.000Z",
+          "tags": [
+            "Claude Code",
+            "浏览器",
+            "开发工具"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "百度搭子发布个人版、自媒体套件、企业版和搭子联盟更新",
+          "summary": "百度搭子在成都 AI Day 发布四项更新：个人版新增浏览器调用、智能路由、多端共享记忆和强化 PPT 生成，智能路由使平均任务耗时降低 20%、Token 利用率提升 25%；同时上架“一镜”数字人制作、“灵医”报告解读等 Skill。自媒体专业套件覆盖选题到复盘链路，企业版加入协作与权限管理，搭子联盟已有中国联通等加入，上线三个月日均提问量增长 20 倍。百度把浏览器、记忆、路由、内容套件和企业权限放进同一产品更新，反映出通用助手正在按任务链条拆成更具体的工作界面。",
+          "sourceName": "公众号：百度智能云（文心）",
+          "sourceUrl": "https://mp.weixin.qq.com/s/Haqbjim9YGmRu1XpxG_VvA",
+          "publishedAt": "2026-07-10T13:58:07.000Z",
+          "tags": [
+            "AI 助手",
+            "百度",
+            "内容工具"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "蚂蚁 Robbyant 发布 LingBot-VA 2.0 具身基础模型",
+          "summary": "蚂蚁集团旗下 Robbyant 发布 LingBot-VA 2.0，称其为原生具身基础模型。模型采用因果 DiT 架构，视频专家约 13.0B 参数、约 1.9B 激活，训练规模约 15.3B 参数，推理时每 token 约 2.5B 激活；多块预测带来 2.3 倍训练加速，前瞻推理把延迟降至 142 ms/chunk，在 RoboTwin 2.0 的 50 个任务上干净和随机演示数据平均成功率分别达到 93.8% 和 93.4%。具身模型的评估越来越依赖任务成功率、延迟和随机演示数据，而不是单纯文本或视觉基准。",
+          "sourceName": "MarkTechPost（RSS）",
+          "sourceUrl": "https://www.marktechpost.com/2026/07/11/ant-groups-robbyant-unveils-lingbot-va-2-0",
+          "publishedAt": "2026-07-11T07:56:11.000Z",
+          "tags": [
+            "具身智能",
+            "蚂蚁",
+            "机器人"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "小红书发布大模型新架构 PIPO",
+          "summary": "小红书提出 PIPO 架构，通过输入侧压缩器把两个 token 折叠成一个 latent，再用输出侧 MTP head 将隐藏状态展开为额外 token，实现输入长度减半、每步输出翻倍。基于 Qwen3.5-4B/9B backbone 的测试显示，AIME 2025 等基准最高带来 +7.15 pass@4 提升，部署中 TTFT 加速约 1.23 倍、TPOT 加速约 1.86 倍；训练采用 SFT 和 On-Policy Distillation 两阶段，把 verifier 校验能力蒸馏进轻量 confidence head。PIPO 关注的是推理效率和长上下文成本，适合放在模型架构与部署效率的交叉处理解。",
+          "sourceName": "公众号：小红书技术（dots.llm）",
+          "sourceUrl": "https://mp.weixin.qq.com/s/1eo7rrCAH-OA0TnXwwqJEg",
+          "publishedAt": "2026-07-10T09:59:00.000Z",
+          "tags": [
+            "模型架构",
+            "小红书",
+            "推理效率"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Perplexity 推出跨模型信用额度分析功能",
+          "summary": "Perplexity 推出 Computer Analytics，允许个人和企业用户在账户设置中跨模型跟踪信用额度支出。这个功能本身不复杂，但它把多模型使用成本从账单末端提前到产品界面内，用户能看到不同模型消耗之间的差异。随着 AI 产品把 GPT、Claude、Gemini 等模型放进同一入口，信用额度、成本归因和模型选择会成为产品体验的一部分。",
+          "sourceName": "X：Perplexity (@perplexity_ai)",
+          "sourceUrl": "https://x.com/perplexity_ai/status/2075599540640714863",
+          "publishedAt": "2026-07-10T15:14:27.000Z",
+          "tags": [
+            "Perplexity",
+            "成本分析",
+            "AI 产品"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台变化集中在使用限制、硬件合作、AI 图片功能和算力商业化。",
+      "items": [
+        {
+          "title": "Codex 与 ChatGPT Work 暂时取消 5 小时使用限制",
+          "summary": "Codex 负责人 Tibo 表示，过去 48 小时内 Codex 和 ChatGPT Work 有多项更新：Plus、Business 和 Pro 计划暂时取消 5 小时使用限制，GPT-5.6 Sol 正在推出效率改进以降低使用量消耗，平台已达到 600 万活跃用户并进行使用量重置。juya 早报也记录到 7 月 11 日曾为 ChatGPT Work 和 Codex 用户再次重置用量，官方称原因是流量激增。使用限制反复调整说明高强度编码和工作场景的需求超过常规配额设计，模型效率、用户增长和成本控制正在同时影响产品策略。",
+          "sourceName": "X：Tibo (@thsottiaux)",
+          "sourceUrl": "https://x.com/thsottiaux/status/2076365965915467978",
+          "publishedAt": "2026-07-12T17:59:57.000Z",
+          "tags": [
+            "OpenAI",
+            "Codex",
+            "产品策略"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "苹果起诉 OpenAI 挖角窃密，硬件计划面临不确定性",
+          "summary": "苹果在美国起诉 OpenAI，指控其挖角 400 名员工、窃取工程机和机密文件，被告包括 OpenAI、硬件负责人 Tang Tan、前苹果工程师 Chang Liu 以及 Jony Ive 联合创立的 io Products，Jony Ive 本人未被列为被告。后续报道提到，Chang Liu 离职时未归还 MacBook，并被指利用软件漏洞继续访问苹果内网；苹果称 OpenAI 试图复制 iPhone 产品研发体系。该案会影响 OpenAI 消费级硬件叙事，也会让大型 AI 公司从软件模型扩展到硬件产品时面对更高的人才流动和商业秘密审查。",
+          "sourceName": "IT之家（RSS）",
+          "sourceUrl": "https://www.ithome.com/0/975/666.htm",
+          "publishedAt": "2026-07-12T02:37:22.000Z",
+          "tags": [
+            "Apple",
+            "OpenAI",
+            "硬件"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Meta 关闭 Instagram 公开账户 AI 图片生成功能",
+          "summary": "Meta 在用户反对后关闭 Instagram 一项新功能，该功能允许用户通过 @ 提及公开账户并基于其内容生成 AI 图片，且不需要账户所有者许可。Meta 在 Muse Image AI 模型博客更新中表示，功能初衷是提供创意工具并给予用户认可，但反馈显示可能被滥用。平台把公开账户内容直接接入生成式图片功能，会改变用户肖像、内容授权和滥用治理边界，这类能力即使短期上线，也可能因许可机制不足而被撤回。",
+          "sourceName": "The Verge：AI（RSS）",
+          "sourceUrl": "https://www.theverge.com/tech/964416/meta-instagram-ai-muse-image-deepfakes",
+          "publishedAt": "2026-07-10T23:49:50.000Z",
+          "tags": [
+            "Meta",
+            "Instagram",
+            "生成式 AI"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Meta 讨论 AI 基础设施外租与自研芯片部署",
+          "summary": "Meta CEO 扎克伯格回应公司筹划云基础设施业务，否认“算力过剩”说法，称内部算力需求仍然旺盛且满负荷运转；同时表示当前市场对算力出价很高，部分 AI 基础设施对外出租在财务上划算。报道提到 Meta 正制定代号“Meta Compute”的云计算计划，路线包括开放模型访问权限和直接出租裸算力，2026 年资本支出指引为 1250 亿到 1450 亿美元，并计划 2026 年 9 月量产自研 AI 芯片。平台公司把自有算力从内部训练资源扩展为外部云产品，会使模型、芯片、数据中心和云收入之间的边界更模糊。",
+          "sourceName": "IT之家（RSS）",
+          "sourceUrl": "https://www.ithome.com/0/975/078.htm",
+          "publishedAt": "2026-07-10T07:26:10.000Z",
+          "tags": [
+            "Meta",
+            "云计算",
+            "AI 基础设施"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "本板块保留内容生产、社交分发和 AI 输出形态变化。",
+      "items": [
+        {
+          "title": "LinkedIn 超 40% 长文被标记为 AI 写作",
+          "summary": "安全公司 Pangram 通过 Chrome 扩展收集超过 100 万条帖子，分析发现整体 AI 检测率为 13.8%，超过 250 词的长文中 25.72% 完全由 AI 生成。LinkedIn 情况最突出，超过 40% 长文帖子被标记为完全 AI 生成，占全部 AI 内容的 62%；X/Twitter 近一半文章为完全 AI 或混合 AI 写作，Reddit 整体 AI 率为 4.4%，顶层帖子为 11.6%。当社交平台长文内容大量被 AI 生成，内容供给会变得更便宜，但平台推荐、信任标记和创作者辨识成本也会同步上升。",
+          "sourceName": "Hacker News 热门（buzzing.cc 中文翻译）",
+          "sourceUrl": "https://www.pangram.com/blog/ai-in-your-feed",
+          "publishedAt": "2026-07-09T21:46:29.789Z",
+          "tags": [
+            "社交平台",
+            "AI 内容",
+            "内容分发"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "PCMag 调查称 55% 美国人停止发布状态更新",
+          "summary": "HN 高分讨论转引 PCMag 文章，标题指出 55% 美国人已停止在社交媒体发布状态更新。该话题热度高，反映出传统公开状态流的使用习惯正在变化，更多互动可能转向私域聊天、短视频、群组或只读消费。公开发布减少会改变平台的内容供给结构，算法推荐可分发的个人近况变少，品牌、创作者和 AI 生成内容在信息流中的占比可能更显眼。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://ca.pcmag.com/social-media/16790/the-death-of-the-status-update-why-55-of-americans-stopped-posting-on-social-media",
+          "publishedAt": "2026-07-12T10:14:40.000Z",
+          "tags": [
+            "社交产品",
+            "用户行为",
+            "分发"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Ghost Font 用动态视频隐藏人类可读文字",
+          "summary": "Ghost Font 是一种反 AI 字体原型，利用运动、视频、噪点和诱饵隐藏文字；用户输入文字后生成视频片段，单帧截图看不到信息，但人类能通过运动读出内容。作者称该视频被 Claude Fable 和 GPT Sol 5.6 Ultra 等模型处理时无法解码移动信息，直到被提示具体技术；视频还包含诱饵信息误导模型。它像一个视觉感知边界测试，说明 AI 内容识别和反识别会从静态文本、水印扩展到动态视觉、时间序列和诱饵信号。",
+          "sourceName": "Hacker News 热门（buzzing.cc 中文翻译）",
+          "sourceUrl": "https://www.mixfont.com/ghost-font",
+          "publishedAt": "2026-07-11T16:31:09.615Z",
+          "tags": [
+            "视觉 AI",
+            "内容识别",
+            "实验产品"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程侧重点是编码 Agent 开销、运行时重构、浏览器指纹和开源安全工具。",
+      "items": [
+        {
+          "title": "Claude Code 在读取提示词前发送 33k token 引发 HN 讨论",
+          "summary": "HN 今日最高分帖子之一比较 Claude Code 与 OpenCode 的 token 开销，标题称 Claude Code 在读取用户提示词前发送约 33k token，而 OpenCode 约为 7k。讨论集中在编码 Agent 为了构建上下文所引入的系统提示、工具说明、规则和环境信息，以及这些开销如何影响成本、延迟和隐私。编码 Agent 的单位任务成本不只由模型价格决定，固定上下文、工具协议和本地环境摘要同样会成为工程成本的一部分。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://systima.ai/blog/claude-code-vs-opencode-token-overhead",
+          "publishedAt": "2026-07-12T18:25:51.000Z",
+          "tags": [
+            "Claude Code",
+            "Token 成本",
+            "工程实践"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Bun 被 Anthropic 收购后用 Rust 大规模重写",
+          "summary": "Bun 作者 Jarred Sumner 借助 Claude Fable 5 在 11 天内将 Bun 从 Zig 大规模重写为 Rust，64 个实例并行编写超过 100 万行代码，API 费用约 16.5 万美元。Bun v1.4.0 以 Canary 版本发布，修复 128 个错误，速度提高约 2% 到 5%；另一篇材料补充，Bun CLI 月下载超过 2200 万，v1.3.14 曾修复 use-after-free、内存泄漏等问题。这个案例把 AI 辅助重构从小范围补丁扩展到运行时级别迁移，但最终收益仍落在内存安全、测试、模糊测试和性能回归这些工程指标上。",
+          "sourceName": "IT之家（RSS）",
+          "sourceUrl": "https://www.ithome.com/0/975/469.htm",
+          "publishedAt": "2026-07-11T07:33:08.000Z",
+          "tags": [
+            "Bun",
+            "Rust",
+            "AI 编程"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Claude Code v2.1.207 修复终端冻结和安全同意问题",
+          "summary": "Claude Code v2.1.207 发布，Auto 模式在 Bedrock、Vertex AI 和 Foundry 上无需 `CLAUDE_CODE_ENABLE_AUTO_MODE` 即可使用，并可通过 `disableAutoMode` 关闭。版本修复了流式响应含超长列表、表格、段落或代码块时终端冻结和按键延迟的问题，也修复非交互式运行中远程托管设置被永久记录为已同意而未显示安全同意对话框的问题；Bedrock、Vertex 和 Claude Platform on AWS 默认切换为 Claude Opus 4.8。编码工具的版本更新越来越多涉及安全提示、托管设置、企业云后端和终端可用性，这些细节会直接影响自动化任务能否稳定运行。",
+          "sourceName": "Claude Code：GitHub Releases（RSS）",
+          "sourceUrl": "https://github.com/anthropics/claude-code/releases/tag/v2.1.207",
+          "publishedAt": "2026-07-11T00:52:10.000Z",
+          "tags": [
+            "Claude Code",
+            "Release",
+            "开发工具"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Chromium 148 后 Math.tanh 差异可用于识别底层系统",
+          "summary": "HN 高分帖子指出，自 Chromium 148 起，`Math.tanh` 的浮点差异可被用于关联底层操作系统，形成新的浏览器指纹信号。文章从 JavaScript 数学函数实现差异切入，展示同一浏览器在不同 OS 上可能暴露可测量差别。浏览器指纹不只来自字体、Canvas、WebGL 或硬件参数，标准库数值行为也可能成为识别维度，这会让反爬、隐私保护和浏览器一致性测试增加新的边界条件。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://scrapfly.dev/posts/browser-math-os-fingerprint/",
+          "publishedAt": "2026-07-12T21:12:11.000Z",
+          "tags": [
+            "浏览器",
+            "隐私",
+            "指纹识别"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "本期没有传统融资强信号，保留 AI 基础设施回本和算力商业模式两类机会信息。",
+      "items": [
+        {
+          "title": "Sequoia 估算 AI 基础设施需 3 万亿美元收入回本",
+          "summary": "TechCrunch 转述 Sequoia 合伙人 David Cahn 的更新估算：2026 年全球 AI 基础设施投入达 1.5 万亿美元，行业需要产生 3 万亿美元收入才能回本。报道同时列出 Anthropic 年化收入达 600 亿美元、OpenAI 2025 年收入 130 亿美元及 11 月 ARR 200 亿美元等数据，并提到开放权重模型、低价中国模型和 OpenAI 编码任务 token 效率提升 54% 可能压低 token 价格。这个问题的核心是资本开支和收入兑现之间的时间差，模型价格下降会改善使用成本，也会挤压以算力消耗计价的收入预期。",
+          "sourceName": "TechCrunch：AI（RSS）",
+          "sourceUrl": "https://techcrunch.com/2026/07/09/can-ai-answer-the-3-trillion-question",
+          "publishedAt": "2026-07-09T21:47:50.000Z",
+          "tags": [
+            "AI 基础设施",
+            "商业化",
+            "资本开支"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "爱尔兰数据中心用电占全国 23% 引发基础设施讨论",
+          "summary": "HN 高分帖子转引 The Register 报道，爱尔兰数据中心用电已占全国电力消耗的 23%。这个数字被放在 AI 算力扩张背景下讨论，数据中心的选址、供电、冷却和电网承载能力正在成为云和 AI 基础设施扩张的硬条件。算力投资不只取决于芯片和机房建设，电力可得性、监管许可和公共基础设施压力也会影响云服务成本和区域部署节奏。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://www.theregister.com/on-prem/2026/07/11/irish-datacenters-now-guzzle-23-of-the-countrys-electricity/5270013",
+          "publishedAt": "2026-07-12T20:16:12.000Z",
+          "tags": [
+            "数据中心",
+            "电力",
+            "AI 基础设施"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "监管焦点落在开源权重模型、AI 滥用和平台许可机制。",
+      "items": [
+        {
+          "title": "开源模型可能面临美国行政令限制讨论",
+          "summary": "AI HOT 收录 Nathan Lambert 的文章称，美国白宫正在讨论通过新行政令管理开源模型，未来 6 个月内可能禁止或延迟发布能力接近 GPT-5.5、Claude Opus 4.8 或 GLM-5.2 水平的开源权重模型。文章认为，相关政治推动以知识蒸馏和中国模型风险为理由，Reflection AI 代表则主张开源模型应基于能力获得豁免。该信息仍属于政策讨论和评论，但它触及开源权重发布、能力阈值和国家安全审查之间的边界，若形成规则，会直接改变模型发布节奏和可获得性。",
+          "sourceName": "Nathan Lambert：Interconnects（RSS）",
+          "sourceUrl": "https://www.interconnects.ai/p/6-months-to-live-for-open-models",
+          "publishedAt": "2026-07-13T00:00:00.000Z",
+          "tags": [
+            "开源模型",
+            "政策",
+            "美国"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "研究称博科圣地已系统使用主流 AI 聊天机器人",
+          "summary": "剑桥大学 CASP 研究员 Antonia Jülich 对 27 名前博科圣地成员进行 57 次访谈，显示该组织已使用 ChatGPT、Claude、Gemini、Grok、Meta AI 和 DeepSeek 等主流聊天机器人，用于袭击策划、爆炸装置改进、武器维护和行动安全。研究称两个派系均设立专门 AI 部门，ISIS 自 2023 年起提供提示工程和越狱培训，帮助成员绕过安全过滤器。该报告把 AI 安全从模型拒答规则扩展到组织化滥用、越狱培训和跨国传播链条，平台治理需要面对的不只是单次违规提示。",
+          "sourceName": "The Decoder：AI News（RSS）",
+          "sourceUrl": "https://the-decoder.com/terrorist-groups-are-using-every-major-ai-chatbot-for-attack-planning-and-weapons-development",
+          "publishedAt": "2026-07-11T17:04:28.000Z",
+          "tags": [
+            "AI 安全",
+            "滥用治理",
+            "合规"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "这里保留高讨论但工作性弱于核心板块的背景信号。",
+      "items": [
+        {
+          "title": "Terrence Tao 讨论用现代编码 Agent 开发新旧应用",
+          "summary": "Terrence Tao 的博客文章《Old and new apps, via modern coding agents》在 HN 获得高分讨论。它的热度来自一位数学家从实际应用开发角度记录编码 Agent 的使用体验，话题比单一产品更新更偏背景信号。该讨论反映出 AI 编程工具的受众正在超出传统软件工程圈，进入科研、教育和个人工具制作场景。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://terrytao.wordpress.com/2026/07/11/old-and-new-apps-via-modern-coding-agents/",
+          "publishedAt": "2026-07-12T11:09:42.000Z",
+          "tags": [
+            "编码 Agent",
+            "社区讨论",
+            "背景信号"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "George Hotz 文章《I love LLMs, I hate hype》引发讨论",
+          "summary": "George Hotz 发布《I love LLMs, I hate hype》，在 HN 获得 300 分以上讨论。文章标题已经概括了社区情绪：许多开发者认可 LLM 的工程用途，同时反感过度宣传和空泛叙事。这个信号不直接改变产品或平台规则，但能解释为什么今天围绕 Grok CLI、Agent 删除文件和 token 开销的讨论会获得高关注，社区正在把注意力从“能不能做”转到“代价和边界是什么”。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://geohot.github.io//blog/jekyll/update/2026/07/12/i-love-llms.html",
+          "publishedAt": "2026-07-12T18:31:56.000Z",
+          "tags": [
+            "社区情绪",
+            "LLM",
+            "背景信号"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "GitHub Trending：破坏性命令拦截工具登上榜首",
+          "summary": "GitHub Trending 今日出现多个 Agent 相关项目，其中 Dicklesworthstone/destructive_command_guard 单日新增 444 星，项目目标是阻止代理执行危险的 git 和 shell 命令；DesktopCommanderMCP、claude-code-templates、background-agents 等也在榜单中。这个热度和 GPT-5.6-Sol 删除文件、Grok CLI 上传代码库形成呼应，开发者关注点正在从“让代理能操作电脑”转向“限制代理如何操作电脑”。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/Dicklesworthstone/destructive_command_guard",
+          "publishedAt": "2026-07-13T01:09:40.377Z",
+          "tags": [
+            "GitHub Trending",
+            "Agent 安全",
+            "开源"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Vint Cerf 退休消息在 HN 获得高讨论",
+          "summary": "TechCrunch 关于 Vint Cerf 退休的报道在 HN 获得高分讨论。它不是今天互联网工作流的直接变化，但作为互联网基础设施史上的人物节点，社区关注度很高。放在今天的报告里，它承担背景信号作用：AI 基础设施、浏览器、数据中心和开放协议的讨论仍然建立在上一代互联网基础设施之上。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://techcrunch.com/2026/06/30/the-father-of-the-internet-is-finally-retiring/",
+          "publishedAt": "2026-07-10T00:06:59.000Z",
+          "tags": [
+            "互联网历史",
+            "社区讨论",
+            "背景信号"
+          ],
+          "importance": "low"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "本期优先保留 juya 和 AI HOT 中事实完整、与 AI 工具、开发者实践、平台策略、基础设施和合规直接相关的条目；删除重复报道、弱相关消费电子和纯泛讨论内容。HN 和 GitHub Trending 仅选取高热且能补充工程、开源或社区情绪的信号。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (33 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (17 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-07-13T01:20:00.000Z"
+}
