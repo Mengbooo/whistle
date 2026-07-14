@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-14",
+  "title": "Whistle 互联网日报｜2026-07-14",
+  "summary": "今天有几类事值得放在一起看。OpenAI 披露 Codex 与 ChatGPT Work 周活达到 700 万，同时调整 GPT-5.6 Sol 的上下文和用量策略，说明编码 Agent 已进入高频使用阶段，成本、上下文缓存和多 Agent 调度开始变成产品体验的一部分。xAI Grok CLI 被曝默认上传完整代码库和用户密钥，随后通过服务端开关关闭相关行为，把 AI 编码工具的数据边界和审计问题推到台前。模型和工具侧，腾讯混元开源 HyOCR-1.5，Seedream 5.0 Pro 强化图像局部编辑，Claude Code Artifacts 支持公开分享和多人协作，Step AOS 试图把个人智能体放进手机系统。基础设施和产业侧，Meta 将路易斯安那州数据中心扩至 5GW，PixVerse 完成 4.39 亿美元融资，韩国启动全民 AI 项目。它们共同指向一个更现实的问题：AI 产品不只比模型能力，也在比权限、成本、交互形态、分发位置和合规边界。",
+  "theme": "AI 工具进入高频使用后的权限、成本与交互边界",
+  "topline": [
+    "Codex 与 ChatGPT Work 周活达到 700 万，OpenAI 同步调整 GPT-5.6 Sol 的上下文和用量策略。",
+    "Grok CLI 被曝默认上传完整代码库和用户密钥，xAI 已通过服务端开关关闭相关上传。",
+    "腾讯混元全栈开源 HyOCR-1.5，1B 参数 OCR 模型支持 4K 图像、128K 上下文和本地部署。",
+    "Meta 扩建路易斯安那州数据中心至 5GW，总投资超过 500 亿美元。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "今日头条集中在 AI 编码工具、模型开源、数据安全和算力建设。",
+      "items": [
+        {
+          "title": "Codex 与 ChatGPT Work 周活达到 700 万，OpenAI 调整 GPT-5.6 Sol 用量策略",
+          "summary": "OpenAI 开发者 Tibo 披露，Codex 与 ChatGPT Work 周活跃用户数已达到 700 万，官方向所有账户发放一次可手动补满当周额度的 banked reset。同期，OpenAI 通过推理优化为 GPT-5.6 Sol 用户带来约 10% 的用量提升，并将此前从 272k 提升到 372k 的上下文上限回滚至 272k，原因是长上下文在多次工具调用之间反复传递带来缓存读取成本上升。官方否认超过 272k 存在双倍计费，并表示正在修复多 Agent 高推理努力下消耗偏高的问题。编码 Agent 的使用量、上下文长度和工具调用成本开始互相牵连，产品体验不再只取决于模型回答质量，也取决于后台如何管理长期任务的上下文和额度。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://daily.juya.uk/issues/2026-07-14/",
+          "publishedAt": "2026-07-14T01:13:36.000Z",
+          "tags": [
+            "OpenAI",
+            "Codex",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Grok CLI 被曝默认上传完整代码库，xAI 通过服务端开关关闭上传",
+          "summary": "安全研究者和社区抓包测试显示，xAI 官方 Grok CLI 的 npm 包 `@xai-official/grok` 0.2.93 会在每轮任务前后把当前工作目录打包上传到 xAI 的 Google Cloud 仓库，相关上传独立于模型实际读取文件，且关闭“Improve the model”选项不能阻止。另一份流量分析记录到 `.env`、git 历史和 session_state 存档被传输，在 12 GB 仓库测试中 `/v1/storage` 传输了 5.10 GiB 数据，而模型对话通道仅传输 192 KB。7 月 13 日凌晨，xAI 通过服务端返回 `disable_codebase_upload: true` 暂时关闭该行为。事件把 AI 编码 CLI 的默认权限、远程配置、密钥暴露和遥测边界放到同一处，后续同类工具的文件读取和上传记录会更难只靠信任说明处理。",
+          "sourceName": "公众号：数字生命卡兹克",
+          "sourceUrl": "https://mp.weixin.qq.com/s/6c6vGMJAVMbh6UhNVw4dcg",
+          "publishedAt": "2026-07-13T00:05:00.000Z",
+          "tags": [
+            "xAI",
+            "安全",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "腾讯混元全栈开源 HyOCR-1.5，1B 参数模型在端到端 OCR 基准居前",
+          "summary": "腾讯混元团队发布并全栈开源 HyOCR-1.5，公开数据构造方法、训练配方、模型权重和推理框架。该模型只有 1B 参数，覆盖 8 种以上 text-centric 任务，支持 4K 图像分辨率和 128K 上下文窗口，并通过 Agentic Data Flow 扩展低资源 OCR、古文字识别和多图问答能力。官方称 DFlash 投机解码在 Transformers 下实现 6.37 倍加速，在 vLLM 下实现 2.14 倍加速，端到端推理达每页 1.408 秒，OmniDocBench v1.6 得分 94.74。OCR 从“识别文字”变成文档、图片、表格和长上下文理解的入口，完整开源使这类能力更容易进入本地部署和垂直文档处理系统。",
+          "sourceName": "公众号：腾讯混元",
+          "sourceUrl": "https://mp.weixin.qq.com/s/vKFCa9FfoGBUGK8J1MhFag",
+          "publishedAt": "2026-07-13T11:12:59.000Z",
+          "tags": [
+            "腾讯混元",
+            "OCR",
+            "开源模型"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Meta 扩建路易斯安那州数据中心至 5GW，总投资超过 500 亿美元",
+          "summary": "Meta 宣布扩建位于路易斯安那州 Richland Parish 的数据中心，园区面积将达到 400 万平方英尺，算力规模扩至 5GW，总投资超过 500 亿美元。Meta 称该项目是其迄今最大的数据中心，也是全球最大 AI 基础设施投资之一，建设高峰期预计雇用超过 5000 名建筑工人，并支持超过 500 个运营岗位。公司承诺为该中心匹配 100% 可再生能源，至少向电网增加 1500 兆瓦新可再生能源，并承担能源、水资源和部分当地道路、供水系统改善费用。AI 基础设施的竞争已经延伸到电力、用水、地方公共设施和长期资本开支，算力扩张越来越像一项区域级基础设施工程。",
+          "sourceName": "Meta Newsroom",
+          "sourceUrl": "https://about.fb.com/news/2026/07/teachers-local-businesses-win-as-meta-expands-louisiana-data-center/",
+          "publishedAt": "2026-07-13T09:58:56.000Z",
+          "tags": [
+            "Meta",
+            "AI 基础设施",
+            "数据中心"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "模型、Agent、图像工具和企业 AI 产品继续密集更新。",
+      "items": [
+        {
+          "title": "actAVA 发布万亿参数医疗模型 Cura 1T，并开源评估工具",
+          "summary": "actAVA 推出医疗模型 Cura 1T，模型微调自 Kimi-K2.6，面向患者护理、临床推理和医疗 Agentic 工作流。官方数据显示，Cura 1T 在 HealthBench Hard 等 6 项医疗基准中的 5 项领先，在 MedXpertQA-Multimodal 上排名第二，同时通用能力在域外榜单保持前五。actAVA 同步开源模型无关评估工具 cura-eval，并强调 Cura 1T 是研究模型，不替代医疗服务。医疗模型的竞争正在从单题问答转向临床流程、证据链和多步任务评估，评估工具开源使外部复核有了更明确入口。",
+          "sourceName": "actAVA",
+          "sourceUrl": "https://www.actava.ai/cura",
+          "publishedAt": "2026-07-14T01:13:36.000Z",
+          "tags": [
+            "医疗 AI",
+            "模型评估",
+            "Agent"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Claude Code Artifacts 支持公开分享和多人编辑",
+          "summary": "Anthropic 开发者账号 ClaudeDevs 宣布，Claude Code 的 Artifacts 新增公开分享和多人编辑功能，并可通过 Claude Tag 创建。公开分享允许将原型工具发布到公司外部，任何拥有链接的人都能查看；多人编辑允许多名用户在同一 Artifact 上协同工作，但仅面向 Team 和 Enterprise plan 开放。Claude Tag 还可以在 Slack 线程中生成内部 Artifacts 并在组织内分享。Artifacts 从个人生成物变成可分享、可协作的工作对象后，AI 输出形态不再停留在对话文本，而是更接近页面、工具和团队协作空间。",
+          "sourceName": "ClaudeDevs",
+          "sourceUrl": "https://x.com/ClaudeDevs/status/2076789349145092230",
+          "publishedAt": "2026-07-14T01:13:36.000Z",
+          "tags": [
+            "Claude Code",
+            "Artifacts",
+            "协作工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "阶跃星辰发布 Step AOS 与智能体手机 STEPX Neo",
+          "summary": "阶跃星辰发布大模型原生 AI 终端品牌 STEPX、智能体原生操作系统 Step AOS、个人智能体阶跃 Amoo，并展示首款智能体手机 STEPX Neo。Step AOS 提供双域三步记忆和端云多脑体系，官方称日常问答记忆召回最快 15 毫秒，端侧执行成功率超过 99%；STEPX Neo 背面配备交互副屏，并已通过国家人工智能终端 L3 级别测试。该机暂未公布具体配置和上市时间，阶跃称已与支付宝、美团等达成首批生态合作，采用 A2A 交互范式。手机级 Agent 产品的关键不只是模型能力，也包括记忆、端云分工、系统权限和第三方应用协作方式。",
+          "sourceName": "阶跃星辰",
+          "sourceUrl": "https://mp.weixin.qq.com/s/YvKYAZzgNK4Chh2JpQM5jg",
+          "publishedAt": "2026-07-14T01:13:36.000Z",
+          "tags": [
+            "AI 手机",
+            "Agent OS",
+            "终端"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Seedream 5.0 Pro 强化点选、画框和涂鸦式图像编辑",
+          "summary": "字节跳动发布 Seedream 5.0 Pro，测试者称其图像质量和提示词理解接近 GPT-Image 2.0，综合能力仅次于后者。该版本重点放在可编辑交互，用户可在图上打点、画框、涂鸦，并在提示词中用 @ 标记，实现局部替换、墙面改色、商品图拆解、海报文字排版和 SKU 换色等操作，其他区域保持不变。火山引擎已全量上线 API，即梦、豆包、Lumina 可体验。图像生成工具正在从“写提示词得到整张图”转向直接操作画面元素，输出形态也更接近可编辑界面，而不是一次性的静态图片。",
+          "sourceName": "X：歸藏 (@op7418)",
+          "sourceUrl": "https://x.com/op7418/status/2076604797202161800",
+          "publishedAt": "2026-07-13T09:48:59.000Z",
+          "tags": [
+            "字节跳动",
+            "图像生成",
+            "AI 编辑"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "德国 AI 协会发布开源模型 Soofi S，强调德语数据和百万 token 上下文",
+          "summary": "德国 AI 协会协调的研究联盟发布 Soofi S 30B-A3B，总参数量 316 亿，每个 token 约激活 32 亿参数，采用 Mamba-2 与标准注意力层混合的 MoE 架构。模型完全在德国电信慕尼黑工业 AI 云上训练，训练数据中德语占比从第一阶段的 7.2% 提升至第二阶段的 15.3%。AI HOT 摘要显示，Soofi S 在英语和德语综合基准中超过 OLMo 3 32B 与 Apertus 70B，HumanEval 得分 73.8%，MBPP 得分 70.2，德语版 MBPP 得分 84.2，并支持最高 100 万 token 上下文。欧洲本地训练、语言覆盖和开源权重放在一起，反映出主权 AI 不只是在政策层面讨论，也开始以模型和云资源形态落地。",
+          "sourceName": "The Decoder",
+          "sourceUrl": "https://the-decoder.com/german-ai-consortium-releases-soofi-s-an-open-30b-model-that-tops-benchmarks-in-both-english-and-german",
+          "publishedAt": "2026-07-13T11:41:01.000Z",
+          "tags": [
+            "开源模型",
+            "欧洲 AI",
+            "长上下文"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "商汤开源 SenseNova-Vision-7B-MoT，多任务视觉模型覆盖检测、OCR 和 GUI",
+          "summary": "商汤发布并完全开源 SenseNova-Vision-7B-MoT，这是一个统一处理检测、OCR、GUI、深度与法线估计、分割、多视图等视觉任务的模型。该模型支持用自然语言定义新的视觉任务变体，并跨传统任务边界重组视觉能力。开源内容包括模型权重及 SenseNova-Vision Corpus，后者包含 5000 万示例子集和复现剩余公开数据的完整工具包。视觉模型正在从单项任务模型转向多任务接口，GUI 与 OCR 能力并列出现，会让模型更容易接入自动化操作、界面理解和文档处理流程。",
+          "sourceName": "SenseTime",
+          "sourceUrl": "https://x.com/SenseTime_AI/status/2076828658531262619",
+          "publishedAt": "2026-07-14T00:38:32.000Z",
+          "tags": [
+            "商汤",
+            "视觉模型",
+            "开源"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Cloudflare 推出 Precursor，用连续客户端信号识别 AI 智能体行为",
+          "summary": "Cloudflare 发布 Precursor，一款用于机器人管理的持续行为验证引擎。它将用户会话级别的行为转化为机器人检测信号，追踪人类与 AI 智能体在完整用户旅程中的交互方式，用于识别高级自动化行为并减少对合法用户的干扰。传统 bot 防护通常基于单点请求、指纹或挑战，Precursor 把检测范围扩展到跨页面、跨步骤的行为过程。随着 AI Agent 能够浏览、点击和提交表单，网站防护也开始从“判断一次请求”转为“判断一段会话是否像自动化代理”。",
+          "sourceName": "Cloudflare Blog",
+          "sourceUrl": "https://blog.cloudflare.com/introducing-precursor",
+          "publishedAt": "2026-07-14T00:00:00.976Z",
+          "tags": [
+            "Cloudflare",
+            "Bot 管理",
+            "Agent"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Anthropic 研究 Claude 在不同模型和语言中的价值观表达差异",
+          "summary": "Anthropic 发布研究，分析 2026 年 5 月为期两周抽取的 309815 条 Claude.ai 对话，并将 Claude 表达的 3000 余种价值观压缩为四个轴：顺从与谨慎、温暖与严谨、深度与简洁、坦诚与执行。研究发现，不同模型存在可测差异，Sonnet 4.6 更偏顺从与温暖，Opus 4.7 更偏谨慎、深度与严谨；不同语言也会带来偏移，例如阿拉伯语和印地语更倾向温暖，英语和俄语更倾向严谨。Anthropic 表示尚未确定这些差异的驱动因素和理想状态，计划将方法用于模型评估与监控。模型行为评估正在从安全拒答扩展到风格、价值表达和跨语言一致性，这会影响面向全球用户的产品体验边界。",
+          "sourceName": "Anthropic Research",
+          "sourceUrl": "https://www.anthropic.com/research/claude-values-models-languages",
+          "publishedAt": "2026-07-13T00:00:00.976Z",
+          "tags": [
+            "Anthropic",
+            "模型评估",
+            "多语言"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "OpenAI 发布面向普通用户的提示词指南，强调先写结果和边界",
+          "summary": "The Decoder 汇总称，OpenAI 发布面向普通用户的提示词指南，建议从目标结果开始，而不是先写一长串步骤；提示词可包含目标、上下文、输出格式和边界四个模块，用一两条硬性规则替代逐步骤脚本。该指南还区分了 Chat 和 ChatGPT Work：Chat 处理快速任务，基于 Codex 技术和 GPT-5.6 模型的 ChatGPT Work 负责多源、多步骤复杂项目。Codex 新增 Steer、Queue、沙盒模式，以及 `/plan`、`/goal`、`/review` 等命令。提示词指导从“写好一次输入”转向“在多轮任务里持续调整目标和约束”，这与 Agent 产品的运行方式更接近。",
+          "sourceName": "The Decoder",
+          "sourceUrl": "https://the-decoder.com/openais-new-prompting-guide-tells-users-to-stop-overthinking-and-start-with-the-result",
+          "publishedAt": "2026-07-13T17:47:39.000Z",
+          "tags": [
+            "OpenAI",
+            "提示词",
+            "ChatGPT Work"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Apple SpeechAnalyzer API 在 HN 获高分讨论，基准测试与 Whisper 对比",
+          "summary": "HN 今日高分帖讨论 Apple 新的 SpeechAnalyzer API，一篇基准测试文章将其与 Whisper 和苹果旧版语音识别方案进行对比，帖子得分超过 400。SpeechAnalyzer 属于系统级语音能力，进入开发者 API 后，语音转写、离线识别、实时字幕和本地隐私处理会更容易嵌入 Mac 与 iOS 应用。AI 输入常被讨论为文本提示词，但移动设备和桌面应用中，语音仍是高频入口；当语音 API 质量和延迟接近通用模型方案，产品交互会更容易把语音输入和结构化、可视化输出组合起来。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://get-inscribe.com/blog/apple-speech-api-benchmark.html",
+          "publishedAt": "2026-07-14T01:33:07.998Z",
+          "tags": [
+            "Apple",
+            "语音识别",
+            "开发者 API"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台侧变化集中在账号治理、硬件路线、AI 生成内容和开发工具发布节奏。",
+      "items": [
+        {
+          "title": "GLM Coding Plan 治理中转、倒卖和共享账号",
+          "summary": "智谱 GLM Coding Plan 官方完成一轮专项治理，对确认存在中转、倒卖或共享等违规行为的账号执行 30 天封禁。官方强调，该服务是个人订阅，资源仅限订阅人本人在支持环境中使用，风控不会因单一指标如多设备或多并发触发，而是基于数十项风险信号并结合人工复核。若用户认为账号被误判，可通过申诉入口提交复核。AI 编码订阅的成本压力正在转化为账号规则，平台需要区分正常重度使用、团队共享和商业转售，这会影响订阅产品的权限、并发和审计设计。",
+          "sourceName": "GLM Coding Plan",
+          "sourceUrl": "https://applink.feishu.cn/client/message/link/open?token=Amjtw5fSSAADalS8pCYPS8A%3D",
+          "publishedAt": "2026-07-14T01:13:36.000Z",
+          "tags": [
+            "智谱",
+            "AI 编码",
+            "账号治理"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "黄仁勋称英伟达季度收入逼近千亿美元，Rubin Ultra 未延期",
+          "summary": "英伟达 CEO 黄仁勋在摩根士丹利路演中表示，公司季度营收即将逼近 1000 亿美元，增长速度仍在加快，并否认下一代旗舰架构 Rubin Ultra 延期传闻，称其仍按计划于明年出货。报道还提到，一个此前主要依赖 ASIC 的前沿 AI 模型项目中，英伟达 GPU 算力占比已接近 50%，市场普遍指向 Anthropic。英伟达预计本财年 CPU 业务收入约 200 亿美元，下一代 Vera CPU 将进入通用服务器市场。GPU、CPU、机架设计和客户算力结构同时变化，说明 AI 基础设施供应商正在把竞争范围从单颗加速卡扩展到整机架和通用服务器。",
+          "sourceName": "IT之家",
+          "sourceUrl": "https://www.ithome.com/0/975/865.htm",
+          "publishedAt": "2026-07-13T00:55:29.000Z",
+          "tags": [
+            "英伟达",
+            "AI 芯片",
+            "基础设施"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Claude Code v2.1.207 发布，Auto 模式扩展到 Bedrock、Vertex AI 和 Foundry",
+          "summary": "Claude Code v2.1.207 发布，Auto 模式在 Bedrock、Vertex AI 和 Foundry 上无需 `CLAUDE_CODE_ENABLE_AUTO_MODE` 即可使用，并可通过 `disableAutoMode` 设置关闭。该版本修复了流式响应中超长列表、表格、段落或代码块导致终端冻结和按键延迟的问题，也修复了非交互式运行中远程托管设置被永久记录为已同意却未显示安全同意对话框的问题。Bedrock、Vertex 和 Claude Platform on AWS 默认切换为 Claude Opus 4.8。企业云、终端体验和安全同意流程同时更新，反映出 AI 编码工具正在进入更复杂的托管和合规环境。",
+          "sourceName": "Anthropic GitHub",
+          "sourceUrl": "https://github.com/anthropics/claude-code/releases/tag/v2.1.207",
+          "publishedAt": "2026-07-11T00:52:10.000Z",
+          "tags": [
+            "Claude Code",
+            "开发工具",
+            "企业云"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Meta 关闭 Instagram 基于公开账户生成 AI 图片的功能",
+          "summary": "The Verge 报道，Meta 关闭了本周早些时候推出的一项 Instagram 功能，该功能允许用户通过 @ 提及公开 Instagram 账户，基于其内容生成 AI 图片，且不需要账户所有者许可。Meta 在 Muse Image AI 模型博客更新中表示，功能初衷是提供创意工具并给予用户认可，但用户反馈表明该功能可能被滥用。平台把公开内容接入生成式模型时，权限、肖像和滥用问题会迅速从模型能力变成产品规则问题。功能下线说明，公开可见不等于可被无许可生成和再创作。",
+          "sourceName": "The Verge",
+          "sourceUrl": "https://www.theverge.com/tech/964416/meta-instagram-ai-muse-image-deepfakes",
+          "publishedAt": "2026-07-10T23:49:50.000Z",
+          "tags": [
+            "Meta",
+            "Instagram",
+            "AI 生成内容"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "产品侧信号集中在 Agent 迁移、个人 AI 工作台和模型用量分析。",
+      "items": [
+        {
+          "title": "Ploy 将默认模型从 Claude Opus 4.8 切换到 GPT-5.6 Sol",
+          "summary": "Ploy 披露，其 AI 智能体默认模型从 Claude Opus 4.8 切换到 OpenAI GPT-5.6 Sol。在真实营销网站构建测试中，GPT-5.6 Sol 平均完成页面耗时 3 分 42 秒，Opus 4.8 为 8 分钟；单次构建成本从 3.06 美元降至 2.22 美元，输出 token 从 33.0K 降至 17.1K，视觉评分从 0.936 提升至 0.970。迁移也暴露了问题：GPT-5.6 会为 25 个工具参数填充默认值，导致 52% 到 64% 的文件读取返回空结果，提示词和 OpenAI strict 模式都未能完全修复。真实产品迁移模型时，速度、成本、视觉质量和工具调用语义会同时影响结果，评估框架中针对旧模型的假设也可能变成新的失败来源。",
+          "sourceName": "Ploy",
+          "sourceUrl": "https://ploy.ai/blog/migrating-a-production-ai-agent-to-gpt-5-6",
+          "publishedAt": "2026-07-12T23:41:11.951Z",
+          "tags": [
+            "Agent",
+            "模型迁移",
+            "产品评估"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "百度搭子发布个人版、自媒体套件、企业版和搭子联盟更新",
+          "summary": "百度搭子在成都 AI Day 发布四项更新：个人版新增浏览器调用、智能路由、多端共享记忆和强化 PPT 生成，并上架“一镜”数字人制作、“灵医”报告解读等 Skill；自媒体专业套件覆盖选题到复盘；企业版支持团队协作与权限管理；搭子联盟启动，中国联通等已加入。百度称个人版智能路由使平均任务耗时降低 20%，Token 利用率提升 25%，产品上线三个月日均提问量增长 20 倍。国内个人 AI 工作台正在把浏览器、PPT、数字人、内容运营和团队权限放进同一个产品框架，增长数据也显示这类入口在从尝鲜走向高频使用。",
+          "sourceName": "百度",
+          "sourceUrl": "https://mp.weixin.qq.com/s/Haqbjim9YGmRu1XpxG_VvA",
+          "publishedAt": "2026-07-10T13:58:07.000Z",
+          "tags": [
+            "百度",
+            "AI 工作台",
+            "增长"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Perplexity 推出跨模型信用额度分析功能",
+          "summary": "Perplexity 宣布推出 Computer Analytics，个人和企业用户可在账户设置的 Analytics 中跨模型跟踪信用额度支出。该功能把不同模型、不同任务的消耗放进统一分析界面，帮助用户看清额度花在何处。随着多模型产品常态化，信用额度不再只是账单数字，而是影响路由、任务拆分和模型选择的产品信息。把用量分析直接放进账户设置，说明模型成本正在成为用户界面中的常驻指标。",
+          "sourceName": "Perplexity",
+          "sourceUrl": "https://x.com/perplexity_ai/status/2075599540640714863",
+          "publishedAt": "2026-07-10T15:14:27.000Z",
+          "tags": [
+            "Perplexity",
+            "模型成本",
+            "产品分析"
+          ],
+          "importance": "low"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程侧重点是成本计算、代码库可视化、安全漏洞和开源开发工具。",
+      "items": [
+        {
+          "title": "前沿模型 tokenizer 差异带来隐性成本变化",
+          "summary": "一篇成本分析文章指出，同一份 TypeScript 文件在 GPT-5.x 上为 681 个 token，在 Claude 最新 tokenizer 下为 1178 个，相差 1.73 倍；Anthropic 新 tokenizer 比旧版多产生约 30% token。Claude Opus 4.6 与 Opus 4.8 标价同为每百万输入 5 美元、输出 25 美元，但新 tokenizer 使同一代码的 token 数增加约 32%；Claude Sonnet 5 的促销价在 2026 年 8 月 31 日后恢复后，相同代码成本也会进一步上升。模型价格表只展示每百万 token 单价，实际代码成本还取决于 tokenizer 如何切分语言、符号和文件结构。长代码上下文和 Agent 工具调用越多，这种差异越会放大。",
+          "sourceName": "PlayCode",
+          "sourceUrl": "https://playcode.io/blog/real-price-of-frontier-models",
+          "publishedAt": "2026-07-13T21:50:30.963Z",
+          "tags": [
+            "模型成本",
+            "Tokenizer",
+            "工程实践"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Mindwalk 在代码库 3D 地图上回放 Claude Code 和 Codex 会话",
+          "summary": "Mindwalk 是一个开源可视化工具，可将 Claude Code 和 Codex 的会话日志在代码库 3D 地图上回放。它把仓库绘制成夜间地图，代理搜索、读取和编辑过的文件会发光，未触及区域保持黑暗；单个 Go 二进制文件即可运行，所有会话数据本地处理。工具支持树状图和地形图两种视图，并用颜色区分未访问、已查看、已读取、已编辑，播放界面还包含错误率、文件修改量、上下文压缩、子代理启动和用户交互等时间轴标记。Agent 调试正在从查看日志转向理解“它看过哪里、没看哪里、改了哪里”，这类可视化会让长任务错误更容易定位。",
+          "sourceName": "GitHub",
+          "sourceUrl": "https://github.com/cosmtrek/mindwalk",
+          "publishedAt": "2026-07-12T13:51:05.035Z",
+          "tags": [
+            "Codex",
+            "Claude Code",
+            "可视化"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "GhostLock Linux 栈 UAF 漏洞在 HN 获高分讨论",
+          "summary": "安全研究机构 Nebusec 发布 GhostLock 研究，称一个存在于所有 Linux 发行版中约 15 年的 stack use-after-free 问题可被利用，HN 讨论得分接近 400。该类漏洞通常不只是单一发行版补丁问题，还涉及内核、发行版维护、容器宿主机和长期支持版本的修复节奏。运行云服务和自托管基础设施的系统会受到补丁验证、镜像更新和运行时隔离影响。HN 的高分也反映出底层安全研究仍是开发者社区长期关注的内容。",
+          "sourceName": "Nebusec",
+          "sourceUrl": "https://nebusec.ai/research/ionstack-part-2/",
+          "publishedAt": "2026-07-14T01:33:07.998Z",
+          "tags": [
+            "Linux",
+            "安全",
+            "漏洞"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "GitHub Trending 中多款 AI 开发工具走热：Graphify、spec-kit 和 awesome-llm-apps",
+          "summary": "今日 GitHub Trending 中，Graphify-Labs/graphify、github/spec-kit 和 Shubhamsaboo/awesome-llm-apps 均获得较高新增 star。Graphify 将代码、SQL schema、脚本、文档、论文、图片或视频整理为可查询知识图谱，面向 Claude Code、Codex、OpenCode、Cursor 和 Gemini CLI 等工具；spec-kit 提供 Spec-Driven Development 起步工具；awesome-llm-apps 收集可运行的 Agent 与 RAG 应用。开源热度从单一模型调用示例转向“让 AI 理解项目结构、规范需求、复用应用模板”的工具层，这些项目都在补 AI 编码流程中的上下文组织和工程约束。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/Graphify-Labs/graphify",
+          "publishedAt": "2026-07-14T01:33:07.998Z",
+          "tags": [
+            "GitHub Trending",
+            "AI 编码",
+            "开源工具"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "融资信号集中在视频生成和 Agent 公司。",
+      "items": [
+        {
+          "title": "PixVerse 完成 4.39 亿美元 C 轮扩展融资，估值超过 20 亿美元",
+          "summary": "TechCrunch 报道，新加坡视频生成初创公司 PixVerse 完成 C 轮扩展融资，共筹集 4.39 亿美元，估值超过 20 亿美元，投资者包括阿里巴巴等。公司提供面向消费者和 API 的 V 系列、面向专业影视的 C 系列，以及今年初发布、用于游戏开发的 R 系列世界模型；用户可生成最高 4K 分辨率并自带音频的视频。PixVerse 称消费端注册用户超过 1.5 亿，月活超过 1500 万，图生视频每分钟价格为 4.80 美元，并计划今年推出新 V 系列模型、新版世界模型和全球企业客户拓展。视频生成从创意工具走向 API、影视和游戏世界模型，融资规模反映出该赛道仍在争夺基础模型、消费分发和企业应用三条路径。",
+          "sourceName": "TechCrunch",
+          "sourceUrl": "https://techcrunch.com/2026/07/13/video-generation-startup-pixverse-raises-439m-valuation-soars-past-2b",
+          "publishedAt": "2026-07-14T00:00:00.000Z",
+          "tags": [
+            "PixVerse",
+            "视频生成",
+            "融资"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Nous Research 洽谈新融资，估值据称达 15 亿美元",
+          "summary": "TechCrunch 援引三名知情人士称，Hermes Agent 开发商 Nous Research 正在敲定新一轮融资，估值达 15 亿美元，计划至少筹集 7500 万美元。报道称本轮融资由 Robot Ventures 领投，USV 和其他知名投资方参与，这距离公司宣布 5000 万美元 A 轮融资不到三个月；Nous Research 和相关资方均拒绝置评。该消息仍属未确认融资报道，但估值和融资间隔显示，Agent 与开源模型社区相关公司仍能获得资本关注。资金进入后，Hermes Agent 这类产品会继续在模型能力、代理框架和开发者分发之间寻找商业位置。",
+          "sourceName": "TechCrunch",
+          "sourceUrl": "https://techcrunch.com/2026/07/13/hermes-agent-maker-nous-research-in-talks-for-new-funding-at-1-5b-valuation/",
+          "publishedAt": "2026-07-14T01:13:36.000Z",
+          "tags": [
+            "Nous Research",
+            "Agent",
+            "融资"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "监管信号主要来自国家级 AI 服务和在线安全规则。",
+      "items": [
+        {
+          "title": "韩国科信部启动全民 AI 项目，要求国产基础模型占比超过 50%",
+          "summary": "韩国科学技术信息通信部启动“全民 AI 项目”，计划年内推出免费且不限量的韩国国产 AI 服务。项目将选出 2 至 3 家民营企业主导，提供通用 AI 聊天机器人、公共 AI Agent 和特化服务，并要求符合独立基础模型标准的国产 AI 模型占比超过 50%，非服务企业的国产模型占比超过 30%，外产模型只能有限使用且不享受政府支持。项目预计下月中旬选定服务商，约两个月后推出 Beta 服务，年内正式上线；今年依托政府 512 块 Nvidia B200 GPU 推进，明年起由政府预算承担全民服务成本。国家级 AI 服务正在把模型来源、算力供给、公共服务入口和财政预算绑在一起，合规边界也从单个产品扩展到基础模型占比和数据收益机制。",
+          "sourceName": "韩国科学技术信息通信部",
+          "sourceUrl": "https://www.msit.go.kr/bbs/view.do?sCode=user&mPid=121&mId=311&bbsSeqNo=100&nttSeqNo=3186816",
+          "publishedAt": "2026-07-14T01:13:36.000Z",
+          "tags": [
+            "韩国",
+            "主权 AI",
+            "公共服务"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Wikipedia 暂未被列入英国在线安全法 Category 1",
+          "summary": "Wikipedia Signpost 报道，Wikipedia 目前暂未被列入英国 Online Safety Act 的 Category 1 服务，HN 讨论得分达到 100。Category 1 通常意味着更严格的用户身份、内容治理、透明度和风险评估义务，Wikipedia 这类开放协作平台若被纳入，治理成本和编辑流程都会受到影响。暂时未被列入不代表监管压力消失，而是说明大型知识社区和社交平台在同一法律框架下仍存在分类争议。在线安全监管正在持续重画平台、社区和内容协作工具的责任边界。",
+          "sourceName": "Wikipedia Signpost",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Wikipedia:Wikipedia_Signpost/2026-07-13/Special_report",
+          "publishedAt": "2026-07-14T01:33:07.998Z",
+          "tags": [
+            "英国",
+            "Online Safety Act",
+            "平台治理"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "以下内容热度较高，但更多是背景信号或社区情绪。",
+      "items": [
+        {
+          "title": "Samsung Health 被指用数据删除压力推动用户同意 AI 训练",
+          "summary": "Neowin 报道称，Samsung Health 应用提示用户如果不同意 AI 训练相关条款，可能面临数据删除，相关链接在 HN 获得 200 分以上讨论。该信息更偏消费者权益和隐私争议，但它反映了健康数据、AI 训练授权和账户服务绑定之间的紧张关系。健康应用积累的数据敏感度高，一旦训练授权和历史数据访问被放在同一选择界面，用户对“不同意”的实际后果会更敏感。这类争议会影响平台之后如何呈现 AI 数据使用条款。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://neow.in/cWsyMTV3",
+          "publishedAt": "2026-07-14T01:33:07.998Z",
+          "tags": [
+            "Samsung Health",
+            "隐私",
+            "AI 训练"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Telegram 的 t.me 域名被暂停，社区关注平台入口风险",
+          "summary": "HN 高分帖显示，Telegram 的 t.me 域名 WHOIS 状态出现 suspended，帖子得分约 250。该事件本身仍需以 Telegram 或域名注册机构进一步说明为准，但社区关注点集中在平台短链、频道入口和第三方分享链接的单点风险。大型通信平台常把账号、频道、机器人和公开内容绑定在短域名上，域名层异常会影响外部跳转、增长链路和自动化集成。由于目前缺少平台方解释，本期只将它作为热度观察处理。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://www.whois.com/whois/t.me",
+          "publishedAt": "2026-07-14T01:33:07.998Z",
+          "tags": [
+            "Telegram",
+            "域名",
+            "平台入口"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "OpenCut 登上 GitHub Trending，开源 CapCut 替代品获得单日高 star",
+          "summary": "GitHub Trending 显示，OpenCut-app/OpenCut 今日新增超过 1200 star，项目定位是开源 CapCut 替代品，使用 TypeScript 开发。该项目不属于 AI 核心新闻，但它反映了短视频剪辑工具在开源社区仍有明显需求，也与创作者工具、视频生成和本地编辑链路相邻。随着 AI 视频生成工具增长，剪辑、字幕、模板和导出这类后处理工具仍会保留独立位置。本期将它作为开源社区对视频生产工具的热度信号。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/OpenCut-app/OpenCut",
+          "publishedAt": "2026-07-14T01:33:07.998Z",
+          "tags": [
+            "GitHub Trending",
+            "视频工具",
+            "开源"
+          ],
+          "importance": "low"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "本期优先采用 juya 与 AI HOT daily 中事实完整、与 AI 工具、开发平台、基础设施、产品增长、融资和监管直接相关的条目；删除重复报道、弱相关消费内容、纯泛媒体讨论和未能落到工作判断的高热帖子。HN 只保留高分且与开发工具、安全、平台治理或 AI 数据边界相关的内容；GitHub Trending 只选 AI 编码、工程上下文和视频工具相关项目。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (27 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (10 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-07-14T01:34:09.000Z"
+}
