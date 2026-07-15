@@ -78,7 +78,7 @@ jobs:
           RESPONSES_STATUS="$(curl -sS -o /tmp/micu-responses.json -w "%{http_code}" \
             -H "Authorization: Bearer $MICU_API_KEY" \
             -H "Content-Type: application/json" \
-            -d "{\"model\":\"${MICU_MODEL:-gpt-5.4}\",\"input\":\"ping\"}" \
+            -d "{\"model\":\"${MICU_MODEL:-gpt-5.4}\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"ping\"}]}]}" \
             "$EFFECTIVE_MICU_BASE_URL/responses")"
           echo "MICU /responses status=$RESPONSES_STATUS"
           if [ "$RESPONSES_STATUS" -lt 200 ] || [ "$RESPONSES_STATUS" -ge 300 ]; then
