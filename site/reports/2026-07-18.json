@@ -1,0 +1,517 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-18",
+  "title": "Whistle 互联网日报｜2026-07-18",
+  "summary": "今天有几类事值得放在一起看。月之暗面发布 Kimi K3，2.8 万亿参数、100 万 token 上下文、视觉理解和开放权重计划把国产前沿模型推到开发者与企业 Agent 场景前台；同一天，OpenAI、Anthropic、Google、MiniMax 等围绕编码 Agent、托管 Agent、代码审查、文档执行和多模态生产继续补齐产品接口。另一边，安全与合规压力也更具体：Codex full-access 误删文件、企业 Agent 凭证共用、AI 评估与生产事故脱节、xAI 起诉滥用 Grok 的用户，都把权限、身份、评估和责任边界推到真实部署环节。平台侧的变化集中在分发和入口，Google 搜索 AI Mode 开始连接第三方应用，Gemini Notebook 获得安全云电脑，欧盟要求 Google 开放 Android 和 Search，AI 功能正在进入搜索、办公、浏览器、终端和企业平台这些日常入口。",
+  "theme": "模型、Agent 与平台入口同步扩张",
+  "topline": [
+    "Kimi K3 发布，2.8 万亿参数、100 万 token 上下文和 7 月 27 日前开放权重计划成为当天最强模型信号。",
+    "Codex、Claude Code、Gemini API、MiniMax Code 等开发工具集中更新，Agent 产品开始围绕权限、预算、代码审查和长任务稳定性补齐基础设施。",
+    "AI 安全事件从抽象风险转为具体事故：文件误删、凭证共用、生产故障、内容滥用和平台开放规则都进入日报核心信息面。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "今天最重要的信息集中在前沿模型、开发 Agent、安全边界和平台入口四个方向。",
+      "items": [
+        {
+          "title": "月之暗面发布 Kimi K3，权重计划于 7 月 27 日前开放",
+          "summary": "月之暗面正式推出 Kimi K3，模型总参数量 2.8 万亿，原生支持视觉理解和 100 万 token 上下文，采用 KDA、AttnRes 与 Stable LatentMoE 架构，在 896 个专家中激活 16 个，并从 SFT 阶段引入 MXFP4 权重和 MXFP8 激活的量化感知训练。Kimi K3 已在 Kimi.com、Kimi Work、Kimi Code 和 API 上线，默认思考强度为 max，官方计划在 7 月 27 日前发布完整权重；API 定价为每百万 tokens 缓存命中输入 2 元、未命中输入 20 元、输出 100 元，官方称编程场景缓存命中率超过 90%。这次发布把长上下文、视觉理解、编码 Agent 和开放权重放在同一产品包里，模型能力的竞争不再只看单点基准，也开始进入 API 成本、Agent 运行稳定性和企业托管能力。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://www.kimi.com/blog/kimi-k3",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "AI 模型",
+            "开源权重",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 确认 GPT-5.6 在 Codex full-access 模式下存在误删文件风险",
+          "summary": "Codex 负责人 Tibo 表示，团队调查了少数 GPT-5.6 非预期删除文件的反馈，确认问题发生在无沙盒 full-access 模式运行 Codex 时，模型有概率因环境变量覆盖失误误删 $HOME 目录。OpenAI 正在更新开发者消息、引导更安全的权限设置并增加防护，后续会发布详细事后分析。这个事件把编码 Agent 的权限边界从体验问题变成工程事故问题：当模型可直接操作文件系统，沙盒、权限提示、环境隔离和审计日志会成为产品能力的一部分。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://x.com/thsottiaux/status/2077630111499882637",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "开发工具",
+            "Agent 安全",
+            "OpenAI"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google 搜索 AI Mode 开始连接第三方应用",
+          "summary": "Google 宣布在搜索 AI Mode 中上线连接应用功能，本周起在美国推出，用户可以连接 Instacart、Canva、YouTube Music 等服务，在搜索结果中把食材加入购物车、查看设计模板或保存播放列表。类似连接能力此前已在 Gemini 应用中提供，这次被扩展到搜索入口，并会继续接入更多应用。搜索结果页由信息展示入口变成可直接调动外部服务的操作入口后，应用分发、授权登录、交易归因和数据访问边界都会更靠近搜索平台。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://blog.google/products-and-platforms/products/search/connected-apps/",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "Google",
+            "搜索",
+            "平台入口"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "企业 Agent 安全事件比例升高，凭证和沙箱仍是薄弱环节",
+          "summary": "VentureBeat 调查 107 家企业发现，54% 已遭遇 AI 智能体安全事件，其中 18% 为确认事故、36% 为险些酿祸。调查还显示，仅 32% 为每个智能体分配独立身份凭证，30% 将高风险智能体隔离在沙箱中，安全工具主要依赖模型提供商原生方案，专用智能体安全产品渗透率仍低。企业 Agent 的合规问题已经落到身份、凭证、沙箱和审计工具，而不是停留在模型输出内容审查。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://venturebeat.com/ai/the-agent-security-gap-54-of-enterprises-have-already-had-an-ai-agent-incident-and-most-still-let-agents-share-credentials",
+          "publishedAt": "2026-07-16T19:02:38.000Z",
+          "tags": [
+            "Agent 安全",
+            "企业合规",
+            "身份管理"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "模型发布、Agent 产品、代码工具和多模态生产工具是今天最密集的板块。",
+      "items": [
+        {
+          "title": "NVIDIA 发布开源 Nemotron 3 Embed 嵌入模型系列",
+          "summary": "NVIDIA 发布 Nemotron 3 Embed 系列，包含 8B 和 1B 两种参数规格，已在 Hugging Face 开放权重并支持商业使用。官方称 Nemotron-3-Embed-8B-BF16 在 RTEB 基准上以约 78.5% 成绩排名第一，1B 版本通过结构化剪枝与蒸馏获得，面向 Blackwell 的 NVFP4 量化版吞吐量最高提升两倍，系列模型支持 32k 上下文和 34 种语言检索，并提供微调、蒸馏配方及 NIM 微服务部署。嵌入模型影响的是检索、RAG、推荐和企业知识库的底层质量，开源与商业可用降低了自建检索链路对闭源向量服务的依赖。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://huggingface.co/blog/nvidia/nemotron-3-embed-wins-rteb",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "Embedding",
+            "NVIDIA",
+            "开源模型"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "通义实验室发布 Wan-Streamer v0.2，端到端响应延迟 550ms",
+          "summary": "通义实验室发布 Wan-Streamer v0.2，把听、看、说、演统一进单个 Transformer，端到端响应延迟为 550ms，输出分辨率从 v0.1 的 192×336 提升至 640×368、25FPS，并采用 Thinker-Performer 双通路架构在提高画质时保持低延迟。该类模型把语音、视觉和表演输出合并到实时交互链路中，AI 输出形态由文本和图片转向视频化、结构化、可交互方向。人类输入常使用语音，但 AI 输出若能进入可视、可编辑、可反馈的界面，信息处理效率会接近 Markdown、HTML 到交互式视频/模拟的连续演进。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://mp.weixin.qq.com/s/_eaO0wmsiQFGsrE2_zW_Dg",
+          "publishedAt": "2026-07-17T07:14:00.000Z",
+          "tags": [
+            "多模态",
+            "实时视频",
+            "通义"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Claude Code 为 /code-review 新增多个 effort 级别",
+          "summary": "Anthropic 为 Claude Code 的 /code-review 功能新增多个 effort 级别，每个级别采用不同审查策略，更新后所有会话可用。该功能会自动采用会话 effort 设置或显式指定级别；低级别强调低 token 成本扫描，高级别让 subagent 使用全新上下文以减少锚定，极限级别会生成审查 Agent 集群独立复现发现，Anthropic 内部每个 PR 都运行该级别。代码审查从固定提示词变成可调算力和多 Agent 协同流程后，成本、召回率和误报之间的权衡被产品化。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://x.com/ClaudeDevs/status/2077840063342506351",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "Claude Code",
+            "代码审查",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Gemini API Managed Agents 上线免费层级、预算控制和定时触发器",
+          "summary": "Google 为 Gemini API 的 Managed Agents 推出免费层级、预算控制和定时触发器。免费层级允许未启用计费的 API 密钥在免费配额下调用；预算控制通过 agent_config 的 max_total_tokens 限制总 token 消耗，达限后返回 incomplete 状态并保留文件系统进度，可用 previous_interaction_id 继续执行；定时触发器使用内置 cron 在同一沙盒环境中复用文件。托管 Agent 开始把费用上限、进度恢复和周期任务纳入默认接口，长任务不再只是一次性模型调用。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://x.com/GoogleAIStudio/status/2077801843720093867",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "Gemini API",
+            "Agent",
+            "开发平台"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "MiniMax Code 2.0 桌面端重构底层架构并接入金融数据",
+          "summary": "MiniMax 更新 Code 2.0 桌面端并开放下载，新版基于 Pi Agent 重构会话运行、状态管理和工具调用链路，重点改善长任务中的中断与上下文断裂问题。版本还优化图表加载和文件预览框选编辑，并接入恒生金融数据库与企查查 MCP，金融模块即将在桌面端上线，网页版已可尝鲜，本月还将加入远程控制和浏览器操控。编码 Agent 正在从代码生成扩展到数据检索、报告生成、远程环境操作和垂直行业插件。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://mp.weixin.qq.com/s/mQeBO0xC6Z1R0LqZX5TvNg",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "MiniMax",
+            "开发工具",
+            "MCP"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Google Vids 上线 Gemini Omni 与个人数字分身",
+          "summary": "Google Vids 推出 Gemini Omni 和个人数字分身两项功能：前者支持用户用自然语言提示词和图片参考生成并逐步编辑视频片段，后者允许用户上传自拍和语音录制后，通过文本让数字分身出镜。功能面向 Google AI Pro、Ultra 订阅者和 Google Workspace 商业客户开放，生成内容带有不可见 SynthID 数字水印。企业视频生产工具开始把提示词生成、个人形象授权和水印标识放进同一工作链路，这会改变内部培训、销售材料和异步沟通内容的制作方式。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://blog.google/products-and-platforms/products/workspace/gemini-omni-personal-avatars",
+          "publishedAt": "2026-07-16T16:00:00.000Z",
+          "tags": [
+            "Google Vids",
+            "视频生成",
+            "数字分身"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Claude Fable 5 在 CursorBench 达到 72.9% 新高",
+          "summary": "Cursor 模型评估负责人 Nate Schmidt 称，Claude Fable 5 在内部基准 CursorBench 的 Max effort 模式达到 72.9%，创下新高。AI HOT 摘要称，该模型在模糊真实编程任务中表现出全局推理能力，例如在航天模拟器任务中仅凭一句提示自主规划并成功登月，而此前 Claude Opus 运行 12 小时以上仍无结果。编码模型评估正在从短题和单文件修补转向长程、多步骤、目标模糊的工程任务，评估数据会直接影响 IDE 和 Agent 产品的默认模型选择。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://claude.com/blog/working-at-the-frontier-cursor",
+          "publishedAt": "2026-07-17T16:32:51.023Z",
+          "tags": [
+            "Claude",
+            "Cursor",
+            "编程模型"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "OpenAI 提出“有用智能每美元”作为 AI 投资回报指标",
+          "summary": "OpenAI 发布 AI 时代记分卡，提出 Useful Intelligence per Dollar，即“有用智能每美元”，从完成的有用工作量、成功任务的实际成本和结果可靠性三个维度评估 AI 投资回报。这个指标把模型比较从参数、跑分和单次调用价格拉回到任务完成成本，尤其适用于高频办公、客服、代码、研究等可记录成功率和重试成本的场景。AI 产品商业化的价格讨论因此会更多围绕单位成功任务，而不是单纯围绕 token 单价。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://openai.com/index/a-scorecard-for-the-ai-age",
+          "publishedAt": "2026-07-17T10:00:00.000Z",
+          "tags": [
+            "OpenAI",
+            "AI 商业化",
+            "指标"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台变化主要集中在搜索入口、办公入口、企业云和订阅权益。",
+      "items": [
+        {
+          "title": "Google 将 NotebookLM 更名为 Gemini Notebook，并加入安全云电脑",
+          "summary": "Google 宣布将 AI 研究助手 NotebookLM 更名为 Gemini Notebook，产品定位保持研究和资料处理助手，但新增安全云电脑功能。该功能让 Gemini Notebook 可以原生编写并执行代码，直接分析用户上传的文档和资料，目前向 Google AI Ultra 用户和 Workspace 商业客户开放，并将在未来数周推送给所有 Pro 订阅用户。资料问答工具加入代码执行后，笔记、数据清洗、可视化和报告生成会进入同一个受控环境，办公 AI 的边界从摘要扩展到计算。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "Google",
+            "NotebookLM",
+            "办公 AI"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "英特尔与 Google Cloud 扩大合作，部署 Gemini Enterprise",
+          "summary": "英特尔与 Google Cloud 宣布扩大多年战略合作，英特尔将在全球员工中集成基于 Gemini 的生成式 AI，并采用 Gemini Enterprise Agent Platform 构建业务 Agent 自动化核心流程。Google Cloud 的 C4 和 N4 实例也将补充英特尔本地计算能力，用于运行复杂模拟并加速芯片开发。大型企业采用 Agent 平台时，云算力、内部流程自动化和工程模拟会被打包进同一云合作协议。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://www.googlecloudpresscorner.com/2026-07-16-Intel-and-Google-Cloud-Announce-Collaboration-to-Accelerate-Intels-AI-Enabled-Enterprise-Transformation",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "Google Cloud",
+            "Intel",
+            "企业 AI"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "OpenAI 扩展 ChatGPT 青少年保护，学习模式可默认开启",
+          "summary": "OpenAI 更新 ChatGPT 青少年保护和学习工具，家长可以通过家长控制把学习模式设为新对话默认开启，青少年长时间使用会收到更频繁的休息提醒。家长通知范围扩展到账号因违反暴力使用政策被停用的情况；官方还称互动学习体验已有 1800 万周活跃用户，并新增教育起始提示词、250 多个互动主题和 61 种以上语言的发音体验。教育场景中的 AI 产品正在把内容能力、家长控制、使用时长提醒和违规通知合并成平台规则。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://openai.com/index/why-teens-deserve-access-safe-ai/",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "OpenAI",
+            "青少年保护",
+            "教育"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "SuperGrok Heavy 订阅开始包含 X Premium+",
+          "summary": "X 官方账号 Premium 宣布，SuperGrok Heavy 订阅现在包含 X Premium+，用户无需额外付费，只要在 Grok 应用中链接 X 账户即可激活。已同时订阅两项服务的用户可取消原有 X Premium+ 订阅，包含在 SuperGrok Heavy 中的权益会在当前计费周期后自动延续。xAI 与 X 的订阅权益进一步绑定，AI 助手和社交平台会员的商业化被合并到同一个付费关系中。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://x.com/premium/status/2077820074015293774",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "xAI",
+            "X",
+            "订阅"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Apple 与 OpenAI 法律战升级，约 40 名前员工收到律师函",
+          "summary": "AI HOT 引用报道称，苹果已向约 40 名就职于 OpenAI 的前员工发出律师函，要求保存相关文件；此前苹果起诉 OpenAI 和两名前员工，指控其通过挖角获取商业机密以加速 AI 硬件研发。苹果称已有超过 400 名前员工在 OpenAI 工作，并寻求法院禁令阻止 OpenAI 使用苹果信息、要求归还机密。人才流动争议进入诉讼程序后，AI 硬件、模型公司和平台公司的知识产权边界会更多依赖雇佣协议、资料保全和法院禁令来界定。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.ithome.com/0/978/277.htm",
+          "publishedAt": "2026-07-17T11:10:01.000Z",
+          "tags": [
+            "Apple",
+            "OpenAI",
+            "法律争议"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "产品形态变化集中在可执行文档、低代码应用、多端分发和内容生产。",
+      "items": [
+        {
+          "title": "百度智能云秒哒 3.5 新增 iOS 打包、多应用共享后端和 SEO Agent",
+          "summary": "百度智能云在 WAIC2026 发布秒哒 3.5，新增 iOS 打包能力，用户无需 Mac 或 Xcode 就能将应用打包为 IPA 文件或上架 App Store。新版本还内置 SEO Agent 支持搜索优化自动化，允许多应用共享同一后端数据库，并推出数据库多环境隔离与后端资源分级功能；秒哒累计服务超过 3500 万用户，已创造 350 万个商业应用。无代码开发工具正在从页面生成扩展到移动端上架、后端复用、资源隔离和搜索分发。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://mp.weixin.qq.com/s/W3QACoSYgwK0TW4zG-KFsg",
+          "publishedAt": "2026-07-16T12:17:11.000Z",
+          "tags": [
+            "无代码",
+            "百度智能云",
+            "移动应用"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "天工短剧工作台发布 Agent 智能分镜与无限画布双轨创作模式",
+          "summary": "天工短剧工作台推出双轨创作模式，通过导演 Agent 自动解析剧本、规划站位和机位，并支持多视细节图生成，以减少 AI 短剧中的角色变脸和站位漂移问题。工具内置影视级提示词模板、720 度全景图和 3D 导演台，已有三部作品上线 DramaWave 后 7 天实现百万美元级营收。短剧生产工具把剧本解析、分镜、镜头控制和商业分发数据连在一起，AIGC 视频产品开始处理工业化制作中的一致性和可控性问题。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://mp.weixin.qq.com/s/WlGAeogkF_N5122nHA0TtQ",
+          "publishedAt": "2026-07-16T02:00:00.000Z",
+          "tags": [
+            "AIGC 视频",
+            "短剧",
+            "内容生产"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程侧重点是模型评测、代码安全、上下文管理、开源工具和基础设施成本。",
+      "items": [
+        {
+          "title": "Kimi 发布 PerceptionBench，前沿多模态模型准确率均未超过 60%",
+          "summary": "Kimi 发布 PerceptionBench，用于评估多模态大模型的原子视觉感知能力。该基准从 40 多个现有基准的模型失败案例中提炼出 10 项原子感知类别，包含 3000 个仅依赖视觉感知的已验证问题；官方评测显示，当前参评前沿模型准确率均未超过 60%，GPT-5.6-Sol 以 59.7% 居首，且大量正确答案在重复提问时无法重现。这个基准把多模态模型的短板指向基础视觉感知，而不是复杂推理，图像理解产品在可靠性评估上需要区分“看见了”和“猜对了”。",
+          "sourceName": "juya AI 早报",
+          "sourceUrl": "https://www.kimi.com/blog/perception-bench",
+          "publishedAt": "2026-07-17T01:08:09.000Z",
+          "tags": [
+            "多模态评测",
+            "Kimi",
+            "基准"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "美团 LongCat 发布 LoHoSearch 搜索智能体基准",
+          "summary": "美团 LongCat 推出 LoHoSearch，一个基于 762 万实体维基百科知识图谱自动生成问题的搜索智能体基准，用来缓解 BrowseComp 等现有基准趋于饱和的问题。AI HOT 摘要称，该基准包含 544 道问题、11 个领域，采用树与图结构；在 11 个前沿模型测试中，最佳得分仅 34.74%，远低于模型在 BrowseComp 上约 90% 的成绩，上下文策略只带来 6.8 个百分点提升。搜索 Agent 的评测开始转向长链路、多实体、图结构信息检索，这类任务更接近企业知识库和复杂网络调查。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://x.com/Meituan_LongCat/status/2078119654632124547",
+          "publishedAt": "2026-07-17T14:08:29.000Z",
+          "tags": [
+            "搜索 Agent",
+            "评测基准",
+            "美团"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Schema Harness 在 ARC-AGI-3 公开集取得约 99% 成绩",
+          "summary": "Schema 框架在 ARC-AGI-3 公开集上使用 Claude Opus 4.8 和 Fable 5 达到 99% RHAE 分数，使用 GPT-5.6 Sol 达到 95.35%。该框架不修改模型权重，而是把原始观测转化为可编辑程序，联合解决状态归因和机制发现问题；此前最强模型 GPT-5.6 Sol 在半私有集上仅得 7.78%。这类结果显示，围绕模型外部表示、状态转换和程序化中间层的工程设计，仍可能显著改变模型在推理任务上的表现。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://schema-harness.github.io/",
+          "publishedAt": "2026-07-17T08:41:53.383Z",
+          "tags": [
+            "AGI 评测",
+            "程序化推理",
+            "Claude"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "HYPIC 在混合注意力大模型上实现位置无关缓存",
+          "summary": "小红书联合北大、上交提出 HYPIC，用于混合注意力大模型的位置无关缓存。AI HOT 摘要称，在 4 个生产级模型上，HYPIC 将首 token 延迟平均降低 3.25 倍，在同一 SLO 下可持续 QPS 提升 1.66 倍，任务质量与完全重算仅相差 1.71 分。缓存策略从全注意力模型迁移到混合注意力架构后，推理系统的延迟、吞吐和质量损耗可以被更精细地折中。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://mp.weixin.qq.com/s/RWveWvw9yBH6YQINBQ-XjA",
+          "publishedAt": "2026-07-16T10:00:00.000Z",
+          "tags": [
+            "推理优化",
+            "缓存",
+            "大模型工程"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Capital One 发布 agentic AI 代码安全工具 VulnHunter",
+          "summary": "HN 高分帖关注 Capital One 的开源代码安全工具 VulnHunter，该工具被描述为面向代码安全的 agentic AI 工具。帖子在 HN 获得 60 分和 29 条讨论，热度不如 Kimi K3 等模型新闻，但它补充了一个企业内部安全工具开源的信号。代码安全场景中的 Agent 产品会围绕漏洞定位、代码上下文读取、审计记录和误报处理展开，银行等强监管行业的开源实践有助于观察落地边界。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://www.capitalone.com/tech/open-source/announcing-vulnhunter/",
+          "publishedAt": "2026-07-17T12:42:12.000Z",
+          "tags": [
+            "代码安全",
+            "Agent",
+            "开源"
+          ],
+          "importance": "low"
+        },
+        {
+          "title": "GitHub Trending 中 Copilot SDK、code-review-graph 和 openinterpreter 同时升温",
+          "summary": "GitHub Trending 今日出现多个与开发 Agent 相关的项目：github/copilot-sdk 是用于把 GitHub Copilot Agent 集成进应用和服务的多平台 SDK，今日新增 233 星；tirth8205/code-review-graph 构建本地优先的代码智能图，面向 MCP 和 CLI，今日新增 74 星；openinterpreter/openinterpreter 描述为面向 Kimi K3 等开放模型的编码 Agent，今日新增 431 星。这些项目的共同点是围绕代码上下文、Agent 集成和本地执行环境展开，开源生态正在补齐模型之外的工程接口。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/github/copilot-sdk",
+          "publishedAt": "2026-07-18T01:02:26.966Z",
+          "tags": [
+            "GitHub Trending",
+            "开发 Agent",
+            "开源"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "AI 公司高端内存需求推高硬件成本",
+          "summary": "AI HOT 摘要称，AI 公司为维持 ChatGPT、Claude 等大语言模型运行，可能已购买全球 70% 的高端计算机内存，导致内存和存储价格上涨：两年前 350 美元的硬盘现已涨至 800 美元且缺货，部分笔记本电脑涨价 50%。报道还称科技公司计划未来几年将美国数据中心容量扩大 8 倍，部分站点甚至使用喷气发动机供电。无论具体预测如何，训练和推理需求已经开始通过内存、硬盘、整机和数据中心供应链传导到普通计算硬件价格。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.theatlantic.com/technology/2026/07/generative-ai-engineering-disaster/687901",
+          "publishedAt": "2026-07-17T00:40:20.333Z",
+          "tags": [
+            "AI 基础设施",
+            "内存",
+            "硬件成本"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "本期没有典型融资新闻，保留供应链资本开支和商业化信号。",
+      "items": [
+        {
+          "title": "台积电上调 2026 年资本支出预测至 600 亿至 640 亿美元",
+          "summary": "台积电在 2026 年第二季度财报说明会上将全年资本支出预测上调至 600 亿至 640 亿美元，此前预测接近 560 亿美元。董事长魏哲家表示，预计 2028 年量产的 A14 制程（1.4nm）开发进展顺利，移动和 HPC 客户兴趣强烈，将成为比 2nm 更大、更持久的工艺；台积电预计 2026 年第三季度合并营收 446 亿至 458 亿美元，全年美元收入增幅将超过 40%。AI、HPC 和先进制程需求继续推高晶圆代工资本开支，算力产业链的扩张压力会沿设备、封装、服务器和云服务价格继续传导。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.ithome.com/0/977/544.htm",
+          "publishedAt": "2026-07-16T07:59:15.000Z",
+          "tags": [
+            "台积电",
+            "半导体",
+            "资本支出"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "合规信息集中在平台开放、AI 滥用、身份权限和跨国治理组织。",
+      "items": [
+        {
+          "title": "欧盟要求 Google 开放 Android 和 Search，波及 Gemini 等 AI 服务",
+          "summary": "AI HOT 引用报道称，欧盟依据《数字市场法案》裁定 Google 必须向竞争对手开放 Android 和 Google Search 的关键部分，包括允许第三方 AI 助手和搜索引擎获得更大访问权限。两项决定可能削弱 Google 对 Android 和 Search 两个核心平台的控制，并影响 Gemini 等 AI 工具未来的入口位置。平台监管从应用商店和搜索排序延伸到 AI 助手接入权后，默认入口、数据访问和互操作性会成为 AI 服务竞争的一部分。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.theverge.com/policy/966438/eu-google-android-ai-interoperability-search-data-dma",
+          "publishedAt": "2026-07-16T12:06:51.000Z",
+          "tags": [
+            "欧盟",
+            "DMA",
+            "Google"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "xAI 起诉利用 Grok 制作儿童性虐待图像的用户",
+          "summary": "xAI 首次对一名 Grok 用户提起诉讼，指控其利用模型制作儿童性虐待图像。AI HOT 摘要称，此前 xAI 一直否认 Grok 能生成此类内容，此次诉讼标志着立场转变，案件聚焦用户滥用行为，而非模型本身技术缺陷。生成式 AI 内容安全的责任边界正在从“模型是否能生成”转向平台防护、用户滥用、证据保存和民事诉讼。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://arstechnica.com/tech-policy/2026/07/xai-cant-deny-grok-makes-csam-anymore-so-its-suing-users",
+          "publishedAt": "2026-07-16T20:26:23.000Z",
+          "tags": [
+            "xAI",
+            "内容安全",
+            "法律"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "世界人工智能合作组织协定在上海签署",
+          "summary": "7 月 16 日，世界人工智能合作组织协定签署仪式在上海举行，中国政府代表签署协定。该组织为独立的政府间国际组织，总部设在中国上海，宗旨是促进人工智能国际合作与全球治理；哈萨克斯坦、老挝、巴基斯坦等 29 个国家代表签署协定成为创始成员国。AI 治理正在出现更多多边组织安排，跨境模型服务、数据治理和安全评估未来会受到不同治理框架共同影响。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.ithome.com/0/977/793.htm",
+          "publishedAt": "2026-07-16T14:38:08.000Z",
+          "tags": [
+            "AI 治理",
+            "国际组织",
+            "政策"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "本板块保留高讨论度但工作性略弱或已在核心板块出现过的信号。",
+      "items": [
+        {
+          "title": "Kimi K3 在 HN 获得近 2000 分讨论",
+          "summary": "HN 上的 “Kimi K3: Open Frontier Intelligence” 获得 1994 分和 1161 条讨论，是当天技术社区最强热度信号之一；同一主题的 Simon Willison 文章也获得 268 分。由于 Kimi K3 已在今日头条详述，HN 热度在这里作为社区接受度和争议密度的补充信号。开发者社区的高讨论量说明开放权重、长上下文、编码能力和 API 价格会继续成为模型发布后最先被检验的部分。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://www.kimi.com/blog/kimi-k3",
+          "publishedAt": "2026-07-16T14:46:05.000Z",
+          "tags": [
+            "HN 热度",
+            "Kimi K3",
+            "开发者社区"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "AWS 账单估算异常在 HN 获得超过 1000 分",
+          "summary": "HN 帖子 “AWS: Inaccurate Estimated Billing Data - $1.7 billion” 获得 1027 分和 636 条讨论，链接指向 HN 讨论页。素材没有提供完整官方说明，因此不作为核心事实展开，但高热度反映云账单透明度、成本预估和事故沟通仍是开发者社区敏感议题。云成本和 AI 推理成本同时上升时，账单估算异常会放大基础设施采购和预算管理的不确定感。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://news.ycombinator.com/item?id=48945241",
+          "publishedAt": "2026-07-17T09:42:05.000Z",
+          "tags": [
+            "HN 热度",
+            "云成本",
+            "AWS"
+          ],
+          "importance": "medium"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "本期优先保留 juya 与 AI HOT 中事实完整、与互联网工作判断相关的条目；删除重复报道、弱相关消费电子、泛媒体争议和无可靠链接信息。HN 纯技术讨论除 Kimi K3、AWS 账单等高热事件外未单独刊发，GitHub Trending 只保留 AI、Agent、开发工具、产品分析和内容生产相关项目。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-07-18T01:20:00.000Z"
+}

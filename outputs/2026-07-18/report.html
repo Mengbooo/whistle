@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="今天有几类事值得放在一起看。月之暗面发布 Kimi K3，2.8 万亿参数、100 万 token 上下文、视觉理解和开放权重计划把国产前沿模型推到开发者与企业 Agent 场景前台；同一天，OpenAI、Anthropic、Google、MiniMax 等围绕编码 Agent、托管 Agent、代码审查、文档执行和多模态生产继续补齐产品接口。另一边，安全与合规压力也更具体：Codex full-access 误删文件、企业 Agent 凭证共用、AI 评估与生产事故脱节、xAI 起诉滥用 Grok 的用户，都把权限、身份、评估和责任边界推到真实部署环节。平台侧的变化集中在分发和入口，Google 搜索 AI Mode 开始连接第三方应用，Gemini Notebook 获得安全云电脑，欧盟要求 Google 开放 Android 和 Search，AI 功能正在进入搜索、办公、浏览器、终端和企业平台这些日常入口。">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Whistle 互联网日报｜2026-07-18</title>
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem("whistle-theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0d0d0d;
+      --panel-soft: #151515;
+      --line: #242424;
+      --line-soft: #1a1a1a;
+      --text: #f4f4f4;
+      --muted: #a5a5a5;
+      --faint: #737373;
+      --accent: #01c193;
+      --button-bg: #fff;
+      --button-text: #000;
+      --button-hover-border: #fff;
+      --theme-bg: rgba(0,0,0,.74);
+      --max: 1180px;
+      --serif: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #fff;
+      --panel: #f7f7f7;
+      --panel-soft: #f0f0f0;
+      --line: #dcdcdc;
+      --line-soft: #ececec;
+      --text: #0b0b0b;
+      --muted: #555;
+      --faint: #777;
+      --accent: #012fe3;
+      --button-bg: #000;
+      --button-text: #fff;
+      --button-hover-border: #000;
+      --theme-bg: rgba(255,255,255,.78);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
+    body { font-family: var(--sans); line-height: 1.72; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
+    a:hover { color: var(--text); border-bottom-color: var(--text); }
+    .theme-bar {
+      position: fixed;
+      top: 24px;
+      right: max(40px, calc((100vw - var(--max)) / 2 + 40px));
+      z-index: 30;
+      pointer-events: none;
+    }
+    .theme-toggle {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--theme-bg);
+      color: var(--text);
+      cursor: pointer;
+      pointer-events: auto;
+      transition: border-color .16s ease, transform .16s ease;
+    }
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .theme-toggle:hover { border-color: var(--button-hover-border); transform: translateY(-1px); }
+    :root[data-theme="light"] .theme-toggle { color: #000; }
+    :root:not([data-theme="light"]) .theme-toggle { color: #fff; }
+    .back-link {
+      display: inline-block;
+      margin: 0 0 34px;
+      border: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+    .back-link:hover { color: var(--text); }
+    .hero { width: 100%; padding: 0 0 58px; text-align: left; }
+    h1 { margin: 0; font-size: clamp(26px, 3vw, 38px); font-weight: 560; line-height: 1.06; letter-spacing: -.05em; }
+    .summary { max-width: 720px; margin: 24px 0 0; color: var(--text); font-size: 18px; line-height: 1.7; }
+    .hero-meta { margin-top: 22px; color: var(--text); font-size: 13px; }
+    .hero-actions { display: flex; justify-content: flex-start; gap: 12px; margin-top: 30px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
+      background: var(--button-bg); color: var(--button-text); font-size: 14px; font-weight: 600;
+      transition: border-color .16s ease, color .16s ease, background .16s ease;
+    }
+    .button--ghost { background: transparent; color: var(--text); }
+    .button:hover { border-color: var(--button-hover-border); }
+    .layout {
+      display: grid; grid-template-columns: 190px minmax(0, 760px);
+      gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
+    }
+    .toc { position: sticky; top: 86px; align-self: start; color: var(--muted); font-size: 13px; }
+    .toc strong { display: block; margin-bottom: 8px; color: var(--text); font-size: 13px; }
+    .toc a { display: block; margin: 0 0 3px; padding: 3px 0; border: 0; color: var(--muted); line-height: 1.35; transition: color .16s ease; }
+    .toc a[aria-current="true"] { color: var(--text); }
+    .toc a:hover { color: var(--text); }
+    .topline {
+      margin-bottom: 54px; padding: 26px; border: 1px solid var(--line); border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .topline h2 { margin: 0 0 16px; font-size: 24px; letter-spacing: -.025em; }
+    .topline ul { margin: 0; padding-left: 20px; color: var(--muted); }
+    .report-section { padding: 54px 0; border-top: 1px solid var(--line); }
+    .section-heading { margin-bottom: 30px; }
+    .section-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+    .section-heading h2 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; }
+    .section-heading span { display: block; margin-top: 8px; color: var(--muted); }
+    .section-count { flex: 0 0 auto; margin-top: 0 !important; color: var(--faint) !important; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    .section-items { display: grid; gap: 0; }
+    .report-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+    .report-item:first-child { border-top: 0; padding-top: 0; }
+    .item-rail { padding-top: 3px; }
+    .item-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1;
+    }
+    .item-kicker {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 8px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .item-kicker .tags { margin-bottom: 0; }
+    .tags span { color: var(--accent); font-size: 12px; }
+    .report-item h3 { margin: 0; font-size: 22px; line-height: 1.35; letter-spacing: -.025em; }
+    .report-item h3 a { border: 0; }
+    .report-item h3 a span { color: var(--accent); font-size: .82em; }
+    .item-copy { margin-top: 12px; display: grid; gap: 10px; }
+    .report-item p { margin: 0; color: var(--text); font-size: 15px; }
+    .item-fact { color: var(--text); line-height: 1.82; }
+    .item-insight {
+      position: relative;
+      padding-left: 16px;
+      border-left: 2px solid rgba(1, 47, 227, .42);
+      color: var(--muted) !important;
+      line-height: 1.76;
+    }
+    .item-insight span {
+      display: inline-block;
+      margin-right: 9px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .item-source, .item-meta { color: var(--faint); font-size: 12px; white-space: nowrap; }
+    .item-meta { display: none; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .report-section--featured { padding-top: 54px; }
+    .report-section--featured .section-heading { margin-bottom: 30px; }
+    .report-section--featured .report-item h3 { font-size: 23px; }
+    .report-section--featured .item-index { color: var(--muted); }
+    .empty, .note { margin: 0; color: var(--muted); }
+    .action-list { display: grid; gap: 12px; }
+    .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: var(--muted); }
+    .action-item strong { color: var(--text); }
+    .status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .status-grid div { padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+    .status-grid strong, .status-grid span { display: block; }
+    .status-grid span { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+    @media (max-width: 980px) {
+      .layout { display: block; padding: 66px 24px 72px; }
+      .theme-bar { top: 18px; right: 24px; }
+      .toc { display: none; }
+      .hero { padding: 0 0 58px; }
+      .hero-actions { justify-content: flex-start; }
+      .section-title-row { display: block; }
+      .section-count { margin-top: 8px !important; }
+      .report-item { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+      .item-rail { display: none; }
+      .item-kicker { display: block; }
+      .item-source { display: none; }
+      .item-meta { display: block; }
+      .status-grid, .action-item { grid-template-columns: 1fr; }
+    }
+    @media print {
+      @page { size: A4; margin: 0; }
+      :root { color-scheme: dark; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html, body { background: var(--bg) !important; color: var(--text) !important; }
+      :root, :root[data-theme="light"] {
+        color-scheme: dark;
+        --bg: #000;
+        --panel: #0d0d0d;
+        --panel-soft: #151515;
+        --line: #242424;
+        --line-soft: #1a1a1a;
+        --text: #f4f4f4;
+        --muted: #a5a5a5;
+        --faint: #737373;
+        --accent: #01c193;
+      }
+      .theme-bar, .back-link, .toc, .hero-actions, script { display: none !important; }
+      .hero { text-align: left; padding: 0 0 42px; }
+      .layout { display: block; max-width: 760px; margin: 0; padding: 12mm; }
+      .report-section { break-inside: auto; page-break-inside: auto; padding: 38px 0; }
+      .section-heading { break-after: avoid; page-break-after: avoid; }
+      .report-item { break-inside: auto; page-break-inside: auto; }
+      .item-kicker, .report-item h3 { break-after: avoid; page-break-after: avoid; }
+      .item-insight { border-left-color: rgba(1, 47, 227, .55); }
+      .footer { display: none; }
+      a { color: inherit; border: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-bar">
+    <button class="theme-toggle" data-theme-toggle type="button" aria-label="切换到亮色模式" title="切换到亮色模式">
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M12 2v2"></path>
+        <path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"></path>
+        <path d="M16 12a4 4 0 0 0-4-4"></path>
+        <path d="m19 5-1.256 1.256"></path>
+        <path d="M20 12h2"></path>
+      </svg>
+    </button>
+  </div>
+  <main>
+    <div class="layout">
+      <aside class="toc">
+        <strong>目录</strong>
+        <a href="#section-headline">今日头条</a><a href="#section-ai-tools">AI 与新工具</a><a href="#section-platforms">大厂与平台动态</a><a href="#section-product-growth">产品与增长观察</a><a href="#section-engineering">开发者与工程实践</a><a href="#section-funding">投融资与行业机会</a><a href="#section-policy">政策监管与合规</a><a href="#section-social-buzz">社交热度观察</a>
+      </aside>
+      <article>
+        <a class="back-link" href="/archive/" aria-label="返回归档">← 返回</a>
+        <section class="hero">
+          <h1>Whistle 互联网日报｜2026-07-18</h1>
+          <p class="summary">今天有几类事值得放在一起看。月之暗面发布 Kimi K3，2.8 万亿参数、100 万 token 上下文、视觉理解和开放权重计划把国产前沿模型推到开发者与企业 Agent 场景前台；同一天，OpenAI、Anthropic、Google、MiniMax 等围绕编码 Agent、托管 Agent、代码审查、文档执行和多模态生产继续补齐产品接口。另一边，安全与合规压力也更具体：Codex full-access 误删文件、企业 Agent 凭证共用、AI 评估与生产事故脱节、xAI 起诉滥用 Grok 的用户，都把权限、身份、评估和责任边界推到真实部署环节。平台侧的变化集中在分发和入口，Google 搜索 AI Mode 开始连接第三方应用，Gemini Notebook 获得安全云电脑，欧盟要求 Google 开放 Android 和 Search，AI 功能正在进入搜索、办公、浏览器、终端和企业平台这些日常入口。</p>
+          <p class="hero-meta">32 条信号 · 2026/7/18 09:20:00</p>
+          <div class="hero-actions">
+            <a class="button button--ghost" href="../assets/report-2026-07-18.pdf">下载 PDF</a>
+            <a class="button button--ghost" href="/archive/">查看归档</a>
+          </div>
+        </section>
+        <section class="report-section report-section--featured" id="section-headline">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>今日头条</h2>
+        <span class="section-count">4 条</span>
+      </div>
+      <span>今天最重要的信息集中在前沿模型、开发 Agent、安全边界和平台入口四个方向。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 模型</span><span>开源权重</span><span>Agent</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://www.kimi.com/blog/kimi-k3" target="_blank" rel="noreferrer">月之暗面发布 Kimi K3，权重计划于 7 月 27 日前开放 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">月之暗面正式推出 Kimi K3，模型总参数量 2.8 万亿，原生支持视觉理解和 100 万 token 上下文，采用 KDA、AttnRes 与 Stable LatentMoE 架构，在 896 个专家中激活 16 个，并从 SFT 阶段引入 MXFP4 权重和 MXFP8 激活的量化感知训练。</p>
+        <p class="item-insight"><span>解读</span>Kimi K3 已在 Kimi.com、Kimi Work、Kimi Code 和 API 上线，默认思考强度为 max，官方计划在 7 月 27 日前发布完整权重；API 定价为每百万 tokens 缓存命中输入 2 元、未命中输入 20 元、输出 100 元，官方称编程场景缓存命中率超过 90%。这次发布把长上下文、视觉理解、编码 Agent 和开放权重放在同一产品包里，模型能力的竞争不再只看单点基准，也开始进入 API 成本、Agent 运行稳定性和企业托管能力。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>开发工具</span><span>Agent 安全</span><span>OpenAI</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://x.com/thsottiaux/status/2077630111499882637" target="_blank" rel="noreferrer">OpenAI 确认 GPT-5.6 在 Codex full-access 模式下存在误删文件风险 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Codex 负责人 Tibo 表示，团队调查了少数 GPT-5.6 非预期删除文件的反馈，确认问题发生在无沙盒 full-access 模式运行 Codex 时，模型有概率因环境变量覆盖失误误删 $HOME 目录。OpenAI 正在更新开发者消息、引导更安全的权限设置并增加防护，后续会发布详细事后分析。</p>
+        <p class="item-insight"><span>解读</span>这个事件把编码 Agent 的权限边界从体验问题变成工程事故问题：当模型可直接操作文件系统，沙盒、权限提示、环境隔离和审计日志会成为产品能力的一部分。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Google</span><span>搜索</span><span>平台入口</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://blog.google/products-and-platforms/products/search/connected-apps/" target="_blank" rel="noreferrer">Google 搜索 AI Mode 开始连接第三方应用 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Google 宣布在搜索 AI Mode 中上线连接应用功能，本周起在美国推出，用户可以连接 Instacart、Canva、YouTube Music 等服务，在搜索结果中把食材加入购物车、查看设计模板或保存播放列表。类似连接能力此前已在 Gemini 应用中提供，这次被扩展到搜索入口，并会继续接入更多应用。</p>
+        <p class="item-insight"><span>解读</span>搜索结果页由信息展示入口变成可直接调动外部服务的操作入口后，应用分发、授权登录、交易归因和数据访问边界都会更靠近搜索平台。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent 安全</span><span>企业合规</span><span>身份管理</span></div>
+        <span class="item-source">AI HOT · 2026-07-17 03:02</span>
+      </div>
+      <h3><a href="https://venturebeat.com/ai/the-agent-security-gap-54-of-enterprises-have-already-had-an-ai-agent-incident-and-most-still-let-agents-share-credentials" target="_blank" rel="noreferrer">企业 Agent 安全事件比例升高，凭证和沙箱仍是薄弱环节 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">VentureBeat 调查 107 家企业发现，54% 已遭遇 AI 智能体安全事件，其中 18% 为确认事故、36% 为险些酿祸。调查还显示，仅 32% 为每个智能体分配独立身份凭证，30% 将高风险智能体隔离在沙箱中，安全工具主要依赖模型提供商原生方案，专用智能体安全产品渗透率仍低。</p>
+        <p class="item-insight"><span>解读</span>企业 Agent 的合规问题已经落到身份、凭证、沙箱和审计工具，而不是停留在模型输出内容审查。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-17 03:02</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-ai-tools">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>AI 与新工具</h2>
+        <span class="section-count">8 条</span>
+      </div>
+      <span>模型发布、Agent 产品、代码工具和多模态生产工具是今天最密集的板块。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Embedding</span><span>NVIDIA</span><span>开源模型</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://huggingface.co/blog/nvidia/nemotron-3-embed-wins-rteb" target="_blank" rel="noreferrer">NVIDIA 发布开源 Nemotron 3 Embed 嵌入模型系列 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">NVIDIA 发布 Nemotron 3 Embed 系列，包含 8B 和 1B 两种参数规格，已在 Hugging Face 开放权重并支持商业使用。官方称 Nemotron-3-Embed-8B-BF16 在 RTEB 基准上以约 78.5% 成绩排名第一，1B 版本通过结构化剪枝与蒸馏获得，面向 Blackwell 的 NVFP4 量化版吞吐量最高提升两倍，系列模型支持 32k 上下文和 34 种语言检索，并提供微调、蒸馏配方及 NIM 微服务部署。</p>
+        <p class="item-insight"><span>解读</span>嵌入模型影响的是检索、RAG、推荐和企业知识库的底层质量，开源与商业可用降低了自建检索链路对闭源向量服务的依赖。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>多模态</span><span>实时视频</span><span>通义</span></div>
+        <span class="item-source">AI HOT · 2026-07-17 15:14</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s/_eaO0wmsiQFGsrE2_zW_Dg" target="_blank" rel="noreferrer">通义实验室发布 Wan-Streamer v0.2，端到端响应延迟 550ms <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">通义实验室发布 Wan-Streamer v0.2，把听、看、说、演统一进单个 Transformer，端到端响应延迟为 550ms，输出分辨率从 v0.1 的 192×336 提升至 640×368、25FPS，并采用 Thinker-Performer 双通路架构在提高画质时保持低延迟。</p>
+        <p class="item-insight"><span>解读</span>该类模型把语音、视觉和表演输出合并到实时交互链路中，AI 输出形态由文本和图片转向视频化、结构化、可交互方向。人类输入常使用语音，但 AI 输出若能进入可视、可编辑、可反馈的界面，信息处理效率会接近 Markdown、HTML 到交互式视频/模拟的连续演进。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-17 15:14</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Claude Code</span><span>代码审查</span><span>开发工具</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://x.com/ClaudeDevs/status/2077840063342506351" target="_blank" rel="noreferrer">Claude Code 为 /code-review 新增多个 effort 级别 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Anthropic 为 Claude Code 的 /code-review 功能新增多个 effort 级别，每个级别采用不同审查策略，更新后所有会话可用。该功能会自动采用会话 effort 设置或显式指定级别；</p>
+        <p class="item-insight"><span>解读</span>低级别强调低 token 成本扫描，高级别让 subagent 使用全新上下文以减少锚定，极限级别会生成审查 Agent 集群独立复现发现，Anthropic 内部每个 PR 都运行该级别。代码审查从固定提示词变成可调算力和多 Agent 协同流程后，成本、召回率和误报之间的权衡被产品化。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Gemini API</span><span>Agent</span><span>开发平台</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://x.com/GoogleAIStudio/status/2077801843720093867" target="_blank" rel="noreferrer">Gemini API Managed Agents 上线免费层级、预算控制和定时触发器 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Google 为 Gemini API 的 Managed Agents 推出免费层级、预算控制和定时触发器。免费层级允许未启用计费的 API 密钥在免费配额下调用；</p>
+        <p class="item-insight"><span>解读</span>预算控制通过 agent_config 的 max_total_tokens 限制总 token 消耗，达限后返回 incomplete 状态并保留文件系统进度，可用 previous_interaction_id 继续执行；定时触发器使用内置 cron 在同一沙盒环境中复用文件。托管 Agent 开始把费用上限、进度恢复和周期任务纳入默认接口，长任务不再只是一次性模型调用。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>MiniMax</span><span>开发工具</span><span>MCP</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s/mQeBO0xC6Z1R0LqZX5TvNg" target="_blank" rel="noreferrer">MiniMax Code 2.0 桌面端重构底层架构并接入金融数据 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">MiniMax 更新 Code 2.0 桌面端并开放下载，新版基于 Pi Agent 重构会话运行、状态管理和工具调用链路，重点改善长任务中的中断与上下文断裂问题。版本还优化图表加载和文件预览框选编辑，并接入恒生金融数据库与企查查 MCP，金融模块即将在桌面端上线，网页版已可尝鲜，本月还将加入远程控制和浏览器操控。</p>
+        <p class="item-insight"><span>解读</span>编码 Agent 正在从代码生成扩展到数据检索、报告生成、远程环境操作和垂直行业插件。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">06</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Google Vids</span><span>视频生成</span><span>数字分身</span></div>
+        <span class="item-source">AI HOT · 2026-07-17 00:00</span>
+      </div>
+      <h3><a href="https://blog.google/products-and-platforms/products/workspace/gemini-omni-personal-avatars" target="_blank" rel="noreferrer">Google Vids 上线 Gemini Omni 与个人数字分身 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Google Vids 推出 Gemini Omni 和个人数字分身两项功能：前者支持用户用自然语言提示词和图片参考生成并逐步编辑视频片段，后者允许用户上传自拍和语音录制后，通过文本让数字分身出镜。功能面向 Google AI Pro、Ultra 订阅者和 Google Workspace 商业客户开放，生成内容带有不可见 SynthID 数字水印。</p>
+        <p class="item-insight"><span>解读</span>企业视频生产工具开始把提示词生成、个人形象授权和水印标识放进同一工作链路，这会改变内部培训、销售材料和异步沟通内容的制作方式。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-17 00:00</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">07</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Claude</span><span>Cursor</span><span>编程模型</span></div>
+        <span class="item-source">AI HOT · 2026-07-18 00:32</span>
+      </div>
+      <h3><a href="https://claude.com/blog/working-at-the-frontier-cursor" target="_blank" rel="noreferrer">Claude Fable 5 在 CursorBench 达到 72.9% 新高 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Cursor 模型评估负责人 Nate Schmidt 称，Claude Fable 5 在内部基准 CursorBench 的 Max effort 模式达到 72.9%，创下新高。AI HOT 摘要称，该模型在模糊真实编程任务中表现出全局推理能力，例如在航天模拟器任务中仅凭一句提示自主规划并成功登月，而此前 Claude Opus 运行 12 小时以上仍无结果。</p>
+        <p class="item-insight"><span>解读</span>编码模型评估正在从短题和单文件修补转向长程、多步骤、目标模糊的工程任务，评估数据会直接影响 IDE 和 Agent 产品的默认模型选择。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-18 00:32</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">08</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>OpenAI</span><span>AI 商业化</span><span>指标</span></div>
+        <span class="item-source">AI HOT · 2026-07-17 18:00</span>
+      </div>
+      <h3><a href="https://openai.com/index/a-scorecard-for-the-ai-age" target="_blank" rel="noreferrer">OpenAI 提出“有用智能每美元”作为 AI 投资回报指标 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenAI 发布 AI 时代记分卡，提出 Useful Intelligence per Dollar，即“有用智能每美元”，从完成的有用工作量、成功任务的实际成本和结果可靠性三个维度评估 AI 投资回报。这个指标把模型比较从参数、跑分和单次调用价格拉回到任务完成成本，尤其适用于高频办公、客服、代码、研究等可记录成功率和重试成本的场景。</p>
+        <p class="item-insight"><span>解读</span>AI 产品商业化的价格讨论因此会更多围绕单位成功任务，而不是单纯围绕 token 单价。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-17 18:00</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-platforms">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>大厂与平台动态</h2>
+        <span class="section-count">5 条</span>
+      </div>
+      <span>平台变化主要集中在搜索入口、办公入口、企业云和订阅权益。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Google</span><span>NotebookLM</span><span>办公 AI</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/" target="_blank" rel="noreferrer">Google 将 NotebookLM 更名为 Gemini Notebook，并加入安全云电脑 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Google 宣布将 AI 研究助手 NotebookLM 更名为 Gemini Notebook，产品定位保持研究和资料处理助手，但新增安全云电脑功能。该功能让 Gemini Notebook 可以原生编写并执行代码，直接分析用户上传的文档和资料，目前向 Google AI Ultra 用户和 Workspace 商业客户开放，并将在未来数周推送给所有 Pro 订阅用户。</p>
+        <p class="item-insight"><span>解读</span>资料问答工具加入代码执行后，笔记、数据清洗、可视化和报告生成会进入同一个受控环境，办公 AI 的边界从摘要扩展到计算。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Google Cloud</span><span>Intel</span><span>企业 AI</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://www.googlecloudpresscorner.com/2026-07-16-Intel-and-Google-Cloud-Announce-Collaboration-to-Accelerate-Intels-AI-Enabled-Enterprise-Transformation" target="_blank" rel="noreferrer">英特尔与 Google Cloud 扩大合作，部署 Gemini Enterprise <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">英特尔与 Google Cloud 宣布扩大多年战略合作，英特尔将在全球员工中集成基于 Gemini 的生成式 AI，并采用 Gemini Enterprise Agent Platform 构建业务 Agent 自动化核心流程。Google Cloud 的 C4 和 N4 实例也将补充英特尔本地计算能力，用于运行复杂模拟并加速芯片开发。</p>
+        <p class="item-insight"><span>解读</span>大型企业采用 Agent 平台时，云算力、内部流程自动化和工程模拟会被打包进同一云合作协议。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>OpenAI</span><span>青少年保护</span><span>教育</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://openai.com/index/why-teens-deserve-access-safe-ai/" target="_blank" rel="noreferrer">OpenAI 扩展 ChatGPT 青少年保护，学习模式可默认开启 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenAI 更新 ChatGPT 青少年保护和学习工具，家长可以通过家长控制把学习模式设为新对话默认开启，青少年长时间使用会收到更频繁的休息提醒。家长通知范围扩展到账号因违反暴力使用政策被停用的情况；</p>
+        <p class="item-insight"><span>解读</span>官方还称互动学习体验已有 1800 万周活跃用户，并新增教育起始提示词、250 多个互动主题和 61 种以上语言的发音体验。教育场景中的 AI 产品正在把内容能力、家长控制、使用时长提醒和违规通知合并成平台规则。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>xAI</span><span>X</span><span>订阅</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://x.com/premium/status/2077820074015293774" target="_blank" rel="noreferrer">SuperGrok Heavy 订阅开始包含 X Premium+ <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">X 官方账号 Premium 宣布，SuperGrok Heavy 订阅现在包含 X Premium+，用户无需额外付费，只要在 Grok 应用中链接 X 账户即可激活。已同时订阅两项服务的用户可取消原有 X Premium+ 订阅，包含在 SuperGrok Heavy 中的权益会在当前计费周期后自动延续。</p>
+        <p class="item-insight"><span>解读</span>xAI 与 X 的订阅权益进一步绑定，AI 助手和社交平台会员的商业化被合并到同一个付费关系中。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Apple</span><span>OpenAI</span><span>法律争议</span></div>
+        <span class="item-source">AI HOT · 2026-07-17 19:10</span>
+      </div>
+      <h3><a href="https://www.ithome.com/0/978/277.htm" target="_blank" rel="noreferrer">Apple 与 OpenAI 法律战升级，约 40 名前员工收到律师函 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">AI HOT 引用报道称，苹果已向约 40 名就职于 OpenAI 的前员工发出律师函，要求保存相关文件；此前苹果起诉 OpenAI 和两名前员工，指控其通过挖角获取商业机密以加速 AI 硬件研发。</p>
+        <p class="item-insight"><span>解读</span>苹果称已有超过 400 名前员工在 OpenAI 工作，并寻求法院禁令阻止 OpenAI 使用苹果信息、要求归还机密。人才流动争议进入诉讼程序后，AI 硬件、模型公司和平台公司的知识产权边界会更多依赖雇佣协议、资料保全和法院禁令来界定。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-17 19:10</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-product-growth">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>产品与增长观察</h2>
+        <span class="section-count">2 条</span>
+      </div>
+      <span>产品形态变化集中在可执行文档、低代码应用、多端分发和内容生产。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>无代码</span><span>百度智能云</span><span>移动应用</span></div>
+        <span class="item-source">AI HOT · 2026-07-16 20:17</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s/W3QACoSYgwK0TW4zG-KFsg" target="_blank" rel="noreferrer">百度智能云秒哒 3.5 新增 iOS 打包、多应用共享后端和 SEO Agent <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">百度智能云在 WAIC2026 发布秒哒 3.5，新增 iOS 打包能力，用户无需 Mac 或 Xcode 就能将应用打包为 IPA 文件或上架 App Store。新版本还内置 SEO Agent 支持搜索优化自动化，允许多应用共享同一后端数据库，并推出数据库多环境隔离与后端资源分级功能；</p>
+        <p class="item-insight"><span>解读</span>秒哒累计服务超过 3500 万用户，已创造 350 万个商业应用。无代码开发工具正在从页面生成扩展到移动端上架、后端复用、资源隔离和搜索分发。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-16 20:17</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AIGC 视频</span><span>短剧</span><span>内容生产</span></div>
+        <span class="item-source">AI HOT · 2026-07-16 10:00</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s/WlGAeogkF_N5122nHA0TtQ" target="_blank" rel="noreferrer">天工短剧工作台发布 Agent 智能分镜与无限画布双轨创作模式 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">天工短剧工作台推出双轨创作模式，通过导演 Agent 自动解析剧本、规划站位和机位，并支持多视细节图生成，以减少 AI 短剧中的角色变脸和站位漂移问题。工具内置影视级提示词模板、720 度全景图和 3D 导演台，已有三部作品上线 DramaWave 后 7 天实现百万美元级营收。</p>
+        <p class="item-insight"><span>解读</span>短剧生产工具把剧本解析、分镜、镜头控制和商业分发数据连在一起，AIGC 视频产品开始处理工业化制作中的一致性和可控性问题。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-16 10:00</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-engineering">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>开发者与工程实践</h2>
+        <span class="section-count">7 条</span>
+      </div>
+      <span>工程侧重点是模型评测、代码安全、上下文管理、开源工具和基础设施成本。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>多模态评测</span><span>Kimi</span><span>基准</span></div>
+        <span class="item-source">juya AI 早报 · 2026-07-17 09:08</span>
+      </div>
+      <h3><a href="https://www.kimi.com/blog/perception-bench" target="_blank" rel="noreferrer">Kimi 发布 PerceptionBench，前沿多模态模型准确率均未超过 60% <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Kimi 发布 PerceptionBench，用于评估多模态大模型的原子视觉感知能力。该基准从 40 多个现有基准的模型失败案例中提炼出 10 项原子感知类别，包含 3000 个仅依赖视觉感知的已验证问题；</p>
+        <p class="item-insight"><span>解读</span>官方评测显示，当前参评前沿模型准确率均未超过 60%，GPT-5.6-Sol 以 59.7% 居首，且大量正确答案在重复提问时无法重现。这个基准把多模态模型的短板指向基础视觉感知，而不是复杂推理，图像理解产品在可靠性评估上需要区分“看见了”和“猜对了”。</p>
+      </div>
+      <div class="item-meta">juya AI 早报 · 2026-07-17 09:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>搜索 Agent</span><span>评测基准</span><span>美团</span></div>
+        <span class="item-source">AI HOT · 2026-07-17 22:08</span>
+      </div>
+      <h3><a href="https://x.com/Meituan_LongCat/status/2078119654632124547" target="_blank" rel="noreferrer">美团 LongCat 发布 LoHoSearch 搜索智能体基准 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">美团 LongCat 推出 LoHoSearch，一个基于 762 万实体维基百科知识图谱自动生成问题的搜索智能体基准，用来缓解 BrowseComp 等现有基准趋于饱和的问题。AI HOT 摘要称，该基准包含 544 道问题、11 个领域，采用树与图结构；</p>
+        <p class="item-insight"><span>解读</span>在 11 个前沿模型测试中，最佳得分仅 34.74%，远低于模型在 BrowseComp 上约 90% 的成绩，上下文策略只带来 6.8 个百分点提升。搜索 Agent 的评测开始转向长链路、多实体、图结构信息检索，这类任务更接近企业知识库和复杂网络调查。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-17 22:08</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AGI 评测</span><span>程序化推理</span><span>Claude</span></div>
+        <span class="item-source">AI HOT · 2026-07-17 16:41</span>
+      </div>
+      <h3><a href="https://schema-harness.github.io/" target="_blank" rel="noreferrer">Schema Harness 在 ARC-AGI-3 公开集取得约 99% 成绩 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Schema 框架在 ARC-AGI-3 公开集上使用 Claude Opus 4.8 和 Fable 5 达到 99% RHAE 分数，使用 GPT-5.6 Sol 达到 95.35%。该框架不修改模型权重，而是把原始观测转化为可编辑程序，联合解决状态归因和机制发现问题；</p>
+        <p class="item-insight"><span>解读</span>此前最强模型 GPT-5.6 Sol 在半私有集上仅得 7.78%。这类结果显示，围绕模型外部表示、状态转换和程序化中间层的工程设计，仍可能显著改变模型在推理任务上的表现。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-17 16:41</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>推理优化</span><span>缓存</span><span>大模型工程</span></div>
+        <span class="item-source">AI HOT · 2026-07-16 18:00</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s/RWveWvw9yBH6YQINBQ-XjA" target="_blank" rel="noreferrer">HYPIC 在混合注意力大模型上实现位置无关缓存 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">小红书联合北大、上交提出 HYPIC，用于混合注意力大模型的位置无关缓存。AI HOT 摘要称，在 4 个生产级模型上，HYPIC 将首 token 延迟平均降低 3.25 倍，在同一 SLO 下可持续 QPS 提升 1.66 倍，任务质量与完全重算仅相差 1.71 分。</p>
+        <p class="item-insight"><span>解读</span>缓存策略从全注意力模型迁移到混合注意力架构后，推理系统的延迟、吞吐和质量损耗可以被更精细地折中。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-16 18:00</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>代码安全</span><span>Agent</span><span>开源</span></div>
+        <span class="item-source">Hacker News · 2026-07-17 20:42</span>
+      </div>
+      <h3><a href="https://www.capitalone.com/tech/open-source/announcing-vulnhunter/" target="_blank" rel="noreferrer">Capital One 发布 agentic AI 代码安全工具 VulnHunter <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 高分帖关注 Capital One 的开源代码安全工具 VulnHunter，该工具被描述为面向代码安全的 agentic AI 工具。帖子在 HN 获得 60 分和 29 条讨论，热度不如 Kimi K3 等模型新闻，但它补充了一个企业内部安全工具开源的信号。</p>
+        <p class="item-insight"><span>解读</span>代码安全场景中的 Agent 产品会围绕漏洞定位、代码上下文读取、审计记录和误报处理展开，银行等强监管行业的开源实践有助于观察落地边界。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-07-17 20:42</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">06</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>GitHub Trending</span><span>开发 Agent</span><span>开源</span></div>
+        <span class="item-source">GitHub Trending · 2026-07-18 09:02</span>
+      </div>
+      <h3><a href="https://github.com/github/copilot-sdk" target="_blank" rel="noreferrer">GitHub Trending 中 Copilot SDK、code-review-graph 和 openinterpreter 同时升温 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 今日出现多个与开发 Agent 相关的项目：github/copilot-sdk 是用于把 GitHub Copilot Agent 集成进应用和服务的多平台 SDK，今日新增 233 星；tirth8205/code-review-graph 构建本地优先的代码智能图，面向 MCP 和 CLI，今日新增 74 星；</p>
+        <p class="item-insight"><span>解读</span>openinterpreter/openinterpreter 描述为面向 Kimi K3 等开放模型的编码 Agent，今日新增 431 星。这些项目的共同点是围绕代码上下文、Agent 集成和本地执行环境展开，开源生态正在补齐模型之外的工程接口。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-07-18 09:02</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">07</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 基础设施</span><span>内存</span><span>硬件成本</span></div>
+        <span class="item-source">AI HOT · 2026-07-17 08:40</span>
+      </div>
+      <h3><a href="https://www.theatlantic.com/technology/2026/07/generative-ai-engineering-disaster/687901" target="_blank" rel="noreferrer">AI 公司高端内存需求推高硬件成本 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">AI HOT 摘要称，AI 公司为维持 ChatGPT、Claude 等大语言模型运行，可能已购买全球 70% 的高端计算机内存，导致内存和存储价格上涨：两年前 350 美元的硬盘现已涨至 800 美元且缺货，部分笔记本电脑涨价 50%。报道还称科技公司计划未来几年将美国数据中心容量扩大 8 倍，部分站点甚至使用喷气发动机供电。</p>
+        <p class="item-insight"><span>解读</span>无论具体预测如何，训练和推理需求已经开始通过内存、硬盘、整机和数据中心供应链传导到普通计算硬件价格。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-17 08:40</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-funding">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>投融资与行业机会</h2>
+        <span class="section-count">1 条</span>
+      </div>
+      <span>本期没有典型融资新闻，保留供应链资本开支和商业化信号。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>台积电</span><span>半导体</span><span>资本支出</span></div>
+        <span class="item-source">AI HOT · 2026-07-16 15:59</span>
+      </div>
+      <h3><a href="https://www.ithome.com/0/977/544.htm" target="_blank" rel="noreferrer">台积电上调 2026 年资本支出预测至 600 亿至 640 亿美元 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">台积电在 2026 年第二季度财报说明会上将全年资本支出预测上调至 600 亿至 640 亿美元，此前预测接近 560 亿美元。董事长魏哲家表示，预计 2028 年量产的 A14 制程（1.4nm）开发进展顺利，移动和 HPC 客户兴趣强烈，将成为比 2nm 更大、更持久的工艺；</p>
+        <p class="item-insight"><span>解读</span>台积电预计 2026 年第三季度合并营收 446 亿至 458 亿美元，全年美元收入增幅将超过 40%。AI、HPC 和先进制程需求继续推高晶圆代工资本开支，算力产业链的扩张压力会沿设备、封装、服务器和云服务价格继续传导。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-16 15:59</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-policy">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>政策监管与合规</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>合规信息集中在平台开放、AI 滥用、身份权限和跨国治理组织。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>欧盟</span><span>DMA</span><span>Google</span></div>
+        <span class="item-source">AI HOT · 2026-07-16 20:06</span>
+      </div>
+      <h3><a href="https://www.theverge.com/policy/966438/eu-google-android-ai-interoperability-search-data-dma" target="_blank" rel="noreferrer">欧盟要求 Google 开放 Android 和 Search，波及 Gemini 等 AI 服务 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">AI HOT 引用报道称，欧盟依据《数字市场法案》裁定 Google 必须向竞争对手开放 Android 和 Google Search 的关键部分，包括允许第三方 AI 助手和搜索引擎获得更大访问权限。两项决定可能削弱 Google 对 Android 和 Search 两个核心平台的控制，并影响 Gemini 等 AI 工具未来的入口位置。</p>
+        <p class="item-insight"><span>解读</span>平台监管从应用商店和搜索排序延伸到 AI 助手接入权后，默认入口、数据访问和互操作性会成为 AI 服务竞争的一部分。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-16 20:06</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>xAI</span><span>内容安全</span><span>法律</span></div>
+        <span class="item-source">AI HOT · 2026-07-17 04:26</span>
+      </div>
+      <h3><a href="https://arstechnica.com/tech-policy/2026/07/xai-cant-deny-grok-makes-csam-anymore-so-its-suing-users" target="_blank" rel="noreferrer">xAI 起诉利用 Grok 制作儿童性虐待图像的用户 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">xAI 首次对一名 Grok 用户提起诉讼，指控其利用模型制作儿童性虐待图像。AI HOT 摘要称，此前 xAI 一直否认 Grok 能生成此类内容，此次诉讼标志着立场转变，案件聚焦用户滥用行为，而非模型本身技术缺陷。</p>
+        <p class="item-insight"><span>解读</span>生成式 AI 内容安全的责任边界正在从“模型是否能生成”转向平台防护、用户滥用、证据保存和民事诉讼。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-17 04:26</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 治理</span><span>国际组织</span><span>政策</span></div>
+        <span class="item-source">AI HOT · 2026-07-16 22:38</span>
+      </div>
+      <h3><a href="https://www.ithome.com/0/977/793.htm" target="_blank" rel="noreferrer">世界人工智能合作组织协定在上海签署 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">7 月 16 日，世界人工智能合作组织协定签署仪式在上海举行，中国政府代表签署协定。该组织为独立的政府间国际组织，总部设在中国上海，宗旨是促进人工智能国际合作与全球治理；</p>
+        <p class="item-insight"><span>解读</span>哈萨克斯坦、老挝、巴基斯坦等 29 个国家代表签署协定成为创始成员国。AI 治理正在出现更多多边组织安排，跨境模型服务、数据治理和安全评估未来会受到不同治理框架共同影响。</p>
+      </div>
+      <div class="item-meta">AI HOT · 2026-07-16 22:38</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-social-buzz">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>社交热度观察</h2>
+        <span class="section-count">2 条</span>
+      </div>
+      <span>本板块保留高讨论度但工作性略弱或已在核心板块出现过的信号。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>HN 热度</span><span>Kimi K3</span><span>开发者社区</span></div>
+        <span class="item-source">Hacker News · 2026-07-16 22:46</span>
+      </div>
+      <h3><a href="https://www.kimi.com/blog/kimi-k3" target="_blank" rel="noreferrer">Kimi K3 在 HN 获得近 2000 分讨论 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 上的 “Kimi K3: Open Frontier Intelligence” 获得 1994 分和 1161 条讨论，是当天技术社区最强热度信号之一；同一主题的 Simon Willison 文章也获得 268 分。</p>
+        <p class="item-insight"><span>解读</span>由于 Kimi K3 已在今日头条详述，HN 热度在这里作为社区接受度和争议密度的补充信号。开发者社区的高讨论量说明开放权重、长上下文、编码能力和 API 价格会继续成为模型发布后最先被检验的部分。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-07-16 22:46</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>HN 热度</span><span>云成本</span><span>AWS</span></div>
+        <span class="item-source">Hacker News · 2026-07-17 17:42</span>
+      </div>
+      <h3><a href="https://news.ycombinator.com/item?id=48945241" target="_blank" rel="noreferrer">AWS 账单估算异常在 HN 获得超过 1000 分 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子 “AWS: Inaccurate Estimated Billing Data - $1.7 billion” 获得 1027 分和 636 条讨论，链接指向 HN 讨论页。素材没有提供完整官方说明，因此不作为核心事实展开，但高热度反映云账单透明度、成本预估和事故沟通仍是开发者社区敏感议题。</p>
+        <p class="item-insight"><span>解读</span>云成本和 AI 推理成本同时上升时，账单估算异常会放大基础设施采购和预算管理的不确定感。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-07-17 17:42</div>
+    </div>
+  </article></div>
+  </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">© 2026 Whistle. 低噪音互联网与 AI 日报。</footer>
+  <script>
+    (() => {
+      const themeKey = "whistle-theme";
+      const themeButton = document.querySelector("[data-theme-toggle]");
+      const setTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        try { localStorage.setItem(themeKey, theme); } catch {}
+        if (themeButton) {
+          const label = theme === "dark" ? "切换到亮色模式" : "切换到暗色模式";
+          themeButton.setAttribute("aria-label", label);
+          themeButton.setAttribute("title", label);
+        }
+      };
+      let currentTheme = document.documentElement.dataset.theme || "dark";
+      setTheme(currentTheme);
+      themeButton?.addEventListener("click", () => {
+        currentTheme = currentTheme === "dark" ? "light" : "dark";
+        setTheme(currentTheme);
+      });
+
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = links
+        .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))
+        .filter((item) => item.section);
+      if (!sections.length) return;
+
+      const updateActiveToc = () => {
+        const threshold = Math.max(120, window.innerHeight * 0.28);
+        let active = null;
+        for (const item of sections) {
+          const rect = item.section.getBoundingClientRect();
+          if (rect.top <= threshold && rect.bottom > 80) active = item;
+        }
+        links.forEach((link) => link.removeAttribute("aria-current"));
+        if (active) active.link.setAttribute("aria-current", "true");
+      };
+
+      updateActiveToc();
+      window.addEventListener("scroll", updateActiveToc, { passive: true });
+      window.addEventListener("resize", updateActiveToc);
+    })();
+  </script>
+</body>
+</html>
