@@ -357,6 +357,7 @@ export function renderReportHtml(input) {
       --muted: #a5a5a5;
       --faint: #737373;
       --accent: #01c193;
+      --insight-border: rgba(1, 193, 147, .42);
       --button-bg: #fff;
       --button-text: #000;
       --button-hover-border: #fff;
@@ -376,6 +377,7 @@ export function renderReportHtml(input) {
       --muted: #555;
       --faint: #777;
       --accent: #012fe3;
+      --insight-border: rgba(1, 47, 227, .42);
       --button-bg: #000;
       --button-text: #fff;
       --button-hover-border: #000;
@@ -503,7 +505,7 @@ export function renderReportHtml(input) {
     .item-insight {
       position: relative;
       padding-left: 16px;
-      border-left: 2px solid rgba(1, 47, 227, .42);
+      border-left: 2px solid var(--insight-border);
       color: var(--muted) !important;
       line-height: 1.76;
     }
@@ -568,7 +570,7 @@ export function renderReportHtml(input) {
       .section-heading { break-after: avoid; page-break-after: avoid; }
       .report-item { break-inside: auto; page-break-inside: auto; }
       .item-kicker, .report-item h3 { break-after: avoid; page-break-after: avoid; }
-      .item-insight { border-left-color: rgba(1, 47, 227, .55); }
+      .item-insight { border-left-color: rgba(1, 193, 147, .55); }
       .footer { display: none; }
       a { color: inherit; border: 0; }
     }
