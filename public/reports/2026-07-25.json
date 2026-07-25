@@ -1,0 +1,558 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-07-25",
+  "title": "Whistle 互联网日报｜2026-07-25",
+  "summary": "先看几条新变化：Anthropic 发布 Claude Opus 5，并让 Claude Code 接入 1M 上下文；OpenAI 和 Anthropic 同时把语音入口推进到桌面、移动和网页端，语音开始承担任务调度、工具调用和多 Agent 协调；Black Forest Labs 的 FLUX 3 把图像、视频、音频和机器人动作预测放进统一架构；开放权重模型的监管边界在美国继续被大公司公开讨论，北京则用政策文件把智能体、终端融合和 Token 经济写进产业措施。今天的素材里，模型能力更新并不只是参数和榜单变化，更多体现在输入方式、输出形态、权限连接、成本归因和合规审计上。AI 产品正在从聊天窗口扩展到桌面、浏览器、办公套件、健康数据和企业日志，相关风险也从内容生成延伸到代理权限、爬虫流量、版权、医疗和安全测试。",
+  "theme": "语音 Agent、开放权重与多模态模型同日推进",
+  "topline": [
+    "Anthropic 发布 Claude Opus 5，HN 讨论热度超过 1200 分，并同步进入 Claude Code 更新。",
+    "ChatGPT Voice 和 Claude 语音模式都扩大到工具调用与任务协调，语音入口开始连接桌面权限和第三方应用。",
+    "FLUX 3 将视频、音频、图像和动作预测放进统一模型，并通过 mimic 在奥迪生产线测试机器人场景。",
+    "英伟达、微软和 Meta 公开反对过度监管开放权重模型，北京发布智能体发展措施，监管与产业政策同时围绕模型开放和 Agent 落地展开。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "本期头条集中在模型能力、Agent 入口、多模态生成和监管边界。",
+      "items": [
+        {
+          "title": "Anthropic 发布 Claude Opus 5，并成为 Claude Max 默认模型",
+          "summary": "Anthropic 发布 Claude Opus 5，官方称其智能水平接近 Claude Fable 5，但价格减半；AI HOT 摘要显示，它在 Frontier-Bench v0.1 上性能超过 Opus 4.8 两倍以上，在 ARC-AGI 3 上得分是次优模型的三倍。Opus 5 即日起成为 Claude Max 的默认模型和 Claude Pro 的最强模型，Claude Code v2.1.219 也新增该模型，并支持 1M 上下文窗口与嵌套子智能体。HN 上相关帖子得分超过 1200，说明开发者社区对新一代 Claude 在编码、长上下文和代理任务中的表现有强烈关注。",
+          "sourceName": "Anthropic：Newsroom",
+          "sourceUrl": "https://www.anthropic.com/news/claude-opus-5",
+          "publishedAt": "2026-07-24T17:24:25.589Z",
+          "tags": [
+            "Claude",
+            "模型发布",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "ChatGPT 与 Claude 同步强化语音模式，语音开始承接 Agent 调度",
+          "summary": "OpenAI 在 ChatGPT 桌面应用中上线 ChatGPT Voice，由 GPT-Live 驱动，Plus、Pro、Business、Edu 和 Enterprise 用户可在 macOS 与 Windows 上用语音对话、发布任务、检查进度或改变方向，并可在 Codex 中通过 iOS 配对远程使用语音。Anthropic 同日更新 Claude 语音模式，用户可在语音对话中使用 Opus 和 Sonnet，并连接 Gmail、Google Calendar、Slack、Canva、Notion 等应用执行会议更新和邮件起草。两家公司都把语音从问答输入推进到任务入口，随之出现的是桌面控制、第三方授权、并发语音会话和滚动配额等产品边界。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://learn.chatgpt.com/docs/features/voice",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "语音交互",
+            "Agent",
+            "ChatGPT",
+            "Claude"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "FLUX 3 统一图像、视频、音频与动作预测，视频模型开始连接机器人场景",
+          "summary": "Black Forest Labs 发布 FLUX 3 多模态基础模型，基于 Self-Flow 方法联合学习图像、视频和音频，可单次生成最长 20 秒带原生音频的视频，并具备图像合成与编辑能力。AI HOT 补充称，FLUX 3 与机器人公司 mimic 合作推出 FLUX-mimic，已在奥迪生产线上测试部署，视频预测占训练算力的 95% 以上，加入动作预测后视频生成质量一度下降最多 10%，经过 3500 步训练后恢复。该事件把生成式视频从内容生产扩展到动作预测和工业机器人测试，视觉输出不再只是成片，而是可能承载可交互模拟和物理执行前的状态预测。",
+          "sourceName": "Black Forest Labs",
+          "sourceUrl": "https://bfl.ai/blog/flux-3",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "多模态",
+            "视频生成",
+            "机器人"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "英伟达、微软和 Meta 警告不要过度监管开放权重模型",
+          "summary": "英伟达、微软和 Meta 联合签署公开信，警告对开放权重 AI 模型的过度监管会削弱美国在 AI 领域的竞争力，并强调开放权重模型可促进创新、降低准入门槛和支持学术研究；OpenAI 和 Anthropic 没有签署。微软 CEO Satya Nadella 随后在 X 上表示，开放权重模型需要在保护国家安全的同时增强美国竞争力并扩大经济机会。HN 上相关讨论得分接近 500，说明模型开放、国家安全和产业竞争之间的边界正在成为政策和开发社区共同关注的问题。",
+          "sourceName": "CNBC",
+          "sourceUrl": "https://www.cnbc.com/2026/07/24/nvidia-microsoft-meta-open-weight-ai-models.html",
+          "publishedAt": "2026-07-24T19:07:52.324Z",
+          "tags": [
+            "开放权重",
+            "监管",
+            "AI 政策"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "北京发布智能体发展措施，覆盖模型、终端、Token 经济和安全治理",
+          "summary": "北京市发展和改革委员会等四部门联合印发《北京市关于加快智能体引领发展的若干措施》，提出十条措施，覆盖基础模型能力提升、原生应用、终端产品融合、创新创业模式、Token 经济培育和安全治理。juya 摘要显示，符合条件的智能体终端新产品将被纳入家电以旧换新及数码和智能产品购新范围；AI HOT 补充称，文件还提到 Harness Engineering、OPC、一人公司和从 Token 消耗量计费转向价值计费等概念。政策把 Agent 从技术应用写入终端消费、产业扶持和治理框架，后续影响会体现在补贴目录、商业计费和安全要求上。",
+          "sourceName": "北京市人民政府",
+          "sourceUrl": "https://www.beijing.gov.cn/zhengce/zhengcefagui/202607/t20260723_4781085.html",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "智能体",
+            "产业政策",
+            "北京"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "模型、Agent 产品和生成式媒体工具继续密集更新，重点变化在长上下文、低激活参数、文档解析、媒体路由和跨端任务执行。",
+      "items": [
+        {
+          "title": "蚂蚁百灵发布 Ling-3.0-flash，124B 总参数、5.1B 激活参数",
+          "summary": "蚂蚁集团百灵大模型团队发布混合推理 MoE 模型 Ling-3.0-flash，专为生产级 Agent 工作负载设计，总参数 124B，每 token 激活 5.1B。juya 信息显示，模型原生支持 256K 上下文并可扩展至 1M，已上线 OpenRouter、Vercel AI Gateway 等平台并限时免费；AI HOT 补充称，其采用原生混合线性注意力架构与 1/64 稀疏 MoE，并扩展至 10000 多个可交互训练环境，长输入 TTFT 降低 60% 到 80% 以上。这个发布把长上下文、低激活成本和 Agent 训练环境放在同一模型设计里。",
+          "sourceName": "公众号：蚂蚁百灵（Ling）",
+          "sourceUrl": "https://mp.weixin.qq.com/s/5ic54FCsy334JJsQcyBr1g",
+          "publishedAt": "2026-07-24T13:40:30.000Z",
+          "tags": [
+            "Ling",
+            "MoE",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "inclusionAI 发布 LLaDA2.2-flash，扩散语言模型面向 Agent 长上下文",
+          "summary": "蚂蚁集团 inclusionAI 发布 LLaDA2.2-flash，这是 LLaDA2 系列中的 Agent 导向 MoE 扩散语言模型。模型引入 Levenshtein Editing 机制，通过 DELETE 和 INSERT 控制标记在扩散解码中进行序列结构编辑与纠错，总非嵌入参数量 100B，上下文窗口 128K，并使用 Block Routing 将 MoE 专家激活限制在扩散块级别。模型已在 Hugging Face 和 ModelScope 上线，采用 Apache License 2.0，SGLang 部署支持仍在推进。",
+          "sourceName": "Hugging Face",
+          "sourceUrl": "https://huggingface.co/inclusionAI/LLaDA2.2-flash",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "扩散语言模型",
+            "Agent",
+            "开源模型"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "快手开源 KAT-Coder-V2.5-Dev，面向 Agentic Coding 基准",
+          "summary": "快手 KwaiKAT 团队在 Hugging Face 开源 KAT-Coder-V2.5-Dev 权重，该模型基于 Qwen3.6-35B-A3B 后训练，总参数 350 亿、激活参数 30 亿。官方称它在 SWE-bench Verified、Multilingual、Pro 和 Terminal-Bench 2.1 等 Agentic Coding 基准上取得同参数量级领先结果。权重使用 Apache 2.0 许可，仅包含语言模型，不含视觉或多模态组件，支持 vLLM、SGLang 等框架部署。",
+          "sourceName": "Hugging Face",
+          "sourceUrl": "https://huggingface.co/Kwaipilot/KAT-Coder-V2.5-Dev",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "Coding Agent",
+            "开源模型",
+            "快手"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "百度 PaddlePaddle 发布 HPD-Parsing，1B 参数文档解析模型强调吞吐",
+          "summary": "百度 PaddlePaddle 在 Hugging Face 发布 HPD-Parsing，这是一个基于 InternVL3.5-1B 的轻量级高吞吐文档解析模型。模型引入分层并行解码和渐进式多词元预测，将传统单页自回归生成重构为全局协调的局部并行解码；官方数据显示，HPD-Parsing 在 OmniDocBench v1.6 上总体准确率达到 94.91%，峰值吞吐量为每秒 4752 个令牌。文档解析是企业知识库、RAG 和办公自动化的基础环节，吞吐与准确率同时提升会改变批量文档进入模型系统的成本结构。",
+          "sourceName": "Hugging Face",
+          "sourceUrl": "https://huggingface.co/PaddlePaddle/HPD-Parsing",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "文档解析",
+            "PaddlePaddle",
+            "多模态"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Grok 4.5 登陆 grok.com、X、移动端和 Microsoft 365 加载项",
+          "summary": "SpaceXAI 宣布 Grok 4.5 已在 grok.com、X、iOS 和 Android 应用中全面上线，官方称该模型能更好理解提问、跟踪更长对话，并提高推理效率。juya 摘要显示，Grok 4.5 可处理电子表格、转换幻灯片和提取长 PDF 要点，还可通过 Microsoft 365 加载项在 Word、Excel 等软件中使用。模型能力因此被嵌入办公套件和社交平台，入口不再限于独立聊天产品。",
+          "sourceName": "xAI",
+          "sourceUrl": "https://x.ai/news/grok-4-5-everywhere",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "Grok",
+            "办公套件",
+            "AI 助手"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "微软 MAI-Image-2.5-Pro 与 MAI-Voice-2-Flash 进入公测",
+          "summary": "Microsoft AI 宣布 MAI-Image-2.5-Pro 和 MAI-Voice-2-Flash 两款自研模型进入公测阶段。官方称两款模型已经在必应图片创建器、PowerPoint 图片生成与编辑、OneDrive 图片编辑以及 Dynamics 365 客服中心语音智能体中投入生产；MAI-Transcribe-1.5 目前支持 58 种语言，并用于医疗笔录解决方案 Dragon Copilot。微软的更新重点不是单独推出一个聊天模型，而是把图像、语音和转录模型放入现有办公、客服和医疗工作流。",
+          "sourceName": "Microsoft AI",
+          "sourceUrl": "https://microsoft.ai/news/introducing-mai-image-2-5-pro-and-mai-voice-2-flash/",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "微软",
+            "图像模型",
+            "语音模型"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Google 向美国 AI Pro 订阅者推出 Gemini Spark",
+          "summary": "Google 开始向美国 Google AI Pro 订阅者推出个人 AI agent Gemini Spark，当前版本为英语。官方称 Gemini Spark 可在后台全天候运行，并按用户指示完成任务，用户还能让它设置首项技能和任务；此前该功能已向更多国家和语言的 Google AI Ultra 订阅者开放。订阅层级从 Ultra 扩展到 Pro，意味着 Google 正在把持续运行的个人代理能力从高价套餐向更大用户池推进。",
+          "sourceName": "X：Gemini App",
+          "sourceUrl": "https://x.com/GeminiApp/status/2080401074083799229",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "Gemini",
+            "Agent",
+            "订阅"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Runway 推出 Media Router，按成本、延迟和质量自动选择生成式媒体模型",
+          "summary": "Runway 在 Runway Dev 平台上线 Runway Media Router，面向视频、图像和音频生成请求提供模型路由。该功能允许用户设置成本、延迟和质量偏好，也可配置价格上限、允许名单和拒绝名单，系统会据此筛选并调用得分最高的模型。生成式媒体正在出现类似 LLM 网关的路由层，模型选择从手动指定变成基于预算和质量约束的系统决策。",
+          "sourceName": "Runway",
+          "sourceUrl": "https://runway.com/news/company-news/introducing-runway-media-router",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "Runway",
+            "媒体生成",
+            "模型路由"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Runway Agent 支持用自然语言构建和编辑节点工作流",
+          "summary": "Runway 在 Runway Agent 中引入工作流功能，用户可通过自然语言构建、运行或编辑基于节点的流程。AI HOT 素材显示，该功能通过调用 / Workflow 技能进入使用，目标是把高质量媒体输出扩展到可复用流程。自然语言在这里不是单次提示词，而是用于生成和修改节点图，AI 输出形态继续从原始文本、Markdown 和 HTML，走向更视觉化、结构化、可交互的界面。",
+          "sourceName": "X：Runway",
+          "sourceUrl": "https://x.com/runwayml/status/2080649234672439389",
+          "publishedAt": "2026-07-24T13:40:08.000Z",
+          "tags": [
+            "Runway",
+            "工作流",
+            "交互界面"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Midjourney V8.2 发布，重点提升美学质量和个性化理解",
+          "summary": "Midjourney 推出 V8.2 图像模型，官方更新称新版重点提升美学质量、图像创意和个性化表现，并显著降低低质量图像出现频率。AI HOT 摘要显示，V8.2 的个性化配置文件拥有更大、更优的图像选择池，可更准确理解用户审美偏好。图像模型竞争继续从单纯提示词跟随转向审美偏好建模和个性化配置，输出稳定性成为面向创意工作的重要指标。",
+          "sourceName": "Midjourney Updates",
+          "sourceUrl": "https://updates.midjourney.com/version-8-2",
+          "publishedAt": "2026-07-24T22:18:48.000Z",
+          "tags": [
+            "Midjourney",
+            "图像生成",
+            "个性化"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "百度搭子升级跨端接力与桌面端内嵌浏览器",
+          "summary": "百度搭子在近期 AI Day 上推出多项升级，支持电脑与手机双端互联，同步任务上下文和执行进度，用户可跨设备接力完成复杂工作。AI HOT 摘要显示，桌面端内嵌浏览器已上线，可自动打开多个网页执行调研和下载等操作，手机端支持云端远程操控；智能路由让平均任务耗时降低 20%，Token 利用率提升 25%，复杂任务高交付率达到 94%，积分消耗最高降低 75%。这个产品更新把 Agent 执行环境从聊天框扩展到浏览器、手机和云端会话。",
+          "sourceName": "公众号：百度智能云（文心）",
+          "sourceUrl": "https://mp.weixin.qq.com/s/HRySK1LU53clPe2I_M-Fug",
+          "publishedAt": "2026-07-24T12:28:24.000Z",
+          "tags": [
+            "百度",
+            "Agent",
+            "跨端"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台更新集中在开发工具、健康数据、模型使用日志和商业化边界。",
+      "items": [
+        {
+          "title": "OpenAI Codex 支持多文件夹项目，并开放 Sites Analytics 公测",
+          "summary": "OpenAI 开发者账号宣布，Codex 本地项目已支持包含多个文件夹的相关代码、文档和参考文件，Codex 可跨这些文件夹读取和写入。系统仍保留一个主文件夹作为 Git 根目录，用于 Git 操作、审查、pull requests、AGENTS.md 和技能发现；同日，Sites Analytics 进入公开测试，为 Codex 发布站点提供基础性能指标。多目录支持改变了 Codex 项目的上下文边界，站点分析则把从代码到发布后的观测闭环纳入同一开发工具链。",
+          "sourceName": "X：OpenAI Developers",
+          "sourceUrl": "https://x.com/OpenAIDevs/status/2080383045472075856",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "Codex",
+            "开发工具",
+            "站点分析"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "ChatGPT Health 面向美国成年用户上线，连接 Apple Health 和医疗记录",
+          "summary": "OpenAI 向美国 18 岁及以上 ChatGPT 用户推出 Health 功能，覆盖网页端和 iOS 端的 Free、Go、Plus、Pro 套餐。用户可在授权后连接 Apple Health、部分美国医院系统和 One Medical 等医疗记录，ChatGPT 会结合这些数据回答健康问题、追踪指标变化并提供上下文参考；官方说明称，连接的医疗数据和相关对话不会用于训练基础模型或定向广告。健康数据接入让聊天产品进入高敏感信息场景，权限、数据用途声明和医疗免责声明都会成为产品边界的一部分。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/health-in-chatgpt/",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "ChatGPT",
+            "健康数据",
+            "隐私"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenRouter 上线 Classifiers 测试版，为 AI 请求标记用途与成本归属",
+          "summary": "OpenRouter 推出 Classifiers 测试版，允许用户通过最多 8 个维度的自定义分类法，为每次 AI 请求自动标记任务类型、部门归属和合规类别。分类异步运行，不增加推理延迟，并支持采样率控制成本；标记结果写入日志，可在 Activity Explorer 中按维度聚合分析模型使用分布和成本流向。模型网关正在从转发请求扩展到成本、审计和合规元数据层，企业级 AI 使用会增加更细的日志结构。",
+          "sourceName": "OpenRouter",
+          "sourceUrl": "https://openrouter.ai/blog/announcements/classifiers",
+          "publishedAt": "2026-07-24T00:00:00.000Z",
+          "tags": [
+            "OpenRouter",
+            "模型网关",
+            "成本归因"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "小米 MiMo Code 将于 7 月 26 日结束免费使用阶段",
+          "summary": "小米 MiMo 团队宣布，MiMo Code 将于 7 月 26 日 18:00 结束免费阶段，之后用户需要前往 MiMo 开放平台订阅 Token Plan 才能继续使用。官方同时提供首次订阅 88 折优惠。AI 编程工具的免费试用转向 token 订阅，反映平台开始把体验期流量转入明确计费，开发工具的日常使用成本会从模型调用费延伸到工具平台套餐。",
+          "sourceName": "MiMo 开放平台",
+          "sourceUrl": "https://platform.xiaomimimo.com/token-plan",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "MiMo Code",
+            "AI 编程",
+            "商业化"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "产品层面的信号集中在 AI 助手规模、AI 流量压力和视觉化原型工具。",
+      "items": [
+        {
+          "title": "Google Gemini 月活接近 9.5 亿，AI 搜索模式用户超过 10 亿",
+          "summary": "TechCrunch 报道，Google 在 2026 年 Q2 财报电话会上披露 Gemini 月活跃用户超过 9.5 亿，较去年增长三倍，AI 搜索模式用户也已超过 10 亿。Sensor Tower 报告显示，Gemini 在 AI 助手市场份额升至 27.7%，ChatGPT 份额首次跌破 50%。Google 正把 Gemini 放入搜索、订阅和企业产品中，AI 助手的分发竞争从单一应用下载扩展到已有入口的默认位置和套餐绑定。",
+          "sourceName": "TechCrunch",
+          "sourceUrl": "https://techcrunch.com/2026/07/23/google-closes-in-on-another-billion-user-product-with-gemini",
+          "publishedAt": "2026-07-23T14:52:44.000Z",
+          "tags": [
+            "Gemini",
+            "用户增长",
+            "AI 搜索"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "TheNumbers.com 因 AI 爬虫和攻击流量下线重建",
+          "summary": "电影数据网站 The Numbers 在 2026 年 3 月 5 日突然下线，一周后只以精简版恢复，历史图表、电影页面和 Report Builder 被移除。创始人 Bruce Nash 透露，AI 爬虫和智能体流量占总流量的 90%，服务器在持续重压下崩溃，日志还显示存在针对后门的恶意攻击，团队被迫放弃运行 30 年、包含 16 万源文件的旧系统，在新基础设施上重建。AI 抓取流量正在把内容站的成本问题变成可用性和安全问题。",
+          "sourceName": "Hacker News 热门（buzzing.cc 中文翻译）",
+          "sourceUrl": "https://stephenfollows.com/p/what-just-happened-to-thenumberscom-should-worry-us-all",
+          "publishedAt": "2026-07-23T18:35:29.016Z",
+          "tags": [
+            "AI 爬虫",
+            "内容站",
+            "基础设施"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Claude Design 展示用 HTML 交互探索产品原型和视觉创意",
+          "summary": "Anthropic 产品设计师 Nate Parrott 分享了 Claude Design beta 版的使用方式，包括用 HTML 交互能力探索产品原型、幻灯片、动画和品牌视觉创意。他将 Anthropic 品牌规范提炼为提示词，使输出自动符合品牌指南；Claude Design 不包含图像模型，不用于 Logo 设计，但可与 Claude Code 协同，把早期创意衔接到生产开发。这个案例显示 AI 输出正在从文本回复变成可查看、可交互、可继续编码的界面草稿。",
+          "sourceName": "Claude：Blog",
+          "sourceUrl": "https://claude.com/blog/how-the-product-designer-who-built-claude-design-uses-it-to-explore-ideas-before-building-them",
+          "publishedAt": "2026-07-24T17:25:50.349Z",
+          "tags": [
+            "Claude Design",
+            "原型",
+            "交互输出"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程实践信号来自上下文工程、缓存成本、安全事故、向量检索和开源工具热度。",
+      "items": [
+        {
+          "title": "Anthropic 称 Claude 5 代模型让 Claude Code 系统提示词精简超 80%",
+          "summary": "Anthropic 发布 Claude 5 代模型上下文工程文章，称在 Claude Opus 5 和 Claude Fable 5 等新一代模型上，Claude Code 删除了超过 80% 的系统提示词，编码评测没有显著损失。这个变化把一部分过去依赖长系统提示词维持的行为转移给模型本身，提示词工程从堆叠规则转向更短的上下文组织、工具协议和评测反馈。",
+          "sourceName": "Claude：Blog",
+          "sourceUrl": "https://claude.com/blog/the-new-rules-of-context-engineering-for-claude-5-generation-models",
+          "publishedAt": "2026-07-24T17:25:50.349Z",
+          "tags": [
+            "Claude Code",
+            "上下文工程",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Claude-thermos 用本地代理保持 Claude Code 会话缓存热度",
+          "summary": "Claude-thermos 是一个本地反向代理，用于监控 Claude Code 会话，并在主智能体因等待子智能体而空闲超过 5 分钟时自动发送预热请求刷新提示缓存。AI HOT 摘要显示，约 185 次本地会话实测中，缓存过期导致的重新编码占账单约 22%，该工具可用 uvx 运行，并支持自定义空闲阈值和预热间隔。随着多 Agent 编程工具更多使用长上下文，缓存生命周期和重新编码费用开始成为真实工程成本。",
+          "sourceName": "GitHub",
+          "sourceUrl": "https://github.com/izeigerman/claude-thermos",
+          "publishedAt": "2026-07-24T09:47:29.601Z",
+          "tags": [
+            "Claude Code",
+            "缓存",
+            "成本优化"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "小红书 HELMSMAN 用全闪存服务器承载向量检索负载，硬件成本节省超 90%",
+          "summary": "小红书引擎架构团队在 OSDI 2026 提出 HELMSMAN，一个面向全闪存服务器的高性能向量近似最近邻搜索系统。AI HOT 摘要显示，该系统通过聚类式索引、定制化存储栈和分层学习式搜索剪枝，用约 40 台全闪存服务器承载过去约 35000 CPU Core 和约 350 TB DRAM 的负载，硬件成本节省超过 90%。向量检索从内存密集型架构转向闪存优化，会直接影响推荐、搜索和 RAG 系统的基础设施预算。",
+          "sourceName": "公众号：小红书技术",
+          "sourceUrl": "https://mp.weixin.qq.com/s/WCYE6itbTBPU0Q_3BfQxkA",
+          "publishedAt": "2026-07-23T04:00:00.000Z",
+          "tags": [
+            "向量检索",
+            "基础设施",
+            "小红书"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "GitHub Trending 显示 AI 代理浏览器和模型网关工具热度上升",
+          "summary": "GitHub Trending 今日出现多个与 AI 工具链有关的项目：citrolabs/ego-lite 获得 880 个今日星标，定位为面向 Codex、Claude Code 等代理的自动化浏览器，可共享已登录浏览器状态；diegosouzapw/OmniRoute 今日新增 1841 星，描述为免费 MIT AI gateway，支持 290 多个提供商、500 多个模型、自动 fallback、token 压缩、MCP 与 A2A。开源生态正在补齐 Agent 运行所需的浏览器环境、模型路由和成本控制层。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/citrolabs/ego-lite",
+          "publishedAt": "2026-07-25T01:04:20.367Z",
+          "tags": [
+            "GitHub Trending",
+            "Agent 浏览器",
+            "AI Gateway"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "本期强信号集中在推理芯片、科研协作和垂直基础模型。",
+      "items": [
+        {
+          "title": "AI 推理芯片公司 Etched 完成 3 亿美元 C 轮融资，估值 103 亿美元",
+          "summary": "Etched 宣布完成 3 亿美元 C 轮融资，由 Sequoia 领投，估值达到 103 亿美元。公司专注 AI 推理系统，称资金将用于加速定制芯片和推理集群生产交付；其系统从头设计了针对推理预填充阶段的低压芯片，以及用于生成解码阶段的集群级内存，并称可运行包括 DeepSeek 在内的任何 AI 模型。公司已获得 10 亿美元订单，但联合创始人承认硬件目前仅供投资方和早期客户测试，距离大规模量产交付仍有距离。",
+          "sourceName": "X：Etched",
+          "sourceUrl": "https://x.com/Etched/status/2080307393699987849",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "AI 芯片",
+            "融资",
+            "推理"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "字节跳动 Seed 启动 STEM 科学家计划，邀请 100 位学者协作",
+          "summary": "字节跳动 Seed 团队启动 Seed STEM 科学家计划，邀请 100 位前沿科学领域学者围绕真实科研问题合作。计划面向 STEM 相关领域已获或正在攻读博士学位及同等研究水平人员，提供科学家顾问和博士实习生两种参与方式，并提供算力资源、团队协作机会和竞争性薪酬；首期约持续 6 个月，需现场办公，地点在北京海淀区，申请截止到 2026 年 9 月 30 日。大模型公司正在把科研合作、算力资源和人才计划包装成长期能力建设的一部分。",
+          "sourceName": "字节跳动 Seed",
+          "sourceUrl": "https://seed.bytedance.com/zh/seedstem",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "字节跳动",
+            "科研",
+            "人才计划"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "合规关注点从模型发布安全扩展到跨国指责、医疗责任、开源治理和代理权限。",
+      "items": [
+        {
+          "title": "有关部门回应白宫指责月之暗面，反对科技经贸问题政治化",
+          "summary": "针对白宫高级官员指责中国公司月之暗面蒸馏 Anthropic 模型一事，有关部门发言人在例行记者会上回应称，中国人工智能的发展得益于共商共建共享理念，中方一贯反对将科技经贸问题政治化、工具化。发言人表示，这种行径会干扰全球人工智能发展进程，不符合任何一方利益。AI 模型训练、蒸馏和跨境技术竞争正在进入外交与经贸叙事，企业模型来源和训练合规会承受更多外部审视。",
+          "sourceName": "微信公众号",
+          "sourceUrl": "https://mp.weixin.qq.com/s/jjyiEECaDLwwGxKKw3RjGQ",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "月之暗面",
+            "AI 政策",
+            "跨境"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "马斯克提议前沿模型发布前由竞争公司互审，政府干预作为最后手段",
+          "summary": "埃隆·马斯克在采访中提议，OpenAI、Anthropic 和 SpaceXAI 等前沿 AI 公司在发布最先进模型前应互相审查，并定期沟通安全问题。报道称，他认为政府缺乏足够技术深度，因此政府干预只应在公司拒绝修复安全问题时启动；目前这些公司虽通过前沿模型论坛共享漏洞信息，但没有共享未发布模型。这个提议把模型发布前评估从自测和第三方红队扩展到竞争对手审查，现实难点在未发布模型访问、商业机密和责任划分。",
+          "sourceName": "Fortune",
+          "sourceUrl": "https://fortune.com/article/elon-musk-says-rival-ai-labs-should-peer-review-frontier-models-before-release-with-government-as-last-resort/",
+          "publishedAt": "2026-07-24T01:43:37.000Z",
+          "tags": [
+            "模型安全",
+            "监管",
+            "前沿模型"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "以下内容讨论度高，但更多是社区情绪、背景风险或开源热度信号。",
+      "items": [
+        {
+          "title": "HN 热议安防摄像头登录页泄露 GitHub 管理员 token",
+          "summary": "HN 上“My security camera shipped a GitHub admin token in its login page”得分超过 500，文章称某安防摄像头产品在登录页面中泄露 GitHub 管理员 token。它是典型供应链和前端打包安全事故，和今日 Agent 权限、浏览器自动化、工具连接等话题形成背景呼应。该条未进入核心板块，是因为素材主要来自社区讨论，但它反映出硬件产品和云端代码仓库之间的权限隔离仍是高风险环节。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://hhh.hn/hanwha-github-token/",
+          "publishedAt": "2026-07-24T11:54:41.000Z",
+          "tags": [
+            "安全",
+            "GitHub",
+            "供应链"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "HN 继续讨论“AI 编程已解决，软件为什么还在变差”",
+          "summary": "HN 文章“If coding has been solved, why does software keep getting worse?”得分接近 500，讨论围绕 AI 编程工具普及后软件质量、复杂度和责任边界的落差展开。它不是单一产品发布，但与 Claude Code、Codex、多 Agent 编程和上下文工程等新闻相互映照。社区热度显示，开发者对 AI 生成代码的效率叙事仍存在明显怀疑，讨论焦点集中在维护性、评审压力和生产事故。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://ptrchm.com/posts/nothing-works-and-everyone-is-euphoric/",
+          "publishedAt": "2026-07-24T09:08:17.000Z",
+          "tags": [
+            "AI 编程",
+            "软件质量",
+            "社区讨论"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "印度政府据称要求 GitHub 移除蓝牙聊天应用 Bitchat",
+          "summary": "HN 上关于 Jack Dorsey 称印度政府要求 GitHub 移除 Bluetooth-based chat app Bitchat 的帖子得分超过 360，评论超过 270。该事件主要是平台治理和通信工具监管的社区讨论信号，涉及去中心化通信、应用分发和 GitHub 下架边界。它未进入政策核心板块，是因为素材细节仍主要来自报道和当事人说法，但热度显示开发者社区对代码托管平台承受政府下架请求高度敏感。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://www.thehindu.com/news/national/government-orders-github-to-remove-bluetooth-based-chat-app-bitchat-over-security-concerns-jack-dorsey/article71262049.ece",
+          "publishedAt": "2026-07-24T14:41:59.000Z",
+          "tags": [
+            "GitHub",
+            "平台治理",
+            "通信应用"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "GitHub Trending 上 worldmonitor、awesome-claude-skills 和 skills 获得高星标",
+          "summary": "GitHub Trending 今日显示，koala73/worldmonitor 获得 2184 个今日星标，定位为 AI 驱动的实时全球情报仪表盘；ComposioHQ/awesome-claude-skills 今日新增 663 星，聚合 Claude Skills 资源；mattpocock/skills 今日新增 2251 星，收录个人 agents 目录中的工程技能。它们更多是开源热度和学习材料信号，但与 Whistle 关注的信息处理、技能化 Agent 和个人情报台方向高度相关。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/koala73/worldmonitor",
+          "publishedAt": "2026-07-25T01:04:20.367Z",
+          "tags": [
+            "GitHub Trending",
+            "信息仪表盘",
+            "Agent Skills"
+          ],
+          "importance": "normal"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "本期优先保留 juya 与 AI HOT daily 中事实完整、与互联网工作相关的模型、Agent、平台、基础设施、商业化和政策信息；合并了 ChatGPT Voice、Claude 语音模式、FLUX 3、开放权重监管等多源重复报道；过滤了过期、弱相关、纯消费电子、泛媒体讨论和 HN 中分数不足且与 AI 或开发实践关联较弱的条目。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (40 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (16 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-07-25T01:25:00.000Z"
+}
