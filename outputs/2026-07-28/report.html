@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="先看几条新变化：月之暗面开放 Kimi K3 权重和技术报告，把 2.8 万亿参数 MoE、100 万 token 上下文、视觉理解和 Agent 训练基础设施一起推到公开市场；微软把自研网络安全模型接入 MDASH，多 Agent 漏洞识别开始从演示走向安全产品；Google 搜索里的 AI Overviews 出现率升到 43%，搜索入口正在被更长的自然语言查询改写。国内平台也在把 Agent 做成办公和本地生活工具，美团 CatPaw、阿里千问办公、百度搭子都在处理跨端、云端运行、文件产出和浏览器自动化。另一边，开放权重模型的安全边界继续被讨论，Anthropic、NVIDIA、微软、Meta 和中方回应分别给出了不同约束口径，模型开放已经不只是技术路线，也牵动芯片、蒸馏、安全测试和企业采购边界。">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Whistle 互联网日报｜2026-07-28</title>
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem("whistle-theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0d0d0d;
+      --panel-soft: #151515;
+      --line: #242424;
+      --line-soft: #1a1a1a;
+      --text: #f4f4f4;
+      --muted: #a5a5a5;
+      --faint: #737373;
+      --accent: #01c193;
+      --insight-border: rgba(1, 193, 147, .42);
+      --button-bg: #fff;
+      --button-text: #000;
+      --button-hover-border: #fff;
+      --theme-bg: rgba(0,0,0,.74);
+      --max: 1180px;
+      --serif: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #fff;
+      --panel: #f7f7f7;
+      --panel-soft: #f0f0f0;
+      --line: #dcdcdc;
+      --line-soft: #ececec;
+      --text: #0b0b0b;
+      --muted: #555;
+      --faint: #777;
+      --accent: #012fe3;
+      --insight-border: rgba(1, 47, 227, .42);
+      --button-bg: #000;
+      --button-text: #fff;
+      --button-hover-border: #000;
+      --theme-bg: rgba(255,255,255,.78);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
+    body { font-family: var(--sans); line-height: 1.72; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
+    a:hover { color: var(--text); border-bottom-color: var(--text); }
+    .theme-bar {
+      position: fixed;
+      top: 24px;
+      right: max(40px, calc((100vw - var(--max)) / 2 + 40px));
+      z-index: 30;
+      pointer-events: none;
+    }
+    .theme-toggle {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--theme-bg);
+      color: var(--text);
+      cursor: pointer;
+      pointer-events: auto;
+      transition: border-color .16s ease, transform .16s ease;
+    }
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .theme-toggle:hover { border-color: var(--button-hover-border); transform: translateY(-1px); }
+    :root[data-theme="light"] .theme-toggle { color: #000; }
+    :root:not([data-theme="light"]) .theme-toggle { color: #fff; }
+    .back-link {
+      display: inline-block;
+      margin: 0 0 34px;
+      border: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+    .back-link:hover { color: var(--text); }
+    .hero { width: 100%; padding: 0 0 58px; text-align: left; }
+    h1 { margin: 0; font-size: clamp(26px, 3vw, 38px); font-weight: 560; line-height: 1.06; letter-spacing: -.05em; }
+    .summary { max-width: 720px; margin: 24px 0 0; color: var(--text); font-size: 18px; line-height: 1.7; }
+    .hero-meta { margin-top: 22px; color: var(--text); font-size: 13px; }
+    .hero-actions { display: flex; justify-content: flex-start; gap: 12px; margin-top: 30px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
+      background: var(--button-bg); color: var(--button-text); font-size: 14px; font-weight: 600;
+      transition: border-color .16s ease, color .16s ease, background .16s ease;
+    }
+    .button--ghost { background: transparent; color: var(--text); }
+    .button:hover { border-color: var(--button-hover-border); }
+    .layout {
+      display: grid; grid-template-columns: 190px minmax(0, 760px);
+      gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
+    }
+    .toc { position: sticky; top: 86px; align-self: start; color: var(--muted); font-size: 13px; }
+    .toc strong { display: block; margin-bottom: 8px; color: var(--text); font-size: 13px; }
+    .toc a { display: block; margin: 0 0 3px; padding: 3px 0; border: 0; color: var(--muted); line-height: 1.35; transition: color .16s ease; }
+    .toc a[aria-current="true"] { color: var(--text); }
+    .toc a:hover { color: var(--text); }
+    .topline {
+      margin-bottom: 54px; padding: 26px; border: 1px solid var(--line); border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .topline h2 { margin: 0 0 16px; font-size: 24px; letter-spacing: -.025em; }
+    .topline ul { margin: 0; padding-left: 20px; color: var(--muted); }
+    .report-section { padding: 54px 0; border-top: 1px solid var(--line); }
+    .section-heading { margin-bottom: 30px; }
+    .section-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+    .section-heading h2 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; }
+    .section-heading span { display: block; margin-top: 8px; color: var(--muted); }
+    .section-count { flex: 0 0 auto; margin-top: 0 !important; color: var(--faint) !important; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    .section-items { display: grid; gap: 0; }
+    .report-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+    .report-item:first-child { border-top: 0; padding-top: 0; }
+    .item-rail { padding-top: 3px; }
+    .item-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1;
+    }
+    .item-kicker {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 8px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .item-kicker .tags { margin-bottom: 0; }
+    .tags span { color: var(--accent); font-size: 12px; }
+    .report-item h3 { margin: 0; font-size: 22px; line-height: 1.35; letter-spacing: -.025em; }
+    .report-item h3 a { border: 0; }
+    .report-item h3 a span { color: var(--accent); font-size: .82em; }
+    .item-copy { margin-top: 12px; display: grid; gap: 10px; }
+    .report-item p { margin: 0; color: var(--text); font-size: 15px; }
+    .item-fact { color: var(--text); line-height: 1.82; }
+    .item-insight {
+      position: relative;
+      padding-left: 16px;
+      border-left: 2px solid var(--insight-border);
+      color: var(--muted) !important;
+      line-height: 1.76;
+    }
+    .item-insight span {
+      display: inline-block;
+      margin-right: 9px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .item-source, .item-meta { color: var(--faint); font-size: 12px; white-space: nowrap; }
+    .item-meta { display: none; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .report-section--featured { padding-top: 54px; }
+    .report-section--featured .section-heading { margin-bottom: 30px; }
+    .report-section--featured .report-item h3 { font-size: 23px; }
+    .report-section--featured .item-index { color: var(--muted); }
+    .empty, .note { margin: 0; color: var(--muted); }
+    .action-list { display: grid; gap: 12px; }
+    .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: var(--muted); }
+    .action-item strong { color: var(--text); }
+    .status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .status-grid div { padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+    .status-grid strong, .status-grid span { display: block; }
+    .status-grid span { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+    @media (max-width: 980px) {
+      .layout { display: block; padding: 66px 24px 72px; }
+      .theme-bar { top: 18px; right: 24px; }
+      .toc { display: none; }
+      .hero { padding: 0 0 58px; }
+      .hero-actions { justify-content: flex-start; }
+      .section-title-row { display: block; }
+      .section-count { margin-top: 8px !important; }
+      .report-item { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+      .item-rail { display: none; }
+      .item-kicker { display: block; }
+      .item-source { display: none; }
+      .item-meta { display: block; }
+      .status-grid, .action-item { grid-template-columns: 1fr; }
+    }
+    @media print {
+      @page { size: A4; margin: 0; }
+      :root { color-scheme: dark; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html, body { background: var(--bg) !important; color: var(--text) !important; }
+      :root, :root[data-theme="light"] {
+        color-scheme: dark;
+        --bg: #000;
+        --panel: #0d0d0d;
+        --panel-soft: #151515;
+        --line: #242424;
+        --line-soft: #1a1a1a;
+        --text: #f4f4f4;
+        --muted: #a5a5a5;
+        --faint: #737373;
+        --accent: #01c193;
+      }
+      .theme-bar, .back-link, .toc, .hero-actions, script { display: none !important; }
+      .hero { text-align: left; padding: 0 0 42px; }
+      .layout { display: block; max-width: 760px; margin: 0; padding: 12mm; }
+      .report-section { break-inside: auto; page-break-inside: auto; padding: 38px 0; }
+      .section-heading { break-after: avoid; page-break-after: avoid; }
+      .report-item { break-inside: auto; page-break-inside: auto; }
+      .item-kicker, .report-item h3 { break-after: avoid; page-break-after: avoid; }
+      .item-insight { border-left-color: rgba(1, 193, 147, .55); }
+      .footer { display: none; }
+      a { color: inherit; border: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-bar">
+    <button class="theme-toggle" data-theme-toggle type="button" aria-label="切换到亮色模式" title="切换到亮色模式">
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M12 2v2"></path>
+        <path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"></path>
+        <path d="M16 12a4 4 0 0 0-4-4"></path>
+        <path d="m19 5-1.256 1.256"></path>
+        <path d="M20 12h2"></path>
+      </svg>
+    </button>
+  </div>
+  <main>
+    <div class="layout">
+      <aside class="toc">
+        <strong>目录</strong>
+        <a href="#section-headline">今日头条</a><a href="#section-ai-tools">AI 与新工具</a><a href="#section-platforms">大厂与平台动态</a><a href="#section-product-growth">产品与增长观察</a><a href="#section-engineering">开发者与工程实践</a><a href="#section-funding">投融资与行业机会</a><a href="#section-policy">政策监管与合规</a><a href="#section-social-buzz">社交热度观察</a>
+      </aside>
+      <article>
+        <a class="back-link" href="/archive/" aria-label="返回归档">← 返回</a>
+        <section class="hero">
+          <h1>Whistle 互联网日报｜2026-07-28</h1>
+          <p class="summary">先看几条新变化：月之暗面开放 Kimi K3 权重和技术报告，把 2.8 万亿参数 MoE、100 万 token 上下文、视觉理解和 Agent 训练基础设施一起推到公开市场；微软把自研网络安全模型接入 MDASH，多 Agent 漏洞识别开始从演示走向安全产品；Google 搜索里的 AI Overviews 出现率升到 43%，搜索入口正在被更长的自然语言查询改写。国内平台也在把 Agent 做成办公和本地生活工具，美团 CatPaw、阿里千问办公、百度搭子都在处理跨端、云端运行、文件产出和浏览器自动化。另一边，开放权重模型的安全边界继续被讨论，Anthropic、NVIDIA、微软、Meta 和中方回应分别给出了不同约束口径，模型开放已经不只是技术路线，也牵动芯片、蒸馏、安全测试和企业采购边界。</p>
+          <p class="hero-meta">32 条信号 · 2026/7/28 09:37:37</p>
+          <div class="hero-actions">
+            <a class="button button--ghost" href="../assets/report-2026-07-28.pdf">下载 PDF</a>
+            <a class="button button--ghost" href="/archive/">查看归档</a>
+          </div>
+        </section>
+        <section class="report-section report-section--featured" id="section-headline">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>今日头条</h2>
+        <span class="section-count">5 条</span>
+      </div>
+      <span>今天最重要的变化集中在模型开放、Agent 产品化、安全基础设施和搜索分发入口。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 模型</span><span>开放权重</span><span>基础设施</span></div>
+        <span class="item-source">juya-ai-daily · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s/tryHe81IyM6nr0fBPDz72g" target="_blank" rel="noreferrer">月之暗面发布 Kimi K3 权重与完整技术报告 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">月之暗面正式开放 Kimi K3 模型权重，并同步发布完整技术报告。Kimi K3 采用 MoE 架构，总参数 2.8 万亿，每个 token 激活约 1040 亿参数，设置 896 个路由专家并选择 16 个参与计算，同时具备原生视觉理解能力和最长 100 万 token 上下文。</p>
+        <p class="item-insight"><span>解读</span>技术报告披露了 Kimi Delta Attention、Gated MLA、Attention Residuals、Stable LatentMoE 和 MoonViT-V2 等设计，权重采用 Kimi K3 License，达到一定收入规模的 MaaS 服务商在商业使用前需另行签署协议。模型、技术报告和许可条件一起发布，使开放权重竞争从参数规模扩展到推理成本、长上下文、视觉能力和商业授权边界。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 安全</span><span>Agent</span><span>微软</span></div>
+        <span class="item-source">Microsoft AI · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://microsoft.ai/news/introducing-mai-cyber-1-flash-inside-mdash/" target="_blank" rel="noreferrer">微软推出 MAI-Cyber-1-Flash 并接入 MDASH <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">微软发布首款网络安全模型 MAI-Cyber-1-Flash，并将其深度集成到多 Agent 漏洞识别与修复工具 MDASH 中。官方称该组合在 CyberGym 安全基准上得分 96%，较 Mythos 高出 12 个百分点，MAI-Cyber-1-Flash 可处理约 90% 的任务，复杂任务交给 GPT-5.4，整体成本较此前 MDASH 最佳方案降低 50%。</p>
+        <p class="item-insight"><span>解读</span>微软还同步推出 Agentic 安全系统 Project Perception，用 Agent 团队持续监控、修补和关闭威胁向量。安全模型进入漏洞发现和修复链路后，AI 安全产品的竞争重点会落到专用模型、任务分流、审计记录和成本控制。</p>
+      </div>
+      <div class="item-meta">Microsoft AI · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent</span><span>美团</span><span>企业工具</span></div>
+        <span class="item-source">juya-ai-daily · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s/daRzJtun2EfQ8X3VVpVppQ" target="_blank" rel="noreferrer">美团上线全场景 AI Agent 平台 CatPaw <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">美团正式上线全场景 AI Agent 平台 CatPaw，提供桌面端、移动端和云端智能工作台，以及企业级 Managed Agents 开发托管能力。平台支持 macOS、Windows、iOS、Android 四端实时同步，云端模式支持 7×24 小时运行，内置专家与技能库，支持多 Agent 自主协同和跨会话持久记忆；</p>
+        <p class="item-insight"><span>解读</span>美团称其内部已覆盖 9 万员工、搭建 3 万个 Agent。个人侧提供体验版和专业版，专业版每月 4000 Credits，并面向美团合作商家开放抢先体验。本地生活平台把 Agent 做成可托管、可同步、可计费的工作台，会把行业知识、商家场景和任务执行入口绑定在同一产品内。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 搜索</span><span>Google</span><span>分发</span></div>
+        <span class="item-source">TechCrunch · 2026-07-27 23:57</span>
+      </div>
+      <h3><a href="https://techcrunch.com/2026/07/27/googles-ai-search-is-rapidly-becoming-the-default-new-data-shows" target="_blank" rel="noreferrer">Google AI Overviews 搜索结果出现率升至 43% <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">AI HOT 引用 TechCrunch 数据称，Google AI Overviews 在搜索结果中的出现率一年内从 15% 升至 43%，AI Mode 月访问量从 1.26 亿增至 2.79 亿。数据同时显示用户搜索长度增加，查询方式正从短关键词转向更长的自然对话式表达。</p>
+        <p class="item-insight"><span>解读</span>搜索结果页的 AI 摘要占比提高，会改变网页内容获得曝光的位置，也会让结构化答案、引用来源和对话式查询成为搜索分发的一部分。</p>
+      </div>
+      <div class="item-meta">TechCrunch · 2026-07-27 23:57</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>开放权重</span><span>政策</span><span>Anthropic</span></div>
+        <span class="item-source">Anthropic Newsroom · 2026-07-28 06:26</span>
+      </div>
+      <h3><a href="https://www.anthropic.com/news/position-open-weights-models" target="_blank" rel="noreferrer">开放权重模型争论升级，Anthropic 给出三项约束口径 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Anthropic CEO Dario Amodei 发文称，Anthropic 从未倡导封禁开放权重模型，也认为不具备危险能力的开放权重模型是公共产品。他支持的措施包括限制向中国出口高性能芯片及芯片制造设备、打击工业级蒸馏操作，以及要求所有足够强大的模型无论开放或封闭都经过强制性安全测试。</p>
+        <p class="item-insight"><span>解读</span>近期美国官员、科技公司公开信和中国相关部门回应都围绕开放模型访问、蒸馏和制裁展开，讨论对象已经从模型是否开放，延伸到供应链、国家安全、测试制度和企业使用边界。</p>
+      </div>
+      <div class="item-meta">Anthropic Newsroom · 2026-07-28 06:26</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-ai-tools">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>AI 与新工具</h2>
+        <span class="section-count">10 条</span>
+      </div>
+      <span>模型、Agent、办公、语音、图像和开发工具都有更新，重点是能力如何变成可运行的产品入口。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 模型</span><span>微信</span><span>MoE</span></div>
+        <span class="item-source">juya-ai-daily · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://daily.juya.uk/issues/2026-07-28/" target="_blank" rel="noreferrer">微信 WeLM 推出 HD4-80B 与 617B 参数 MoE 模型 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">微信 WeLM 技术团队发布采用 Hidden Decoding 技术的大规模 MoE 模型 WeLM-HD4-80B 和 WeLM-HD4-617B。团队称这两个模型在复杂推理、代码生成和通用对话能力上均有提升，目标是服务微信海量用户，但目前未公布模型开放下载或 API 使用方式。</p>
+        <p class="item-insight"><span>解读</span>微信生态内的大模型能力如果继续内嵌到聊天、内容和服务场景，模型能力会更多以平台功能出现，而不是以独立模型服务出现。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 办公</span><span>阿里</span><span>钉钉</span></div>
+        <span class="item-source">juya-ai-daily · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://qwenwork.cn/docs/product-introduction" target="_blank" rel="noreferrer">阿里千问办公打通钉钉并支持多格式产出 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">阿里巴巴推出一站式 AI 办公平台千问办公，用户可通过自然语言对话执行数据分析、PPT 生成、视频剪辑等任务，并输出 PPTX、Word、Excel、HTML 等格式文件。该平台基于千问系列大模型，覆盖桌面端、网页端并接入钉钉生态，提供免费版，以及连续包月 78 元起的个人标准版和 158 元起的个人高级版；</p>
+        <p class="item-insight"><span>解读</span>部分能力如浏览器自动化目前仅桌面端支持。办公 AI 产品正在从问答窗口变成文件生成、协同平台和自动化执行的组合入口。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>语音交互</span><span>ChatGPT</span><span>企业订阅</span></div>
+        <span class="item-source">OpenAI · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://x.com/OpenAI/status/2074907025537224840" target="_blank" rel="noreferrer">OpenAI GPT-Live 语音功能向教育和企业订阅开放 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenAI 宣布新一代语音模型 GPT-Live 1 已向 ChatGPT 的 Education、Business 和 Enterprise 订阅方案全球开放，用户可在 ChatGPT 语音模式中体验更自然的人机语音交互。此前 ChatGPT 桌面端已开始支持用语音控制电脑，并协调 ChatGPT Work 或 Codex 中运行的多个智能体。</p>
+        <p class="item-insight"><span>解读</span>语音作为输入方式被接入企业和教育套餐后，AI 交互会从打字问答扩展到边说边执行任务的桌面场景；输出形态仍可能继续从原始文本走向 Markdown、HTML 和更结构化、可交互的界面。</p>
+      </div>
+      <div class="item-meta">OpenAI · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>GitHub Copilot</span><span>开发工具</span><span>Agent</span></div>
+        <span class="item-source">GitHub Blog · 2026-07-28 02:00</span>
+      </div>
+      <h3><a href="https://github.blog/ai-and-ml/github-copilot/the-harness-is-all-you-need-mostly" target="_blank" rel="noreferrer">GitHub Copilot 发布 Harness 工作流 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Copilot 发布 Harness 工作流，强调用单一 AI 工具完成从原型设计、规划、实现到代码审查的完整软件开发流程。GitHub 的表述重点不是新增一个孤立工具，而是把开发中的多个阶段放进同一套 AI 辅助链路，减少原型、任务拆解、代码生成和审查之间的上下文断裂。</p>
+        <p class="item-insight"><span>解读</span>开发工具的竞争正在从补全单行代码扩展到多步骤工程流程，关键变化是任务状态、项目上下文和审查结果能否在同一工作区里被持续追踪。</p>
+      </div>
+      <div class="item-meta">GitHub Blog · 2026-07-28 02:00</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>GitHub Copilot</span><span>多 Agent</span><span>开发工作区</span></div>
+        <span class="item-source">GitHub Blog · 2026-07-28 00:00</span>
+      </div>
+      <h3><a href="https://github.blog/ai-and-ml/github-copilot/github-copilot-app-for-beginners-getting-started" target="_blank" rel="noreferrer">GitHub Copilot app 支持多 Agent 会话工作区与 Canvas 预览 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Blog 发布 Copilot app 入门指南，介绍其多 Agent 会话工作区能力：用户可同时管理多个任务线程，为每个会话绑定项目上下文，并通过 /create-canvas 命令在浏览器 Canvas 中预览 UI、直接点选修改。指南还提到 Agent Merge 可自动处理 PR 审查反馈和合并冲突。</p>
+        <p class="item-insight"><span>解读</span>这个产品形态把编码助手从编辑器内的提示框扩展为项目级任务面板，Agent 的状态管理、预览环境和代码合并成为同一体验的一部分。</p>
+      </div>
+      <div class="item-meta">GitHub Blog · 2026-07-28 00:00</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">06</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>OpenRouter</span><span>图像生成</span><span>API</span></div>
+        <span class="item-source">OpenRouter · 2026-07-27</span>
+      </div>
+      <h3><a href="https://openrouter.ai/blog/tutorials/image-generation-models" target="_blank" rel="noreferrer">OpenRouter 新增图像生成模型专用 API 端点 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenRouter 发布图像生成模型专用 /api/v1/images 端点，图像理解仍通过 /chat/completions 完成，两者共用同一 API Key 和计费体系。平台同时公布两类任务的接口合约，并修复此前出现的 “no endpoints found” 错误。</p>
+        <p class="item-insight"><span>解读</span>多模型路由平台把图像生成和图像理解拆成不同端点后，应用接入时需要区分生成、理解、计费和日志字段，图像能力开始按任务类型进入统一模型网关。</p>
+      </div>
+      <div class="item-meta">OpenRouter · 2026-07-27</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">07</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>视觉模型</span><span>评测基准</span><span>Kimi</span></div>
+        <span class="item-source">Kimi.ai · 2026-07-28 02:45</span>
+      </div>
+      <h3><a href="https://x.com/Kimi_Moonshot/status/2081813202514681878" target="_blank" rel="noreferrer">Kimi 发布视觉感知基准 PerceptionBench <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Kimi.ai 发布 PerceptionBench，这是一个从当前前沿模型在 42 个基准上的失败模式中归纳出的视觉感知基准。该基准将视觉感知拆解为 10 种原子能力，构建 3000 道验证题，每道题只测试单一感知能力，不依赖推理或外部知识。</p>
+        <p class="item-insight"><span>解读</span>视觉模型评估如果能把感知错误和推理错误拆开，后续模型报告中的视觉能力描述会更容易定位问题来源。</p>
+      </div>
+      <div class="item-meta">Kimi.ai · 2026-07-28 02:45</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">08</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>视频工具</span><span>Agent</span><span>工作流</span></div>
+        <span class="item-source">Runway · 2026-07-24 21:40</span>
+      </div>
+      <h3><a href="https://x.com/runwayml/status/2080649234672439389" target="_blank" rel="noreferrer">Runway Agent 推出自然语言工作流功能 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Runway 宣布在 Runway Agent 中引入工作流能力，用户可通过自然语言构建、运行或编辑基于节点的工作流，并通过 / Workflow 技能调用。该功能把视频和创意工具中的节点式流程包装成自然语言入口，减少用户直接操作复杂节点图的步骤。</p>
+        <p class="item-insight"><span>解读</span>AI 输出形态在这类产品里不只是文本结果，而是可编辑的视觉工作流，后续可能继续向 HTML、交互式视频和模拟界面延展。</p>
+      </div>
+      <div class="item-meta">Runway · 2026-07-24 21:40</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">09</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>音频生成</span><span>创作工具</span><span>Suno</span></div>
+        <span class="item-source">Suno · 2026-07-27 02:14</span>
+      </div>
+      <h3><a href="https://x.com/suno/status/2081443050312843765" target="_blank" rel="noreferrer">Suno 更新网页端和移动端，加入 MIDI 导出等功能 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Suno 发布网页端和移动端新功能，包括高级音轨分离、音轨导出为 MIDI、歌词合写与自动保存、截图生成歌曲，以及 Apple CarPlay 和 Android Auto 支持。音乐生成产品从生成完整歌曲继续向可编辑素材、车载播放和协作写作扩展，MIDI 导出尤其会把生成结果带入传统音乐制作软件。</p>
+        <p class="item-insight"><span>解读</span>生成式音频的商业化不只依赖一次性作品，还取决于能否输出可继续编辑、可跨工具流转的中间格式。</p>
+      </div>
+      <div class="item-meta">Suno · 2026-07-27 02:14</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">10</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>ChatGPT</span><span>工作方式</span><span>数据观察</span></div>
+        <span class="item-source">The Decoder · 2026-07-28 03:08</span>
+      </div>
+      <h3><a href="https://the-decoder.com/openai-says-more-workers-are-using-chatgpt-to-do-other-peoples-jobs" target="_blank" rel="noreferrer">OpenAI 称 ChatGPT 工作查询中跨岗位任务占比达 43.5% <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenAI 分析超过 80 万条与工作相关的 ChatGPT 消息后发现，43.5% 的岗位特定查询涉及另一职业，营销和工程任务交叉最多。The Decoder 摘要称，用户用 AI 处理合同审查、数据分析、网站故障排查等原由专业人员负责的工作，OpenAI 将其视为岗位职责变化的早期信号。</p>
+        <p class="item-insight"><span>解读</span>这个数据说明工作场景中的 AI 使用不再只服务本岗位知识检索，而是把合同、数据、网站运维等任务拆成可由通用助手临时承接的请求。</p>
+      </div>
+      <div class="item-meta">The Decoder · 2026-07-28 03:08</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-platforms">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>大厂与平台动态</h2>
+        <span class="section-count">4 条</span>
+      </div>
+      <span>平台动态主要集中在企业额度、开源安全联盟、钉钉生态和 QQ 社交产品回归。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>OpenAI</span><span>Codex</span><span>企业套餐</span></div>
+        <span class="item-source">juya-ai-daily · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://x.com/thsottiaux/status/2081899343091843463" target="_blank" rel="noreferrer">Codex 负责人暗示重置用量限制，ChatGPT Work 试用额度同步放出 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenAI Codex 负责人 Tibo 在社交平台表示正在庆祝 ChatGPT Work 被快速采用，并暗示将进行一次用量限制重置，但未说明具体时间、范围和适用账号。Greg Brockman 同时宣布，ChatGPT Enterprise 客户如在 8 月 21 日前注册，每位团队成员首次试用 ChatGPT Work 时，可在两周内获得最高 200 美元使用额度，有效期 14 天。</p>
+        <p class="item-insight"><span>解读</span>额度活动和限制重置会影响企业用户试用 Codex、ChatGPT Work 和多 Agent 功能的成本门槛，也反映 OpenAI 正在用套餐权益推动工作场景采用。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>NVIDIA</span><span>AI 安全</span><span>开源联盟</span></div>
+        <span class="item-source">NVIDIA Blog · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://blogs.nvidia.com/blog/open-secure-ai-alliance/" target="_blank" rel="noreferrer">NVIDIA 联合三十余家机构成立 Open Secure AI Alliance <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">NVIDIA 联合 Hugging Face、Microsoft、IBM、Red Hat、SpaceXAI 等三十余家企业和机构成立 Open Secure AI Alliance，目标是开发和共享开放技术、工具与方法，用于 AI 时代的软件和智能体安全防御。</p>
+        <p class="item-insight"><span>解读</span>联盟基于 Linux Foundation 的 Akrites 倡议和 OpenSSF 社区工作，成员已贡献 NOOA、Safetensors、Grok Build 等开源项目。该联盟把开放模型、开放框架和安全防御联系在一起，使 AI 安全工具不只由闭源供应商提供，也可以围绕可审查、可部署在自有基础设施上的组件协作。</p>
+      </div>
+      <div class="item-meta">NVIDIA Blog · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>腾讯 QQ</span><span>AI 角色</span><span>社交产品</span></div>
+        <span class="item-source">juya-ai-daily · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s/3QR3xBxUjjZCEbFXZAn0qQ" target="_blank" rel="noreferrer">腾讯 QQ 宠物回归，接入 Hy3 大模型并升级 3D 形象 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">腾讯 QQ 宣布 QQ 宠物升级回归，目前已在手机 QQ 上线。新版 QQ 宠物采用 3D 形象，接入腾讯 Hy3 大模型，支持主动回应和多种性格，保留喂食、洗澡等经典玩法，并新增聊天列表等多屏出现、好友串门互踩等社交功能。</p>
+        <p class="item-insight"><span>解读</span>老 IP 被接入大模型后，社交平台获得了一个低门槛 AI 角色入口，用户互动从菜单式养成扩展到主动回应和跨场景陪伴。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Anthropic</span><span>企业服务</span><span>Claude</span></div>
+        <span class="item-source">Anthropic Newsroom · 2026-07-27</span>
+      </div>
+      <h3><a href="https://www.anthropic.com/news/cognizant-anthropic" target="_blank" rel="noreferrer">Cognizant 与 Anthropic 扩大合作，成为 Claude Partner Network 全球首要合作伙伴 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Cognizant 与 Anthropic 扩大合作，成为 Claude Partner Network 的 Global Premier Partner，并将 Claude 嵌入 Flowsource 等平台。</p>
+        <p class="item-insight"><span>解读</span>AI HOT 摘要称，Cognizant 已有超过 3 万名员工完成 Claude 培训，其为一家生物制药公司构建的智能合约系统将合同审核时间缩短最高 40%，提取准确率超过 88%。大型 IT 服务商把 Claude 嵌入交付平台后，模型厂商的企业增长会更多依赖咨询、流程改造和行业系统集成，而不是只销售 API。</p>
+      </div>
+      <div class="item-meta">Anthropic Newsroom · 2026-07-27</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-product-growth">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>产品与增长观察</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>产品变化主要体现为跨端接力、搜索分发和 AI 角色互动。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent</span><span>跨端</span><span>百度</span></div>
+        <span class="item-source">公众号：百度 · 2026-07-24 20:28</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s/HRySK1LU53clPe2I_M-Fug" target="_blank" rel="noreferrer">百度搭子升级跨端接力和桌面内嵌浏览器 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">百度搭子在近期 AI Day 上更新，支持电脑与手机双端互联，同步任务上下文和执行进度，复杂任务可跨设备接力完成。桌面端新增内嵌浏览器，可自动打开多个网页执行调研、下载等操作，手机端支持云端远程操控；</p>
+        <p class="item-insight"><span>解读</span>官方称智能路由使平均任务耗时降低 20%，Token 利用率提升 25%，复杂任务高交付率达到 94%，积分消耗最高降低 75%。这类升级把 Agent 产品的竞争点放在持续任务、跨端状态和浏览器自动化，而不只是单次问答质量。</p>
+      </div>
+      <div class="item-meta">公众号：百度 · 2026-07-24 20:28</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 爬虫</span><span>内容分发</span><span>基础设施</span></div>
+        <span class="item-source">Stephen Follows · 2026-07-24 02:35</span>
+      </div>
+      <h3><a href="https://stephenfollows.com/p/what-just-happened-to-thenumberscom-should-worry-us-all" target="_blank" rel="noreferrer">TheNumbers.com 因 AI 爬虫和攻击流量下线重建 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">电影数据网站 The Numbers 于 2026 年 3 月 5 日突然下线，一周后只以精简版恢复，历史图表、电影页面和 Report Builder 均被移除。创始人 Bruce Nash 透露，AI 爬虫和智能体流量占其总流量 90%，服务器在持续压力下崩溃，日志还显示存在针对后门的恶意攻击，团队被迫放弃运行 30 年、包含 16 万源文件的旧系统并在新基础设施上重建。</p>
+        <p class="item-insight"><span>解读</span>AI 抓取流量已经成为内容数据库的运营成本和产品边界问题，公开数据站点需要面对访问控制、授权抓取和基础设施承压。</p>
+      </div>
+      <div class="item-meta">Stephen Follows · 2026-07-24 02:35</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>模型价格</span><span>OpenRouter</span><span>OpenAI</span></div>
+        <span class="item-source">OpenRouter · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://x.com/OpenRouter/status/2081795087739289912" target="_blank" rel="noreferrer">OpenRouter 限时下调 GPT-5.6 Terra 与 Luna 价格 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenRouter 宣布与 OpenAI 合作，限时推出 GPT-5.6 Terra 与 Luna 半价优惠。折扣仅适用于第一方 OpenAI 提供商，覆盖输入、输出和缓存价格，两款模型的 Pro 版本也享受半价。</p>
+        <p class="item-insight"><span>解读</span>模型路由平台的价格活动会直接影响应用调用成本和供应商选择，尤其是缓存价格也被纳入折扣时，长上下文和高频调用场景的成本结构会随之变化。</p>
+      </div>
+      <div class="item-meta">OpenRouter · 2026-07-28 09:31</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-engineering">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>开发者与工程实践</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>工程侧重点是开放模型推理支持、代码审查 Agent 和模型供应商性能评估。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>推理框架</span><span>Kimi K3</span><span>SGLang</span></div>
+        <span class="item-source">LMSYS Blog · 2026-07-28 01:50</span>
+      </div>
+      <h3><a href="https://www.lmsys.org/blog/2026-07-27-kimi-k3-day0-support" target="_blank" rel="noreferrer">SGLang 和 Miles 为 Kimi K3 提供发布当日支持 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">SGLang 和 Miles 为月之暗面 2.8T 参数 Kimi K3 提供 Day 0 支持，分别覆盖推理和强化学习训练。LMSYS 博客称，K3 采用 69 层 KDA 线性注意力与 24 层 MLA 交错的混合架构，在 SGLang 上单卡 batch-1 解码速度约 113 tok/s，结合 DSpark 推测解码可达约 423 tok/s。</p>
+        <p class="item-insight"><span>解读</span>开放权重模型能否快速被推理框架和训练环境支持，会影响模型从发布到实际部署的速度，也会决定长上下文和 MoE 架构的使用成本。</p>
+      </div>
+      <div class="item-meta">LMSYS Blog · 2026-07-28 01:50</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>开源项目</span><span>代码审查</span><span>Agent</span></div>
+        <span class="item-source">GitHub Trending · 2026-07-28 09:36</span>
+      </div>
+      <h3><a href="https://github.com/alibaba/open-code-review" target="_blank" rel="noreferrer">阿里 open-code-review 在 GitHub Trending 获得高热度 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 今日显示 alibaba/open-code-review 获得 979 个当日 star，总 star 约 1.48 万。项目描述称其是阿里规模下验证过的开源代码审查工具，采用确定性流水线加 LLM Agent 的混合架构，可提供精确到行的评论，内置 NPE、线程安全、XSS、SQL 注入等细粒度规则，并兼容 OpenAI 与 Anthropic。</p>
+        <p class="item-insight"><span>解读</span>代码审查工具把规则引擎和模型 Agent 结合后，审查结果既包含确定性检查，也包含语义层面的代码意见。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-07-28 09:36</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>LLM API</span><span>性能评估</span><span>路由</span></div>
+        <span class="item-source">OpenRouter · 2026-07-28</span>
+      </div>
+      <h3><a href="https://openrouter.ai/blog/insights/evaluate-llm-provider-performance" target="_blank" rel="noreferrer">OpenRouter 介绍如何评估 LLM 供应商性能 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenRouter 发布文章说明，同一模型在不同提供商端点上的表现会因基础设施、量化、负载处理和路由默认设置而不同。文章强调评估时需同时测量延迟、吞吐量、正常运行时间和精度，并将结果转化为路由策略。</p>
+        <p class="item-insight"><span>解读</span>随着模型调用经由多个供应商和聚合平台完成，工程指标不再只看模型名称，端点稳定性、缓存策略和供应商路由会直接改变真实请求体验。</p>
+      </div>
+      <div class="item-meta">OpenRouter · 2026-07-28</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-funding">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>投融资与行业机会</h2>
+        <span class="section-count">2 条</span>
+      </div>
+      <span>本期强信号集中在算力融资和长期战略合作。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>算力</span><span>融资</span><span>OpenAI</span></div>
+        <span class="item-source">Wall Street Journal · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://www.wsj.com/tech/ai/nvidia-in-talks-with-openai-to-guarantee-250-billion-financing-for-data-center-3dd6eae3" target="_blank" rel="noreferrer">NVIDIA 与 OpenAI 被曝洽谈 2500 亿美元数据中心融资担保 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">《华尔街日报》援引知情人士称，NVIDIA 正与 OpenAI 谈判，拟提供约 2500 亿美元融资担保，帮助 OpenAI 租赁软银能源子公司在俄亥俄州南部开发的 10 吉瓦数据中心项目。</p>
+        <p class="item-insight"><span>解读</span>报道称项目总成本预计超过 5000 亿美元，知情人士称担保覆盖数据中心租赁和债务融资，但不包括 NVIDIA 芯片费用，NVIDIA 另在讨论为 OpenAI 提供最高 3500 亿美元芯片采购融资；彭博社称谈判尚处早期，可能破裂或调整条件。算力项目正在从单纯采购芯片变成土地、电力、租赁、债务和芯片融资共同组成的大型资本安排。</p>
+      </div>
+      <div class="item-meta">Wall Street Journal · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>SSI</span><span>NVIDIA</span><span>算力</span></div>
+        <span class="item-source">SSI · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="https://x.com/ssi/status/2081732119194394763" target="_blank" rel="noreferrer">SSI 与 NVIDIA 达成长期战略合作 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">SSI 宣布与 NVIDIA 达成长期战略合作，NVIDIA 将对 SSI 进行一笔大额投资，并向其开放下一代 Vera Rubin 计算平台。SSI 称该合作将使其未来 12 个月算力提升 10 倍，并表示研究已达到值得规模化的阶段；</p>
+        <p class="item-insight"><span>解读</span>《华尔街日报》称 NVIDIA 在获得对 SSI 保密研究的罕见查看权限后做出投资决定，但交易金额未披露。前沿模型实验室和芯片供应商之间的合作，正在把算力供给、研究进展和投资关系绑定得更紧。</p>
+      </div>
+      <div class="item-meta">SSI · 2026-07-28 09:31</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-policy">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>政策监管与合规</h2>
+        <span class="section-count">2 条</span>
+      </div>
+      <span>监管讨论围绕开放模型访问、蒸馏、出口管制和高风险 AI 使用展开。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 监管</span><span>开放模型</span><span>中美科技</span></div>
+        <span class="item-source">商务部 · 2026-07-28 09:31</span>
+      </div>
+      <h3><a href="http://www.mofcom.gov.cn/syxwfb/art/2026/art_7f1622463a7c48ef9fad600ce0ef702f.html" target="_blank" rel="noreferrer">有关部门回应美方拟制裁中国 AI 企业 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">针对美国部分高级官员表示拟对中国人工智能企业所谓“蒸馏”美国前沿模型开展调查并实施制裁的表态，有关部门回应称强烈反对，认为相关指责缺乏事实依据和法理支撑，并敦促美方停止抹黑与制裁威胁。回应还提到，美国很多人工智能企业在研发和训练中蒸馏了中国模型，且众多美国企业反对切断对中国开源模型的访问。</p>
+        <p class="item-insight"><span>解读</span>开放权重、模型蒸馏和跨境模型访问正在进入政策争议范围，企业使用外部模型时会面对来源、许可、合规审查和供应链风险。</p>
+      </div>
+      <div class="item-meta">商务部 · 2026-07-28 09:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 合规</span><span>医疗健康</span><span>OpenAI</span></div>
+        <span class="item-source">IT之家 · 2026-07-24 07:30</span>
+      </div>
+      <h3><a href="https://www.ithome.com/0/980/890.htm" target="_blank" rel="noreferrer">ChatGPT 健康建议相关诉讼显示高风险场景边界 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">美国佛罗里达州 55 岁男子 Scott Winters 起诉 OpenAI，称 ChatGPT-4o 多次建议其无需就医，导致其因双肺血栓引发大面积肺栓塞并一度濒临死亡。诉状指控 OpenAI 存在疏忽和“无证行医”行为，要求经济赔偿并暂停 ChatGPT Health 服务；</p>
+        <p class="item-insight"><span>解读</span>OpenAI 回应称 ChatGPT 不是医生，不应替代专业医疗护理。健康功能、个人数据连接和医疗建议一旦出现在同一产品内，免责声明、风险分级、转诊提示和日志留存都会成为监管与责任判断的一部分。</p>
+      </div>
+      <div class="item-meta">IT之家 · 2026-07-24 07:30</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-social-buzz">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>社交热度观察</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>这些信息讨论度高，部分与 AI 和工程生态相关，但工作信号弱于核心板块。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>HN 热度</span><span>Kimi K3</span><span>开放权重</span></div>
+        <span class="item-source">Hacker News · 2026-07-28 09:36</span>
+      </div>
+      <h3><a href="https://huggingface.co/moonshotai/Kimi-K3" target="_blank" rel="noreferrer">Kimi-K3 登上 Hacker News 高分榜 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 今日关于 Kimi-K3 的帖子指向 Hugging Face 模型页，获得 1311 分和 515 条评论，是当天最热 AI 讨论。社区热度补充了 juya 和 AI HOT 的发布信息，显示海外开发者也在关注 Kimi K3 的开放权重、许可限制和实际推理可用性。</p>
+        <p class="item-insight"><span>解读</span>该条作为传播信号呈现，核心事实已经在头条中的模型发布条目完整覆盖。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-07-28 09:36</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>HN 热度</span><span>PostgreSQL</span><span>工程教育</span></div>
+        <span class="item-source">Hacker News · 2026-07-28 09:36</span>
+      </div>
+      <h3><a href="https://nikolays.github.io/PGSimCity/" target="_blank" rel="noreferrer">PGSimCity 用可视化方式解释 PostgreSQL 工作机制 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 上 PGSimCity - How PostgreSQL Works 获得 888 分和 87 条评论，项目用可视化方式呈现 PostgreSQL 内部工作机制。它属于高质量工程教育内容，热度高于一般技术文章，但与今天的 AI、平台和产品变化关联较弱。</p>
+        <p class="item-insight"><span>解读</span>放在热度观察中更能体现技术社区兴趣，而不挤占核心工作信号。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-07-28 09:36</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>GitHub Trending</span><span>开源热度</span><span>AI 角色</span></div>
+        <span class="item-source">GitHub Trending · 2026-07-28 09:36</span>
+      </div>
+      <h3><a href="https://github.com/permissionlesstech/bitchat" target="_blank" rel="noreferrer">GitHub Trending 中 bitchat、airi、impeccable 热度较高 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 今日显示 permissionlesstech/bitchat 当日新增 2346 star，项目定位为蓝牙 mesh 聊天；moeru-ai/airi 当日新增 572 star，是自托管 AI 伴侣项目；</p>
+        <p class="item-insight"><span>解读</span>pbakaus/impeccable 当日新增 847 star，描述为让 AI harness 在设计上表现更好的设计语言。三者分别对应离线通信、AI 角色和 AI 设计辅助，本期按开源社区兴趣信号处理；只有在具体产品和工程采用出现更多证据后，才会进入核心行业信号范围。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-07-28 09:36</div>
+    </div>
+  </article></div>
+  </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">© 2026 Whistle. 低噪音互联网与 AI 日报。</footer>
+  <script>
+    (() => {
+      const themeKey = "whistle-theme";
+      const themeButton = document.querySelector("[data-theme-toggle]");
+      const setTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        try { localStorage.setItem(themeKey, theme); } catch {}
+        if (themeButton) {
+          const label = theme === "dark" ? "切换到亮色模式" : "切换到暗色模式";
+          themeButton.setAttribute("aria-label", label);
+          themeButton.setAttribute("title", label);
+        }
+      };
+      let currentTheme = document.documentElement.dataset.theme || "dark";
+      setTheme(currentTheme);
+      themeButton?.addEventListener("click", () => {
+        currentTheme = currentTheme === "dark" ? "light" : "dark";
+        setTheme(currentTheme);
+      });
+
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = links
+        .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))
+        .filter((item) => item.section);
+      if (!sections.length) return;
+
+      const updateActiveToc = () => {
+        const threshold = Math.max(120, window.innerHeight * 0.28);
+        let active = null;
+        for (const item of sections) {
+          const rect = item.section.getBoundingClientRect();
+          if (rect.top <= threshold && rect.bottom > 80) active = item;
+        }
+        links.forEach((link) => link.removeAttribute("aria-current"));
+        if (active) active.link.setAttribute("aria-current", "true");
+      };
+
+      updateActiveToc();
+      window.addEventListener("scroll", updateActiveToc, { passive: true });
+      window.addEventListener("resize", updateActiveToc);
+    })();
+  </script>
+</body>
+</html>
