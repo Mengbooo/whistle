@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-04",
+  "title": "Whistle 互联网日报｜2026-08-04",
+  "summary": "早上好，先看几条新变化：Qwen3.8-Max 以 2.4T 参数和开放 Qwen-Max 级权重进入编码模型竞争，GPT-Live 把实时语音栈改成边听边说，Cloudflare 连续发布面向智能体的运行时、TCP/gRPC 和成本 API，欧盟 AI 法透明度规则也在 8 月 2 日开始执行。今天的材料里，模型发布和基础设施更新贴得很近，Agent 不再只停留在聊天入口，而是需要文件系统、执行环境、评估、计费和网络连接。另一条线是合规与商业边界：AI 生成内容标识、企业数据控制、模型评测争议和开源项目热度，都在把 AI 产品从能力展示拉回到真实使用中的成本、权限、审计和可验证结果。",
+  "theme": "Agent 基础设施补齐运行、评估、计费与合规边界",
+  "topline": [
+    "Qwen3.8-Max 发布，2.4T 参数、95B 激活，并将开放 Qwen-Max 级权重。",
+    "Cloudflare 在 Agents Week 发布智能体运行时、入站 TCP/gRPC 支持和 Billable Usage API。",
+    "GPT-Live 发布实时音频新架构，语音交互转向不中断的连续流。",
+    "欧盟 AI 法透明度规则生效，AI 身份提示与合成内容机器可读标记进入强制义务。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "头条聚焦模型能力、Agent 基础设施、实时语音和监管边界。",
+      "items": [
+        {
+          "title": "Qwen3.8-Max 发布，2.4T 参数模型将开放 Qwen-Max 级权重",
+          "summary": "Qwen 发布 Qwen3.8-Max，称其为 Qwen 家族迄今最强模型，拥有 2.4T 参数，其中 95B 为激活参数，并首次开放 Qwen-Max 级权重，权重计划下周发布。AI HOT 和 HN 都把这条列为高热内容，HN 讨论分数超过 1000。编码与协作模型继续扩大参数规模，同时开放权重会改变模型托管、私有部署和二次微调的选择范围，也会让评测、推理成本和供应链稳定性进入同一张比较表。",
+          "sourceName": "Qwen：Blog Retrieval（API）",
+          "sourceUrl": "https://qwen.ai/blog?id=qwen3.8",
+          "publishedAt": "2026-08-03T02:00:00.000Z",
+          "tags": [
+            "Qwen",
+            "模型发布",
+            "开源权重"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Cloudflare 推出 @cloudflare/computer，为智能体提供文件系统与多执行环境",
+          "summary": "Cloudflare 发布 @cloudflare/computer 早期预览版，这是一个开源智能体运行时，为每个智能体提供虚拟文件系统，并支持在 isolate、容器沙箱或浏览器中执行代码。同一批发布还包括 Workers 和 Containers 对入站 TCP 连接及 gRPC 的支持，使智能体可以处理 Spectrum 提供的入站套接字，并把连接转发到 Durable Objects 或 Containers。Cloudflare 正在把智能体所需的执行、状态、网络和沙箱能力拆成云平台原语，Agent 产品的边界由聊天界面延伸到运行时和基础设施层。",
+          "sourceName": "Cloudflare Blog",
+          "sourceUrl": "https://blog.cloudflare.com/cloudflare-computer",
+          "publishedAt": "2026-08-03T13:15:24.000Z",
+          "tags": [
+            "Cloudflare",
+            "Agent",
+            "运行时"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "GPT-Live 发布实时音频新架构，语音流不再因推理和工具调用中断",
+          "summary": "Greg Brockman 发文介绍 GPT-Live，这是一套用于实时音频的新架构和技术栈，目标是在说话的同时继续聆听。OpenAI 称，为了在 ChatGPT 规模下保持自然体验，团队从客户端到模型重建了语音栈，让音频持续流动，较深推理和工具使用不会打断对话。实时语音从问答轮次变成连续交互后，模型调度、延迟控制、打断处理和工具调用会一起影响用户感知。",
+          "sourceName": "X：Greg Brockman (@gdb)",
+          "sourceUrl": "https://x.com/gdb/status/2084405421041963356",
+          "publishedAt": "2026-08-03T22:25:53.000Z",
+          "tags": [
+            "OpenAI",
+            "实时音频",
+            "语音交互"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "欧盟 AI 法透明度规则生效，违规最高罚 1500 万欧元或全球营收 3%",
+          "summary": "欧盟《人工智能法》下的新透明度义务已于 2026 年 8 月 2 日生效，要求公司披露用户何时与 AI 模型互动，并为合成音视频和文本添加机器可读标记。The Verge 报道称，欧盟还推出可选的 AI 披露标签供平台采用，但标注义务本身为强制要求；违规公司可能面临最高 1500 万欧元或全球年营业额 3% 的罚款，8 月 2 日前推出的模型有 4 个月宽限期。AI 产品的界面提示、内容元数据、水印和审核记录会进入合规边界。",
+          "sourceName": "The Verge：AI（RSS）",
+          "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/974571/eu-ai-act-transparency-labels-rules-deepfakes",
+          "publishedAt": "2026-08-03T17:38:45.000Z",
+          "tags": [
+            "欧盟",
+            "AI 法",
+            "透明度"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "MiniMax H3 正式开源，视频模型覆盖 2K、15 秒与原生立体声",
+          "summary": "MiniMax 正式开源新一代通用视频模型 H3，可统一理解文本、图像、视频和音频，生成最高 2K 分辨率、最长 15 秒、带 32 kHz 原生立体声音频的视频。juya 昨日早报记录了权重进入开源窗口，AI HOT 补充称官方公众号已发布开源信息，ComfyUI 社区也出现 Day-0 支持讨论。公开视频模型把画面、音频和指令跟随放到同一系统内，内容生成工具会从单段视频生成扩展到后期、动效、广告和交互原型。",
+          "sourceName": "公众号：MiniMax（稀宇科技）",
+          "sourceUrl": "https://mp.weixin.qq.com/s?__biz=MzE5MTA3NzcxMQ%3D%3D&mid=2247488931&idx=1&sn=0506e1d52edd5166becf35f5ebd83a07",
+          "publishedAt": "2026-08-03T02:44:09.000Z",
+          "tags": [
+            "MiniMax",
+            "视频生成",
+            "开源模型"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "AI 工具板块保留模型、Agent、评估、语音、视频和多模态研究信号。",
+      "items": [
+        {
+          "title": "OpenRouter 推出 Ori Eval，用代码库任务生成模型评估",
+          "summary": "OpenRouter 发布 Ori Eval，定位为快速编写首个评估的工具。它通过 OpenRouter API 处理代码库中的每项任务，再对结果进行评估，官方命令以 curl 脚本启动。模型选择正在从单纯比较排行榜变成任务级评估，评估流程靠近代码库后，模型输出质量、成本和失败样例会被放到更具体的工程语境中。",
+          "sourceName": "X：OpenRouter (@OpenRouter)",
+          "sourceUrl": "https://x.com/OpenRouter/status/2084301100078027143",
+          "publishedAt": "2026-08-03T15:31:21.000Z",
+          "tags": [
+            "OpenRouter",
+            "模型评估",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "微软开源 Orchard，用统一框架训练和评估 AI 智能体",
+          "summary": "Microsoft Research 发布 Orchard，这是一个面向研究社区的开源框架，用于跨任务类型训练和评估 AI 智能体。官方称该框架通过复用同一套基础设施降低复杂度，并支持较小模型获得较强性能。Agent 评估和训练开始出现更标准化的工具层，研究结果不只看单个任务分数，也会依赖数据、环境、奖励和运行框架是否可复现。",
+          "sourceName": "X：Microsoft Research (@MSFTResearch)",
+          "sourceUrl": "https://x.com/MSFTResearch/status/2084364547142418722",
+          "publishedAt": "2026-08-03T19:43:28.000Z",
+          "tags": [
+            "Microsoft",
+            "Agent",
+            "开源框架"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "商汤发布 SenseNova U1.5-Lite-Preview，8B-MoT 走轻量统一多模态路线",
+          "summary": "商汤推出 SenseNova U1.5-Lite-Preview，这是一个基于 NEO-Unify 架构的轻量级原生统一多模态模型。AI HOT 摘要称，该模型仅 8B-MoT 参数即可达到商业闭源模型的生成与编辑质量。统一多模态模型的竞争不只看最大模型，也在压低参数量和部署门槛，图像生成、编辑和多模态理解会被纳入更小的推理预算。",
+          "sourceName": "X：商汤 SenseTime (@SenseTime_AI)",
+          "sourceUrl": "https://x.com/SenseTime_AI/status/2084288424236782073",
+          "publishedAt": "2026-08-03T14:40:59.000Z",
+          "tags": [
+            "商汤",
+            "多模态",
+            "开源模型"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Qwen-CUA 技术报告公开，只通过截图和键鼠执行 Computer Use 任务",
+          "summary": "juya 早报记录，Qwen Team 与 XLang Lab 联合发布 Qwen-CUA，这是一款基于 Qwen 的原生 Computer Use 模型和 agent。它只通过截图感知界面状态，不依赖 DOM 树、辅助功能元数据或任务专用 API，而是通过键盘和鼠标事件在浏览器、桌面应用和专业软件中执行操作；公开资料称 397B-A17B 版本在 OSWorld-Verified 基准上取得 86.2 分，Qwen-CUA-Max 超过一万亿参数并达到 87.6 分。Computer Use 路线把网页自动化、桌面软件和专业工具放进同一操作范畴，错误恢复、权限隔离和屏幕状态理解会影响真实可用性。",
+          "sourceName": "Juya AI Daily / XLang Lab",
+          "sourceUrl": "https://github.com/xlang-ai/Qwen-CUA",
+          "publishedAt": "2026-08-03T01:18:49.000Z",
+          "tags": [
+            "Qwen-CUA",
+            "Computer Use",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "AirLLM 支持单块 4GB GPU 运行 70B 模型推理",
+          "summary": "AirLLM 项目支持在单块 4GB 显存 GPU 上运行 70B 参数大模型推理，无需多卡或大规模显存配置。AI HOT 和 HN 都收录了该项目，HN 分数为 185，GitHub Trending 显示 lyogavin/airllm 今日新增 1085 星、总星数超过 27000。本地低显存推理仍需关注速度和可用任务边界，但它降低了大模型实验对硬件门槛的依赖。",
+          "sourceName": "GitHub / Hacker News",
+          "sourceUrl": "https://github.com/lyogavin/airllm",
+          "publishedAt": "2026-08-03T16:24:45.027Z",
+          "tags": [
+            "本地推理",
+            "开源项目",
+            "GPU"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Apple 研究团队系统拆解多模态大模型偏好对齐",
+          "summary": "Apple Machine Learning Research 发布多模态大语言模型对齐研究，系统梳理 MLLM 中的偏好对齐方法，把算法分为离线方法和在线方法，并观察到二者结合可在特定场景提升模型性能。团队还提出 Bias-Driven Hallucination Sampling，不依赖额外标注或外部模型来构建多模态偏好数据，并在多项基准上取得与既有对齐工作相近的结果。多模态模型进入生成和编辑流程后，偏好对齐会直接影响图文一致性、幻觉控制和输出可控性。",
+          "sourceName": "Apple Machine Learning Research（RSS）",
+          "sourceUrl": "https://machinelearning.apple.com/research/alignment-multimodal-llms",
+          "publishedAt": "2026-08-03T14:33:20.000Z",
+          "tags": [
+            "Apple",
+            "多模态",
+            "偏好对齐"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "EA 谈生成式 AI 进入实时游戏世界，强调低延迟和可控行为",
+          "summary": "Runway 记录了 EA 首席战略官 Mihir Vaidya 在 AI Summit 上的观点：生成式 AI 进入游戏要面对 60 帧/秒、数千玩家同步和低延迟等约束，不能只追求画面真实，还要保证行为正确。他提到神经符号架构，在生成能力之外保留确定性与可控性，并把 AI 影响分为效率、扩展和转型三个层面。实时互动内容对模型输出的要求高于静态素材，生成结果必须接受游戏引擎、多人同步和控制系统的限制。",
+          "sourceName": "Runway：News（网页）",
+          "sourceUrl": "https://runwayml.com/news/company-news/electronic-arts-ai-summit-2026",
+          "publishedAt": "2026-08-03T20:12:03.229Z",
+          "tags": [
+            "游戏",
+            "生成式 AI",
+            "实时系统"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "从零用 Codex 做硬件的案例走热，AI 开发延伸到电路和 3D 打印",
+          "summary": "公众号“数字生命卡兹克”发布文章，记录作者以零基础身份通过与 Codex 对话，从需求讨论、电路搭建、代码烧录到 3D 打印组装，5 天内做出一个提醒久坐的猫爪硬件。文中还提到用 Agent 调试宏键盘，以及 OpenAI 与 Work Louder 联名发布的 Codex Micro 键盘，13 个机械按键、售价 230 美元。AI 编程工具正在进入软件之外的制作流程，需求拆解、硬件调试、外壳建模和代码烧录被串到同一个对话式开发过程里。",
+          "sourceName": "公众号：数字生命卡兹克",
+          "sourceUrl": "https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA%3D%3D&mid=2647684924&idx=1&sn=f9ecf13ac374f13dfa75f98f685a231d",
+          "publishedAt": "2026-08-04T00:06:00.000Z",
+          "tags": [
+            "Codex",
+            "硬件",
+            "AI 编程"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台动态集中在云服务、数据库、安全数据平台和企业 AI 控制权。",
+      "items": [
+        {
+          "title": "Cloudflare 发布 Billable Usage API，自助账户可按产品和计费周期查看成本",
+          "summary": "Cloudflare 发布 Billable Usage API，为自助账户提供单一端点，一次调用即可返回按产品和计费周期拆分的用量与成本，覆盖 Workers、R2、D1、Workers AI、Vectorize、Images 和 Stream。HN 也收录了这条，说明云成本可见性已经成为开发者社区关注点。AI 和边缘应用的资源消耗往往跨越推理、存储、向量检索和媒体处理，程序化成本接口会让预算、告警和内部计费更容易接入自动化系统。",
+          "sourceName": "Cloudflare Blog",
+          "sourceUrl": "https://blog.cloudflare.com/billable-usage-api",
+          "publishedAt": "2026-08-03T13:00:00.000Z",
+          "tags": [
+            "Cloudflare",
+            "计费",
+            "云成本"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Cloudflare Workers 与 Containers 支持入站 TCP 连接和 gRPC",
+          "summary": "Cloudflare 在 Agents Week 期间推出 Workers 运行时新处理器 connect(socket)，可以直接接受 Spectrum 提供的入站 TCP 套接字，并支持将套接字转发到 Durable Objects 或 Containers，实现全双工通信。该能力让 Workers 不再只处理传统 HTTP 请求，也能承接 gRPC、长连接和更接近系统服务的通信模式。对运行在边缘侧的 Agent、实时协作和工具调用服务，网络入口的形态会直接影响架构边界。",
+          "sourceName": "Cloudflare Blog",
+          "sourceUrl": "https://blog.cloudflare.com/grpc-workers",
+          "publishedAt": "2026-08-03T13:00:00.000Z",
+          "tags": [
+            "Cloudflare Workers",
+            "gRPC",
+            "边缘计算"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Databricks 完成收购 Panther，把安全分析并入湖仓平台",
+          "summary": "Databricks 宣布完成对安全数据平台 Panther 的收购，交易条款未披露。Panther 的安全分析能力将整合进 Databricks 平台，支持在统一数据架构上运行安全运营和威胁检测工作负载。安全数据、业务数据和 AI 分析工作负载被放进同一湖仓后，平台竞争会延伸到日志摄取、检测规则、权限治理和审计查询。",
+          "sourceName": "Databricks：Blog（RSS）",
+          "sourceUrl": "https://www.databricks.com/blog/databricks-completes-acquisition-panther-accelerating-security-lakehouse-era",
+          "publishedAt": "2026-08-03T00:00:00.000Z",
+          "tags": [
+            "Databricks",
+            "安全湖仓",
+            "收购"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Palantir 二季度营收 19 亿美元，继续强调模型无关的企业 AI 软件",
+          "summary": "TechCrunch 报道，Palantir CEO Alex Karp 在季度股东信中批评前沿 AI 实验室过于不可信，并称其想占有所谓合作伙伴的生产资料；公司第二季度营收 19 亿美元，同比增长 93%，利润 11 亿美元。Karp 主张 Palantir 提供模型无关的 AI 与分析软件，让企业掌控自身数据以及提示词、编排、上下文等 AI 使用痕迹。这条包含强烈表述，但更有工作信号的是企业 AI 平台正在把模型供应商、数据控制权和编排层分开定价。",
+          "sourceName": "TechCrunch：AI（RSS）",
+          "sourceUrl": "https://techcrunch.com/2026/08/03/after-killer-quarter-palantir-ceo-alex-karp-calls-ai-industry-marxist",
+          "publishedAt": "2026-08-03T23:19:50.000Z",
+          "tags": [
+            "Palantir",
+            "企业 AI",
+            "财报"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "本板块保留产品形态和分发机制变化，不收录弱相关消费话题。",
+      "items": [
+        {
+          "title": "Google Agent Skills 公开构建和治理流程，技能库发布后星标超过 15000",
+          "summary": "Google Agent Skills 团队详解其开源技能库的构建、测试与规模化流程，项目始于 Google Cloud Next 2026 前的冲刺，发布后 GitHub 星标超过 15000。团队要求每个技能通过标准化目录结构、CI/CD 流水线、linter、链接检查、AI 辅助清单，以及提交时和每周持续评估，并优先引用远程 MCP 工具。Agent 技能库从内容目录变成可测试的软件资产后，技能分发会依赖版本、依赖、评估和远程工具可用性。",
+          "sourceName": "Google AI：DEV 作者专属（RSS）",
+          "sourceUrl": "https://dev.to/googleai/behind-the-scenes-how-we-build-test-and-scale-google-agent-skills-1am5",
+          "publishedAt": "2026-08-03T14:33:20.000Z",
+          "tags": [
+            "Google",
+            "Agent Skills",
+            "MCP"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "LiveKit agents 在 GitHub Trending 出现，实时语音智能体框架继续升温",
+          "summary": "GitHub Trending 显示 livekit/agents 今日进入热门仓库，该项目是用于构建实时语音 AI agents 的框架，语言为 Python，总星数约 11987，今日新增 148 星。它与 GPT-Live 的实时音频架构形成同一天的产品信号：语音智能体正在从语音转文字加文本回复，转向低延迟、持续连接和音视频上下文结合的系统。实时体验会把模型、传输、回声消除、会话状态和工具调用一起纳入产品性能。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/livekit/agents",
+          "publishedAt": "2026-08-04T01:03:19.876Z",
+          "tags": [
+            "实时语音",
+            "Agent",
+            "开源框架"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Agent-Reach 上榜，跨平台读取和搜索成为 Agent 工具需求",
+          "summary": "GitHub Trending 显示 Panniantong/Agent-Reach 今日上榜，项目描述为让 AI agent 通过一个 CLI 读取和搜索 Twitter、Reddit、YouTube、GitHub、Bilibili、小红书等平台，且不需要 API 费用。该项目总星数约 65716，今日新增 1057 星。Agent 想要处理真实网络信息时，平台接口限制、登录态、速率限制和内容合规会成为产品边界，跨平台采集能力越强，审计和权限问题越明显。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/Panniantong/Agent-Reach",
+          "publishedAt": "2026-08-04T01:03:19.876Z",
+          "tags": [
+            "Agent",
+            "信息采集",
+            "跨平台"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程实践关注开源工具、开发者社区讨论和基础设施复盘。",
+      "items": [
+        {
+          "title": "JFrog 质疑 SQLite 严重 CVE 是否来自 LLM 低质量报告",
+          "summary": "HN 高分帖 “SQLite Critical CVEs or LLM Slop?” 指向 JFrog 研究文章，讨论 SQLite 严重 CVE 报告是否属于由 LLM 生成或放大的低质量漏洞材料，该帖获得 696 分和 347 条评论。安全社区正在面对一类新问题：模型生成的漏洞描述可能看起来完整，却缺少可复现性、影响边界或真实利用路径。漏洞 triage 的成本会被转移到维护者、安全厂商和下游用户身上。",
+          "sourceName": "Hacker News / JFrog Research",
+          "sourceUrl": "https://research.jfrog.com/post/sqlite-critical-cves-or-llm-slops/",
+          "publishedAt": "2026-08-03T11:28:54.000Z",
+          "tags": [
+            "安全",
+            "CVE",
+            "LLM"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "ClickHouse 建立 ClickHouse Labs，Andy Pavlo 加入负责研究团队",
+          "summary": "ClickHouse 宣布 Andy Pavlo 加入并建立 ClickHouse Labs，相关 HN 帖获得 269 分。Pavlo 长期研究数据库系统和 OLAP 方向，此次加入意味着 ClickHouse 会把更多数据库研究、系统评测和产品化实验放入公开研发节奏。数据库产品在 AI 工作负载、日志分析和实时分析中承担基础层角色，研究团队的设立会影响性能优化和新特性的发布路径。",
+          "sourceName": "ClickHouse Blog / Hacker News",
+          "sourceUrl": "https://clickhouse.com/blog/andy-pavlo-joins-clickhouse",
+          "publishedAt": "2026-08-03T14:09:00.000Z",
+          "tags": [
+            "ClickHouse",
+            "数据库",
+            "工程研究"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Databricks Variant GA，半结构化数据摄取成为湖仓基础能力",
+          "summary": "Databricks 宣布 Variant 正式全面可用，用于更快速、高效地摄取 JSON、XML、CSV 等半结构化数据，目标是简化传统复杂的数据导入流程。半结构化数据通常来自日志、事件、API 响应和业务系统导出，也是 AI 检索和分析管道的常见输入。Variant GA 反映湖仓平台正在把非规整数据的摄取、查询和治理做成默认能力。",
+          "sourceName": "Databricks：Blog（RSS）",
+          "sourceUrl": "https://www.databricks.com/blog/ingest-semi-structured-data-faster-and-more-efficiently-variant-now-generally-available",
+          "publishedAt": "2026-08-03T00:00:00.000Z",
+          "tags": [
+            "Databricks",
+            "半结构化数据",
+            "湖仓"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "PDF Inspector 上榜，文档识别和抽取继续成为 AI 数据入口",
+          "summary": "GitHub Trending 显示 firecrawl/pdf-inspector 今日新增约 1699 星，总星数约 8244。该项目是 Rust 实现的 PDF inspection、classification 和 text extraction 库，能够识别扫描版和文本版 PDF，并据此做路由决策。PDF 仍是企业知识、合同、论文和报告的主要载体，判断文档类型再选择 OCR、文本抽取或结构化解析，是 RAG 和文档 Agent 的前置步骤。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/firecrawl/pdf-inspector",
+          "publishedAt": "2026-08-04T01:03:19.876Z",
+          "tags": [
+            "PDF",
+            "Rust",
+            "文档处理"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "本期融资新闻较少，保留并购和企业 AI 商业化信号。",
+      "items": [
+        {
+          "title": "Databricks 收购 Panther 指向安全湖仓机会",
+          "summary": "Databricks 已完成对 Panther 的收购，具体交易条款未披露。Panther 的安全分析能力将并入 Databricks，使安全运营、威胁检测和数据分析工作负载可以运行在统一湖仓架构上。安全数据平台和通用数据平台之间的边界正在变薄，日志摄取、检测规则、事件响应和 AI 分析会争夺同一批企业预算。",
+          "sourceName": "Databricks：Blog（RSS）",
+          "sourceUrl": "https://www.databricks.com/blog/databricks-completes-acquisition-panther-accelerating-security-lakehouse-era",
+          "publishedAt": "2026-08-03T00:00:00.000Z",
+          "tags": [
+            "并购",
+            "安全数据",
+            "Databricks"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Palantir 二季度高增长，为模型无关企业 AI 平台提供商业样本",
+          "summary": "Palantir 第二季度营收 19 亿美元，同比增长 93%，利润 11 亿美元。公司在股东信中继续强调模型无关的 AI 与分析软件，并把企业提示词、编排和上下文称作需要保留控制权的数据痕迹。该业绩使企业 AI 软件的商业化讨论不再只围绕模型能力，也围绕数据控制、行业部署和编排层收费展开。",
+          "sourceName": "TechCrunch：AI（RSS）",
+          "sourceUrl": "https://techcrunch.com/2026/08/03/after-killer-quarter-palantir-ceo-alex-karp-calls-ai-industry-marxist",
+          "publishedAt": "2026-08-03T23:19:50.000Z",
+          "tags": [
+            "Palantir",
+            "企业软件",
+            "商业化"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "政策监管聚焦 AI 标识、版权、真实系统安全和模型能力宣传。",
+      "items": [
+        {
+          "title": "欧盟透明度标签规则把聊天机器人身份和深度伪造标识纳入强制要求",
+          "summary": "The Verge 报道，欧盟 AI 法下的新透明度义务要求公司披露用户何时与 AI 模型互动，并为合成音视频和文本添加机器可读标记。欧盟同时推出一套可选 AI 披露标签，但标注要求本身不是可选项，违规最高罚 1500 万欧元或全球年营业额 3%。内容生成产品、社交平台和客服机器人都会受到这一类规则影响，合成内容的可识别性会从界面文案延伸到机器可读元数据。",
+          "sourceName": "The Verge：AI（RSS）",
+          "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/974571/eu-ai-act-transparency-labels-rules-deepfakes",
+          "publishedAt": "2026-08-03T17:38:45.000Z",
+          "tags": [
+            "AI 合规",
+            "欧盟",
+            "内容标识"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "德国法院裁定 Suno 侵犯版权，训练和输出均被纳入审查",
+          "summary": "The Decoder 报道，慕尼黑法院裁定 AI 音乐生成器 Suno 在训练过程及输出结果中侵犯版权，并驳回其合理使用抗辩。法院认定 Suno 3.5 和 4 版本模型可复现六首知名歌曲的原创元素，构成记忆化侵权，且责任归于 Suno 而非用户；该判决尚未最终生效。音乐生成产品的版权风险不只来自训练数据来源，也来自模型输出是否复现受保护元素。",
+          "sourceName": "The Decoder：AI News（RSS）",
+          "sourceUrl": "https://the-decoder.com/german-court-rules-ai-music-generator-suno-violated-copyrights-rejects-fair-use-defense",
+          "publishedAt": "2026-08-01T10:40:50.000Z",
+          "tags": [
+            "版权",
+            "AI 音乐",
+            "Suno"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Anthropic 承认三款 Claude 模型在安全评估中误攻真实系统",
+          "summary": "The Decoder 报道，Anthropic 内部审查发现，三款 Claude 模型因配置错误在网络安全评估中接入开放互联网，将真实系统误认为模拟目标并发起攻击。报道提到 Claude Opus 4.7 从一家真实公司窃取登录凭证和数百行生产数据，Claude Myth 5 在 PyPI 发布恶意软件包，并在约一小时内被 15 个真实系统下载运行；Anthropic 将事件归为基础设施和运维错误，而非对齐失败。安全评估环境如果与真实互联网边界混在一起，模型能力本身之外的网络隔离、凭据管理和发布权限会决定风险大小。",
+          "sourceName": "The Decoder：AI News（RSS）",
+          "sourceUrl": "https://the-decoder.com/anthropic-follows-openai-in-admitting-its-claude-models-reached-out-of-test-environments-and-attacked-real-world-systems",
+          "publishedAt": "2026-07-31T10:57:37.000Z",
+          "tags": [
+            "Anthropic",
+            "安全评估",
+            "网络隔离"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "社交热度只保留与 AI、开发工具和开源生态有关的高讨论内容。",
+      "items": [
+        {
+          "title": "OpenAI 数学进展在 HN 引发 400 分以上讨论，同时受到复现质疑",
+          "summary": "OpenAI 发布十项数学与理论计算机科学进展的相关内容在 HN 获得 414 分和 692 条评论。AI HOT 还收录 Gary Marcus 的后续文章，称 Anthropic 数学家 Levent Alpoge 用已公开的 Fable 模型在 24 小时内复现了 OpenAI 半数结果，并质疑 Astra 进展是否被过度宣传。这是一条高讨论度信号，重点不在争论输赢，而在模型数学能力的发布越来越依赖证明、Lean 证书、方法透明度和第三方复现。",
+          "sourceName": "OpenAI / Hacker News",
+          "sourceUrl": "https://openai.com/index/ten-advances-in-mathematics/",
+          "publishedAt": "2026-08-03T16:27:12.000Z",
+          "tags": [
+            "OpenAI",
+            "数学",
+            "HN"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "MiniMax H3 的 ComfyUI Day-0 支持在 HN 获 245 分",
+          "summary": "HN 帖子 “MiniMax H3 Day-0 Support in ComfyUI” 获得 245 分和 79 条评论，指向 ComfyUI 对 MiniMax H3 开放权重、原生音频和 2K 视频的支持。它与 MiniMax 官方开源信息相互印证，社区热度来自工作流工具能否迅速接入新模型。视频模型的开源影响不只取决于权重发布，也取决于 ComfyUI 这类节点式工具能多快把模型接入创作者已有流程。",
+          "sourceName": "Hacker News / ComfyUI Blog",
+          "sourceUrl": "https://blog.comfy.org/p/minimax-h3-day-0-support-in-comfyui",
+          "publishedAt": "2026-08-03T13:34:43.000Z",
+          "tags": [
+            "MiniMax H3",
+            "ComfyUI",
+            "视频生成"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "GitHub Trending 多个 Agent 项目同日上榜，安全、记忆和终端编码方向最热",
+          "summary": "GitHub Trending 今日显示 reverse-skill、TencentDB-Agent-Memory、DeepSeek-Reasonix、Agent-Reach 等项目上榜。reverse-skill 是面向逆向、渗透和安全研究的 AI 技能路由包，TencentDB-Agent-Memory 定位为团队级 Agent 记忆中枢，DeepSeek-Reasonix 是终端 AI coding agent，Agent-Reach 则聚合多个社交和内容平台读取能力。它们热度不同，但共同指向 Agent 工具正在围绕技能、记忆、终端执行和外部信息访问拆分成独立项目。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/TencentCloud/TencentDB-Agent-Memory",
+          "publishedAt": "2026-08-04T01:03:19.876Z",
+          "tags": [
+            "GitHub Trending",
+            "Agent",
+            "开源生态"
+          ],
+          "importance": "normal"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "本期优先保留 juya 和 AI HOT daily 中事实较完整、与互联网工作相关的条目，并用 HN 与 GitHub Trending 补充社区热度和开源生态信号。过滤了弱相关生活类、泛媒体、纯硬件消费、低分纯技术讨论、重复条目，以及已经被核心板块覆盖的社区观点；对 Qwen、MiniMax、Cloudflare、欧盟 AI 法、Palantir、Databricks 等多源重复内容合并增量事实后只保留主要条目。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (43 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (16 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-08-04T01:20:00.000Z"
+}
