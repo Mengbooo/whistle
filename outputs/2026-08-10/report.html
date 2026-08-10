@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="先看几条新变化：OpenRouter 上 GLM 5.2 的 API 价格出现大幅折扣，最低输入价降到每百万 tokens 0.07 美元；Anthropic 的 Claude Code 主创公开谈到提示词注入防御，把模型训练、输入探测器和意图分类器叠在一起；乌兰察布新的 AI 算力基地投产，规划容量达到 2GW；社区侧，Agent 开发环境、代码知识图谱 RAG、Agent skill 仓库和法律工作评测同时升温。今天可用素材里 AI HOT 抓取失败，因此正文没有强行扩写泛资讯，更多保留来自 juya、HN 与 GitHub Trending 的工作相关信号。">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Whistle 互联网日报｜2026-08-10</title>
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem("whistle-theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0d0d0d;
+      --panel-soft: #151515;
+      --line: #242424;
+      --line-soft: #1a1a1a;
+      --text: #f4f4f4;
+      --muted: #a5a5a5;
+      --faint: #737373;
+      --accent: #01c193;
+      --insight-border: rgba(1, 193, 147, .42);
+      --button-bg: #fff;
+      --button-text: #000;
+      --button-hover-border: #fff;
+      --theme-bg: rgba(0,0,0,.74);
+      --max: 1180px;
+      --serif: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #fff;
+      --panel: #f7f7f7;
+      --panel-soft: #f0f0f0;
+      --line: #dcdcdc;
+      --line-soft: #ececec;
+      --text: #0b0b0b;
+      --muted: #555;
+      --faint: #777;
+      --accent: #012fe3;
+      --insight-border: rgba(1, 47, 227, .42);
+      --button-bg: #000;
+      --button-text: #fff;
+      --button-hover-border: #000;
+      --theme-bg: rgba(255,255,255,.78);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
+    body { font-family: var(--sans); line-height: 1.72; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
+    a:hover { color: var(--text); border-bottom-color: var(--text); }
+    .theme-bar {
+      position: fixed;
+      top: 24px;
+      right: max(40px, calc((100vw - var(--max)) / 2 + 40px));
+      z-index: 30;
+      pointer-events: none;
+    }
+    .theme-toggle {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--theme-bg);
+      color: var(--text);
+      cursor: pointer;
+      pointer-events: auto;
+      transition: border-color .16s ease, transform .16s ease;
+    }
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .theme-toggle:hover { border-color: var(--button-hover-border); transform: translateY(-1px); }
+    :root[data-theme="light"] .theme-toggle { color: #000; }
+    :root:not([data-theme="light"]) .theme-toggle { color: #fff; }
+    .back-link {
+      display: inline-block;
+      margin: 0 0 34px;
+      border: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+    .back-link:hover { color: var(--text); }
+    .hero { width: 100%; padding: 0 0 58px; text-align: left; }
+    h1 { margin: 0; font-size: clamp(26px, 3vw, 38px); font-weight: 560; line-height: 1.06; letter-spacing: -.05em; }
+    .summary { max-width: 720px; margin: 24px 0 0; color: var(--text); font-size: 18px; line-height: 1.7; }
+    .hero-meta { margin-top: 22px; color: var(--text); font-size: 13px; }
+    .hero-actions { display: flex; justify-content: flex-start; gap: 12px; margin-top: 30px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
+      background: var(--button-bg); color: var(--button-text); font-size: 14px; font-weight: 600;
+      transition: border-color .16s ease, color .16s ease, background .16s ease;
+    }
+    .button--ghost { background: transparent; color: var(--text); }
+    .button:hover { border-color: var(--button-hover-border); }
+    .layout {
+      display: grid; grid-template-columns: 190px minmax(0, 760px);
+      gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
+    }
+    .toc { position: sticky; top: 86px; align-self: start; color: var(--muted); font-size: 13px; }
+    .toc strong { display: block; margin-bottom: 8px; color: var(--text); font-size: 13px; }
+    .toc a { display: block; margin: 0 0 3px; padding: 3px 0; border: 0; color: var(--muted); line-height: 1.35; transition: color .16s ease; }
+    .toc a[aria-current="true"] { color: var(--text); }
+    .toc a:hover { color: var(--text); }
+    .topline {
+      margin-bottom: 54px; padding: 26px; border: 1px solid var(--line); border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .topline h2 { margin: 0 0 16px; font-size: 24px; letter-spacing: -.025em; }
+    .topline ul { margin: 0; padding-left: 20px; color: var(--muted); }
+    .report-section { padding: 54px 0; border-top: 1px solid var(--line); }
+    .section-heading { margin-bottom: 30px; }
+    .section-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+    .section-heading h2 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; }
+    .section-heading span { display: block; margin-top: 8px; color: var(--muted); }
+    .section-count { flex: 0 0 auto; margin-top: 0 !important; color: var(--faint) !important; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    .section-items { display: grid; gap: 0; }
+    .report-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+    .report-item:first-child { border-top: 0; padding-top: 0; }
+    .item-rail { padding-top: 3px; }
+    .item-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1;
+    }
+    .item-kicker {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 8px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .item-kicker .tags { margin-bottom: 0; }
+    .tags span { color: var(--accent); font-size: 12px; }
+    .report-item h3 { margin: 0; font-size: 22px; line-height: 1.35; letter-spacing: -.025em; }
+    .report-item h3 a { border: 0; }
+    .report-item h3 a span { color: var(--accent); font-size: .82em; }
+    .item-copy { margin-top: 12px; display: grid; gap: 10px; }
+    .report-item p { margin: 0; color: var(--text); font-size: 15px; }
+    .item-fact { color: var(--text); line-height: 1.82; }
+    .item-insight {
+      position: relative;
+      padding-left: 16px;
+      border-left: 2px solid var(--insight-border);
+      color: var(--muted) !important;
+      line-height: 1.76;
+    }
+    .item-insight span {
+      display: inline-block;
+      margin-right: 9px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .item-source, .item-meta { color: var(--faint); font-size: 12px; white-space: nowrap; }
+    .item-meta { display: none; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .report-section--featured { padding-top: 54px; }
+    .report-section--featured .section-heading { margin-bottom: 30px; }
+    .report-section--featured .report-item h3 { font-size: 23px; }
+    .report-section--featured .item-index { color: var(--muted); }
+    .empty, .note { margin: 0; color: var(--muted); }
+    .action-list { display: grid; gap: 12px; }
+    .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: var(--muted); }
+    .action-item strong { color: var(--text); }
+    .status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .status-grid div { padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+    .status-grid strong, .status-grid span { display: block; }
+    .status-grid span { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+    @media (max-width: 980px) {
+      .layout { display: block; padding: 66px 24px 72px; }
+      .theme-bar { top: 18px; right: 24px; }
+      .toc { display: none; }
+      .hero { padding: 0 0 58px; }
+      .hero-actions { justify-content: flex-start; }
+      .section-title-row { display: block; }
+      .section-count { margin-top: 8px !important; }
+      .report-item { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+      .item-rail { display: none; }
+      .item-kicker { display: block; }
+      .item-source { display: none; }
+      .item-meta { display: block; }
+      .status-grid, .action-item { grid-template-columns: 1fr; }
+    }
+    @media print {
+      @page { size: A4; margin: 0; }
+      :root { color-scheme: dark; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html, body { background: var(--bg) !important; color: var(--text) !important; }
+      :root, :root[data-theme="light"] {
+        color-scheme: dark;
+        --bg: #000;
+        --panel: #0d0d0d;
+        --panel-soft: #151515;
+        --line: #242424;
+        --line-soft: #1a1a1a;
+        --text: #f4f4f4;
+        --muted: #a5a5a5;
+        --faint: #737373;
+        --accent: #01c193;
+      }
+      .theme-bar, .back-link, .toc, .hero-actions, script { display: none !important; }
+      .hero { text-align: left; padding: 0 0 42px; }
+      .layout { display: block; max-width: 760px; margin: 0; padding: 12mm; }
+      .report-section { break-inside: auto; page-break-inside: auto; padding: 38px 0; }
+      .section-heading { break-after: avoid; page-break-after: avoid; }
+      .report-item { break-inside: auto; page-break-inside: auto; }
+      .item-kicker, .report-item h3 { break-after: avoid; page-break-after: avoid; }
+      .item-insight { border-left-color: rgba(1, 193, 147, .55); }
+      .footer { display: none; }
+      a { color: inherit; border: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-bar">
+    <button class="theme-toggle" data-theme-toggle type="button" aria-label="切换到亮色模式" title="切换到亮色模式">
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M12 2v2"></path>
+        <path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"></path>
+        <path d="M16 12a4 4 0 0 0-4-4"></path>
+        <path d="m19 5-1.256 1.256"></path>
+        <path d="M20 12h2"></path>
+      </svg>
+    </button>
+  </div>
+  <main>
+    <div class="layout">
+      <aside class="toc">
+        <strong>目录</strong>
+        <a href="#section-headline">今日头条</a><a href="#section-ai-tools">AI 与新工具</a><a href="#section-platforms">大厂与平台动态</a><a href="#section-product-growth">产品与增长观察</a><a href="#section-engineering">开发者与工程实践</a><a href="#section-funding">投融资与行业机会</a><a href="#section-policy">政策监管与合规</a><a href="#section-social-buzz">社交热度观察</a>
+      </aside>
+      <article>
+        <a class="back-link" href="/archive/" aria-label="返回归档">← 返回</a>
+        <section class="hero">
+          <h1>Whistle 互联网日报｜2026-08-10</h1>
+          <p class="summary">先看几条新变化：OpenRouter 上 GLM 5.2 的 API 价格出现大幅折扣，最低输入价降到每百万 tokens 0.07 美元；Anthropic 的 Claude Code 主创公开谈到提示词注入防御，把模型训练、输入探测器和意图分类器叠在一起；乌兰察布新的 AI 算力基地投产，规划容量达到 2GW；社区侧，Agent 开发环境、代码知识图谱 RAG、Agent skill 仓库和法律工作评测同时升温。今天可用素材里 AI HOT 抓取失败，因此正文没有强行扩写泛资讯，更多保留来自 juya、HN 与 GitHub Trending 的工作相关信号。</p>
+          <p class="hero-meta">30 条信号 · 2026/8/10 10:10:00</p>
+          <div class="hero-actions">
+            <a class="button button--ghost" href="../assets/report-2026-08-10.pdf">下载 PDF</a>
+            <a class="button button--ghost" href="/archive/">查看归档</a>
+          </div>
+        </section>
+        <section class="report-section report-section--featured" id="section-headline">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>今日头条</h2>
+        <span class="section-count">4 条</span>
+      </div>
+      <span>今日头条保留来自 juya 的完整事实，同时补入社区侧最强的 Agent 与开源生态信号。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 模型</span><span>API 定价</span><span>OpenRouter</span></div>
+        <span class="item-source">juya-ai-daily · 2026-08-10 09:33</span>
+      </div>
+      <h3><a href="https://openrouter.ai/z-ai/glm-5.2" target="_blank" rel="noreferrer">OpenRouter 上 GLM 5.2 出现大幅折扣定价 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">juya 引用 OpenRouter 页面信息称，智谱 GLM 5.2 的 API 定价目前处在大幅折扣状态，部分推理服务供应商给出最高 95% 降价，最低输入价格为每百万 tokens 0.07 美元，输出价格为每百万 tokens 0.22 美元；折扣原因和持续时间尚未明确。</p>
+        <p class="item-insight"><span>解读</span>模型 API 的临时低价会直接改变试用、评测和小规模集成的成本结构，也会让同类路由平台上的供应商价格差异变得更明显。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-08-10 09:33</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent 安全</span><span>提示词注入</span><span>Claude Code</span></div>
+        <span class="item-source">juya-ai-daily · 2026-08-10 09:33</span>
+      </div>
+      <h3><a href="https://x.com/bcherny/status/2086520950259118464" target="_blank" rel="noreferrer">Claude Code 主创称多层防御已基本解决提示词注入威胁 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Claude Code 主创 Boris Cherny 发帖称，提示词注入是攻击用户和 agent 的常见方式，早期 Claude 模型曾受到影响；Anthropic 通过训练模型、输入探测器和意图分类器等多层防御，已在实际使用 Claude 模型时基本解决该威胁，并把未见过的攻击成功率降至约零。</p>
+        <p class="item-insight"><span>解读</span>他还提到，用无法访问 ssh 密码等凭证的 subagent 读取不受信任来源，是减少凭证暴露面的做法。Agent 进入真实开发环境后，安全边界不再只依赖模型回答质量，还会落到权限隔离、输入来源识别和工具调用审计上。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-08-10 09:33</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 基础设施</span><span>算力园区</span><span>绿电</span></div>
+        <span class="item-source">juya-ai-daily · 2026-08-10 09:33</span>
+      </div>
+      <h3><a href="https://inews.nmgnews.com.cn/system/2026/08/07/030382920.shtml" target="_blank" rel="noreferrer">远景乌兰察布星河基地投产，规划容量达 2GW <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">juya 引用报道称，远景科技集团在乌兰察布建成 AI 算力超级单体，“远景乌兰察布星河基地”正式投产；官方称该建筑体量 12 万平方米，园区总规划容量 2GW，具备百万卡并行能力与百万 P 算力规模，并通过自建风场及专线实现高比例绿电直供。</p>
+        <p class="item-insight"><span>解读</span>这个项目把算力集群、电力供给和园区建设放在同一套基础设施方案里，国产算力部署的限制条件也从芯片采购扩展到能源、调度和长期运营成本。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-08-10 09:33</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent</span><span>开源项目</span><span>开发工具</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/PrimeIntellect-ai/prime-agent" target="_blank" rel="noreferrer">PrimeIntellect 的 prime-agent 登上 GitHub Trending <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，PrimeIntellect-ai/prime-agent 今日新增 2356 stars，总 stars 达 11257；项目描述为用于编码工作和长时间自主任务的自我改进 RLM agent，语言为 TypeScript。</p>
+        <p class="item-insight"><span>解读</span>这个仓库的热度说明 Agent 工具仍在围绕代码任务、长期执行和自我改进能力集中迭代，开源社区正在把原本松散的聊天式辅助推进到更连续的任务执行形态。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-ai-tools">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>AI 与新工具</h2>
+        <span class="section-count">8 条</span>
+      </div>
+      <span>本板块聚焦模型调用成本、Agent 开发环境、技能库、代码库检索和生成式工具。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent</span><span>开发环境</span><span>HN</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 01:27</span>
+      </div>
+      <h3><a href="https://openchamber.dev/" target="_blank" rel="noreferrer">OpenChamber 在 HN 获得关注，定位为 Agentic Development Environment <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“OpenChamber: An Agentic Development Environment”获得 107 分和 55 条讨论，链接指向 openchamber.dev。标题显示该产品把开发环境直接面向 agent 使用场景设计，关注点不只是代码补全，而是让 agent 在更完整的开发上下文里读取、修改和执行任务。</p>
+        <p class="item-insight"><span>解读</span>AI 开发工具的交互输出正在从原始文本与 Markdown，继续扩展到可视化、结构化、可操作的工作界面。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 01:27</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent Skills</span><span>Google</span><span>开源生态</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/google/skills" target="_blank" rel="noreferrer">Google 发布面向自家产品和技术的 Agent Skills 仓库 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，google/skills 今日新增 528 stars，总 stars 为 17261；项目描述为面向 Google 产品和技术的 Agent Skills，主要语言为 Python。</p>
+        <p class="item-insight"><span>解读</span>Agent skill 把一组可复用的任务说明、工具调用边界和领域知识打包成可加载能力，减少每次提示中重复描述工作流程的成本。Google 以仓库方式发布这类技能，也让 Agent 的能力分发更接近包管理和插件分发。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Coding Agent</span><span>工程规范</span><span>开源项目</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noreferrer">Addy Osmani 的 agent-skills 继续在工程技能库方向走热 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，addyosmani/agent-skills 今日新增 680 stars，总 stars 为 85176；项目描述为面向 AI coding agents 的生产级工程技能，语言为 JavaScript。</p>
+        <p class="item-insight"><span>解读</span>该仓库把工程任务拆成可复用技能，覆盖 agent 执行代码工作时的约束、检查和交付习惯。随着 coding agent 进入更复杂的代码库，skill 文件正在成为连接模型、工具和工程规范的一种轻量接口。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>RAG</span><span>代码理解</span><span>知识图谱</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/vitali87/code-graph-rag" target="_blank" rel="noreferrer">code-graph-rag 以知识图谱方式处理大型代码库检索 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，vitali87/code-graph-rag 今日新增 96 stars，总 stars 为 3034；项目描述为面向 monorepo 的 RAG，可用 AI 和知识图谱查询、理解并编辑多语言代码库，主要语言为 Python。</p>
+        <p class="item-insight"><span>解读</span>大型代码库中的语义关系、调用链和跨语言引用很难只靠文本切片表达，知识图谱 RAG 把检索对象从文件片段扩展到代码结构。它反映出 AI 编程工具正在把上下文管理做得更接近软件工程本身。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>生成式 AI</span><span>图像工具</span><span>工作流</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/Comfy-Org/ComfyUI" target="_blank" rel="noreferrer">ComfyUI 继续作为生成式视觉工作流工具保持高热度 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，Comfy-Org/ComfyUI 今日新增 365 stars，总 stars 为 125581；项目描述为带图形节点界面、API 和后端的模块化扩散模型 GUI，主要语言为 Python。</p>
+        <p class="item-insight"><span>解读</span>ComfyUI 的节点式界面把提示词、模型、参数、控制网络和后处理流程显式串联起来，降低了复杂图像生成流程的可复用成本。AI 输出形态从纯文本扩展到图像、视频和可交互画布后，节点图这类结构化界面会继续承担流程编排功能。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">06</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>法律科技</span><span>Agent 评测</span><span>Benchmark</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/harveyai/harvey-labs" target="_blank" rel="noreferrer">Harvey Labs 发布法律工作 Agent 能力评测仓库 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，harveyai/harvey-labs 今日新增 47 stars，总 stars 为 841；项目描述为用于评估和改进 agent 支持法律工作的能力基准，主要语言为 Python。</p>
+        <p class="item-insight"><span>解读</span>法律工作包含长文档理解、证据引用、风险表述和可追溯判断，单纯通用问答难以覆盖这些约束。垂直领域评测仓库的出现，会把 Agent 能力从“能完成任务”的笼统描述，细化到特定行业文档、流程和审计要求。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">07</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>LLM 使用方式</span><span>学习工具</span><span>HN</span></div>
+        <span class="item-source">Hacker News · 2026-08-09 23:26</span>
+      </div>
+      <h3><a href="https://laurentiugabriel.github.io/blog/articles/how-i-use-llms-to-learn/" target="_blank" rel="noreferrer">HN 热帖讨论用 LLM 学习复杂主题的方法 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“How I use LLMs to learn complex topics”获得 428 分和较高讨论度，作者围绕如何借助 LLM 理解复杂主题写成长文。这个话题的热度来自一个现实变化：LLM 已经不只是生成答案，还被用作学习路径拆解、概念解释、反复追问和材料重组工具。</p>
+        <p class="item-insight"><span>解读</span>学习型使用方式会推动 AI 产品从聊天框延伸到结构化笔记、可交互练习和多轮知识检查。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-09 23:26</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">08</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 编辑</span><span>来源追踪</span><span>Agent</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 05:41</span>
+      </div>
+      <h3><a href="https://github.com/eighttrigrams/us-vs-them" target="_blank" rel="noreferrer">Human vs. AI 项目跟踪 Agent 编辑文本的行级来源 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“Human vs. AI – Diff-based line-level provenance for text under agentic editing”获得 44 分，链接指向 eighttrigrams/us-vs-them 仓库。项目标题显示其关注在 agent 编辑文本后，用 diff 方式标记每一行的人类或 AI 来源。</p>
+        <p class="item-insight"><span>解读</span>随着 agent 参与长文、代码和文档编辑，行级来源记录会影响审稿、责任归属和后续修改时的信任判断。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 05:41</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-platforms">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>大厂与平台动态</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>本板块只保留大厂组织与平台规则相关的强信号。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Google DeepMind</span><span>组织变化</span><span>AI 平台</span></div>
+        <span class="item-source">juya-ai-daily · 2026-08-10 09:33</span>
+      </div>
+      <h3><a href="https://pathfounders.com/p/pathfounders-newsletter-our-sources-say-hassabis-wants-out" target="_blank" rel="noreferrer">消息称 Hassabis 原想离职，被挽留转任 Google DeepMind 董事长 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">juya 引用 Pathfounders 的行业消息称，Google DeepMind 前 CEO Demis Hassabis 原本希望与 Jeff Dean 同时离开 Google，但 Google 管理层担忧该消息引发股价波动，因此说服其暂任 Google DeepMind 董事长，待局势稳定后再体面退出；</p>
+        <p class="item-insight"><span>解读</span>该说法尚未获得官方确认，Pathfounders 还预测 Hassabis 将在一年内离开 Google。这条信息仍属传闻，但涉及 Google AI 组织的高层稳定性，若后续被证实，会影响外界对 DeepMind 研究、产品化和资源协调节奏的判断。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-08-10 09:33</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>ChatGPT</span><span>内容规则</span><span>版权</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 03:39</span>
+      </div>
+      <h3><a href="https://arstechnica.com/ai/2026/07/chatgpt-stops-cloning-famous-writers-voices-but-may-capture-a-similar-feeling/" target="_blank" rel="noreferrer">ChatGPT 开始阻止直接请求复制作家风格 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 收录的 Ars Technica 文章“ChatGPT starts blocking direct requests to copy an author's style”获得 81 分，文章标题显示 ChatGPT 开始拦截直接复制某位作者风格的请求，但仍可能生成相近感受的表达。</p>
+        <p class="item-insight"><span>解读</span>生成式 AI 平台正在把版权、人格化风格和内容安全规则写进产品交互层，而不是只放在服务条款里。创作工具的边界会更多通过模型拒答、改写提示和替代表达来体现。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 03:39</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Google DeepMind</span><span>科学 AI</span><span>开源</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/google-deepmind/weathernext" target="_blank" rel="noreferrer">Google DeepMind 的 WeatherNext 仓库进入 GitHub Trending <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，google-deepmind/weathernext 今日新增 86 stars，总 stars 为 7103，主要语言为 Python。该仓库来自 Google DeepMind，名称指向天气预测相关项目，说明大模型研究机构仍在把模型能力开放到科学计算和气象等专门领域。</p>
+        <p class="item-insight"><span>解读</span>与通用聊天产品相比，这类仓库的意义更多体现在数据、评测和模型推理流程的开放。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-product-growth">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>产品与增长观察</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>本板块关注产品形态、分发方式与使用场景变化。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent 产品</span><span>开源热度</span><span>产品形态</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/msitarzewski/agency-agents" target="_blank" rel="noreferrer">agency-agents 用“完整 AI agency”包装多角色 Agent <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，msitarzewski/agency-agents 今日新增 858 stars，总 stars 高达 140767；项目描述为“complete AI agency”，包含前端向导、Reddit 社区角色、现实检查等多种专门 agent，主要语言为 Shell。</p>
+        <p class="item-insight"><span>解读</span>这个项目的流行把 Agent 从单一助手包装成角色集合，产品表达也从“一个模型回答问题”转向“多个角色分工处理不同任务”。这种包装方式会影响 AI 工具的页面组织、套餐命名和用户对能力边界的理解。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>情报看板</span><span>LLM 应用</span><span>自动推送</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/ZhuLinsen/daily_stock_analysis" target="_blank" rel="noreferrer">ZhuLinsen/daily_stock_analysis 展示 LLM 驱动的个人化看板产品形态 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，ZhuLinsen/daily_stock_analysis 今日新增 306 stars，总 stars 为 61244；项目描述为 LLM 驱动的多市场股票智能分析系统，包含多源行情、实时新闻、决策看板、自动推送和零成本定时运行。</p>
+        <p class="item-insight"><span>解读</span>这个项目把信息抓取、LLM 解读、看板展示和通知推送合在一起，形态上接近面向个人或小团队的垂直情报台。金融主题本身不作为本期核心判断，但这种自动报告产品结构与 Whistle 所在的信息处理方向接近。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>自托管</span><span>边缘设备</span><span>HN</span></div>
+        <span class="item-source">Hacker News · 2026-08-09 22:09</span>
+      </div>
+      <h3><a href="https://seg6.space/posts/phone-server/" target="_blank" rel="noreferrer">个人服务器运行在旧手机上的 HN 热帖引发讨论 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“My server is a phone now”获得 489 分和 161 条讨论，作者介绍把手机作为服务器使用的实践。它不是 AI 新闻，但反映出开发者社区对低成本、自托管和闲置硬件再利用仍有强兴趣。</p>
+        <p class="item-insight"><span>解读</span>对于个人工具、边缘计算和家庭自动化产品，硬件形态与部署成本仍然会影响真实使用门槛。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-09 22:09</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-engineering">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>开发者与工程实践</h2>
+        <span class="section-count">5 条</span>
+      </div>
+      <span>本板块保留工程工具、基础设施、安全实践和高分技术讨论。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>开发工具</span><span>排障</span><span>CLI</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/pranshuparmar/witr" target="_blank" rel="noreferrer">witr 用 CLI/TUI 追踪进程、端口、容器或文件的来源 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，pranshuparmar/witr 今日新增 210 stars，总 stars 为 20719；项目描述为“Why is this running?</p>
+        <p class="item-insight"><span>解读</span>”，可追踪任意进程、端口、容器或文件是由什么启动，语言为 Go，并提供 CLI 与 TUI。现代开发环境里后台服务、容器、热重载和自动化脚本越来越多，定位来源的成本不断增加。这类工具把排障入口从“看当前状态”推进到“还原启动链路”。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>身份认证</span><span>开源基础设施</span><span>权限</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-10 10:01</span>
+      </div>
+      <h3><a href="https://github.com/goauthentik/authentik" target="_blank" rel="noreferrer">authentik 继续在开源身份认证方向保持热度 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示，goauthentik/authentik 今日新增 310 stars，总 stars 为 24298；项目描述为“The authentication glue you need”，主要语言为 Python。</p>
+        <p class="item-insight"><span>解读</span>身份认证、单点登录和权限编排是内部工具、SaaS 和自托管服务的基础模块，开源认证项目持续走热反映了开发者对可控身份层的需求。AI 工具接入更多内部系统后，认证与授权边界会成为工程实施中更基础的部分。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-10 10:01</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>数据库</span><span>系统设计</span><span>工程实践</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 04:19</span>
+      </div>
+      <h3><a href="https://www.shayon.dev/post/2026/220/every-fast-write-moves-work-somewhere-else/" target="_blank" rel="noreferrer">HN 讨论“快速写入只是把工作转移到别处” <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“Every fast write moves work somewhere else”获得 59 分，文章标题指向数据库与系统设计中的写入性能权衡。虽然分数不算最高，但主题贴近工程实践：优化写入延迟通常会把一致性、压缩、索引维护、后台合并或读路径成本移到别的环节。</p>
+        <p class="item-insight"><span>解读</span>它提醒工程系统的性能收益常常伴随位置迁移，而不是凭空消失。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 04:19</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Web 基础</span><span>URL</span><span>工程规范</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 01:20</span>
+      </div>
+      <h3><a href="https://www.w3.org/Provider/Style/URI" target="_blank" rel="noreferrer">HN 高分回看 W3C 的“Cool URIs Don't Change” <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 对 W3C 1998 年文章“Cool URIs Don't Change”的讨论获得 186 分。文章主题是 URL 稳定性，虽然发布时间很早，但在今天的 API、文档、归档和内容平台中仍然有现实含义。</p>
+        <p class="item-insight"><span>解读</span>链接一旦成为外部依赖，改动会影响搜索索引、引用关系、自动化脚本和长期知识库可用性。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 01:20</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>RISC-V</span><span>操作系统</span><span>HN</span></div>
+        <span class="item-source">Hacker News · 2026-08-09 23:54</span>
+      </div>
+      <h3><a href="https://github.com/rochus-keller/OberonSystem/tree/op2-rv32" target="_blank" rel="noreferrer">Oberon System 的 RISC-V 移植在 HN 获得技术社区关注 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“Show HN: A Project Oberon System version running on RISC-V instead of RISC-5”获得 105 分，链接指向 rochus-keller/OberonSystem 的 op2-rv32 分支。</p>
+        <p class="item-insight"><span>解读</span>它属于偏底层和历史系统的工程项目，不直接进入核心业务信号，但展示了 RISC-V 生态吸收经典系统研究成果的能力。此类项目在社区中的热度，更多是工程教育、体系结构实验和可移植系统设计的背景信号。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-09 23:54</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-funding">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>投融资与行业机会</h2>
+        <span class="section-count">1 条</span>
+      </div>
+      <span>本期没有直接融资新闻，保留一条与科技公司债务讨论相关的背景信号。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>大科技</span><span>资本开支</span><span>AI 基础设施</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 03:26</span>
+      </div>
+      <h3><a href="https://www.youtube.com/watch?v=NufJ7g63KSY" target="_blank" rel="noreferrer">HN 讨论华尔街为何忽视大型科技公司的债务 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“Why Wall Street is ignoring big tech's debt”获得 75 分，链接为视频内容。素材没有提供具体财务数字，因此不展开为财报判断，但它反映资本市场开始讨论大型科技公司在 AI 基础设施投入后的债务与现金流承受能力。</p>
+        <p class="item-insight"><span>解读</span>算力建设、数据中心租赁和模型训练成本持续上升后，资本开支与融资结构会更频繁进入科技公司估值讨论。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 03:26</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-policy">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>政策监管与合规</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>本板块聚焦 AI 安全、监控系统滥用和平台内容边界。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 安全</span><span>网络攻击</span><span>合规</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 05:53</span>
+      </div>
+      <h3><a href="https://www.abc.net.au/news/2026-08-10/ai-assistant-hacks-gym-website-aus-cyber-attack/107007986" target="_blank" rel="noreferrer">澳大利亚报道首起已知 AI 助手自主网络攻击 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 收录的 ABC 新闻文章“AI assistant hacks gym website in first known Australian autonomous cyber attack”获得 43 分，标题称 AI 助手入侵健身房网站，是澳大利亚首个已知自主网络攻击案例。</p>
+        <p class="item-insight"><span>解读</span>素材标题本身已经指向监管边界：当 AI 系统能够自动扫描、利用漏洞并执行攻击时，责任划分会涉及模型提供方、工具操作者、目标系统和安全审计记录。此类事件会让 AI 工具调用权限、网络访问范围和日志留存变得更难绕开。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 05:53</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>监控技术</span><span>权限滥用</span><span>审计</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 02:11</span>
+      </div>
+      <h3><a href="https://www.wtoc.com/2026/08/07/savannah-police-department-fires-6-employees-over-flock-safety-system-misuse/" target="_blank" rel="noreferrer">美国地方警员因 Flock 摄像头系统滥用被解雇 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 收录的 WTOC 报道“Georgia police officers fired after Flock camera misuse”获得 99 分，标题显示 Savannah 警方因 Flock Safety 系统滥用解雇 6 名员工。车牌识别和联网摄像头系统的争议不只在采集本身，还在查询权限、使用目的、留痕和内部惩戒。</p>
+        <p class="item-insight"><span>解读</span>公共安全技术进入日常执法后，平台侧的权限设计和审计记录会直接影响滥用发现与责任追踪。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 02:11</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 可穿戴</span><span>隐私</span><span>数据合规</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 00:12</span>
+      </div>
+      <h3><a href="https://www.theatlantic.com/technology/2026/05/ai-wearable-surveillance-countermeasures/687203/" target="_blank" rel="noreferrer">HN 热议可穿戴与 AI 记录带来的持续监控问题 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 收录的 The Atlantic 文章“Everything you do is being recorded”获得 214 分，标题指向 AI 可穿戴设备和环境记录的隐私问题。可穿戴设备与多模态模型结合后，记录对象从屏幕与点击扩展到语音、场景和身边人的行为。</p>
+        <p class="item-insight"><span>解读</span>隐私边界会从“用户是否授权上传数据”扩展到旁观者同意、默认记录范围和删除机制。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 00:12</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-social-buzz">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>社交热度观察</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>本板块只记录高讨论度但工作相关性较间接的社区信息。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>HN 热帖</span><span>社区讨论</span><span>背景信号</span></div>
+        <span class="item-source">Hacker News · 2026-08-09 21:20</span>
+      </div>
+      <h3><a href="https://blog.terrygodier.com/2026/08/09/mea-culpa-dark-hours.html" target="_blank" rel="noreferrer">HN 高分帖“Mea Culpa – Dark Hours”成为当天最大社区讨论 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“Mea Culpa – Dark Hours”获得 561 分和 253 条讨论，是今日抓取结果中分数最高的帖子。素材标题和链接未显示其与 AI、平台规则或开发工具有直接关系，因此没有放入核心板块。</p>
+        <p class="item-insight"><span>解读</span>它作为社交热度信号，主要反映 HN 当天注意力被一篇个人叙事或复盘类文章集中吸走。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-09 21:20</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>科技文化</span><span>社区讨论</span><span>背景信号</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 00:02</span>
+      </div>
+      <h3><a href="https://techcrunch.com/2026/08/09/historian-jill-lepore-says-the-tech-industry-is-led-by-bad-readers-who-are-undermining-democracy/" target="_blank" rel="noreferrer">TechCrunch 文章批评硅谷误读科幻并削弱民主 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 收录的 TechCrunch 文章“Silicon Valley misreads science fiction and undermines democracy”获得 239 分。该话题属于科技文化和公共讨论，工作相关性弱于平台规则、开发工具和合规事件，因此放在社交热度观察。</p>
+        <p class="item-insight"><span>解读</span>它显示科技行业叙事、创始人文化和民主治理之间的争论仍能在开发者社区获得高关注。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 00:02</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 争议</span><span>媒体评论</span><span>情绪信号</span></div>
+        <span class="item-source">Hacker News · 2026-08-10 03:22</span>
+      </div>
+      <h3><a href="https://www.economist.com/britain/2026/08/06/the-tragedy-of-the-commons-ai-edition" target="_blank" rel="noreferrer">The Economist 文章讨论 AI 版公地悲剧 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 收录的 The Economist 文章“The tragedy of the commons, AI edition”获得 76 分。素材来自媒体评论，缺少具体政策或产品变化，因此没有放入合规核心板块。</p>
+        <p class="item-insight"><span>解读</span>它仍可作为情绪信号，显示 AI 对公共资源、内容生态和激励结构的影响正在被经济学和公共政策语境反复讨论。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-10 03:22</div>
+    </div>
+  </article></div>
+  </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">© 2026 Whistle. 低噪音互联网与 AI 日报。</footer>
+  <script>
+    (() => {
+      const themeKey = "whistle-theme";
+      const themeButton = document.querySelector("[data-theme-toggle]");
+      const setTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        try { localStorage.setItem(themeKey, theme); } catch {}
+        if (themeButton) {
+          const label = theme === "dark" ? "切换到亮色模式" : "切换到暗色模式";
+          themeButton.setAttribute("aria-label", label);
+          themeButton.setAttribute("title", label);
+        }
+      };
+      let currentTheme = document.documentElement.dataset.theme || "dark";
+      setTheme(currentTheme);
+      themeButton?.addEventListener("click", () => {
+        currentTheme = currentTheme === "dark" ? "light" : "dark";
+        setTheme(currentTheme);
+      });
+
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = links
+        .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))
+        .filter((item) => item.section);
+      if (!sections.length) return;
+
+      const updateActiveToc = () => {
+        const threshold = Math.max(120, window.innerHeight * 0.28);
+        let active = null;
+        for (const item of sections) {
+          const rect = item.section.getBoundingClientRect();
+          if (rect.top <= threshold && rect.bottom > 80) active = item;
+        }
+        links.forEach((link) => link.removeAttribute("aria-current"));
+        if (active) active.link.setAttribute("aria-current", "true");
+      };
+
+      updateActiveToc();
+      window.addEventListener("scroll", updateActiveToc, { passive: true });
+      window.addEventListener("resize", updateActiveToc);
+    })();
+  </script>
+</body>
+</html>
