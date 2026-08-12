@@ -1,0 +1,558 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-12",
+  "title": "Whistle 互联网日报｜2026-08-12",
+  "summary": "先看几条新变化：OpenAI 把 ChatGPT 桌面端带到 Linux，并让 ChatGPT 与 Codex 导入其它 Agent 的项目、技能和最近工作；Grok Bot、ZCode、WorkBuddy 和 ChatGPT 工作区 Agent 都在把“聊天窗口”改造成可登录工具、跨设备运行、多人共享的任务系统；Google Gemini 月活超过 10 亿，Gemma 下载量也破 10 亿，说明模型入口和开放模型分发同时扩大。另一边，研究人员披露主流模型 API 的加密推理轨迹可被跨模型提取，Anthropic、Mistral、Manus 等消息也把数据驻留、合规审计和用户数据处理放到台前。基础设施层面，NVIDIA 的 Nemotron 3.5 Lightning、NeMo Switchyard、Riot 与 Anthropic 的大型数据中心租赁协议，继续把模型能力、路由效率和算力合同连接在一起。",
+  "theme": "Agent 产品进入跨工具与跨设备运行阶段",
+  "topline": [
+    "OpenAI 发布 ChatGPT Linux 桌面预览版，并为 ChatGPT 与 Codex 增加 Agent 数据导入能力。",
+    "Grok Bot、ZCode、WorkBuddy 和 ChatGPT 工作区 Agent 同日呈现出多步骤任务、远程控制和共享 Agent 的产品化方向。",
+    "研究人员披露主流模型 API 可泄露加密推理轨迹，相关问题涉及 OpenAI、Anthropic 和 Google。",
+    "Google Gemini 月活超过 10 亿，Gemma 模型下载量也突破 10 亿次。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "最重要的变化集中在 Agent 入口、推理安全、模型分发和算力合同。",
+      "items": [
+        {
+          "title": "OpenAI 推出 ChatGPT Linux 桌面预览版，并打通 Agent 工作导入",
+          "summary": "OpenAI 宣布 ChatGPT 桌面应用进入 Linux 预览阶段，集成 ChatGPT、ChatGPT Work 和 Codex，覆盖 Ubuntu 24.04 LTS 与 26.04 LTS、Debian 13、Fedora 43 和 44，并提供 x64 与 ARM64 的 .deb、.rpm 安装包。同日，ChatGPT 桌面应用和 Codex CLI 新增从 Claude Code、Claude Cowork、Cursor 导入项目、设置、技能、插件、MCP 配置、hooks、subagents 及最近 30 天聊天记录的能力，桌面端还支持自动更新。桌面入口、项目上下文和编码 Agent 被放在同一套迁移路径里，AI 工具之间的切换成本会更多落到配置、权限、历史记录和同步机制上。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://learn.chatgpt.com/docs/import",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "OpenAI",
+            "ChatGPT",
+            "Codex",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Grok Bot 早期测试版上线，Agent 开始拥有独立云端电脑",
+          "summary": "SpaceXAI 推出 Grok Bot 早期测试版，官方称该 Agent 拥有独立云端计算机，可登录用户已有工具和无公开 API 的平台，端到端完成多步骤任务，并能记住对话、学习偏好、让多个 Bot 共享上下文和互相通信。当前测试面向 SuperGrok Heavy、Cursor Ultra 和 Cursor Teams Premium 订阅用户开放，支持桌面端和 iOS，企业用户可加入候补名单；Elon Musk 还预告本周晚些时候发布 Grok 4.6。该形态把 Agent 的边界从 API 调用扩展到“登录并操作现有软件”，也会把账号授权、云端执行环境和任务记录变成产品能力的一部分。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://x.ai/news/introducing-grok-bot",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "Grok",
+            "Agent",
+            "自动化"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "主流模型 API 被曝可跨模型提取加密推理轨迹",
+          "summary": "研究团队披露，专有大模型 API 的加密推理块可在同一提供商的不同会话、用户和模型之间复用，攻击者可把强模型的加密推理块注入较弱模型并越狱，使其输出强模型的明文推理，涉及 Anthropic、OpenAI 和 Google。AI HOT 补充称，Alexander Panfilov 团队扫描约 7000 条公开会话，发现 62 个 API 密钥、33 个邮箱和 33 个密码，解码 10000 条推理轨迹的 API 成本约 720 美元。该问题把“隐藏推理”从展示层安全扩大到 API 隔离、跨模型兼容和公开日志泄露，模型供应商后续需要在加密块绑定、会话隔离和审计流程上补齐防线。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://stolen-thoughts.com/",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "AI 安全",
+            "推理轨迹",
+            "API"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google Gemini 月活破 10 亿，Gemma 下载量破 10 亿",
+          "summary": "Google CEO Sundar Pichai 宣布 Gemini 应用月活跃用户超过 10 亿，成为 Google 历史上增长最快的产品，也是第 14 个达到 10 亿用户里程碑的产品。juya 补充了更多使用侧数据：63% 的用户使用语音与 Gemini 交互，用户每天生成超过 1.5 亿张照片，超过 1 亿人在 iOS 上使用 Gemini；同期 Gemma 模型家族下载量也超过 10 亿次。Gemini 的入口增长和 Gemma 的模型分发同时放大，Google 的 AI 使用场景覆盖了对话、语音、图像生成和开源模型调用。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://x.com/sundarpichai/status/2087222656819241292",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "Google",
+            "Gemini",
+            "Gemma"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Riot Platforms 与 Anthropic 传出 91 亿美元数据中心租赁协议",
+          "summary": "Riot Platforms 在季度财报中披露，已与一家“前沿 AI 实验室”签署 20 年数据中心租赁协议，将在得克萨斯州 Rockdale 园区提供 191 兆瓦关键 IT 算力，初始合同期预计带来约 91 亿美元收入。彭博社援引知情人士称租户为 Anthropic，协议还包含两次各五年的续约选项，若全部行使，总合同价值约 161 亿美元，但 Riot 与 Anthropic 未正式回应。AI 算力合同正在从短期云资源购买扩展到数十年期的数据中心租赁，电力、机房、资本支出和模型训练计划会被更紧密地绑定在一起。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://www.bloomberg.com/news/articles/2026-08-11/anthropic-strikes-9-billion-deal-with-cloud-computing-firm-riot",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "Anthropic",
+            "数据中心",
+            "AI 基础设施"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "模型、Agent、开发工具和多模态生成继续密集更新。",
+      "items": [
+        {
+          "title": "NVIDIA 发布 Nemotron 3.5 Lightning，面向长期运行 Agent 的高频执行层",
+          "summary": "NVIDIA 发布开源模型 Nemotron 3.5 Lightning，采用 Mamba-2、MoE 与 Attention 混合架构，总参数量 30B，每个 token 仅激活 3B 参数，支持最高 1M token 上下文。juya 称该模型从 Nemotron 3 Ultra 蒸馏而来，采用 OpenMDW-1.1 开放协议，权重、训练数据和配方公开，并已上线 OpenRouter 和 OpenCode；AI HOT 补充称 token 生成速度最高提升 4 倍、任务完成时间缩短 30%，可在 RTX PC、DGX Spark 和 Jetson 等设备运行。该模型把长期 Agent 的执行层拆成低激活参数、长上下文和本地部署三部分，模型运行成本与常驻任务响应速度会更受关注。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://developer.nvidia.com/blog/nvidia-nemotron-3-5-lightning-delivers-fast-accurate-specialized-task-execution-for-long-running-agents/",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "NVIDIA",
+            "开源模型",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "LTX 发布 LTX-2.5 开源世界模型，最低 16GB 显存本地运行",
+          "summary": "LTX.io 发布开源世界模型 LTX-2.5，支持从文本、图像和视频输入生成高保真音视频内容，并加入原生多镜头生成、扩散保真渲染和定制 Gemma 4 12B 文本编码器。官方称模型开放权重，最低 16GB 显存即可本地运行，允许使用自有数据微调，此前基于 LTX-2.3 训练的大多数 LoRA 可直接在新版本运行。视频生成正在从单段素材生成扩展到多镜头、角色一致和可微调资产，输出形式也从原始文本继续走向视觉化、结构化和可交互内容。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://ltx.io/model/ltx-2-5",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "视频生成",
+            "世界模型",
+            "开源"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Bilibili IndexTTS-2.5 开源，支持五语种零样本语音克隆",
+          "summary": "Bilibili 旗下 Index SpeechTeam 开源 IndexTTS-2.5 零样本文本转语音模型，参数量为 0.8B，支持中文、英语、日语、西班牙语和阿拉伯语的语音克隆及跨语种迁移。新版本重构推理架构以提升运行效率，增强发音和情感控制，并新增 0.5 倍至 2.0 倍语速调节，代码、权重和论文已发布，采用 Bilibili Model License。语音模型的更新把克隆、跨语种和可控表达放进同一个开源包里，内容生产链路中的配音、翻译和本地部署空间会继续扩大。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://github.com/index-tts/index-tts",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "语音克隆",
+            "TTS",
+            "开源模型"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "微软 MAI-Code-1.1-Flash 进入 GitHub Copilot",
+          "summary": "微软的小型代码模型 MAI-Code-1.1-Flash 正在 GitHub Copilot 中推出，新版本加入原生视觉支持，优化 CLI 和 .NET 任务，并改善代码质量、指令遵循和工具使用。官方数据显示，该模型完成任务所需 token 减少 25%，流式传输速度提升 25%。代码模型开始同时处理图像理解、命令行任务和主流框架代码，Copilot 的模型选择也更强调速度、成本和具体任务类型。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://microsoft.ai/news/mai-code-1.1-flash-br-better-faster-at-a-quarter-of-the-cost/",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "Microsoft",
+            "GitHub Copilot",
+            "代码模型"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "ZCode 用户破 100 万，并上线 Goal、Subagents、Remote Control 与闲时任务",
+          "summary": "智谱宣布 Harness 产品 ZCode 用户数突破 100 万，并在 8 月 11 日 13 点重置全体 GLM Coding Plan 用户额度。此次升级新增低峰时段自动执行且不扣额度的闲时任务、Goal 自主交付模式、Subagents 并行协作和 Remote Control 移动端控制；AI HOT 补充称，在 Z.ai Code Bench 中，GLM-5.2 搭配 ZCode 较搭配 Claude Code 的任务整体通过率高 2.39%，ZCode 缓存命中率超过 98%。编码 Agent 的竞争点正在从单次代码补全转向额度机制、缓存、并发子任务和移动端控制。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://mp.weixin.qq.com/s/NwVPQ8zsyIp8BC0Z1dN90g",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "智谱",
+            "ZCode",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Unsloth Desktop Beta 发布，本地运行和训练多类 AI 模型",
+          "summary": "Unsloth 发布开源桌面应用 Unsloth Desktop Beta，支持 macOS、Windows 和 Linux，覆盖 NVIDIA、AMD、Intel、Apple Silicon、CPU 和多 GPU 设置。该应用可在本地运行和训练 LLM、图像与视频扩散、音频、MLX、GGUF 等模型，内置私有 Web 搜索、深度研究、RAG 和 MCP，并能通过 unsloth start 将本地模型连接到 Claude Code、Codex 等 Agent。本地模型桌面化会把模型训练、私有数据检索和 Agent 调用放在同一个用户环境里，数据不出端侧的部署路径会更清晰。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://unsloth.ai/docs/desktop",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "本地模型",
+            "桌面应用",
+            "开源"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "NVIDIA 开源 NeMo Switchyard，按任务路由 Agent 请求",
+          "summary": "NVIDIA 发布并开源 NeMo Switchyard 模型路由库，用于在 AI Agent 流程中跨模型分发请求，支持 LLM 分类器、阶段路由、升级路由和预填充路由器等算法。官方同时标注该项目处于 pre-alpha 阶段，暂不用于生产环境。随着模型数量和任务类型增加，路由层会承担模型选择、成本分配和故障切换等职责，Agent 系统不再只依赖单一模型端点。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://developer.nvidia.com/blog/route-ai-agent-workloads-across-models-with-nvidia-nemo-switchyard/",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "NVIDIA",
+            "模型路由",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Runway Seedance 2.5 上线，支持 50 个角色参考和 30 秒音乐同步片段",
+          "summary": "Runway 宣布 Seedance 2.5 已上线，支持 50 个独特角色参考，以及最长 30 秒、与音乐同步的片段生成。该更新把角色阵容、镜头长度和音乐节奏放进同一次生成流程，视频工具的控制对象从单个画面扩大到多角色和完整片段。AI 输出形态正在从 Markdown、HTML 继续走向可播放、可编辑、带结构约束的视觉素材。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://x.com/runwayml/status/2087251184658657346",
+          "publishedAt": "2026-08-11T18:53:56.000Z",
+          "tags": [
+            "Runway",
+            "视频生成",
+            "多模态"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "商汤 SenseNova 6.8 Flash Lite Preview 开放体验",
+          "summary": "商汤日日新上线多模态智能体模型 SenseNova 6.8 Flash Lite Preview，用户可通过 SenseNova Token Plan 抢先体验，当前提供每 5 小时 1500 次限时免费额度。官方称该模型具备自主规划、多 Agent 协作和动态纠偏能力，并预告 6.8 Flash Lite 正式版及 6.8 Flash 模型预计在 8 月发布。该更新把轻量多模态模型和 Agent 规划能力绑定在一起，模型供应商正在把推理额度、协作能力和版本节奏作为产品入口的一部分。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://mp.weixin.qq.com/s/wed28P0G0zIqKKtIv72pTA",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "商汤",
+            "多模态",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Meta 发布 Muse Glimmer，HN 高分讨论本地常驻 Agent 模型",
+          "summary": "Meta 发布 Muse Glimmer，一款开放权重的 30B 参数模型，面向本地、常驻运行的智能体流程优化，可在 Mac 或高性能 GPU PC 等消费级硬件上运行，并以 Apache 2.0 许可证发布权重。HN 上相关帖子得分超过 1100，SGLang 也宣布为该模型提供 Day-0 支持，支持 128k+ token 上下文。本地常驻 Agent 模型的讨论热度很高，开源权重、消费级硬件和推理框架适配正在同时决定模型能否进入日常开发环境。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model",
+          "publishedAt": "2026-08-12T02:00:33.325Z",
+          "tags": [
+            "Meta",
+            "本地 Agent",
+            "开源模型"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Qwen-MM-Plugins 让智能体原生处理图片、视频、文档和 3D/CAD",
+          "summary": "阿里 Qwen 发布 Qwen-MM-Plugins，定位为让智能体原生支持多模态的插件体系，可读取图片、视频和文档，编辑视频，并处理 3D/CAD 等内容。该项目把多模态能力从模型本体扩展到 Agent 插件层，输入输出不再局限于文本和截图，而是进入具体文件类型和创作软件格式。插件化会让多模态智能体更接近真实软件环境中的素材处理流程。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://x.com/Alibaba_Qwen/status/2086664887560970531",
+          "publishedAt": "2026-08-10T04:04:12.000Z",
+          "tags": [
+            "Qwen",
+            "多模态",
+            "插件"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "OpenAI 推出 GPT-5.6-Cyber，面向授权漏洞研究",
+          "summary": "OpenAI 发布网络安全专用模型 GPT-5.6-Cyber，可通过 Daybreak Red 获取，用于授权漏洞研究、漏洞验证和安全测试。该模型针对网络防御窗口收窄的背景，提供面向安全研究的专门能力。专用模型开始进入漏洞研究和验证环节，安全测试的模型访问权限、授权边界和输出审计会成为产品规则的一部分。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows",
+          "publishedAt": "2026-08-10T10:00:00.000Z",
+          "tags": [
+            "OpenAI",
+            "网络安全",
+            "专用模型"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台侧变化集中在工作区 Agent、合规接口、区域推理和数据组织。",
+      "items": [
+        {
+          "title": "OpenAI 推出 ChatGPT 工作区 Agent，面向 Business、Enterprise、Edu 和 Teachers",
+          "summary": "OpenAI 在 ChatGPT 中引入工作区 Agent，用户描述工作内容后，ChatGPT 可协助生成可在组织内共享的 Agent，用于审查潜在客户、生成报告、研究供应商等长期多步骤任务。该功能可跨 Slack、Google Drive 和 Microsoft SharePoint 等工具提取上下文，并在获批后执行更新工单或发送消息等操作，目前处于研究预览阶段，面向 ChatGPT Business、Enterprise、Edu 和 Teachers 订阅方案开放。工作区 Agent 把组织知识、第三方工具权限和可共享自动化放入同一入口，企业版 AI 产品的权限边界会更加细化。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://openai.com/business/workspace-agents/",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "OpenAI",
+            "企业 AI",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Anthropic 将 Compliance API 扩展至 Claude Cowork 和 Claude Code",
+          "summary": "Anthropic 宣布 Claude 的 Compliance API 覆盖 Claude Cowork 和 Claude Code，并向 Enterprise 客户开放 Beta。安全与合规人员可通过现有接口，从 Cowork 的桌面、网页、移动端，以及 Claude Code 的 CLI 和桌面端提取会话内容与元数据，用于审计和取证。编码 Agent 与协作 Agent 纳入同一合规 API 后，企业内部的对话、代码操作和工具调用会进入统一留痕与审计框架。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://claude.com/blog/compliance-api-cowork-and-claude-code",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "Anthropic",
+            "Claude",
+            "合规 API"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Mistral 推出区域推理端点，并在平台引入第三方开放模型",
+          "summary": "Mistral AI 宣布 Mistral Regional Endpoints 正式可用，客户可选择在欧洲或美国运行推理，以满足数据驻留、监管和延迟要求。Mistral 平台还将支持第三方开放模型，首批引入智谱 GLM-5.2，并让这些模型运行在与 Mistral 自有模型相同的基础设施和区域控制下。模型平台正在从单一供应商模型集合扩展为带区域控制的多模型入口，数据驻留和开放模型可选性被合并到部署决策里。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://mistral.ai/news/regional-inference-open-models-new-compute/",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "Mistral",
+            "区域推理",
+            "开放模型"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "字节跳动据报成立“AI 数据与安全”一级部门",
+          "summary": "据智能涌现报道，字节跳动近期成立新的一级部门“AI 数据与安全”，与 Seed、Flow 等部门平行，负责人为此前 TikTok 平台责任负责人王赢磊。该部门整合 Global Data、集团数据中台 DMC、Flow 下属 AI 数据平台 AIDP 等团队，主要为字节所有大模型提供跨模态数据服务，覆盖标准制定、寻源采购、合成清洗和质量评测。大模型训练的数据供给被组织成独立一级部门，数据质量、安全和跨模态供应链会更直接影响模型迭代速度。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://mp.weixin.qq.com/s/gNQWQQoHc_cWG3GIoGR_pw",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "字节跳动",
+            "AI 数据",
+            "组织调整"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "产品形态的变化主要发生在跨设备控制、服务接入和社交内容生成。",
+      "items": [
+        {
+          "title": "WorkBuddy 多端同步上线，手机可远程控制电脑 Agent",
+          "summary": "腾讯 WorkBuddy 推出多端同步功能，打通 PC、App 和小程序，任务、对话记录与产物可在三端实时同步。用户可通过手机远程授权或停止电脑端 Agent 任务，一台手机也可连接多台电脑切换；手机端采集的信息可由电脑端 Agent 继续提取和处理。Agent 产品的操作入口从桌面扩展到移动端，远程授权、锁屏运行和双端协同会改变任务执行时的交互节奏。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://mp.weixin.qq.com/s/XKDwvBBnSvhcXdHGSZPNPQ",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "WorkBuddy",
+            "多端同步",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "千问开放平台上线，十余领域服务可在对话中办理",
+          "summary": "千问开放平台上线，面向生态伙伴和开发者开放手机、PC 和 AI 眼镜三类终端的服务接入，首批覆盖物流运输、房产居住、本地生活、理财、汽车等十多个领域。用户可在对话中 @ 相关服务或点击圆点角标进入智能体，完成咨询、推荐到下单；平台提供标准化协议、一键授权、端到端调测，以及账号、AI 支付、订单接入等基础设施。对话入口正在接入真实交易和服务履约，聊天界面会更多承担分发、授权和订单状态管理。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://mp.weixin.qq.com/s?__biz=MzYzNDE5MDEwMQ%3D%3D&mid=2247488345&idx=1&sn=ef4e57c9c9350f9238d90211eb2dd453",
+          "publishedAt": "2026-08-10T02:07:18.000Z",
+          "tags": [
+            "千问",
+            "开放平台",
+            "服务分发"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "微信小微内测朋友圈 AI 帮写与 AI 点评",
+          "summary": "微信基于小微内测朋友圈 AI 帮写与 AI 点评，前者可根据图片和已写文字生成 3 条朋友圈文案，后者可长按文字生成评价或快捷评论。AI HOT 素材还提到公众号端小微常驻首位，可自动总结常看公众号文章。微信把 AI 放进朋友圈发布、评论和公众号阅读三个高频内容环节后，社交内容的生成、评价和摘要都可能被同一助手承接，平台需要处理 AI 内容标识、关系链语境和创作者分发之间的边界。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA%3D%3D&mid=2647685081&idx=1&sn=13a05578a3959c047209c8e74b56fa48",
+          "publishedAt": "2026-08-11T00:12:00.000Z",
+          "tags": [
+            "微信",
+            "AI 写作",
+            "社交产品"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程信号集中在数据库迁移、模型推理性能、语言服务器和 Agent 可观测性。",
+      "items": [
+        {
+          "title": "Google Cloud 在 DMS 中加入 Gemini 辅助 PostgreSQL 迁移",
+          "summary": "Google Cloud 在 Database Migration Service 中推出 Gemini 驱动的 AI 辅助代码转换，可把 Oracle 或 SQL Server 的存储过程、触发器和自定义函数转换为 PostgreSQL PL/pgSQL 代码。数据库迁移中的难点不只在数据同步，也在业务逻辑、触发器和自定义函数的语义迁移。AI 代码转换进入 DMS 后，迁移工具开始覆盖 schema 之外的数据库应用层逻辑。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://cloud.google.com/blog/products/databases/accelerate-postgresql-migrations-with-gemini-in-dms",
+          "publishedAt": "2026-08-11T16:00:00.000Z",
+          "tags": [
+            "Google Cloud",
+            "数据库迁移",
+            "Gemini"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "macOS 虚拟机中 llama.cpp 推理加速 11 到 16 倍",
+          "summary": "研究团队为 macOS 虚拟机中的 Metal 能力查询构建进程级兼容层，使 llama.cpp 能选用更新的 Metal 内核。在 M1 Ultra 上，TinyLlama 1.1B 的提示处理速度提升 11.08 倍、token 生成提升 16.36 倍，接近裸机性能的 98%；Gemma 4 12B 的提示处理和生成速度分别提升 7.20 倍和 14.54 倍。该结果显示，虚拟化环境中的本地模型性能瓶颈不只来自硬件，也来自框架对 GPU 能力的识别和内核选择。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://github.com/trycua/cua/blob/main/blog/gpu-passthrough-macos-vms.md",
+          "publishedAt": "2026-08-11T16:41:17.281Z",
+          "tags": [
+            "llama.cpp",
+            "Apple Silicon",
+            "推理性能"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Databricks 开源 Metals v2，面向百万行 Java 和 Scala 代码库",
+          "summary": "Databricks 开源 Metals v2，这是面向数百万行代码库的 Java 和 Scala 语言服务器，强调在大规模代码库中的编辑、导航性能，以及智能体驱动开发场景。AI HOT 素材称 Databricks 的大部分代码已由智能体编写，但工程师仍在部分环节手动介入。语言服务器在 Agent 编码中承担代码定位、上下文提取和变更理解，百万行级代码库会把这些基础能力放大成生产效率瓶颈。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.databricks.com/blog/open-sourcing-metals-v2-databricks-java-and-scala-language-server-multi-million-line-codebases",
+          "publishedAt": "2026-08-11T00:00:00.000Z",
+          "tags": [
+            "Databricks",
+            "语言服务器",
+            "工程实践"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "MitM 分析 GitHub Copilot 网络流量，揭示 Electron AI 应用共性",
+          "summary": "一篇 HN 热门文章通过 mitmproxy 对 VS Code 中的 GitHub Copilot 进行中间人代理拦截，逆向分析其网络流量和内部架构。作者指出，这类 AI 应用普遍基于 Electron 构建，并共享相似网络栈，因此探测方法可迁移到其它同类应用。随着编码助手承担更多文件、命令和仓库操作，网络请求、代理配置、遥测与本地数据流向会成为工程可观测性的重要部分。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.lighthousenewsletter.com/p/i-put-github-copilot-behind-a-mitm",
+          "publishedAt": "2026-08-11T18:32:57.961Z",
+          "tags": [
+            "GitHub Copilot",
+            "可观测性",
+            "安全研究"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "融资和商业化信号仍围绕 AI 基础设施、SaaS 估值和具身智能。",
+      "items": [
+        {
+          "title": "通义千问前负责人林俊旸创立语用科技，获得红杉中国和高榕创投等支持",
+          "summary": "通义千问前负责人林俊旸宣布在上海创立 Pragmatik Labs（语用科技），方向是研发跨越数字和物理世界的下一代 Agent。公司官网称将构建执行知识工作的数字 Agent，以及可在真实环境中执行长程任务的物理或具身 Agent；林俊旸确认本轮融资由红杉中国和高榕创投领投，腾讯和上海未来产业基金提供支持。具身智能创业继续吸引大模型核心人才和一线资本，数字 Agent 与物理 Agent 被放在同一家公司叙事中。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://pragmatik.com/",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "具身智能",
+            "创业",
+            "融资"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "SaaS 估值承压，但 AI 龙头仍获得明显收入倍数溢价",
+          "summary": "Tomer Tunguz 的分析称，SaaS 估值整体承压，但多个细分赛道中 AI 龙头仍获得显著溢价：CrowdStrike 以 34.4 倍前瞻收入领跑安全赛道，中位数为 3.9 倍；Cloudflare 为 32.6 倍，对应中位数 17.5 倍；Shopify 为 11.3 倍，对应中位数 1.4 倍。资本市场没有把所有 SaaS 公司统一定价，带有 AI 增长叙事、平台规模和明确收入质量的公司仍能拉开估值差距。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.tomtunguz.com/a-winner-in-every-category",
+          "publishedAt": "2026-08-11T00:00:00.000Z",
+          "tags": [
+            "SaaS",
+            "估值",
+            "AI 商业化"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "本期合规信号主要来自数据删除、区域推理、企业审计和内容标识。",
+      "items": [
+        {
+          "title": "Manus 恢复独立运营，部分用户数据因监管要求将被删除",
+          "summary": "Manus 官方发布致用户公开信，宣布即将恢复独立公司运营。根据说明，2025 年 12 月 29 日 Meta 收购 Manus 后，为遵守特定司法辖区监管要求，部分用户在收购当天或之后产生的数据将被删除；受影响用户可在 2026 年 8 月 23 日 07:59（新加坡时间）前使用备份工具，数据将在 8 月 23 日至 24 日删除，并可从 8 月 25 日 08:00 起恢复数据和正常使用。该事件把并购、跨境监管和用户数据迁移放在一起，AI 产品的公司结构变化会直接触发数据保留、备份和恢复安排。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://manus.im/blog/a-note-to-our-users",
+          "publishedAt": "2026-08-12T01:50:54.000Z",
+          "tags": [
+            "Manus",
+            "数据合规",
+            "监管"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Claude 开始标记 AI 生成内容，HN 社区讨论热度高",
+          "summary": "HN 上 Anthropic 支持文档“How Claude marks AI-generated content”获得 421 分讨论，内容围绕 Claude 如何标记 AI 生成内容。该议题与平台内容来源披露、模型输出标识和下游再分发有关。AI 生成内容标记正在从媒体平台治理进入模型产品本身，标识信息能否随内容流转，会影响文档、图片、社交内容和企业记录的可信度。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://support.claude.com/en/articles/16266773-how-claude-marks-ai-generated-content",
+          "publishedAt": "2026-08-12T02:00:33.325Z",
+          "tags": [
+            "Anthropic",
+            "内容标识",
+            "合规"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "以下内容讨论热度高，但更偏社区情绪、背景信号或开源生态信号。",
+      "items": [
+        {
+          "title": "HN 热议“AI 吃掉 Web 后，互联网集体记忆正在消失”",
+          "summary": "HN 上 The Walrus 文章“As AI eats the web, the internet’s collective memory is disappearing”获得 870 分，讨论 Google Search、AI 摘要、内容归档和网页可发现性的变化。该话题没有对应单一产品发布，但反映出开发者社区对搜索入口、训练数据来源和公共 Web 记忆衰退的担忧。它属于背景信号：AI 分发入口越强，原始网页、独立站和长期知识归档的流量与保存机制越容易被重新讨论。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://thewalrus.ca/google-search-is-dying/",
+          "publishedAt": "2026-08-12T02:00:33.325Z",
+          "tags": [
+            "Web",
+            "搜索",
+            "AI 分发"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "GitHub Trending 多个 Agent 管理和技能项目集中上榜",
+          "summary": "GitHub Trending 今日出现多个 Agent 相关项目：PrimeIntellect-ai/prime-agent 今日新增 1138 星，定位为面向编码流程和长时自治任务的自改进 RLM Agent；stablyai/orca 今日新增 875 星，定位为可管理并行 Agent 队列的 ADE；paperclipai/paperclip 今日新增 748 星，用于工作场景中的 Agent 管理；addyosmani/agent-skills 和 anthropics/skills 也继续高热。开源热度显示，社区正在围绕 Agent 技能、并行编排、任务管理和长时运行构建工具层。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/PrimeIntellect-ai/prime-agent",
+          "publishedAt": "2026-08-12T02:00:33.325Z",
+          "tags": [
+            "GitHub Trending",
+            "Agent",
+            "开源生态"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "H3-metal、Mojo 1.0 与 Go for AI-assisted engineering 获 HN 高分",
+          "summary": "HN 今日有多条工程内容高分：H3-metal 原生 MiniMax-H3 Apple Silicon 推理项目得分 426，Mojo 1.0 得分 295，Google 关于 Go 适合 AI 辅助软件工程的文章得分 272。它们不是同一产品线的发布，但都围绕“本地推理性能、系统语言和 AI 编码可维护性”展开。社区讨论显示，AI 编码之外，运行时性能、语言工具链和长期维护成本仍在影响开发者对技术栈的选择。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://github.com/antirez/h3.c",
+          "publishedAt": "2026-08-12T02:00:33.325Z",
+          "tags": [
+            "Hacker News",
+            "工程实践",
+            "本地推理"
+          ],
+          "importance": "normal"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "本期以 juya 和 AI HOT daily 为主源，保留事实完整且影响产品、开发、商业化、基础设施或合规边界的条目；重复报道合并增量事实，未确认校园优惠、纯泛媒体讨论、弱相关消费和低分纯技术帖未进入核心板块。HN 与 GitHub Trending 中热度高但工作信号偏弱的内容放入社交热度观察。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (39 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (17 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-08-12T02:15:00.000Z"
+}
