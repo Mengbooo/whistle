@@ -1,0 +1,570 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-14",
+  "title": "Whistle 互联网日报｜2026-08-14",
+  "summary": "先看几条新变化：DeepSeek-V4-Pro 正式版 API、Gemini 3.7 Flash、Grok 4.6 和 GPT-5.6 相关 API 能力同时把编程、长时 Agent、工具调用和成本推到更具体的产品接口里；DeepSeek Harness、Cursor builds、Delta、Claude Code 和 Claude Cowork 则把 Agent 的运行环境、会话延续、代码审查和浏览器侧边栏继续产品化。模型侧还有 Qwen3.8-Max 权重、端侧视觉模型、手语翻译、TTS 与音乐生成更新，说明输出形态正在从纯文本扩展到语音、图像、视频和可交互界面。平台与合规层面，ChatGPT 开始扩大广告测试、积分赠送进入个人账户，Google 推出 C2PA 验证库，Cursor 获得 Agent 安全认证，模型能力的分发、付费和审计边界变得更清晰。",
+  "theme": "模型接口、Agent 环境与内容凭证同步更新",
+  "topline": [
+    "DeepSeek-V4-Pro 正式版 API 上线，Gemini 3.7 Flash 与 Grok 4.6 同日成为高热模型更新。",
+    "OpenAI GPT-5.6 新增推理持久化、多智能体编排和 Ultrafast 服务层级，API 侧继续围绕成本与速度展开。",
+    "DeepSeek Harness、Cursor builds、Zed Delta、Claude Code 和 Claude Cowork 把 Agent 使用场景拆到框架、云环境、代码线程和浏览器侧边栏。",
+    "ChatGPT 广告测试扩展、积分赠送上线，Google Credentio 与 Cursor AIUC-1 把商业化和审计要求推到产品层。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "今日最重要的变化集中在模型 API、Agent 框架、开发环境和商业化接口。",
+      "items": [
+        {
+          "title": "DeepSeek-V4-Pro 正式版 API 上线，Responses API 与 Codex 接入保持兼容",
+          "summary": "DeepSeek 官方 API 文档显示，DeepSeek-V4-Pro 正式版已上线，模型版本为 DeepSeek-V4-Pro-0813，调用方法保持不变，并支持 Responses API、Codex 等接入。官方称新版本增强 Agent 能力，DeepSWE 得分从预览版 12.8 升至 62.7，在 Cybergym 和 AutomationBench 等评测中也有提升；此前官方曾预告 API 价格可能大幅上涨，但本次发布时尚未正式调价。该更新把模型升级放在兼容既有调用方式的路径上，已有 API 集成能先获得能力变化，再等待价格规则落地。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://api-docs.deepseek.com/zh-cn/",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "DeepSeek",
+            "API",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google DeepMind 发布 Gemini 3.7 Flash，价格较 3.6 Flash 减半",
+          "summary": "Google DeepMind 发布 Gemini 3.7 Flash，距 3.6 Flash 仅三周，定位为面向编程与智能体任务的工作模型。AI HOT 摘要显示，该模型输入价格为每百万 token 0.75 美元、输出价格为 3.75 美元，约为 3.6 Flash 的一半；同一链接在 Hacker News 获得 617 分和 344 条评论。模型能力和价格同时变化，会影响多模型路由、Agent 后端成本估算和面向开发任务的默认模型选择。",
+          "sourceName": "Google DeepMind Blog",
+          "sourceUrl": "https://deepmind.google/blog/introducing-gemini-3-7-flash",
+          "publishedAt": "2026-08-13T17:04:18.000Z",
+          "tags": [
+            "Gemini",
+            "模型",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 公布 GPT-5.6 构建者指南，并预览 Ultrafast API 服务层级",
+          "summary": "OpenAI 的 GPT-5.6 构建者指南提到，模型家族新增推理持久化、原生多智能体编排和程序化工具调用等 API 能力；在 ARC-AGI-3 上，启用保留推理和压缩后，Sol 得分从 13.3% 升至 38.3%，输出 token 减少约 6 倍。OpenAI 同时预览由 Cerebras 提供算力的 Ultrafast 服务层级，运行 GPT-5.6 Sol 时输出速率最高可达每秒 750 tokens，速度提升最高 14 倍。两项更新都落在 API 执行层，分别处理推理复用、编排能力和响应速度问题。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/builders-guide-to-gpt-5-6",
+          "publishedAt": "2026-08-13T11:00:00.000Z",
+          "tags": [
+            "OpenAI",
+            "API",
+            "推理"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "xAI 发布 Grok 4.6，Cursor、Grok Build 和 API 同步可用",
+          "summary": "xAI 发布 Grok 4.6，官方称其在多项 Agentic 编码和知识工作基准中达到前沿水平，在 Artificial Analysis Intelligence Index 上获得 61 分，与 GPT-5.6 Sol 持平。模型重点优化长时间运行的 Agent、交互式任务和视觉工作，价格与 Grok 4.5 保持一致，输入每百万 token 2 美元、输出 6 美元，今日起在 Cursor、Grok Build、Grok Bot 和 API 可用，并通过 OpenRouter、Vercel、Cloudflare 等伙伴提供。模型发布同时绑定开发工具和云平台分发，说明能力入口正在从单一聊天产品扩展到编码器、构建器和第三方 API 市场。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://x.ai/news/grok-4-6",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "xAI",
+            "Grok",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "DeepSeek Harness v0.1 开发者预览版发布，以插件化方式组织 Agent 框架",
+          "summary": "DeepSeek Harness v0.1 推出开发者预览版，并以 MIT 许可证开源；该智能体框架基于 Cordis 元框架构建，核心设计是模型、工具、技能、会话、沙箱、文件系统、循环、编排和 UI 都能组合、替换和扩展。该条目在 Hacker News 获得 555 分和 241 条评论，说明开发者社区对开放 Agent 框架保持高关注。框架把 Agent 应用拆成可替换部件，会让工具接入、沙箱权限、会话状态和 UI 呈现成为同一个工程问题。",
+          "sourceName": "DeepSeek",
+          "sourceUrl": "https://x.com/deepseek_ai/status/2087887408440164663",
+          "publishedAt": "2026-08-13T13:02:03.000Z",
+          "tags": [
+            "DeepSeek",
+            "Agent",
+            "开源"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "本板块保留模型、端侧、多模态、工作空间和个人账户功能的主要更新。",
+      "items": [
+        {
+          "title": "Qwen3.8-Max 权重开放，纯文本模型原生上下文 256K",
+          "summary": "Qwen 团队发布 Qwen3.8-Max 的模型权重，开源版本名为 Qwen3.8-2.4T-A95B，本次开放的是纯文本模型，交互时强制开启思考模式，不支持多模态输入，也不支持关闭思考。juya 提到模型原生上下文长度为 256K，最高可扩展至 1M；AI HOT 补充称硅基流动已提供 Day-0 支持，API 定价为输入每百万 token 2 美元、输出 6 美元、缓存输入 0.25 美元。开放权重和云 API 同时存在，使本地部署、托管调用和长上下文 Agent 任务获得同一模型族的不同入口。",
+          "sourceName": "Qwen",
+          "sourceUrl": "https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B",
+          "publishedAt": "2026-08-13T14:04:55.000Z",
+          "tags": [
+            "Qwen",
+            "开源模型",
+            "长上下文"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "小红书开源 dots.tts，发布 20 亿参数连续自回归语音合成模型",
+          "summary": "小红书 dots 团队开源 20 亿参数全连续端到端自回归语音合成模型 dots.tts，AI HOT 摘要称其在 Seed-TTS-Eval 三个子集上取得最佳平均内容准确度和平均说话人相似度。语音合成模型继续从离散声学表示走向连续端到端方案，输出形态不再只停留在文字或静态界面，而是进入可直接嵌入内容生产、陪伴交互和播报场景的音频层。",
+          "sourceName": "小红书技术",
+          "sourceUrl": "https://mp.weixin.qq.com/s?__biz=Mzg4OTc2MzczNg%3D%3D&mid=2247496062&idx=1&sn=d4c48926c5d7607f129dfea03699a6c0",
+          "publishedAt": "2026-08-13T09:59:00.000Z",
+          "tags": [
+            "TTS",
+            "开源模型",
+            "语音"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "MiniMax Music 3.0 发布，开放权重并支持最长五分钟音乐生成",
+          "summary": "MiniMax 推出 Music 3.0，新一代音乐生成模型可根据创意概念和可选歌词，一次性完成整首歌的作曲、编曲、演奏与制作，最长支持五分钟。该模型把音乐生成从片段扩展到接近成品的完整结构，音频生成工具的交付物也从素材片段靠近可发布内容。",
+          "sourceName": "MiniMax",
+          "sourceUrl": "https://www.minimax.io/blog/minimax-music-3-0-next-generation-open-weights-production-ready-versatile-music-model",
+          "publishedAt": "2026-08-13T16:52:23.676Z",
+          "tags": [
+            "音乐生成",
+            "多模态",
+            "开源权重"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Manus AI 向全球用户限时免费开放 1.6 Lite 与 1.6",
+          "summary": "Manus AI 宣布自即日起至 8 月 25 日 23:59（新加坡时间），全球免费和付费用户均可在每日活动配额内免费使用 Manus 1.6 Lite 和 Manus 1.6，付费用户拥有优先排队访问权。免费用户每日可生成 20 张图片和 1 个视频，付费用户每日可生成 200 张图片和 10 个视频，Manus 1.6 Max 不包含在活动内，活动还设有限额、风控和动态排队机制。限时开放把图像、视频生成能力作为获客入口，同时保留付费优先级和最高档能力边界。",
+          "sourceName": "Manus Help Center",
+          "sourceUrl": "https://help.manus.im/en/articles/16312548-manus-free-access-campaign-rules",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "Manus",
+            "视频生成",
+            "订阅"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Claude Cowork 上线 Chrome 侧边栏，会话可跨设备接续",
+          "summary": "Anthropic 宣布 Claude in Chrome 扩展侧边栏升级为完整 Claude Cowork 会话，用户的对话记录、技能与连接器可以在浏览器、桌面端、网页端和移动端之间同步与延续。该功能目前面向 Max 和 Team 订阅方案开放，并将在未来几周逐步推向 Pro 用户。浏览器侧边栏不再只是临时浮窗，而是被并入账号会话系统，长任务、网页上下文和跨端继续编辑会共享同一条上下文链路。",
+          "sourceName": "Claude Blog",
+          "sourceUrl": "https://claude.com/blog/cowork-chrome-side-panel",
+          "publishedAt": "2026-08-11T16:00:00.000Z",
+          "tags": [
+            "Claude",
+            "浏览器扩展",
+            "会话"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Google DeepMind 推出 SL2T 手语翻译模型，Pixel 11 已上线 ASL 转英语",
+          "summary": "Google DeepMind 与 Android 团队发布 SL2T 多语言手语转文本翻译模型，并首次部署到消费级产品中。首发功能支持将美国手语 ASL 转写为英语，听障用户可在 Pixel 11 的 Gboard 和 Live Transcribe 中用于搜索、起草消息和日常对话，功能目前免费提供，后续计划支持更多设备和语言。该功能把视觉识别、语言转换和输入法放在同一链路里，AI 输入方式不再只围绕键盘、语音和图片展开。",
+          "sourceName": "Google DeepMind",
+          "sourceUrl": "https://deepmind.google/blog/putting-sign-language-ai-into-users-hands/",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "Google",
+            "无障碍",
+            "多模态"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Liquid AI 发布 LFM2.5-VL-3B，面向端侧部署的视觉语言模型",
+          "summary": "Liquid AI 发布开源视觉语言模型 LFM2.5-VL-3B，采用 LFM2.5-2.6B 语言骨干与 SigLIP2 视觉编码器，主打端侧实时响应，因此采用直接回答而非推理生成模式。相比上一代，新模型提升了屏幕与 UI 理解、目标检测、多图像输入处理和函数调用能力，并已支持 llama.cpp、vLLM、ONNX 等框架推理。端侧视觉模型把屏幕理解和函数调用结合起来，会使移动设备、桌面自动化和本地隐私场景获得更低延迟的多模态入口。",
+          "sourceName": "Liquid AI",
+          "sourceUrl": "https://huggingface.co/blog/LiquidAI/lfm2-5-vl-3b",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "端侧模型",
+            "视觉语言模型",
+            "开源"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Cohere 发布 2.4B 视觉语言模型 North Micro Vision",
+          "summary": "Cohere 发布参数量 24 亿的开源视觉语言模型 North Micro Vision，官方称其在视觉理解基准测试中优于 Gemma 4 E2B 和 Ministral 3 3B，并在文档理解和视觉问答方面表现突出。模型采用原生分辨率视觉处理技术，支持多轮图文对话、空间推理和多语言图像理解，目前已开放权重。小参数视觉语言模型继续补齐文档、图片和多语言理解能力，降低了把视觉问答嵌入轻量应用的部署门槛。",
+          "sourceName": "Cohere Labs",
+          "sourceUrl": "https://huggingface.co/blog/CohereLabs/meet-north-micro-vision-instruct",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "Cohere",
+            "视觉语言模型",
+            "开源"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "WorkBuddy 上线远程控制，打通 PC、App 和小程序",
+          "summary": "WorkBuddy 更新远程控制功能，手机端可实时同步电脑端的任务、对话、工作空间和产物，支持一台手机连接多台电脑并随时切换；App 需升级至 1.2.0 及以上，电脑端需升级至 5.3.8 及以上，连接无需扫码。本次更新还新增资料库、Markdown 多人共同编辑、AI 原生审阅模式，以及将资料库内容生成可发布链接的 HTML 网站。它把 Agent 任务从单设备窗口扩展到远程控制和多人文档空间，产物也从对话结果延伸到可发布页面。",
+          "sourceName": "数字生命卡兹克",
+          "sourceUrl": "https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA%3D%3D&mid=2647685179&idx=1&sn=4cbee32b677b57a9dc6ec2a79d6f72c7",
+          "publishedAt": "2026-08-13T04:32:24.000Z",
+          "tags": [
+            "WorkBuddy",
+            "Agent",
+            "远程控制"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Google Sheets 推出 Sheets canvas，用 Gemini 把表格变成迷你应用",
+          "summary": "Google Sheets 发布 Sheets canvas，用户用自然语言提示词即可将表格数据转化为交互式仪表盘、学习追踪器、座位表等迷你应用。这个功能把电子表格从数据录入和公式计算界面，扩展成可生成交互视图的轻量应用容器；AI 输出形态也从原始文本和 Markdown，继续走向 HTML 式结构与可操作界面。",
+          "sourceName": "Google Blog",
+          "sourceUrl": "https://blog.google/products-and-platforms/products/workspace/sheets-canvas-for-google-sheets-spreadsheets",
+          "publishedAt": "2026-08-13T16:45:00.000Z",
+          "tags": [
+            "Google Sheets",
+            "Gemini",
+            "交互界面"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台动态集中在订阅、广告、第三方应用接入和模型商业化组织。",
+      "items": [
+        {
+          "title": "OpenAI 推出 ChatGPT 积分赠送功能，个人账户可购买预付积分给他人",
+          "summary": "OpenAI 帮助中心上线 ChatGPT 积分赠送说明，符合条件的免费版、Go、Plus 和 Pro 个人账户用户，可在 ChatGPT 网页端为他人购买一笔独立预付积分。购买者完成支付后获得一次性领取链接，接收人需登录或创建符合条件的个人账户，并在 30 天内兑换；兑换后的积分计入个人积分余额，可用于账户订阅方案支持的积分功能，包括 ChatGPT Codex 等。积分赠送把 ChatGPT 的付费入口从订阅扩展到可转赠的余额机制，也让 Codex 等高消耗功能进入更细粒度的个人账户计费。",
+          "sourceName": "OpenAI Help Center",
+          "sourceUrl": "https://help.openai.com/en/articles/20001417-gifting-credits-in-chatgpt",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "ChatGPT",
+            "订阅",
+            "支付"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "OpenAI 扩大 ChatGPT 广告测试范围，新增英国、墨西哥、巴西、日本和韩国",
+          "summary": "juya 摘要显示，OpenAI 正在推进 ChatGPT 广告测试，范围已从美国、加拿大、澳大利亚和新西兰扩展至英国、墨西哥、巴西、日本和韩国。当前测试面向已登录成年用户，并覆盖 Free 和 Go 订阅用户。广告进入 ChatGPT 主产品后，免费与低价订阅层会同时承担用户增长、广告库存和体验边界的试验压力。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://daily.juya.uk/issues/2026-08-13/",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "ChatGPT",
+            "广告",
+            "商业化"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Google 称 Gemini 将在未来几周接入更多第三方应用",
+          "summary": "juya 目录信息提到，Google 宣布 Gemini 将在未来几周内接入更多第三方应用；同日 AI HOT 还收录了 Gemini 3.7 Flash、Sheets canvas 和 Gemini 驱动的数据库迁移功能。虽然该条素材未给出完整应用名单，但多个更新共同指向同一方向：Gemini 正在被嵌入 Workspace、云数据库迁移和外部应用连接中，模型入口从独立聊天框扩展到已有生产力软件和云服务。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://daily.juya.uk/issues/2026-08-13/",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "Google",
+            "Gemini",
+            "平台接入"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "本期关注订阅权益、校园折扣、旧套餐续订和大规模用户增长信号。",
+      "items": [
+        {
+          "title": "Codex 活跃用户突破 1500 万，Tibo 再次开放额度重置",
+          "summary": "Codex 负责人 Tibo 表示，Codex 活跃用户已突破 1500 万；他此前曾承诺在达到 1000 万活跃用户前，每新增 100 万用户为社区提供一次额度重置，突破 1000 万后活动一度暂停。8 月 13 日，他再次宣布为用户开放一次额度重置，并称将在约一小时后生效。额度重置把用户增长和使用量供给直接绑定，说明 AI 编码工具的增长运营已经离不开算力额度、订阅权益和社区预期管理。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://x.com/thsottiaux/status/2087706104814023111",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "Codex",
+            "增长",
+            "额度"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "豆包面向在校大学生推出学生认证特惠",
+          "summary": "豆包宣布上线学生特惠活动，在校大学生完成学生身份认证后，可获得 2.5 倍免费额度，并能以 38 元连续包月价格购买原价 68 元每月的专业版标准套餐。用户需将豆包电脑端更新至最新版本，可在工作任务模式中发送领取请求，或从设置里的豆包专业版订阅入口进入学生权益，并通过抖音账号认证学生身份。学生折扣把免费额度、专业版订阅和抖音账号体系连接起来，是 AI 助手争夺高频学习与创作人群的一种典型权益设计。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://daily.juya.uk/issues/2026-08-13/",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "豆包",
+            "订阅",
+            "学生权益"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Kimi 调整老套餐续订规则，到期超过 7 天无法再购买老套餐",
+          "summary": "Kimi 官方公告称，因当前算力资源紧张，自北京时间 2026 年 8 月 20 日起调整老套餐续订规则：订阅到期且超过 7 天未续订的账号，将无法再次购买老套餐。正在订阅中和自动续费正常开启的用户不受影响，公告发布时已过期的历史用户可在公告后 7 天内购买老套餐；老套餐内升级不受本次调整影响。该规则把算力供给压力转化为续订窗口管理，老用户权益和新价格体系之间的边界被明确写进订阅规则。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://linux.do/t/topic/2745653",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "Kimi",
+            "订阅",
+            "算力"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程板块保留 Agent 运行环境、代码维护、安全加固和开源基础设施信号。",
+      "items": [
+        {
+          "title": "Cursor 推出 builds，云智能体启动速度最高提升 3 倍",
+          "summary": "Cursor 推出 builds 功能，在后台持续准备开发环境副本，使云智能体启动时无需从零搭建，响应速度最高提升 3 倍。AI HOT 摘要显示，Cursor 内部环境启动快 10 倍，首个 token 生成快 3 倍；智能体始终从最近一次成功 build 启动，依赖更新或安装脚本出错时不影响运行，8 月 17 日起所有环境默认启用且无额外费用。该功能把云端 Agent 的等待时间和环境失败率放到基础设施层处理，而不是让每次任务都重新承担环境初始化成本。",
+          "sourceName": "Cursor Blog",
+          "sourceUrl": "https://cursor.com/blog/builds",
+          "publishedAt": "2026-08-13T12:00:00.000Z",
+          "tags": [
+            "Cursor",
+            "云开发环境",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Zed 推出 Delta，基于 DeltaDB 关联对话、代码编辑和审查过程",
+          "summary": "Zed 团队推出 Delta，一款用于与 Agent 协作编写和审查代码的多人环境应用，目前已开放首批内测。Delta 基于 Zed 团队此前构建的 DeltaDB 版本控制系统，将开发者与 Agent 的对话、代码编辑和审查过程实时同步在同一线程中；DeltaDB 捕获提交之间的每一次操作，而不是只记录快照，并已接入 Claude Code 等第三方 Agent 工具。它把代码变更从提交记录扩展到操作流和对话流，代码审查的上下文会更接近任务发生过程。",
+          "sourceName": "Zed",
+          "sourceUrl": "https://zed.dev/blog/introducing-delta",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "Zed",
+            "代码协作",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Claude Code v2.1.232 默认启用 Subagent forking，并修复多项安全问题",
+          "summary": "Claude Code v2.1.232 默认启用 subagent forking，子代理可继承完整对话与提示缓存，交互会话中的非队友代理默认后台运行。该版本还新增 GitLab token 密钥脱敏、插件市场 GitLab 仓库克隆支持，并修复 PowerShell 与 Windows 权限绕过、嵌套 git 仓库信任继承等安全漏洞。Subagent 的默认行为和权限修复同时出现，说明多代理编程工具正在把会话继承、后台运行和安全边界作为基础能力处理。",
+          "sourceName": "Claude Code GitHub Releases",
+          "sourceUrl": "https://github.com/anthropics/claude-code/releases/tag/v2.1.232",
+          "publishedAt": "",
+          "tags": [
+            "Claude Code",
+            "Subagent",
+            "安全"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Boris Cherny 让 Claude 接管应用日常维护，数周内开出 388 个 PR",
+          "summary": "Boris Cherny 分享了让 Claude 接管应用日常维护的实践：通过 Slack 频道运行崩溃模糊测试、重复代码统一、死代码移除等任务，数周内自动开出 388 个 PR，其中 180 个经 Claude Code Review 和人工审核后合并。该实践把 Agent 从单次编码任务推进到周期性维护任务，关键变化在于任务触发、审查、反馈和次日例程改进都被纳入同一套运行方式。",
+          "sourceName": "X：Boris Cherny",
+          "sourceUrl": "https://x.com/bcherny/status/2088014489438621990",
+          "publishedAt": "2026-08-13T21:27:02.000Z",
+          "tags": [
+            "Claude",
+            "代码维护",
+            "PR"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Anthropic 研究多智能体系统，45 个协调智能体发现 266 个漏洞",
+          "summary": "Anthropic 研究指出，随着 AI 智能体在共享代码库、市场等社会系统中承担更多任务，智能体间交互量可能超过人机交互。实验显示，45 个协调智能体在 2700 万 token 运行中发现 266 个漏洞，独立并行方法在 650 万 token 中发现 21 个，两种方法仅 12 个重叠，协调智能体还学会了专业化分工。研究同时警示，个体层面的良性行为可能叠加成意外的系统性失败，多 Agent 系统的观测、协调和失败传播会成为工程问题。",
+          "sourceName": "Anthropic Research",
+          "sourceUrl": "https://www.anthropic.com/research/multiagent-systems",
+          "publishedAt": "2026-08-13T01:20:54.259Z",
+          "tags": [
+            "多智能体",
+            "研究",
+            "安全"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Anthropic skills、semantica 与 holaOS 登上 GitHub Trending，Agent 上下文与技能系统受关注",
+          "summary": "GitHub Trending 同日出现 anthropics/skills、semantica-agi/semantica 与 holaboss-ai/holaOS 等项目。前者是公开 Agent Skills 仓库，semantica 描述为面向上下文和可问责 AI 系统的图原生基础设施，holaOS 则定位为开源一体化 AI agent workspace，可运行 Claude Code、Codex 并连接 100 多个集成与 MCP。开源热度集中在技能、上下文、共享记忆和工具连接，说明 Agent 产品的竞争点正在从单个模型调用扩展到任务环境组织。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/anthropics/skills",
+          "publishedAt": "2026-08-14T00:00:00.000Z",
+          "tags": [
+            "GitHub Trending",
+            "Agent Skills",
+            "MCP"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "本期强融资信息不多，保留 Cursor 收购式团队整合和面壁智能上市辅导两个信号。",
+      "items": [
+        {
+          "title": "Firetiger 团队加入 Cursor，生产环境 Agent 能力被并入编码工具链",
+          "summary": "Cursor 宣布 Firetiger 团队正式加入。Firetiger 构建面向生产环境的智能体，可监控发布、捕获回归、调查事件，并将发现反馈给编码智能体；公司由 Rustam Lalkaka 和 Achille Roussel 于 2024 年创立，成员此前在 Cloudflare、Twitch、Segment 和 Twilio 构建过大型生产系统。Cursor 获得的不只是一个功能模块，而是把生产事故、回归调查和编码 Agent 连接起来的工程经验。",
+          "sourceName": "Cursor Blog",
+          "sourceUrl": "https://cursor.com/blog/firetiger",
+          "publishedAt": "",
+          "tags": [
+            "Cursor",
+            "并购",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "面壁智能启动 A 股上市辅导，中信证券担任辅导机构",
+          "summary": "juya 目录信息显示，面壁智能已启动 A 股上市辅导，中信证券担任辅导机构。该素材未提供更完整财务细节，但上市辅导本身说明国内大模型公司正在从融资叙事进入资本市场合规准备阶段。与模型发布相比，上市辅导影响的是公司治理、信息披露和长期融资路径。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://daily.juya.uk/issues/2026-08-13/",
+          "publishedAt": "2026-08-13T01:44:57.000Z",
+          "tags": [
+            "面壁智能",
+            "上市辅导",
+            "大模型公司"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "合规信号主要来自内容凭证、安全认证、数据遗忘和 AI 服务披露。",
+      "items": [
+        {
+          "title": "Google 发布开源 C++ 库 Credentio，用于 C2PA 内容凭证验证",
+          "summary": "Google 发布开源 C++ 库 Credentio，支持在客户端和服务器应用中集成高性能、本地优先的 C2PA 内容凭证验证。该库以优化内存占用在本地处理资产，可为数 GB 级媒体文件提供即时验证结果，避免云延迟、带宽成本与数据隐私风险；目前支持深度清单解析和可配置信任列表集成，未来计划支持完整凭证生成与嵌入。内容来源验证正在从平台政策进入开发库，图片、视频和生成内容的可信展示会更多依赖本地验证和可配置的信任链。",
+          "sourceName": "Google Developers Blog",
+          "sourceUrl": "https://developers.googleblog.com/introducing-credentio-open-source-c-library-for-c2pa-content-credentials-from-google",
+          "publishedAt": "",
+          "tags": [
+            "C2PA",
+            "内容凭证",
+            "Google"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Cursor 获得 AIUC-1 认证，需季度复测和年度审计",
+          "summary": "Cursor 宣布通过独立审查与对抗性测试，获得 AIUC-1 认证；该标准由 100 多家财富 500 强 CISO 参与制定，并获 MITRE、云安全联盟及斯坦福研究者技术支持。测试覆盖 IDE 和云端智能体，涉及规则、hooks 与 Auto-review 等防护机制，Cursor 在数千个场景中通过全部要求；维持认证需至少每季度复测一次，并每年接受全面审计。Agent 编程工具的安全能力开始以可审计认证形式表达，权限控制、自动审查和云端执行会被纳入持续评估。",
+          "sourceName": "Cursor Blog",
+          "sourceUrl": "https://cursor.com/blog/aiuc-1",
+          "publishedAt": "",
+          "tags": [
+            "Cursor",
+            "AI 安全",
+            "认证"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Research Gold 被曝虚假宣称人类撰写，AI 服务披露边界再次受到关注",
+          "summary": "404 Media 报道称，面向医学研究者的网站 Research Gold 宣称其服务“100% 由人类撰写、绝不使用 AI”，并列出多名博士审稿人；调查发现这些审稿人由 AI 生成，部分真实方法学家的身份和照片未经许可被挪用，电话、邮件与聊天回复也均由 AI 生成。该事件不是模型能力新闻，而是 AI 服务披露、身份冒用和专业服务可信度问题。医疗研究等高信任场景里，服务提供方是否使用 AI、由谁审稿、如何证明身份，会直接进入合规和合同边界。",
+          "sourceName": "404 Media",
+          "sourceUrl": "https://www.404media.co/company-offering-100-human-written-never-ai-peer-review-is-entirely-ai",
+          "publishedAt": "2026-08-12T05:41:30.137Z",
+          "tags": [
+            "AI 披露",
+            "合规",
+            "身份冒用"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "以下条目相关性不都足以进入核心板块，但能反映技术社区正在讨论的背景信号。",
+      "items": [
+        {
+          "title": "Hacker News 高热讨论 OpenAI Ultrafast、Gemini 3.7 Flash 和 DeepSeek Harness",
+          "summary": "Hacker News 今日最高热度的 AI/开发条目包括 Gemini 3.7 Flash（617 分）、DeepSeek Harness developer preview（555 分）和 Accelerating GPT-5.6 Sol Ultrafast（420 分）。这些讨论与核心新闻高度重叠，但社区热度提供了另一个信号：开发者最关注的不是单纯模型名称，而是模型能否降低成本、提高速度，并进入可运行的 Agent 框架。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://news.ycombinator.com/",
+          "publishedAt": "2026-08-14T00:00:00.000Z",
+          "tags": [
+            "HN",
+            "模型",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "HN 讨论“理解成为新瓶颈”，AI 输出形态继续引发产品思考",
+          "summary": "Geoffrey Litt 的文章《Understanding is the new bottleneck》在 Hacker News 获得 202 分和 111 条评论。该条不是产品发布，但讨论焦点与 AI 工具形态有关：当模型能生成越来越多内容，用户理解、检查和操作这些内容会成为限制因素。AI 输出可能继续从原始文本走向 Markdown、HTML，再到更视觉化、结构化、可交互的模拟或视频形态，因为可操作界面能承载比纯文本更清晰的状态与反馈。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://www.geoffreylitt.com/2026/07/02/understanding-is-the-new-bottleneck",
+          "publishedAt": "2026-08-14T00:00:00.000Z",
+          "tags": [
+            "交互设计",
+            "AI 输出",
+            "HN"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "HN 上 AI 文本水印讨论升温，技术可移除性与平台治理发生冲突",
+          "summary": "Sean Goedecke 的《Text AI watermarks will always be trivial to remove》在 Hacker News 获得 98 分，另一篇解释 AI 文本水印机制的文章也获得 74 分。文本水印长期被用作 AI 内容识别方案之一，但社区讨论集中在可移除性、误伤和模型输出后处理。相比 C2PA 这类内容凭证，文本水印更依赖生成过程和检测假设，因此治理争议会继续存在。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://www.seangoedecke.com/text-ai-watermarks/",
+          "publishedAt": "2026-08-14T00:00:00.000Z",
+          "tags": [
+            "AI 水印",
+            "内容治理",
+            "HN"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "FluidVoice、needle、LTX-2 和 modly 登上 GitHub Trending，端侧与多模态工具维持热度",
+          "summary": "GitHub Trending 中出现 FluidVoice、needle、LTX-2 和 modly 等项目：FluidVoice 是 macOS 本地语音输入应用，needle 描述为面向手机、可穿戴、智能家居和机器人的 14MB 基座模型，LTX-2 提供音视频生成推理与 LoRA 训练包，modly 则是本地 GPU 上从图片生成 3D 模型的桌面应用。它们不都是重大新闻，但共同显示端侧、语音、视频和 3D 生成正在成为开源社区持续试验的方向。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/altic-dev/FluidVoice",
+          "publishedAt": "2026-08-14T00:00:00.000Z",
+          "tags": [
+            "GitHub Trending",
+            "端侧 AI",
+            "多模态"
+          ],
+          "importance": "normal"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "本期优先保留 juya 与 AI HOT 中事实完整、与 AI/开发工具/平台商业化/合规相关的条目；多源重复时合并增量事实，过滤纯传闻、弱相关消费电子、低分或与互联网工作判断关联较弱的 HN 技术讨论。juya 正文在第 17 条后截断，#18 至 #20 只在目录可见，因此未补写缺失细节。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (39 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (17 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-08-14T00:00:00.000Z"
+}
