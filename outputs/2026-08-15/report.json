@@ -1,0 +1,571 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-15",
+  "title": "Whistle 互联网日报｜2026-08-15",
+  "summary": "先看几条新变化：Google 把 Gemini 3.7 Flash 推到 API、AI Studio、Android Studio 和企业产品线，并把价格压到年底半价；DeepSeek 同时发布 V4 Pro 正式版和 Harness 开源智能体框架，把模型、工具、沙箱、会话和 UI 都做成可替换插件；OpenAI 与 Cerebras 给 GPT-5.6 Sol 增加 Ultrafast 服务层，最高每秒 750 个输出 token。办公产品也在变得更主动，ChatGPT 开始读取授权应用和网站的交互历史，Google Sheets 可把表格变成交互式界面，Claude 在 Slack 里会结合频道上下文判断是否参与。Anthropic 为欧盟 AI 法案引入 Claude 文本水印，Databricks 和 IBM 的新动作则说明企业级 AI 仍在吸收资金、咨询交付和合规资源。",
+  "theme": "模型降价、Agent 框架与企业 AI 部署同步推进",
+  "topline": [
+    "Gemini 3.7 Flash 发布并降价，OpenRouter 追加限时 50% 折扣",
+    "DeepSeek V4 Pro 正式版上线，同时开源 DeepSeek Harness 智能体框架",
+    "OpenAI 与 Cerebras 推出 GPT-5.6 Sol Ultrafast 预览层，生成速度最高每秒 750 token",
+    "ChatGPT Computer History、Sheets canvas、Claude Tag 等功能把办公上下文接入 AI 产品",
+    "Anthropic 将为 Claude 文本加入水印，以满足欧盟 AI 法案透明度要求"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "今天最重要的变化集中在模型价格、Agent 基础设施、办公上下文和合规标识。",
+      "items": [
+        {
+          "title": "Google 发布 Gemini 3.7 Flash，并同步下调 3.6 Flash 价格",
+          "summary": "Google 发布 Gemini 3.7 Flash，官方称新模型在软件工程、Web 开发和复杂知识任务上超过上一代 3.6 Flash，并已通过 Gemini API、Google AI Studio、Antigravity、Android Studio 与 Gemini Enterprise 开放。该模型截至年底的输入和输出价格分别为每百万 token 0.75 美元和 3.75 美元，3.6 Flash 价格也同步降到同一水平；OpenRouter 还把 Gemini 3.7 Flash 做了额外 50% 限时折扣，优惠期内输入约 0.375 美元、输出约 1.88 美元每百万 token。模型能力提升和平台折扣同时出现，会让应用侧重新计算多步骤编程、网页开发和知识工作任务的调用成本。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-3-7-flash/",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "AI 模型",
+            "Google",
+            "API 定价"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "DeepSeek V4 Pro 正式版上线，API 新价和峰谷定价 8 月 17 日生效",
+          "summary": "DeepSeek 正式发布 DeepSeek-V4-Pro-0813，APP、网页端和 API 同步上线，API 模型名保持 deepseek-v4-pro，用户可在产品内通过“专家模式”调用。官方称新模型的 Agent 能力明显增强，API 原生支持 OpenAI Responses API 格式并适配 Codex，思考强度提供 low、high、max 三档；硅基流动也提供 Day-0 支持，标注 1M 上下文和输入 1.32 美元、输出 3.96 美元、缓存命中 0.44 美元每百万 token 的平台定价。DeepSeek API 将于北京时间 2026 年 8 月 17 日 0 时启用新定价并引入峰谷机制，高峰时段价格翻倍，这会直接改变长期 Agent 任务和高频编码调用的账单结构。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://api-docs.deepseek.com/zh-cn/quick_start/pricing",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "DeepSeek",
+            "Agent",
+            "API 定价"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "DeepSeek Harness 开源，智能体框架采用一切皆插件架构",
+          "summary": "DeepSeek 发布 DeepSeek Harness 开发者预览版，并以 MIT 协议开放源码。该框架基于 Cordis 元框架，模型、工具、技能、会话、沙箱、文件系统、循环、编排和 UI 都以插件形式存在，开发者无需改动核心源码即可替换或扩展组件，并提供标准、PTC、极简和创造四种运行模式。它把 Agent 产品中常见的模型选择、工具调用、沙箱隔离、状态存储和界面适配拆成独立模块，开源后会增加围绕 DeepSeek 模型构建本地和云端智能体的工程入口。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://github.com/deepseek-ai/deepseek-harness",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "开源",
+            "Agent 框架",
+            "DeepSeek"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 与 Cerebras 推出 GPT-5.6 Sol Ultrafast 有限预览",
+          "summary": "OpenAI 在 API 中新增 Ultrafast 服务层，专门运行 GPT-5.6 Sol，并由 Cerebras 的 Wafer-Scale Engine 架构提供算力。官方给出的最高生成速度为每秒 750 个输出 token，比标准模式快 14 倍；该服务目前处于有限预览，只向部分客户开放，OpenAI 会根据工作负载匹配度和可用容量评估接入。高速服务层把模型调用从单纯质量比较扩展到延迟和吞吐比较，实时交互、批量生成、代码代理和多轮工具调用会受到输出速度约束的影响。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://openai.com/index/previewing-ultrafast/",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "OpenAI",
+            "Cerebras",
+            "推理速度"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "ChatGPT 桌面应用上线 Computer History，把授权交互转成记忆和时间线",
+          "summary": "OpenAI 在 ChatGPT macOS 桌面应用中发布 Computer History，功能会记录用户在授权应用和网站中的交互事件，并转化为记忆和时间线，供 ChatGPT 与 Codex 理解近期工作上下文。它不同于此前依赖截图的 Chronicle 预览版，不捕获屏幕截图、屏幕录制或音频；功能默认关闭，已面向全球 Pro、Business 和 Enterprise 用户推出，并要求主动开启 Memories。桌面 AI 从文件和聊天扩展到跨应用活动历史后，产品边界会进入权限授权、历史保留、可解释记忆和企业审计的范围。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://learn.chatgpt.com/docs/customization/computer-history",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "ChatGPT",
+            "桌面应用",
+            "记忆"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "模型发布、Agent 插件、办公 AI 和评测工具是今天最密集的更新方向。",
+      "items": [
+        {
+          "title": "小红书 dots3-note preview 开放权重，支持 512K 上下文和多模态理解",
+          "summary": "小红书旗下 dots studio 发布 dots3-note preview，这是 dots3 系列首个开放权重模型，采用 MoE 架构，总参数 280B、激活参数 16B。模型支持最长 512K token 上下文，可理解文本、图像、视频和音频并输出文本，权重按 Apache 2.0 协议发布到 Hugging Face、ModelScope 和 GitHub，提供 BF16 与 FP8 两个版本。官方还配套开源 VibeSearchBench 与 VibeLifeBench 两个面向真实生活场景的评测环境，长上下文和多模态输入被放到同一个开放模型里，会扩大本地或私有化 Agent 对真实资料、媒体内容和长任务记录的处理范围。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://studio.dots.ai/dots/dots3-zh.html",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "开源模型",
+            "多模态",
+            "长上下文"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Qwen3.8 系列开放权重，27B 多模态模型支持 262K 上下文",
+          "summary": "通义千问开源 Qwen3.8 系列模型，其中 Qwen3.8-27B 是原生多模态稠密模型，参数规模 27B，原生支持 262K 上下文，并可通过 YaRN 扩展到 1M tokens。AI HOT 同时记录 Max 级 Qwen3.8-2.4T-A95B 开放权重，硅基流动已提供 Day-0 支持，标注 2.4T 总参数、95B 激活参数，主打自主编码、深度研究和端到端智能体执行。Qwen 系列把中等规模多模态模型和超大 MoE 模型同时放出，会让开源模型池在端侧、私有部署和云端高性能任务上出现不同档位选择。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://x.com/Alibaba_Qwen/status/2088280182356611304",
+          "publishedAt": "2026-08-14T15:02:48.000Z",
+          "tags": [
+            "Qwen",
+            "开源模型",
+            "多模态"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "GLM-5.3 发布，编程与网络安全基准成为主要卖点",
+          "summary": "智谱发布 GLM-5.3，模型基于与 GLM-5.2 相同的基座，通过后训练 Scaling 提升能力，官方称编程能力较前代提升 50%。AI HOT 摘要显示，GLM-5.3 在 Terminal Bench 3.0 等公开基准中取得开源第一并接近 Claude Fable 5，在白盒代码审查等安全任务中持平 Mythos 5，CyberGym 得分为 84.5%；模型权重将在两周后开源，即日起上线 ZCode、AutoClaw 等工具。HN 上该发布也获得超过 1000 分讨论热度，说明编程模型的比较正在从通用答题转向终端任务、代码审查和攻防环境。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://mp.weixin.qq.com/s?__biz=MzkyMzI3NzQ0Mg%3D%3D&mid=2247494084&idx=1&sn=a2e5cd9a534a4825feb3633ea1b6d492",
+          "publishedAt": "2026-08-14T05:31:04.000Z",
+          "tags": [
+            "GLM",
+            "编程模型",
+            "安全"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "MiniMax Music 3.0 开源，可一次生成最长 5 分钟完整歌曲",
+          "summary": "MiniMax 发布并开源 MiniMax Music 3.0，模型权重已在 Hugging Face 公开，可根据创意描述和可选歌词，一次生成包含人声、作曲、编曲和制作的完整歌曲，最长 5 分钟。该模型采用 8B Global LLM 与 0.6B Local LLM 的混合架构，输出 32 kHz 立体声音频，并支持通过 diffusers 等框架本地部署。音乐生成模型从短音频片段延伸到完整歌曲结构后，版权、素材管理、后期编辑和平台分发会更关注整曲级别的一致性与可追溯性。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://www.minimax.io/blog/minimax-music-3-0-next-generation-open-weights-production-ready-versatile-music-model",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "音乐生成",
+            "开源权重",
+            "多媒体"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Google Sheets canvas 用自然语言把表格变成交互式界面",
+          "summary": "Google 在 Google Sheets 中推出 Sheets canvas，用户可用自然语言提示词把静态表格数据转成仪表板、学习追踪器、座位表等交互式界面，无需编写公式或代码。该功能基于 Gemini 构建，作为读写层与原始数据实时同步，也支持像普通表格一样协作分享；目前面向 Google AI Pro、Ultra 订阅者开放英文版本，并开始向部分 Google Workspace 和教育版附加组件用户推出。表格从数据容器扩展成可交互应用，会改变轻量内部工具、运营看板和协作文档的生成方式。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://blog.google/products-and-platforms/products/workspace/sheets-canvas-for-google-sheets-spreadsheets/",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "Google Sheets",
+            "Workspace",
+            "交互界面"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "ChatGPT 网页端可直接打开 Google Drive 文档并并排处理",
+          "summary": "ChatGPT 网页端开始支持直接打开 Google Drive 中的文档、表格和幻灯片，用户可在不切换标签页的情况下并排工作。功能正在逐步推送给 ChatGPT 和 ChatGPT Work 的 Plus、Pro、Business 与 Enterprise 订阅用户。它把 AI 对话窗口与云文档工作区连接到同一界面，文件访问授权、文档上下文读取和输出回写会成为办公 AI 产品的重要交互环节。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://x.com/ChatGPT/status/2088044956091089281",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "ChatGPT",
+            "Google Drive",
+            "办公 AI"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Claude Tag 在 Slack 中改用频道上下文判断是否主动回应",
+          "summary": "Anthropic 更新 Slack 中的 Claude Tag，去掉原先逐条消息判断的分类器，改用整个频道上下文和用户提供的持久指令决定是否参与对话。更新后的 Claude Tag 首次响应更快，并能在没有实质内容可补充时进入休眠，直到用户再次 @ 提及；功能已面向 Claude Teams 和 Enterprise 客户上线，额外上下文消耗不计入订阅用量或支出限制。企业聊天里的 AI 从被动问答转向频道级观察后，主动发言的边界、上下文读取范围和休眠机制会影响协作体验。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://claude.com/blog/claude-tag-now-reads-even-more-of-the-room",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "Claude",
+            "Slack",
+            "企业协作"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "NousResearch Hermes Agent Bot Mode 把 profile 变成具名 bot",
+          "summary": "NousResearch 发布 Hermes Agent 的 Bot Mode 桌面插件并启动公测，插件在侧边栏提供 Bot 列表，把原有 agent profile 转换为独立具名 bot。每个 bot 拥有独立聊天记录、头像、SOUL.md 人设文件、技能和记忆，用户可直接切换，也支持 bot 间相互通讯；该插件不要求核心代码补丁，但要求更新到最新版 Hermes 桌面应用。多 bot 界面把智能体从单一配置文件变成可管理对象，任务分工、记忆隔离和跨 bot 通信会变成桌面 Agent 产品的基础设计问题。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://github.com/NousResearch/Hermes-Bot-Mode",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "Agent",
+            "桌面应用",
+            "插件"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Artificial Analysis 推出 Optima，用自有数据比较模型质量、成本和耗时",
+          "summary": "Artificial Analysis 推出自定义基准测试平台 Optima，用户可上传文件、导入 Agent 轨迹、安装编程环境插件或直接描述用例来构建专属测试。平台支持一键运行多个前沿模型，并通过标准评分或配对评分比较质量、每项任务成本和耗时，计费方式基于 token 使用量，限时注册用户提供 10 美元体验额度。模型评估从公开榜单转向任务数据后，质量、延迟和成本会在同一个测试集里被并列比较。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://artificialanalysis.ai/optima",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "模型评测",
+            "Benchmark",
+            "成本"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Claude Code desktop 增加 auto-continue，额度重置后可从中断处继续",
+          "summary": "Claude Code desktop 新增 auto-continue 复选框，主要处理运行任务时触达使用限额的场景。用户开启后，一旦系统使用限额发生重置，Claude Code desktop 会自动从上次中断处继续运行，无需手动重启任务。长时间编码 Agent 的任务状态不再只取决于单次额度窗口，产品层面会更强调断点恢复、上下文保存和异步任务生命周期。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://x.com/ClaudeDevs/status/2088014831605702937",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "Claude Code",
+            "开发工具",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "WorkBuddy 上线远程控制，手机端可同步电脑任务和产物",
+          "summary": "WorkBuddy 更新远程控制功能，把 PC、App 和小程序打通，手机端可实时同步电脑端任务、对话、工作空间和产物，也支持一台手机连接多台电脑并切换。AI HOT 摘要显示，App 需升级至 1.2.0 及以上，电脑端需升级至 5.3.8 及以上，连接无需扫码；本次更新还加入资料库、Markdown 多人共同编辑、AI 原生审阅模式，以及把资料库内容生成可发布链接的 HTML 网站。Agent 工具开始覆盖跨设备接管、资料管理和内容发布，移动端不再只是通知入口。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA%3D%3D&mid=2647685179&idx=1&sn=4cbee32b677b57a9dc6ec2a79d6f72c7",
+          "publishedAt": "2026-08-13T04:32:24.000Z",
+          "tags": [
+            "Agent",
+            "远程控制",
+            "协作"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "LTX-2.5 发布，10 秒 720p 视频生成耗时和价格被量化",
+          "summary": "LTX 推出 LTX-2.5 视频模型，并原生集成 ComfyUI。AI HOT 摘要显示，在 2 张英伟达 GB200 配置下，模型生成 10 秒 720p 视频仅需 6.8 秒；LTX-2.5 Fast 以每秒 0.09 美元生成带音频 720p 视频，10 秒片段成本 0.90 美元，年度经常性收入低于 1000 万美元的组织可免费使用。视频生成开始公开披露速度、分辨率、音频和商业使用门槛，内容生产工具会更容易按镜头成本而不是单次调用成本计价。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.ithome.com/0/988/766.htm",
+          "publishedAt": "2026-08-12T06:46:51.000Z",
+          "tags": [
+            "视频生成",
+            "ComfyUI",
+            "多媒体"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台侧的变化主要落在企业 AI 合作、Copilot 应用整合和消费级智能体入口。",
+      "items": [
+        {
+          "title": "IBM 与 OpenAI 达成战略合作，设立专属 OpenAI 业务部",
+          "summary": "IBM 宣布与 OpenAI 建立战略合作，将 GPT-5.6、Codex 和 ChatGPT Work 等模型及产品嵌入 IBM Consulting Advantage，用于金融、政府、电信、零售等行业，以及财务、采购、客户运营、人力资源等业务流程。合作覆盖传统运营流程改造、应用现代化与产品开发、网络安全与 AI 风险管理三大方向；IBM 将设立专属 OpenAI 业务部，数千名顾问和工程师通过 OpenAI 合作伙伴网络考核获取专家级认证，并加入 OpenAI 精英合作伙伴层级。大型咨询公司把模型产品、行业方案和认证体系绑定，会加速 OpenAI 在核心业务流程中的企业交付路径。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://newsroom.ibm.com/2026-08-13-ibm-partners-with-openai-to-accelerate-secure-ai-deployment-for-enterprises-across-core-operations",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "OpenAI",
+            "IBM",
+            "企业 AI"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "微软合并消费者版和企业版 Copilot 应用，并下线部分低使用功能",
+          "summary": "微软正在合并面向消费者的 Copilot 应用和 Microsoft 365 Copilot 应用，并逐步淘汰一批使用效果不佳的 AI 功能。根据微软支持文档，普通用户将在 2026 年 8 月 18 日前失去群聊、AI 生成播客、Copilot Labs 实验功能和 Deep Research 访问权限，独立 Copilot 应用生成的文件将迁移到 OneDrive。微软把 Copilot 入口向 Microsoft 365 体系收拢，功能下线和文件迁移会改变现有消费者版 Copilot 的使用边界。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://support.microsoft.com/en-us/microsoft-365-copilot/learning/changes-microsoft-copilot-app",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "Microsoft",
+            "Copilot",
+            "产品整合"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "千问开放平台上线菜鸟智能体，支持对话寄快递",
+          "summary": "千问开放平台上线菜鸟智能体，用户可在千问中通过 @菜鸟或直接提出寄件需求完成寄快递流程。该智能体能根据物品类型、价格和上门时间推荐寄件方案及快递公司，并支持寄件政策答疑、大件寄送推荐和历史地址自动补全；用户需将千问更新至最新版后使用。物流服务被嵌入通用对话入口后，AI 平台不只承接问答，也开始把具体交易流程接入智能体分发。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://mp.weixin.qq.com/s/SIziGfNymECoydXcEu_Apg",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "千问",
+            "菜鸟",
+            "智能体"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "快手 streamlake 将下线 KwaiKAT 模型和 Coding Plan",
+          "summary": "快手 streamlake 通知称，因业务升级调整，KwaiKAT 系列模型和配套订阅方案将停止服务。受影响对象包括 KAT-Coder-Pro V2.5、KAT-Coder-Air V2.5 两款模型，以及 KwaiKAT Coding Plan，停止服务时间为 2026 年 8 月 31 日 23:59:59。模型服务下线会影响已接入该编码模型和订阅计划的开发链路，也提醒平台型模型产品仍存在业务调整带来的可用性风险。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://linux.do/t/topic/2747238",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "快手",
+            "编码模型",
+            "服务下线"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "产品侧重点从单点 AI 功能转向价格套餐、交互形态和工作入口迁移。",
+      "items": [
+        {
+          "title": "超级小爱 2.0 上线专家模式，并用积分制做会员订阅",
+          "summary": "超级小爱 2.0 在小米澎湃 OS 4 Beta 版上线“专家模式”，接入 Xiaomi MiMo 模型，支持复杂任务编排、跨设备联动和文档生成。该模式采用统一积分制，每月为所有用户免费提供 1000 积分，重度使用者可购买连续包月 19 元至 99 元不等的付费方案获取更多积分和权益。手机厂商的系统级 AI 助手开始把复杂任务和订阅积分绑定，AI 功能从硬件卖点进入持续计费和资源消耗管理。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://mp.weixin.qq.com/s/N8_NxWt6tnEysgfuTCVy7A",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "小米",
+            "会员订阅",
+            "AI 助手"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "ChatGPT 与 Gemini 双双突破 10 亿用户",
+          "summary": "The Verge 报道称，OpenAI 与 Google 的聊天机器人均跨过 10 亿用户门槛。OpenAI 在 8 月 6 日博文中披露 ChatGPT 月活用户超过 10 亿，并称 7 月周活用户也已达 10 亿；Google CEO 皮查伊则宣布 Gemini 月活达到 10 亿，2 月时 Gemini 月活为 7.5 亿。两个通用聊天入口同时进入十亿级规模后，模型分发不再只依赖 API 和开发者平台，消费者应用本身也成为获取文件、记忆、搜索和办公场景的主入口。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.theverge.com/ai-artificial-intelligence/978113/chatgpt-gemini-1-billion-users",
+          "publishedAt": "2026-08-11T19:41:42.000Z",
+          "tags": [
+            "用户增长",
+            "ChatGPT",
+            "Gemini"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "OpenRouter 数据显示 84% token 来自非前沿模型",
+          "summary": "Tomer Tunguz 引用 OpenRouter 数据称，84% 的模型 token 并非来自 SOTA 模型，最常用六款模型性能约为前沿模型的 77%，成本仅为 Claude Fable 5 的 2.5%。8 月 10 日当周，六款模型承载 80% 流量，混合价格约 0.50 美元每百万 token，而 Fable 5 为 20 美元；最佳开源模型性能已从一年前的 48% 提升到前沿模型的 80%。调用市场的流量集中在便宜、够用和可替换模型上，模型发布热度与真实 token 消耗之间存在明显差距。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://www.tomtunguz.com/model-release-exhaustion",
+          "publishedAt": "2026-08-14T00:00:00.000Z",
+          "tags": [
+            "模型成本",
+            "OpenRouter",
+            "增长观察"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程侧的高信号集中在编码 Agent、模型成本控制、开源工作区和隐私计算。",
+      "items": [
+        {
+          "title": "Claude Code v2.1.233 支持 GitLab MR URL，并增加用户身份归因设置",
+          "summary": "Claude Code v2.1.233 发布，为 --worktree 标志和 agents 视图新增 GitLab 合并请求 URL 支持，并添加可选 forward_user_identity 网关设置，用于按用户归因支出。AI HOT 还记录了 Anthropic 关于 Claude Code 会话成本的文章，指出 token 成本由模型、输入输出 token 和提示缓存决定，输出 token 价格约为输入的 5 倍，任务间运行 /clear 可减少无关上下文回传，中途切换模型或 effort 级别会破坏提示缓存。编码 Agent 从个人工具进入团队网关后，身份、成本归因、缓存命中和上下文管理会成为工程管理的一部分。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://github.com/anthropics/claude-code/releases/tag/v2.1.233",
+          "publishedAt": "2026-08-14T00:00:00.000Z",
+          "tags": [
+            "Claude Code",
+            "GitLab",
+            "成本管理"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "AutoGPT 维护者用 AGENTS.md、PR 模板和 CI 门控管理 AI 生成 PR",
+          "summary": "GitHub Blog 介绍 AutoGPT 维护者处理 AI 贡献的经验：AI 智能体不会主动阅读文档，因此项目把指令放进 AGENTS.md 和技能文件，并尽量贴近代码目录。维护者还通过强制 PR 模板、测试计划、CI 覆盖率门槛和 CLA 签名等机制筛选提交，把智能体提交从“不可用”转为“可用但不符合路线图”；其中 CLA 签名因涉及浏览器和 OAuth 流程，被用作区分人类与智能体的一道门槛。开源项目开始把 AI 贡献者当成常态输入源，仓库级指令和合并门控会成为维护规则的一部分。",
+          "sourceName": "GitHub Blog",
+          "sourceUrl": "https://github.blog/open-source/maintainers/your-contributors-are-ai-first-now-is-your-project",
+          "publishedAt": "2026-08-12T18:00:08.000Z",
+          "tags": [
+            "开源维护",
+            "AGENTS.md",
+            "AI PR"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Hugging Face 观察开源模型生态：1.5% 仓库占 99.2% 下载量",
+          "summary": "Hugging Face 发布 2026 年夏季开源模型生态观察，称 2026 年 1 至 8 月公开模型仓库从 243 万增至 296 万，但 85.6% 的模型下载量不足 200 次，1.5% 的仓库占据 99.2% 下载量。报告还提到，中国实验室月度最大开源模型参数规模在 754B 至 2.78 万亿之间，美国实验室七个月中五个月低于 130B；AMD 与 NVIDIA 各发布超过 200 个新模型仓库，成为发布开源模型最多的机构。开源模型数量继续增长，但使用集中度极高，硬件厂商也在通过模型仓库推动软件生态。",
+          "sourceName": "Hugging Face Blog",
+          "sourceUrl": "https://huggingface.co/blog/state-of-open-models-summer-2026",
+          "publishedAt": "2026-08-14T00:00:00.000Z",
+          "tags": [
+            "开源模型",
+            "Hugging Face",
+            "生态数据"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Google 披露同态加密方向，HN 高分讨论私有 AI 推理",
+          "summary": "Google Security Blog 发布关于同态加密让私有 AI 更实际的文章，相关链接在 Hacker News 获得 274 分讨论。该方向的核心是让模型或服务在不直接暴露明文数据的情况下执行部分计算，降低敏感输入进入云端模型时的隐私风险。随着 ChatGPT Computer History、Google Drive 文档接入和 Slack 频道上下文读取增多，隐私计算、端侧处理和授权边界会更频繁地出现在 AI 产品架构讨论中。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://blog.google/security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
+          "publishedAt": "2026-08-14T15:43:10.000Z",
+          "tags": [
+            "隐私计算",
+            "同态加密",
+            "AI 架构"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "本期强信号集中在数据基础设施融资和 AI 编程工具并购传闻。",
+      "items": [
+        {
+          "title": "报道称 Databricks 完成 50 亿美元融资，估值达到 1900 亿美元",
+          "summary": "据媒体报道，Databricks 完成 50 亿美元融资，公司估值达到 1900 亿美元，本轮融资由 Coatue 和 Blackstone 等机构领投。Databricks 表示，公司第二季度营收运行率已超过 70 亿美元，同比增长超过 80%，融资所得将专门用于投资企业级 AI 能力；CEO Ali Ghodsi 还表示，受市场波动和专注 AI 产品投资影响，公司虽有上市打算但目前暂缓。数据湖仓厂商在企业 AI 基础设施上继续获得高估值融资，资金会流向 Lakebase、AI Functions、数据治理和模型应用层的整合。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://www.cnbc.com/2026/08/13/databricks-funding-round-190-billion-valuation.html",
+          "publishedAt": "2026-08-14T01:38:34.000Z",
+          "tags": [
+            "Databricks",
+            "融资",
+            "企业 AI"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "AI HOT 收录 Cursor 被 SpaceX 收购消息，需按官方披露继续核对",
+          "summary": "AI HOT 收录 Cursor Blog 消息称，Cursor 已被 SpaceX 正式收购，完成自 4 月启动的收购流程；摘要称合并后 Cursor 将获得全球最大 GPU 集群，用于构建更强且运行成本更低的模型，并提到本周发布的 Grok 4.6 是双方合作成果的早期体现。该条来自 Cursor Blog 链接，涉及高影响并购和算力资源整合，仍需以公司后续公告、监管文件或更多主流报道交叉确认。若交易属实，AI 编程工具的竞争会进一步和自有模型、GPU 集群、平台分发绑定。",
+          "sourceName": "AI HOT",
+          "sourceUrl": "https://cursor.com/blog/joining-spacex",
+          "publishedAt": "2026-08-14T12:00:00.000Z",
+          "tags": [
+            "Cursor",
+            "并购",
+            "算力"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "合规信号主要来自模型输出标识、平台年龄限制和加密访问边界。",
+      "items": [
+        {
+          "title": "Anthropic 将为 Claude 文本加入水印，以满足欧盟 AI 法案要求",
+          "summary": "Anthropic 宣布未来 Claude 模型生成的文本将包含水印，用于判断文本由 Claude 撰写的可能性。AI HOT 摘要称，这是 Anthropic 为遵守欧盟《AI 法案》而实施的变更，方法基于 Google DeepMind 的 SynthID-Text 技术，对输出质量、创造力和可读性无实际影响，读者无法区分水印文本与普通文本，也不增加额外 token 或成本。生成文本从内容层面加入机器可检测标识，会把模型输出、平台转载、内容审核和合规证明连接起来。",
+          "sourceName": "Anthropic Newsroom",
+          "sourceUrl": "https://www.anthropic.com/news/claude-text-watermark",
+          "publishedAt": "2026-08-14T19:22:48.546Z",
+          "tags": [
+            "AI 法案",
+            "水印",
+            "Anthropic"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "法国最高法院阻止 15 岁以下社交媒体禁令，HN 讨论年龄限制边界",
+          "summary": "Reuters 报道称，法国最高法院阻止一项面向 15 岁以下用户的社交媒体禁令，理由是该禁令限制表达自由；该新闻在 Hacker News 获得 203 分讨论。未成年人保护仍是平台治理的重要议题，但法院裁决显示年龄限制和表达自由之间存在法律边界。社交平台的年龄验证、家长同意、内容推荐和账号权限设计，仍会受到不同司法辖区的审查和调整。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://www.reuters.com/world/frances-top-court-rules-social-media-ban-curtails-freedom-expression-2026-08-14/",
+          "publishedAt": "2026-08-14T16:06:49.000Z",
+          "tags": [
+            "社交平台",
+            "监管",
+            "未成年人"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "这里保留高讨论但工作性略弱或更偏社区情绪的技术与开源信号。",
+      "items": [
+        {
+          "title": "HN 热帖讨论“为什么 Opus 5 用起来更差”",
+          "summary": "一篇题为 Why does Opus 5 feel worse to work with? 的文章在 Hacker News 获得 777 分和 700 多条评论，讨论集中在模型主观体验、长任务稳定性和交互摩擦。该话题更多是社区情绪和使用感受信号，不等同于公开基准或官方能力变化。它仍然反映出高端模型发布后，用户会用连续工作、代码修改和多轮上下文表现来评价体验，而不是只看一次性回答质量。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://mun-logadan.github.io/why-does-opus-5-feel-worse/",
+          "publishedAt": "2026-08-14T10:12:48.000Z",
+          "tags": [
+            "社区讨论",
+            "模型体验",
+            "Claude"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "GitHub Trending 上 Agent 工作区和浏览器自动化项目集中走热",
+          "summary": "GitHub Trending 今日出现多个 Agent 工作区和浏览器自动化项目：holaOS 获 769 stars today，描述为开源 All in One AI agent workspace，支持 100 多个集成、MCP、浏览器、文件和共享记忆；ego-lite 获 165 stars today，定位为给 AI agents 使用的快速浏览器，可共享已登录浏览器状态而不打扰用户；macro 获 436 stars today，定位为整合邮件、聊天、文档、任务、agents、通话和 CRM 的统一工作区。热度信号显示，Agent 产品正在把浏览器状态、工作空间、工具集成和共享记忆打包成可运行环境。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/holaboss-ai/holaOS",
+          "publishedAt": "2026-08-15T01:13:47.817Z",
+          "tags": [
+            "GitHub Trending",
+            "Agent 工作区",
+            "浏览器自动化"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "diagram-design 登顶 GitHub Trending，Claude Code 图表资产获得异常高星",
+          "summary": "cathrynlavery/diagram-design 今日在 GitHub Trending 获得 3646 stars today，总星数超过 1.7 万。项目描述为 29 种面向 Claude Code 的编辑型图表，采用自包含 HTML 与 SVG，不使用 Mermaid 风格输出。该项目更偏工具资产和审美偏好信号，说明开发者正在为 AI 生成文档、图表和报告建立可复用视觉组件，而不是只依赖默认 Markdown 或 Mermaid。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/cathrynlavery/diagram-design",
+          "publishedAt": "2026-08-15T01:13:47.817Z",
+          "tags": [
+            "GitHub Trending",
+            "文档工具",
+            "Claude Code"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Firefox 支持 uBlock Origin 的讨论获得 HN 高热",
+          "summary": "PCWorld 关于 Firefox 仍是最后一个支持 uBlock Origin 的主要浏览器的文章，在 Hacker News 获得 375 分讨论。该条不是 AI 新闻，但它触及浏览器扩展能力、广告拦截和平台控制权。对依赖浏览器插件分发、用户脚本、自动化扩展或隐私工具的产品，Manifest V3 与浏览器差异仍是生态背景信号。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://www.pcworld.com/article/3212428/firefox-is-now-the-last-major-browser-that-still-supports-ublock-origin.html",
+          "publishedAt": "2026-08-14T19:03:20.000Z",
+          "tags": [
+            "浏览器",
+            "扩展生态",
+            "社区热度"
+          ],
+          "importance": "normal"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "本期优先保留 juya 与 AI HOT daily 中具备完整事实骨架的模型、Agent、办公 AI、企业部署、融资与合规信息；HN 只选取高分且与 AI、开发工具、平台规则或工程实践相关的帖子，普通语言、系统优化、生活类和泛文化内容未进入核心板块；GitHub Trending 只保留 Agent 工作区、文档工具等与开发和 AI 工具形态相关的项目。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (39 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (17 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-08-15T01:23:00.000Z"
+}
