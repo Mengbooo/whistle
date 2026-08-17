@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="先看几条新变化：Anthropic 把多智能体协作的实验数据公开，45 个协调智能体在 2700 万 token 运行中发现 266 个漏洞；阿里、DeepSeek、智谱、小红书继续密集发布开源或开放权重模型，参数规模、长上下文、语音与多模态能力同时推进；Cursor 完成被 SpaceX 收购，并把云端开发环境预热、Grok 4.6 等能力接进开发工具链；Claude 的文本水印、AI 生成书籍挤压亚马逊自出版收入、Cloudflare analytics 争议和 Firefox iOS 广告拦截，分别触及合规、内容供给、平台默认设置与移动分发边界。今天的信号不集中在单个模型，而是分布在模型供给、Agent 编排、开发环境、内容平台和监管要求之间。">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Whistle 互联网日报｜2026-08-17</title>
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem("whistle-theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0d0d0d;
+      --panel-soft: #151515;
+      --line: #242424;
+      --line-soft: #1a1a1a;
+      --text: #f4f4f4;
+      --muted: #a5a5a5;
+      --faint: #737373;
+      --accent: #01c193;
+      --insight-border: rgba(1, 193, 147, .42);
+      --button-bg: #fff;
+      --button-text: #000;
+      --button-hover-border: #fff;
+      --theme-bg: rgba(0,0,0,.74);
+      --max: 1180px;
+      --serif: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #fff;
+      --panel: #f7f7f7;
+      --panel-soft: #f0f0f0;
+      --line: #dcdcdc;
+      --line-soft: #ececec;
+      --text: #0b0b0b;
+      --muted: #555;
+      --faint: #777;
+      --accent: #012fe3;
+      --insight-border: rgba(1, 47, 227, .42);
+      --button-bg: #000;
+      --button-text: #fff;
+      --button-hover-border: #000;
+      --theme-bg: rgba(255,255,255,.78);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
+    body { font-family: var(--sans); line-height: 1.72; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
+    a:hover { color: var(--text); border-bottom-color: var(--text); }
+    .theme-bar {
+      position: fixed;
+      top: 24px;
+      right: max(40px, calc((100vw - var(--max)) / 2 + 40px));
+      z-index: 30;
+      pointer-events: none;
+    }
+    .theme-toggle {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--theme-bg);
+      color: var(--text);
+      cursor: pointer;
+      pointer-events: auto;
+      transition: border-color .16s ease, transform .16s ease;
+    }
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .theme-toggle:hover { border-color: var(--button-hover-border); transform: translateY(-1px); }
+    :root[data-theme="light"] .theme-toggle { color: #000; }
+    :root:not([data-theme="light"]) .theme-toggle { color: #fff; }
+    .back-link {
+      display: inline-block;
+      margin: 0 0 34px;
+      border: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+    .back-link:hover { color: var(--text); }
+    .hero { width: 100%; padding: 0 0 58px; text-align: left; }
+    h1 { margin: 0; font-size: clamp(26px, 3vw, 38px); font-weight: 560; line-height: 1.06; letter-spacing: -.05em; }
+    .summary { max-width: 720px; margin: 24px 0 0; color: var(--text); font-size: 18px; line-height: 1.7; }
+    .hero-meta { margin-top: 22px; color: var(--text); font-size: 13px; }
+    .hero-actions { display: flex; justify-content: flex-start; gap: 12px; margin-top: 30px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
+      background: var(--button-bg); color: var(--button-text); font-size: 14px; font-weight: 600;
+      transition: border-color .16s ease, color .16s ease, background .16s ease;
+    }
+    .button--ghost { background: transparent; color: var(--text); }
+    .button:hover { border-color: var(--button-hover-border); }
+    .layout {
+      display: grid; grid-template-columns: 190px minmax(0, 760px);
+      gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
+    }
+    .toc { position: sticky; top: 86px; align-self: start; color: var(--muted); font-size: 13px; }
+    .toc strong { display: block; margin-bottom: 8px; color: var(--text); font-size: 13px; }
+    .toc a { display: block; margin: 0 0 3px; padding: 3px 0; border: 0; color: var(--muted); line-height: 1.35; transition: color .16s ease; }
+    .toc a[aria-current="true"] { color: var(--text); }
+    .toc a:hover { color: var(--text); }
+    .topline {
+      margin-bottom: 54px; padding: 26px; border: 1px solid var(--line); border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .topline h2 { margin: 0 0 16px; font-size: 24px; letter-spacing: -.025em; }
+    .topline ul { margin: 0; padding-left: 20px; color: var(--muted); }
+    .report-section { padding: 54px 0; border-top: 1px solid var(--line); }
+    .section-heading { margin-bottom: 30px; }
+    .section-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+    .section-heading h2 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; }
+    .section-heading span { display: block; margin-top: 8px; color: var(--muted); }
+    .section-count { flex: 0 0 auto; margin-top: 0 !important; color: var(--faint) !important; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    .section-items { display: grid; gap: 0; }
+    .report-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+    .report-item:first-child { border-top: 0; padding-top: 0; }
+    .item-rail { padding-top: 3px; }
+    .item-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1;
+    }
+    .item-kicker {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 8px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .item-kicker .tags { margin-bottom: 0; }
+    .tags span { color: var(--accent); font-size: 12px; }
+    .report-item h3 { margin: 0; font-size: 22px; line-height: 1.35; letter-spacing: -.025em; }
+    .report-item h3 a { border: 0; }
+    .report-item h3 a span { color: var(--accent); font-size: .82em; }
+    .item-copy { margin-top: 12px; display: grid; gap: 10px; }
+    .report-item p { margin: 0; color: var(--text); font-size: 15px; }
+    .item-fact { color: var(--text); line-height: 1.82; }
+    .item-insight {
+      position: relative;
+      padding-left: 16px;
+      border-left: 2px solid var(--insight-border);
+      color: var(--muted) !important;
+      line-height: 1.76;
+    }
+    .item-insight span {
+      display: inline-block;
+      margin-right: 9px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .item-source, .item-meta { color: var(--faint); font-size: 12px; white-space: nowrap; }
+    .item-meta { display: none; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .report-section--featured { padding-top: 54px; }
+    .report-section--featured .section-heading { margin-bottom: 30px; }
+    .report-section--featured .report-item h3 { font-size: 23px; }
+    .report-section--featured .item-index { color: var(--muted); }
+    .empty, .note { margin: 0; color: var(--muted); }
+    .action-list { display: grid; gap: 12px; }
+    .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: var(--muted); }
+    .action-item strong { color: var(--text); }
+    .status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .status-grid div { padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+    .status-grid strong, .status-grid span { display: block; }
+    .status-grid span { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+    @media (max-width: 980px) {
+      .layout { display: block; padding: 66px 24px 72px; }
+      .theme-bar { top: 18px; right: 24px; }
+      .toc { display: none; }
+      .hero { padding: 0 0 58px; }
+      .hero-actions { justify-content: flex-start; }
+      .section-title-row { display: block; }
+      .section-count { margin-top: 8px !important; }
+      .report-item { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+      .item-rail { display: none; }
+      .item-kicker { display: block; }
+      .item-source { display: none; }
+      .item-meta { display: block; }
+      .status-grid, .action-item { grid-template-columns: 1fr; }
+    }
+    @media print {
+      @page { size: A4; margin: 0; }
+      :root { color-scheme: dark; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html, body { background: var(--bg) !important; color: var(--text) !important; }
+      :root, :root[data-theme="light"] {
+        color-scheme: dark;
+        --bg: #000;
+        --panel: #0d0d0d;
+        --panel-soft: #151515;
+        --line: #242424;
+        --line-soft: #1a1a1a;
+        --text: #f4f4f4;
+        --muted: #a5a5a5;
+        --faint: #737373;
+        --accent: #01c193;
+      }
+      .theme-bar, .back-link, .toc, .hero-actions, script { display: none !important; }
+      .hero { text-align: left; padding: 0 0 42px; }
+      .layout { display: block; max-width: 760px; margin: 0; padding: 12mm; }
+      .report-section { break-inside: auto; page-break-inside: auto; padding: 38px 0; }
+      .section-heading { break-after: avoid; page-break-after: avoid; }
+      .report-item { break-inside: auto; page-break-inside: auto; }
+      .item-kicker, .report-item h3 { break-after: avoid; page-break-after: avoid; }
+      .item-insight { border-left-color: rgba(1, 193, 147, .55); }
+      .footer { display: none; }
+      a { color: inherit; border: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-bar">
+    <button class="theme-toggle" data-theme-toggle type="button" aria-label="切换到亮色模式" title="切换到亮色模式">
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M12 2v2"></path>
+        <path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"></path>
+        <path d="M16 12a4 4 0 0 0-4-4"></path>
+        <path d="m19 5-1.256 1.256"></path>
+        <path d="M20 12h2"></path>
+      </svg>
+    </button>
+  </div>
+  <main>
+    <div class="layout">
+      <aside class="toc">
+        <strong>目录</strong>
+        <a href="#section-headline">今日头条</a><a href="#section-ai-tools">AI 与新工具</a><a href="#section-platforms">大厂与平台动态</a><a href="#section-product-growth">产品与增长观察</a><a href="#section-engineering">开发者与工程实践</a><a href="#section-funding">投融资与行业机会</a><a href="#section-policy">政策监管与合规</a><a href="#section-social-buzz">社交热度观察</a>
+      </aside>
+      <article>
+        <a class="back-link" href="/archive/" aria-label="返回归档">← 返回</a>
+        <section class="hero">
+          <h1>Whistle 互联网日报｜2026-08-17</h1>
+          <p class="summary">先看几条新变化：Anthropic 把多智能体协作的实验数据公开，45 个协调智能体在 2700 万 token 运行中发现 266 个漏洞；阿里、DeepSeek、智谱、小红书继续密集发布开源或开放权重模型，参数规模、长上下文、语音与多模态能力同时推进；Cursor 完成被 SpaceX 收购，并把云端开发环境预热、Grok 4.6 等能力接进开发工具链；Claude 的文本水印、AI 生成书籍挤压亚马逊自出版收入、Cloudflare analytics 争议和 Firefox iOS 广告拦截，分别触及合规、内容供给、平台默认设置与移动分发边界。今天的信号不集中在单个模型，而是分布在模型供给、Agent 编排、开发环境、内容平台和监管要求之间。</p>
+          <p class="hero-meta">36 条信号 · 2026/8/17 09:10:32</p>
+          <div class="hero-actions">
+            <a class="button button--ghost" href="../assets/report-2026-08-17.pdf">下载 PDF</a>
+            <a class="button button--ghost" href="/archive/">查看归档</a>
+          </div>
+        </section>
+        <section class="report-section report-section--featured" id="section-headline">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>今日头条</h2>
+        <span class="section-count">5 条</span>
+      </div>
+      <span>头条保留会影响模型供给、Agent 协作、开发工具链、内容平台和合规边界的事件。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>多智能体</span><span>Agent</span><span>研究</span></div>
+        <span class="item-source">Anthropic Research · 2026-08-13 09:20</span>
+      </div>
+      <h3><a href="https://www.anthropic.com/research/multiagent-systems" target="_blank" rel="noreferrer">Anthropic 公开多智能体系统研究，协调式智能体发现 266 个漏洞 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Anthropic 研究指出，随着 AI 智能体进入共享代码库、市场等社会系统，智能体之间的交互量可能超过人机交互。实验中，45 个协调智能体在 2700 万 token 运行中发现 266 个漏洞，独立并行方法在 650 万 token 中发现 21 个，两种方法只有 12 个重叠，协调智能体还出现专业化分工。</p>
+        <p class="item-insight"><span>解读</span>这个结果把多智能体从“多开几个模型并行跑”推进到真实协作问题：任务分配、上下文同步、权限边界和失败传播都会成为系统设计的一部分。</p>
+      </div>
+      <div class="item-meta">Anthropic Research · 2026-08-13 09:20</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>开源模型</span><span>多模态</span><span>Qwen</span></div>
+        <span class="item-source">通义千问 / Simon Willison · 2026-08-14 23:02</span>
+      </div>
+      <h3><a href="https://x.com/Alibaba_Qwen/status/2088280182356611304" target="_blank" rel="noreferrer">通义千问开源 Qwen3.8 系列，27B 多模态模型支持 262K 上下文 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">通义千问开源 Qwen3.8 系列模型，其中 Qwen3.8-27B 是 Apache 2.0 许可的原生多模态稠密模型，官方称 27B 参数规模已全面超越 Qwen3.7-Plus，原生支持 262K 上下文，并可通过 YaRN 扩展至 1M tokens。Simon Willison 试用后认为该模型表现出色，但默认推理强度偏高，容易在简单任务上过度思考。</p>
+        <p class="item-insight"><span>解读</span>开源模型的竞争点已经从“能否接近闭源模型”延伸到上下文长度、推理档位、视觉输入和默认成本控制。</p>
+      </div>
+      <div class="item-meta">通义千问 / Simon Willison · 2026-08-14 23:02</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>DeepSeek</span><span>Agent</span><span>开发框架</span></div>
+        <span class="item-source">DeepSeek API 更新日志 / juya-ai-daily · 2026-08-13 19:16</span>
+      </div>
+      <h3><a href="https://api-docs.deepseek.com/zh-cn/updates#%E6%97%B6%E9%97%B4-2026-08-13" target="_blank" rel="noreferrer">DeepSeek V4 Pro 正式版上线，Harness 极简模式成为社区讨论焦点 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">DeepSeek-V4-Pro 正式版已在 APP、网页端和 API 同步上线，模型名设为 deepseek-v4-pro，官方更新日志给出的 Agent 指标包括 HLE（wo/w tools）42.7/60.0、Terminal Bench 2.1 为 87.9。</p>
+        <p class="item-insight"><span>解读</span>juya 汇总的社交信息显示，DeepSeek 团队成员推荐在 DeepSeek Harness 中使用极简模式配合 V4 Pro，称该模式与 RL 训练对齐较好，并提示至少不要在 Windows PowerShell 下运行。模型能力、运行壳层和提示模式开始绑定，Agent 效果不只取决于模型本身，也取决于调用框架如何约束上下文、工具和输出格式。</p>
+      </div>
+      <div class="item-meta">DeepSeek API 更新日志 / juya-ai-daily · 2026-08-13 19:16</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Cursor</span><span>SpaceX</span><span>开发工具</span></div>
+        <span class="item-source">Cursor Blog · 2026-08-14 20:00</span>
+      </div>
+      <h3><a href="https://cursor.com/blog/joining-spacex" target="_blank" rel="noreferrer">Cursor 完成被 SpaceX 收购，并把 GPU 集群与 Grok 4.6 接入开发工具链 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Cursor 官方博客宣布已完成自 4 月启动的 SpaceX 收购流程，合并后 Cursor 将获得 SpaceX 全球最大规模 GPU 集群，用于构建更强且运行成本更低的模型，并以更低价格向客户提供更强模型。本周发布的 Grok 4.6 被列为双方合作的早期成果，重点强化长时运行智能体与交互式视觉任务。</p>
+        <p class="item-insight"><span>解读</span>开发工具的竞争不再只发生在编辑器界面，算力供应、模型训练、云端运行环境和价格结构正在进入同一个产品包。</p>
+      </div>
+      <div class="item-meta">Cursor Blog · 2026-08-14 20:00</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Claude</span><span>水印</span><span>合规</span></div>
+        <span class="item-source">Anthropic Newsroom · 2026-08-14 00:00</span>
+      </div>
+      <h3><a href="https://www.anthropic.com/news/claude-text-watermark" target="_blank" rel="noreferrer">Claude 将加入文本水印，Anthropic 称用于满足欧盟 AI 法案要求 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Anthropic 公布 Claude 文本水印机制，未来 Claude 模型生成文本将包含用于判断来源可能性的水印，这是为遵守欧盟《AI 法案》而实施的变更。该方法基于 Google DeepMind 的 SynthID-Text 技术，Anthropic 称它不会影响输出质量、创造力和可读性，也不会增加 token 或成本，读者无法直接区分水印文本与普通文本。</p>
+        <p class="item-insight"><span>解读</span>文本生成的合规要求开始从“披露使用 AI”进入模型输出层，平台侧的检测、审计和误判处理会变成产品边界的一部分。</p>
+      </div>
+      <div class="item-meta">Anthropic Newsroom · 2026-08-14 00:00</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-ai-tools">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>AI 与新工具</h2>
+        <span class="section-count">11 条</span>
+      </div>
+      <span>本板块保留模型、Agent 框架、语音视频生成、办公与开发工具的主要更新。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Codex</span><span>多智能体</span><span>OpenAI</span></div>
+        <span class="item-source">juya-ai-daily · 2026-08-16 09:21</span>
+      </div>
+      <h3><a href="https://x.com/pvncher/status/2088641056237580632" target="_blank" rel="noreferrer">OpenAI Codex Multi-agents v2 支持主 Agent 调用 Luna 等模型 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Codex 团队成员介绍 Multi-agents v2 更新，主 Agent 现在可以把任务交给包括 Luna 在内的不同受支持模型，部分模型也可作为只执行任务、不继续向下调度的 sub-agent。juya 记录显示，这项改动此前已经进入 Codex 版本更新，但近期由 Codex 团队成员和 OpenAI 相关人员集中介绍。</p>
+        <p class="item-insight"><span>解读</span>多模型调度让 Agent 系统从单一模型执行变成按任务拆分的模型组合，成本、能力边界和失败责任会随调度策略一起变化。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-08-16 09:21</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>OpenAI</span><span>API</span><span>Agent</span></div>
+        <span class="item-source">OpenAI 官网动态 · 2026-08-13 19:00</span>
+      </div>
+      <h3><a href="https://openai.com/index/builders-guide-to-gpt-5-6" target="_blank" rel="noreferrer">GPT-5.6 构建者指南强调推理持久化、原生多智能体编排和程序化工具调用 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenAI 发布 GPT-5.6 构建者指南，介绍更低成本的前沿级智能体性能，并新增推理持久化、原生多智能体编排和程序化工具调用等 API 能力。素材显示，在 ARC-AGI-3 上启用保留推理和压缩后，Sol 得分从 13.3% 升至 38.3%，输出 token 减少约 6 倍；</p>
+        <p class="item-insight"><span>解读</span>Luna 在 BrowseComp 上以 84.04% 接近 GPT-5.5 的 84.36%，成本从 33.27 美元降至 1.33 美元。这里的重点是 API 层开始直接暴露 Agent 运行时能力，而不是只提供一次性补全文本接口。</p>
+      </div>
+      <div class="item-meta">OpenAI 官网动态 · 2026-08-13 19:00</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Gemini</span><span>Google</span><span>Agent</span></div>
+        <span class="item-source">Google DeepMind Blog · 2026-08-14 01:04</span>
+      </div>
+      <h3><a href="https://deepmind.google/blog/introducing-gemini-3-7-flash" target="_blank" rel="noreferrer">Google DeepMind 发布 Gemini 3.7 Flash，面向编程与智能体任务降价 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Google DeepMind 发布 Gemini 3.7 Flash，距 3.6 Flash 仅三周，主打编程与智能体任务，输入和输出价格分别为每百万 token 0.75 美元和 3.75 美元，为 3.6 Flash 的一半。</p>
+        <p class="item-insight"><span>解读</span>Gemini App 随后宣布该模型向 Gemini 聊天中的 Pro 与 Ultra 用户开放，并让 Gemini Spark 运行在 3.7 Flash 上，以改进对 Google Workspace 应用的工具调用。Google 把模型价格、聊天产品和 Workspace 里的工具调用连在一起，办公数据到交互式产物的路径更短。</p>
+      </div>
+      <div class="item-meta">Google DeepMind Blog · 2026-08-14 01:04</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>GLM</span><span>代码模型</span><span>安全</span></div>
+        <span class="item-source">公众号：智谱（GLM） · 2026-08-14 13:31</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s?__biz=MzkyMzI3NzQ0Mg%3D%3D&amp;mid=2247494084&amp;idx=1&amp;sn=a2e5cd9a534a4825feb3633ea1b6d492" target="_blank" rel="noreferrer">智谱发布 GLM-5.3，编程能力较前代提升 50% <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">智谱发布 GLM-5.3，基于与 GLM-5.2 相同的基座，通过后训练 Scaling 提升能力，素材称编程能力较前代提升 50%，在 Terminal Bench 3.0 等公开基准中取得开源第一，并接近 Claude Fable 5。</p>
+        <p class="item-insight"><span>解读</span>模型在白盒代码审查等安全任务中表现持平 Mythos 5，在 CyberGym 测试中得分 84.5%，权重将在两周后开源，并已上线 ZCode、AutoClaw 等工具。编码模型的发布越来越同时覆盖代码生成、终端任务和安全审查，工程任务链条被拆成多个可评测环节。</p>
+      </div>
+      <div class="item-meta">公众号：智谱（GLM） · 2026-08-14 13:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>语音生成</span><span>开源模型</span><span>小红书</span></div>
+        <span class="item-source">juya-ai-daily · 2026-08-16 09:21</span>
+      </div>
+      <h3><a href="https://github.com/FireRedTeam/FireRedTTS3" target="_blank" rel="noreferrer">FireRed Team 开源 FireRedTTS3，覆盖 24 种语言和 21 种中文方言 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">小红书 FireRed Team 发布 FireRedTTS3，一套基于语义增强语音表示的统一语音生成与编辑模型，采用 Apache-2.0 许可证开源。FireRedTTS3-Base 支持 24 种语言和 21 种中文方言的零样本语音克隆，Instruct 版支持自然语言语音设计，以及语义和声学两类语音编辑；</p>
+        <p class="item-insight"><span>解读</span>官方数据包括 Seed-TTS-eval 平均 WER 3.04%、说话人相似度 78.8%，MiniMax-MLS-Test 平均 WER 3.754%、相似度 84.8%。中文方言覆盖让语音生成从标准普通话扩展到更细的地域表达，内容生产和语音交互的素材边界随之扩大。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-08-16 09:21</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">06</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>多模态</span><span>长上下文</span><span>小红书</span></div>
+        <span class="item-source">公众号：小红书技术（dots.llm） · 2026-08-14 19:25</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s?__biz=Mzg4OTc2MzczNg%3D%3D&amp;mid=2247496140&amp;idx=1&amp;sn=5239a5fbb115c58d2ae0056bb32789ff" target="_blank" rel="noreferrer">小红书开源 dots3-note Preview，280B 总参数覆盖长程 Agent 与多模态推理 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">小红书技术开源 dots3-note Preview，这是 dots3 系列的轻量模型，总参数 280B、激活参数 16B，支持 512K 上下文，并覆盖文本、视觉、语音多模态理解。素材称模型针对复杂推理和长程 Agent 任务优化。</p>
+        <p class="item-insight"><span>解读</span>与 FireRedTTS3、dots.tts 同期出现后，小红书技术线在语音、多模态和长上下文 Agent 上形成连续发布，内容社区平台正在把自身的多媒体数据和模型能力结合起来。</p>
+      </div>
+      <div class="item-meta">公众号：小红书技术（dots.llm） · 2026-08-14 19:25</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">07</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>DeepSeek</span><span>API</span><span>长上下文</span></div>
+        <span class="item-source">SiliconFlow · 2026-08-14 12:55</span>
+      </div>
+      <h3><a href="https://x.com/SiliconFlowAI/status/2088127458558271885" target="_blank" rel="noreferrer">DeepSeek V4 Pro 上线硅基流动，提供 1M 上下文和三档推理强度 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">DeepSeek-V4-Pro-0813 已在硅基流动 SiliconFlow 上线，提供 Day-0 支持，具备 1M 上下文窗口和低、高、最大三档推理强度，更侧重编码、工具调用与智能体工作流，并保持 MIT 开源协议。定价为输入 1.32 美元/百万 token、输出 3.96 美元/百万 token、缓存命中 0.44 美元/百万 token；</p>
+        <p class="item-insight"><span>解读</span>同系列 DeepSeek-V4-Flash-0731 面向速度与成本优先的日常生产场景。推理强度和缓存价格被明确列入 API 选项后，模型调用从单价比较变成延迟、上下文、推理深度和缓存命中率的组合问题。</p>
+      </div>
+      <div class="item-meta">SiliconFlow · 2026-08-14 12:55</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">08</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Devin</span><span>开发工具</span><span>模型供给</span></div>
+        <span class="item-source">juya-ai-daily · 2026-08-16 09:21</span>
+      </div>
+      <h3><a href="https://x.com/devindesktop/status/2088383979997241794" target="_blank" rel="noreferrer">Devin 向 Pro、Max、Teams 用户免费开放 SWE-1.7 与 GLM-5.2 一个月 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Devin 宣布面向 Pro、Max、Teams 订阅用户免费开放 SWE-1.7 和 GLM-5.2 一个月，用户可在 Devin Desktop 和 Devin CLI 中继续使用这两个模型。免费期从公告日起持续一个月。</p>
+        <p class="item-insight"><span>解读</span>开发类 Agent 产品正在用模型组合和限时价格策略扩大试用面，桌面端与 CLI 同时覆盖也让同一模型进入交互式和命令行两种使用场景。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-08-16 09:21</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">09</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent 工具</span><span>远程控制</span><span>协作</span></div>
+        <span class="item-source">公众号：数字生命卡兹克 · 2026-08-13 12:32</span>
+      </div>
+      <h3><a href="https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA%3D%3D&amp;mid=2647685179&amp;idx=1&amp;sn=4cbee32b677b57a9dc6ec2a79d6f72c7" target="_blank" rel="noreferrer">WorkBuddy 上线远程控制，手机端可同步电脑任务、对话和工作空间 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">WorkBuddy 更新远程控制功能，打通 PC、App 和小程序，手机端可实时同步电脑端的任务、对话、工作空间和产物，支持一台手机连接多台电脑并随时切换。App 需升级至 1.2.0 及以上，电脑端需升级至 5.3.8 及以上，连接无需扫码；</p>
+        <p class="item-insight"><span>解读</span>本次还新增资料库、Markdown 多人共同编辑、AI 原生审阅模式，以及将资料库内容生成可发布链接的 HTML 网站。Agent 工具正在从单机对话窗口转向跨设备任务面板，移动端更多承担查看、接管和轻量控制入口。</p>
+      </div>
+      <div class="item-meta">公众号：数字生命卡兹克 · 2026-08-13 12:32</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">10</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>视频生成</span><span>ComfyUI</span><span>多模态</span></div>
+        <span class="item-source">IT之家 · 2026-08-12 14:46</span>
+      </div>
+      <h3><a href="https://www.ithome.com/0/988/766.htm" target="_blank" rel="noreferrer">LTX-2.5 发布，10 秒 720P 带音频视频成本降至 0.90 美元 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">LTX 推出 LTX-2.5 模型，原生集成 ComfyUI，在 2 张英伟达 GB200 配置下生成 10 秒 720P 视频仅需 6.8 秒。LTX-2.5 Fast 以每秒 0.09 美元生成带音频 720p 视频，10 秒片段成本 0.90 美元，年度经常性收入低于 1000 万美元的组织可免费使用。</p>
+        <p class="item-insight"><span>解读</span>视频生成的关键指标正在变成时长、分辨率、音频、生成延迟和商用门槛，视觉化输出比原始文本更接近可直接分发的内容形态。</p>
+      </div>
+      <div class="item-meta">IT之家 · 2026-08-12 14:46</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">11</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>搜索</span><span>Agent</span><span>评测</span></div>
+        <span class="item-source">OpenRouter Announcements · 2026-08-12</span>
+      </div>
+      <h3><a href="https://openrouter.ai/blog/announcements/web-search-benchmark" target="_blank" rel="noreferrer">OpenRouter 发布实时网页搜索基准，比较模型、搜索引擎、深度与预算 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenRouter 发布实时排行榜，系统评测模型、搜索引擎、搜索方法和预算四类配置组合。素材显示，将搜索预算从 1 轮增至 25 轮可使 BrowseComp 得分接近翻倍，成本增加 2.5 到 7 倍；</p>
+        <p class="item-insight"><span>解读</span>模型选择的平均分差约 15 分，高于搜索引擎选择的 10 分。联网 Agent 的质量不只由搜索引擎决定，模型、检索轮次和预算共同决定事实覆盖、延迟和成本。</p>
+      </div>
+      <div class="item-meta">OpenRouter Announcements · 2026-08-12</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-platforms">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>大厂与平台动态</h2>
+        <span class="section-count">5 条</span>
+      </div>
+      <span>平台动态集中在办公入口、浏览器默认能力、基础设施默认设置和模型分发渠道。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Google Sheets</span><span>办公软件</span><span>交互界面</span></div>
+        <span class="item-source">Google Blog · 2026-08-14 00:45</span>
+      </div>
+      <h3><a href="https://blog.google/products-and-platforms/products/workspace/sheets-canvas-for-google-sheets-spreadsheets" target="_blank" rel="noreferrer">Google Sheets 推出 Sheets canvas，自然语言可把表格变成迷你应用 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Google Sheets 发布 Sheets canvas，该功能基于 Gemini，用户通过自然语言提示词即可把表格数据转化为交互式仪表盘、学习追踪器、座位表等“迷你应用”。它把表格从数据编辑界面扩展成应用生成入口，输出形态从单元格和图表变为可交互页面。</p>
+        <p class="item-insight"><span>解读</span>AI 输出正在沿原始文本、Markdown、HTML 到可交互界面的方向变化，办公软件会承载更多轻量应用生成需求。</p>
+      </div>
+      <div class="item-meta">Google Blog · 2026-08-14 00:45</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>ChatGPT</span><span>Gemini</span><span>用户增长</span></div>
+        <span class="item-source">The Verge · 2026-08-12 03:41</span>
+      </div>
+      <h3><a href="https://www.theverge.com/ai-artificial-intelligence/978113/chatgpt-gemini-1-billion-users" target="_blank" rel="noreferrer">ChatGPT 与 Gemini 均跨过 10 亿用户门槛 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">The Verge 汇总称，OpenAI 和 Google 的聊天机器人都已跨过 10 亿用户门槛。OpenAI 在 8 月 6 日博文中披露 ChatGPT 月活超过 10 亿，并称 7 月周活已达 10 亿；</p>
+        <p class="item-insight"><span>解读</span>Google CEO 皮查伊宣布 Gemini 月活达 10 亿，成为 Google 史上增长最快的产品，Gemini 在 2 月月活为 7.5 亿。聊天式 AI 已进入超大规模分发阶段，后续竞争会更多发生在默认入口、账号体系、办公套件和移动端触达上。</p>
+      </div>
+      <div class="item-meta">The Verge · 2026-08-12 03:41</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Firefox</span><span>广告拦截</span><span>移动浏览器</span></div>
+        <span class="item-source">Mozilla Support / Hacker News · 2026-08-16 20:58</span>
+      </div>
+      <h3><a href="https://support.mozilla.org/en-US/kb/block-ads-firefox-ios" target="_blank" rel="noreferrer">Firefox for iOS 增加原生广告拦截能力 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 高分帖子指向 Mozilla 支持文档，Firefox for iOS 现在提供原生广告拦截能力。该功能出现在 iOS 浏览器环境内，会影响移动网页的广告展示、追踪脚本和页面加载体验。</p>
+        <p class="item-insight"><span>解读</span>浏览器默认隐私能力一旦前移，广告平台、内容站和统计脚本对移动端流量的可见性会随之变化。</p>
+      </div>
+      <div class="item-meta">Mozilla Support / Hacker News · 2026-08-16 20:58</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Cloudflare</span><span>基础设施</span><span>隐私</span></div>
+        <span class="item-source">Hacker News · 2026-08-17 01:49</span>
+      </div>
+      <h3><a href="https://news.ycombinator.com/item?id=49322107" target="_blank" rel="noreferrer">HN 用户称 Cloudflare 切换 nameserver 后静默注入 analytics <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 上一条 Tell HN 帖子称，用户切换 Cloudflare nameserver 后，Cloudflare 会静默注入 analytics，帖子获得 270 分和 64 条讨论。该信息来自社区反馈，仍需以 Cloudflare 官方说明或可复现实验核验，但它指向 CDN、DNS 和统计脚本之间的默认权限问题。</p>
+        <p class="item-insight"><span>解读</span>基础设施平台如果在默认配置中改变页面脚本，会影响站点的隐私披露、性能排查和第三方审计。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-17 01:49</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Meta</span><span>OpenRouter</span><span>开放权重</span></div>
+        <span class="item-source">OpenRouter · 2026-08-12 20:00</span>
+      </div>
+      <h3><a href="https://x.com/OpenRouter/status/2087509478480765218" target="_blank" rel="noreferrer">Meta 开放权重模型 Muse Glimmer 登陆 OpenRouter <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenRouter 宣布 Meta AI 超级智能实验室的首个开放权重模型 Muse Glimmer 已在 OpenRouter 上线。这是一款 30B 密集文本加图像模型，采用 Apache 2.0 许可证，OpenRouter 给出的指标包括 MCP Atlas 75.5、SWE-Bench Pro 51.2。</p>
+        <p class="item-insight"><span>解读</span>开放权重模型通过统一路由平台分发后，模型获取、计费和应用接入会更多依赖聚合层，而不是单个模型发布页。</p>
+      </div>
+      <div class="item-meta">OpenRouter · 2026-08-12 20:00</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-product-growth">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>产品与增长观察</h2>
+        <span class="section-count">4 条</span>
+      </div>
+      <span>本板块关注 AI 内容供给、工作流产品形态和模型价格对产品增长的影响。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>内容平台</span><span>AI 生成内容</span><span>亚马逊</span></div>
+        <span class="item-source">The Decoder · 2026-08-15 19:00</span>
+      </div>
+      <h3><a href="https://the-decoder.com/ai-generated-books-are-flooding-amazon-and-tanking-sales-for-human-authors" target="_blank" rel="noreferrer">AI 生成书籍大量进入亚马逊，自出版单书收入被稀释 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">The Decoder 报道的一项分析覆盖 14419 本自出版电子书，显示 AI 生成书籍正在以数量而非质量挤占人类作者市场，即便未检测到 AI 文本的书籍，单书收入也在下滑。2023 年一季度至 2026 年一季度，书目总量增长 38.3 倍，季度收入只增长 8.9 倍；</p>
+        <p class="item-insight"><span>解读</span>八个类型中有七个类型的无 AI 文本书籍单书收入下降。内容平台的供给成本下降后，排序、标注、版权和质量识别会成为市场分配收入的关键环节。</p>
+      </div>
+      <div class="item-meta">The Decoder · 2026-08-15 19:00</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Cursor</span><span>云开发</span><span>Agent</span></div>
+        <span class="item-source">Cursor Blog · 2026-08-13 20:00</span>
+      </div>
+      <h3><a href="https://cursor.com/blog/builds" target="_blank" rel="noreferrer">Cursor builds 让云智能体从预热环境启动，最高提速 3 倍 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Cursor 推出 builds 功能，在后台持续准备就绪的开发环境副本，让云智能体启动时无需从零搭建，响应速度最高提升 3 倍。Cursor 称内部环境启动快 10 倍，首个 token 生成快 3 倍；</p>
+        <p class="item-insight"><span>解读</span>智能体始终从最近一次成功 build 启动，依赖更新或安装脚本出错时不会影响运行，8 月 17 日起所有环境默认启用且无需额外费用。云端 Agent 的等待时间正在被产品化处理，环境构建、依赖安装和模型响应被合并为同一段用户体验。</p>
+      </div>
+      <div class="item-meta">Cursor Blog · 2026-08-13 20:00</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>模型价格</span><span>OpenAI</span><span>Anthropic</span></div>
+        <span class="item-source">Ars Technica · 2026-08-14 22:27</span>
+      </div>
+      <h3><a href="https://arstechnica.com/ai/2026/08/openai-and-anthropic-in-price-war-as-chinese-ai-rivals-gain-ground" target="_blank" rel="noreferrer">OpenAI 与 Anthropic 价格战受到中国 AI 模型竞争影响 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Ars Technica 报道 OpenAI 和 Anthropic 进入价格竞争，并把背景指向中国 AI 竞争者的增长。虽然该条素材未提供更完整摘要，但与 Qwen、DeepSeek、GLM 等开放模型的密集发布相互印证：模型供应方正在同时比较能力、开源许可、上下文长度和 token 单价。</p>
+        <p class="item-insight"><span>解读</span>价格下降会改变应用层的默认模型选择，也会让长上下文、多轮搜索和 Agent 编排更容易进入常规产品预算。</p>
+      </div>
+      <div class="item-meta">Ars Technica · 2026-08-14 22:27</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>写作工具</span><span>长文生成</span><span>LLM</span></div>
+        <span class="item-source">Nathan Lambert：Interconnects · 2026-08-12 21:01</span>
+      </div>
+      <h3><a href="https://www.interconnects.ai/p/i-wrote-an-ai-textbook-how-long-until" target="_blank" rel="noreferrer">长文非虚构写作仍是 LLM 的薄弱环节 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Nathan Lambert 在完成一本 RLHF 教科书后反思，LLM 在长文非虚构写作上的进展仍不稳定，GPT 4.5 和 Kimi K2 等写作强模型已经显老旧，而编码、数学等任务推进更快。作者认为模型能改错字、做编辑，但组织整章内容时仍混乱且容易出错，这会限制模型自主解决开放科学问题。</p>
+        <p class="item-insight"><span>解读</span>生成式写作产品如果只优化句子级润色，仍难覆盖章节结构、论证连贯和事实校验等长程任务。</p>
+      </div>
+      <div class="item-meta">Nathan Lambert：Interconnects · 2026-08-12 21:01</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-engineering">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>开发者与工程实践</h2>
+        <span class="section-count">5 条</span>
+      </div>
+      <span>工程板块保留 Agent 工程化、开源生态、数据库与开发协议工具的高相关信号。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>开源治理</span><span>Agent</span><span>GitHub</span></div>
+        <span class="item-source">GitHub Blog · 2026-08-13 02:00</span>
+      </div>
+      <h3><a href="https://github.blog/open-source/maintainers/your-contributors-are-ai-first-now-is-your-project" target="_blank" rel="noreferrer">GitHub 总结 AutoGPT 用 AGENTS.md 和门控机制管理 AI PR <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Blog 介绍 AutoGPT 维护者的做法：AI 智能体不会主动阅读文档，因此他们把指令放在 AGENTS.md 和技能文件中，并置于代码目录旁。项目通过强制 PR 模板、测试计划、CI 覆盖率门槛和 CLA 签名等门控机制，把智能体提交从“不可用”变成“可用但不符合路线图”；</p>
+        <p class="item-insight"><span>解读</span>其中 CLA 签名因为需要浏览器和 OAuth 流程，被用于区分人类与智能体。开源项目面对 AI 贡献者时，规范文件、CI、权限和身份流程会成为代码质量控制的一部分。</p>
+      </div>
+      <div class="item-meta">GitHub Blog · 2026-08-13 02:00</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Claude</span><span>代码维护</span><span>PR</span></div>
+        <span class="item-source">X：Boris Cherny · 2026-08-14 05:27</span>
+      </div>
+      <h3><a href="https://x.com/bcherny/status/2088014489438621990" target="_blank" rel="noreferrer">Claude 接管应用日常维护，数周内开出 388 个 PR <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Boris Cherny 尝试让 Claude 接管应用的日常维护，通过 Slack 频道运行崩溃模糊测试、重复代码统一、死代码移除等任务。数周内系统自动开出 388 个 PR，其中 180 个经 Claude Code Review 和人工审核后合并；</p>
+        <p class="item-insight"><span>解读</span>他还提到 Claude 通常一次能改对，出错时可通过调整例程在次日改善。这个实践把 Agent 放在持续维护而非一次性生成代码的位置，PR 队列、评审链路和例程更新成为长期运行机制。</p>
+      </div>
+      <div class="item-meta">X：Boris Cherny · 2026-08-14 05:27</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>开源模型</span><span>Hugging Face</span><span>生态数据</span></div>
+        <span class="item-source">Hugging Face Blog · 2026-08-14</span>
+      </div>
+      <h3><a href="https://huggingface.co/blog/state-of-open-models-summer-2026" target="_blank" rel="noreferrer">Hugging Face 夏季开源模型观察：1.5% 仓库占 99.2% 下载量 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hugging Face 发布 2026 年夏季开源模型生态观察，数据显示 2026 年 1 至 8 月公开模型仓库从 243 万增至 296 万，但 85.6% 的模型下载量不足 200 次，1.5% 的仓库占据 99.2% 下载量。</p>
+        <p class="item-insight"><span>解读</span>报告还提到，中国实验室月度最大开源模型参数规模在 754B 至 2.78 万亿之间，美国实验室七个月中五个月低于 130B，AMD 与 NVIDIA 各发布超过 200 个新模型仓库。开源模型数量继续增长，但分发和实际使用高度集中，模型发布量本身并不等同于生态影响力。</p>
+      </div>
+      <div class="item-meta">Hugging Face Blog · 2026-08-14</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Mojo</span><span>编程语言</span><span>AI 计算</span></div>
+        <span class="item-source">Modular Blog · 2026-08-12 03:52</span>
+      </div>
+      <h3><a href="https://www.modular.com/blog/modular-26-5-mojo-1-0-is-here" target="_blank" rel="noreferrer">Mojo 1.0 正式发布，标准库开源后合入 1100 多个 PR <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Mojo 语言正式发布 1.0 版本，提供稳定、可用于生产环境的语言基础，并从 2023 年首次发布发展为通用语言。素材显示，自开源标准库以来，近 200 名贡献者合入超过 1100 个拉取请求，改动超过 20 万行代码。</p>
+        <p class="item-insight"><span>解读</span>Mojo 的 1.0 节点让 AI 计算相关语言从试验阶段进入稳定承诺阶段，库生态和生产兼容性会比语法新特性更影响采用节奏。</p>
+      </div>
+      <div class="item-meta">Modular Blog · 2026-08-12 03:52</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>GitHub Trending</span><span>开源项目</span><span>Agent</span></div>
+        <span class="item-source">GitHub Trending · 2026-08-17 09:06</span>
+      </div>
+      <h3><a href="https://github.com/trending" target="_blank" rel="noreferrer">GitHub Trending：cordis、unsloth、ToolJet AI 和 needle 进入热门榜 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">今日 GitHub Trending 中，cordiverse/cordis 获得 720 stars today，描述为“时空可组合性的元框架”；unslothai/unsloth 获得 572 stars today，用于本地运行和训练 LLM 与扩散模型，覆盖 Qwen3.8、Kimi K3、MiniMax-H3、Gemma 4、DeepSeek-V4 等；</p>
+        <p class="item-insight"><span>解读</span>ToolJet/ToolJet 获得 452 stars today，定位为企业内部工具、仪表盘、业务应用、工作流和 AI agents 的开源基础；cactus-compute/needle 获得 443 stars today，是面向手机、可穿戴、智能家居和机器人的 14MB 基础模型。开源热度集中在 Agent 框架、本地模型训练、企业应用生成和端侧小模型几个方向。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-08-17 09:06</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-funding">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>投融资与行业机会</h2>
+        <span class="section-count">2 条</span>
+      </div>
+      <span>本期强信号主要来自收购与基础设施融资传闻，均带有较高产业链影响。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>OpenRouter</span><span>Stripe</span><span>并购</span></div>
+        <span class="item-source">Bloomberg / Hacker News · 2026-08-17 04:31</span>
+      </div>
+      <h3><a href="https://www.bloomberg.com/news/articles/2026-08-16/stripe-nears-deal-to-buy-ai-firm-openrouter-for-over-7-billion" target="_blank" rel="noreferrer">Stripe 据称接近以超过 70 亿美元收购 OpenRouter <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 高分帖引用 Bloomberg 报道称，Stripe 接近以超过 70 亿美元收购 AI 公司 OpenRouter，帖子获得 178 分和 129 条讨论。该信息仍属于媒体报道口径，需等待交易双方确认；</p>
+        <p class="item-insight"><span>解读</span>但 OpenRouter 近期同时发布网页搜索基准并分发多家模型，已经处在模型路由、计费和应用接入的交汇处。若支付基础设施公司收购模型聚合层，AI API 的计费、用量管理和分发渠道会更紧密地结合。</p>
+      </div>
+      <div class="item-meta">Bloomberg / Hacker News · 2026-08-17 04:31</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Nvidia</span><span>OpenAI</span><span>基础设施融资</span></div>
+        <span class="item-source">Reuters / Hacker News · 2026-08-17 05:07</span>
+      </div>
+      <h3><a href="https://www.reuters.com/business/nvidia-scales-back-250-billion-openai-data-center-guarantee-wsj-reports-2026-08-14/" target="_blank" rel="noreferrer">Nvidia 据称大幅减少可能担保的 OpenAI 基础设施融资额度 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 上一条 Reuters 链接称，Nvidia 大幅减少其可能担保的 OpenAI 数据中心基础设施融资额度，帖子获得 92 分和 23 条讨论。该素材来自媒体转述 WSJ 报道，仍需以公司文件或官方口径确认。</p>
+        <p class="item-insight"><span>解读</span>AI 基础设施融资额度变化会影响数据中心建设节奏、GPU 供应安排和模型训练成本预期，这类财务安排已经成为模型竞争的底层变量。</p>
+      </div>
+      <div class="item-meta">Reuters / Hacker News · 2026-08-17 05:07</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-policy">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>政策监管与合规</h2>
+        <span class="section-count">1 条</span>
+      </div>
+      <span>本期合规信号集中在 AI 生成内容标识、身份冒用和医学研究服务透明度。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>AI 披露</span><span>身份冒用</span><span>合规</span></div>
+        <span class="item-source">404 Media · 2026-08-12 13:41</span>
+      </div>
+      <h3><a href="https://www.404media.co/company-offering-100-human-written-never-ai-peer-review-is-entirely-ai" target="_blank" rel="noreferrer">Research Gold 宣称人工撰写，调查称服务实际由 AI 驱动 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">404 Media 报道称，面向医学研究者的网站 Research Gold 宣称服务“100% 由人类撰写、绝不使用 AI”，并列出多名博士审稿人，但调查发现这些审稿人为 AI 生成且并不存在，部分真实方法学家的身份和照片未经许可被挪用。报道还称，致电该公司时，自称“Sarah”的 AI 助手坚称自己是真人，邮件和聊天回复也均由 AI 生成。</p>
+        <p class="item-insight"><span>解读</span>该事件涉及 AI 使用披露、身份冒用和专业服务可信度，医学与学术相关产品的合规边界会比普通内容生成更严格。</p>
+      </div>
+      <div class="item-meta">404 Media · 2026-08-12 13:41</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-social-buzz">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>社交热度观察</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>本板块只保留热度明显但工作相关性弱于核心板块的信息。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Claude</span><span>系统提示词</span><span>社区讨论</span></div>
+        <span class="item-source">Claude Docs / Hacker News · 2026-08-16 20:48</span>
+      </div>
+      <h3><a href="https://platform.claude.com/docs/en/release-notes/system-prompts" target="_blank" rel="noreferrer">Claude 系统提示词公开文档在 HN 获得 528 分 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“Claude: System Prompts”指向 Claude 平台关于系统提示词的 release notes，获得 528 分和 222 条讨论。该信息的工作相关性主要来自社区对模型默认行为、提示词透明度和平台边界的关注，但素材本身更偏讨论入口，未提供足够新的产品事实。</p>
+        <p class="item-insight"><span>解读</span>它作为热度信号保留，说明系统提示词仍是开发者理解模型行为的重要观察点。</p>
+      </div>
+      <div class="item-meta">Claude Docs / Hacker News · 2026-08-16 20:48</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>模型体验</span><span>社区讨论</span><span>AI</span></div>
+        <span class="item-source">Hacker News · 2026-08-17 03:04</span>
+      </div>
+      <h3><a href="https://w4g1.dev/blog/models-are-getting-dumber-on-purpose" target="_blank" rel="noreferrer">“Models Are Getting Dumber on Purpose” 引发模型体验讨论 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“Models Are Getting Dumber on Purpose”获得 257 分和 146 条讨论，文章标题指向模型体验下降是否来自刻意产品取舍。该话题属于社区情绪信号，和近期模型价格下降、推理强度分档、轻量模型上线等事实相互呼应。</p>
+        <p class="item-insight"><span>解读</span>它没有足够一手数据支撑具体判断，因此不进入核心板块。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-08-17 03:04</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>API 额度</span><span>模型分发</span><span>社区讨论</span></div>
+        <span class="item-source">Vectoral / Hacker News · 2026-08-16 22:44</span>
+      </div>
+      <h3><a href="https://vectoral.com/blog/who-are-the-token-brokers" target="_blank" rel="noreferrer">AI credit resale economy 在 HN 获得 222 分 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HN 帖子“The AI Credit Resale Economy”获得 222 分和 88 条讨论，文章讨论 AI credit 转售和 token broker 现象。该话题与模型 API 价格、账户额度、二级分发和滥用治理有关，但素材仍以社区文章为主，缺少可核验的市场规模和平台规则变化。</p>
+        <p class="item-insight"><span>解读</span>它作为背景信号保留，反映模型访问权正在形成灰色转售与套利讨论。</p>
+      </div>
+      <div class="item-meta">Vectoral / Hacker News · 2026-08-16 22:44</div>
+    </div>
+  </article></div>
+  </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">© 2026 Whistle. 低噪音互联网与 AI 日报。</footer>
+  <script>
+    (() => {
+      const themeKey = "whistle-theme";
+      const themeButton = document.querySelector("[data-theme-toggle]");
+      const setTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        try { localStorage.setItem(themeKey, theme); } catch {}
+        if (themeButton) {
+          const label = theme === "dark" ? "切换到亮色模式" : "切换到暗色模式";
+          themeButton.setAttribute("aria-label", label);
+          themeButton.setAttribute("title", label);
+        }
+      };
+      let currentTheme = document.documentElement.dataset.theme || "dark";
+      setTheme(currentTheme);
+      themeButton?.addEventListener("click", () => {
+        currentTheme = currentTheme === "dark" ? "light" : "dark";
+        setTheme(currentTheme);
+      });
+
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = links
+        .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))
+        .filter((item) => item.section);
+      if (!sections.length) return;
+
+      const updateActiveToc = () => {
+        const threshold = Math.max(120, window.innerHeight * 0.28);
+        let active = null;
+        for (const item of sections) {
+          const rect = item.section.getBoundingClientRect();
+          if (rect.top <= threshold && rect.bottom > 80) active = item;
+        }
+        links.forEach((link) => link.removeAttribute("aria-current"));
+        if (active) active.link.setAttribute("aria-current", "true");
+      };
+
+      updateActiveToc();
+      window.addEventListener("scroll", updateActiveToc, { passive: true });
+      window.addEventListener("resize", updateActiveToc);
+    })();
+  </script>
+</body>
+</html>
