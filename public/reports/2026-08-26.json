@@ -1,0 +1,504 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-08-26",
+  "title": "Whistle 互联网日报｜2026-08-26",
+  "summary": "先看今天几件值得留意的变化：Claude 把聊天与 Cowork 的记忆打通，OpenAI 给 ChatGPT Work 和 Codex 增加 Admin 插件，企业级 AI 产品开始围绕权限、审批、上下文和审计补齐管理层；Apple 发布 M6、M5 Ultra 与新款 Mac Studio、Mac mini，Google 开源 WeatherNext 气旋模型，OpenAI 自研推理芯片 Jalapeno 首秀，算力竞争同时发生在端侧设备、专用芯片和气象等高价值场景；OpenWorker、LangChain、OpenRouter、AgentHands 和 STARFlow2 等工具与研究，把 Agent 安全、数据摄取、模型路由、空间交互和多模态生成继续做细。监管与安全侧，OpenAI 封禁俄罗斯影响力行动账号，Anthropic 投入 500 万美元研究 AI 对用户幸福感的影响，平台治理已经从内容审核扩展到模型使用记录、用户记忆、未成年人和心理健康等边界。",
+  "theme": "企业级 AI 管理、端侧算力与 Agent 安全同步推进",
+  "topline": [
+    "Claude 统一聊天与 Cowork 记忆，并允许用户逐条查看、编辑和删除记忆。",
+    "OpenAI 推出 ChatGPT Work 和 Codex 的 Admin 插件，把权限、用量和审批放进对话式管理入口。",
+    "Apple 发布 M6、M5 Ultra 与新款 Mac Studio、Mac mini，端侧运行大型模型的硬件规格继续提高。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "头条保留今天最能影响企业 AI 管理、个人 AI 记忆、端侧算力、推理供给和气象基础设施的变化。",
+      "items": [
+        {
+          "title": "Claude 记忆功能打通聊天与 Cowork，用户可逐条管理",
+          "summary": "Anthropic 宣布 Claude 即日起将聊天与 Claude Cowork 的记忆统一，用户在任一场景对话时都能调用此前积累的上下文，减少重复解释。记忆会在聊天过程中实时更新，用户可在 Memory 设置中按主题查看、编辑或删除每条记忆；健康、信仰等敏感话题默认不存储但可手动开启，敏感识别号和犯罪记录等始终不会保存。AI 助手的长期上下文从单次会话扩展到跨产品共享后，记忆的可见性、可删除性和敏感信息边界会成为产品信任的一部分。",
+          "sourceName": "Claude Blog",
+          "sourceUrl": "https://claude.com/blog/claudes-memory-works-everywhere-and-you-decide-whats-in-it",
+          "publishedAt": "2026-08-25T18:02:04.743Z",
+          "tags": [
+            "Claude",
+            "AI 记忆",
+            "隐私"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 推出 ChatGPT Work 和 Codex 的 Admin 插件",
+          "summary": "OpenAI 为 ChatGPT Work 和 Codex 推出 Admin 插件，管理员可在单一对话中查看工作区活动、管理成员与权限、调整用量限制，并审批支出请求。该插件遵循用户现有角色和权限，不扩大访问范围，还能把待处理的用量请求路由到 Slack 或 Microsoft Teams 审批；OpenAI IT 团队部署的相关流程已处理约 45% 的工单量。企业 AI 产品正在把管理后台的一部分操作转成对话式入口，权限继承、审批留痕和用量控制会直接进入日常管理流程。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/introducing-admin-plugin",
+          "publishedAt": "2026-08-25T00:00:00.000Z",
+          "tags": [
+            "ChatGPT Work",
+            "Codex",
+            "企业管理"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Apple 发布 M6、M5 Ultra 与新款 Mac Studio、Mac mini",
+          "summary": "Apple 发布首款 2nm 芯片 M6 与新款 M5 Ultra，并同步推出搭载 M5 Max、M5 Ultra 的 Mac Studio 以及搭载 M6、M5 Pro 的 Mac mini。M6 配备 12 核 CPU、12 核 GPU 和双 16 核神经引擎，统一内存带宽最高 170GB/s；M5 Ultra 采用四芯片封装，最高 36 核 CPU、80 核 GPU，带宽达 1.2TB/s。Mac Studio 的 M5 Ultra 版本支持最高 512GB 统一内存，可在设备端运行大型 LLM，四台集群最高可带来 3 倍分布式 AI 推理速度提升，这把本地 AI 工作站的边界从轻量推理推到更大模型和小规模集群场景。",
+          "sourceName": "Apple Newsroom",
+          "sourceUrl": "https://www.apple.com/newsroom/2026/08/apple-introduces-m6-and-m5-ultra-for-a-big-leap-in-performance-and-ai-compute",
+          "publishedAt": "2026-08-25T12:58:13.056Z",
+          "tags": [
+            "Apple",
+            "端侧 AI",
+            "芯片"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 自研推理芯片 Jalapeno 首次公布结果",
+          "summary": "OpenAI 发布自研推理芯片 Jalapeno，称其面向现代模型提供更快、更节能的 AI 推理，具备更高吞吐量和更低延迟。首批结果显示，该芯片在推理速度与效率上达到行业领先水平。模型公司自研推理芯片会把服务成本、延迟控制和硬件供给纳入同一条产品链路，推理基础设施不再只依赖外部 GPU 供应。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/jalapeno-first-results",
+          "publishedAt": "2026-08-25T00:00:00.000Z",
+          "tags": [
+            "OpenAI",
+            "AI 芯片",
+            "推理"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google AI 开源 WeatherNext 气旋预测模型",
+          "summary": "Google AI 发布 WeatherNext 气旋预测模型，可同时预测风暴路径、强度和规模，并比现有系统多提供一整天预警时间。该模型在 2025 飓风季实战测试中提前五天预测飓风 Melissa 在牙买加的五级登陆，美国国家飓风中心首次实时使用 AI 模型；模型单场风暴可生成多达 1000 次模拟，代码与权重已经开源。AI 模型进入气象预警后，影响对象从通用生产力工具扩展到公共安全和基础设施调度，开源权重也方便研究机构复核和本地化改进。",
+          "sourceName": "Google AI",
+          "sourceUrl": "https://x.com/GoogleAI/status/2092275116503707733",
+          "publishedAt": "2026-08-25T15:37:15.000Z",
+          "tags": [
+            "Google",
+            "气象模型",
+            "开源"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "本板块保留模型、Agent、开发工具、视频生成、模型路由、多模态研究和交互形态的主要更新。",
+      "items": [
+        {
+          "title": "OpenWorker 新版内置三类网络安全智能体",
+          "summary": "Andrew Ng 旗下开源智能体 OpenWorker 发布新版，重点强化安全工作流。新版 harness 完全开源，安全团队可审计是否存在后门，并内置代码漏洞扫描、依赖供应链注入检测和云安全配置检查三类网络安全智能体，同时支持本地运行开源权重模型以保护敏感代码。网络安全 Agent 从演示型工具进入可审计、可本地部署的工作形态后，代码、依赖和云配置这些高风险资产可以在同一框架下被自动检查。",
+          "sourceName": "Andrew Ng",
+          "sourceUrl": "https://x.com/AndrewYNg/status/2092315079576555806",
+          "publishedAt": "2026-08-25T18:16:02.000Z",
+          "tags": [
+            "Agent",
+            "网络安全",
+            "开源工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "LangChain 与 Airbyte 集成，把检索应用的数据摄取生产化",
+          "summary": "LangChain 与 Airbyte 推出集成方案，目标是把检索应用的数据摄取扩展到生产环境。该方案通过调度、文本拆分和 50 多种嵌入模型实现数据摄取自动化，用于构建可规模化的数据管道。RAG 和企业搜索项目的难点经常不在单次问答，而在持续同步、切分、嵌入和重建索引，Airbyte 这类数据集成入口会把传统 ELT 流程接入 AI 应用栈。",
+          "sourceName": "LangChain Blog",
+          "sourceUrl": "https://www.langchain.com/blog/making-data-ingestion-production-ready-a-langchain-powered-airbyte-destination",
+          "publishedAt": "2026-08-25T21:12:53.000Z",
+          "tags": [
+            "LangChain",
+            "Airbyte",
+            "RAG"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenRouter 提出编辑器内实时模型选型框架",
+          "summary": "OpenRouter 发布模型选型教程，提出先定义任务，再从实时用量和第三方基准中筛选候选，随后比较各提供商的定价与延迟，最后用自有提示词测试。文章强调判断标准应是每完成任务的成本，而不是每 token 成本；其 MCP 服务器可直接在 Claude Code、Cursor 等编辑器中查询实时排名、价格和基准，并用 openrouter/auto-beta 按请求路由。模型选择正在从静态榜单变成开发环境里的实时决策，价格、延迟和任务完成率会同时影响路由结果。",
+          "sourceName": "OpenRouter",
+          "sourceUrl": "https://openrouter.ai/blog/tutorials/choose-best-ai-model",
+          "publishedAt": "2026-08-25T00:00:00.000Z",
+          "tags": [
+            "OpenRouter",
+            "模型路由",
+            "MCP"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "AgentHands 为 XR 对话智能体生成同步手势",
+          "summary": "Google Research 在 CHI 2026 发布研究原型 AgentHands，用 LLM 为 XR 空间对话智能体生成与语音同步的手部手势，并提供空间锚定的物理指引。系统通过眼动追踪和场景重建注册物体，由 LLM 生成内联 GestureEvents，再按词级时间戳协调 TTS 与动画引擎，示例覆盖兰花养护、3D 打印机操作讲解和陪伴场景。AI 输出形态在 XR 中不只是文字或语音，视觉化、结构化、可交互的动作提示会把模型输出推进到空间界面。",
+          "sourceName": "Google Research",
+          "sourceUrl": "https://research.google/blog/agenthands-generating-interactive-hand-gestures-for-spatially-grounded-agent-conversations-in-xr",
+          "publishedAt": "2026-08-25T00:00:00.000Z",
+          "tags": [
+            "XR",
+            "Agent",
+            "交互界面"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "STARFlow2 用归一化流桥接语言模型与多模态生成",
+          "summary": "Apple Machine Learning Research 发布 STARFlow2，提出将自回归归一化流与语言模型统一，用于多模态生成。该方法观察到自回归归一化流与 LLM 共享因果掩码、KV-cache 机制和从左到右结构，因此尝试弥合文本与图像生成的架构差异，并避免离散 token 化带来的视觉保真度损失。多模态生成的研究方向正在围绕统一架构、连续视觉表示和语言模型推理能力展开，输出可能从 Markdown、HTML 继续走向更高保真的交互式视觉结果。",
+          "sourceName": "Apple Machine Learning Research",
+          "sourceUrl": "https://machinelearning.apple.com/research/starflow2-multimodal-generation",
+          "publishedAt": "2026-08-25T00:00:00.000Z",
+          "tags": [
+            "多模态生成",
+            "Apple",
+            "研究"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Agnes AI 开源 397B 多模态推理模型 Agnes 2.5 Pro Alpha",
+          "summary": "Agnes AI 发布 Agnes 2.5 Pro Alpha 模型权重，该模型是 Qwen3.5-397B 的后训练衍生版本，参数量为 397B，采用 Apache 2.0 许可证。模型支持 1M token 上下文窗口、65536 输出 token、图像理解、扩展推理与工具调用，官方称其在八项 Artificial Analysis 评测中有六项优于 Qwen3.5-397B。长上下文、多模态和工具调用同时开放权重后，开源模型可覆盖文档处理、视觉推理和 Agent 任务，而不只承担聊天接口。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://huggingface.co/Agnes-AI/Agnes-2.5-Pro-Alpha",
+          "publishedAt": "2026-08-25T00:50:12.000Z",
+          "tags": [
+            "开源模型",
+            "多模态",
+            "长上下文"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "阿里 Wan3.0 正式上线，视频 API 按秒计费并限时优惠",
+          "summary": "阿里视频生成模型 Wan3.0 结束公测并正式上线，在生成时长、全能参考和真实世界还原等维度升级。该模型单次视频生成时长达 30 秒，首次支持输入 doc、xls、ppt、pdf、md 等格式文档，并在指令遵循与跨镜头一致性上改进；用户可在阿里云百炼、万相官网、千问等 8 个平台体验，API 按分辨率定价为 0.3 至 1.2 元/秒，部分平台限时 7 折。视频生成流程正在从单段提示词扩展为文档输入、参考素材、镜头一致性和商业 API 计费的组合。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://mp.weixin.qq.com/s/peeeU6cBz4AaROvFe1zqQQ",
+          "publishedAt": "2026-08-25T00:50:12.000Z",
+          "tags": [
+            "视频生成",
+            "阿里",
+            "API"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台动态集中在企业管理插件、端侧硬件、搜索购物场景、模型使用治理和国内 AI 办公整合。",
+      "items": [
+        {
+          "title": "Apple 新款 Mac Studio 支持最高 512GB 统一内存",
+          "summary": "Apple 新款 Mac Studio 搭载 M5 Max 与 M5 Ultra，AI 性能最高提升 4.3 倍，图形性能提升 1.8 倍，存储速度提升 2 倍。M5 Ultra 版本支持最高 512GB 统一内存与 1.2TB/s 内存带宽，可完全在设备端运行大型 LLM；四台集群可带来最高 3 倍分布式 AI 推理速度提升，新品已开放预购并计划 9 月 22 日开售。Apple 把大内存、本地推理和小型集群能力放进桌面工作站后，本地 AI 开发、内容生成和隐私敏感任务会获得新的硬件承载方式。",
+          "sourceName": "Apple Newsroom",
+          "sourceUrl": "https://www.apple.com/newsroom/2026/08/apple-introduces-new-mac-studio-with-m5-max-and-m5-ultra",
+          "publishedAt": "2026-08-25T13:00:23.969Z",
+          "tags": [
+            "Mac Studio",
+            "端侧 AI",
+            "Apple"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google Search 用 AI Mode 和 Lens 扩展家居装饰购物场景",
+          "summary": "Google Search 推出五种家居装饰功能：AI Mode 可上传房间照片并生成家具摆放效果图，Lens 支持识别复古单品并查找相似商品，Circle to Search 可在应用内圈选装饰物，Search Live 提供 DIY 安装步骤，产品列表可对比价格并追踪降价提醒。Google 称近月 home decor inspo 搜索量上涨 300%。搜索入口正在把视觉识别、生成式预览、价格比较和安装指导接到同一消费决策链路中，购物搜索从关键词匹配扩展为图像、空间和任务过程的组合。",
+          "sourceName": "Google Blog",
+          "sourceUrl": "https://blog.google/products-and-platforms/products/search/home-decor-tips",
+          "publishedAt": "2026-08-25T00:00:00.000Z",
+          "tags": [
+            "Google Search",
+            "购物搜索",
+            "AI Mode"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "OpenAI 封禁俄罗斯虚假影响力行动账号",
+          "summary": "OpenAI 封禁了一批源自俄罗斯的账号，这些账号利用 AI 推广一个虚构的以色列智库及所谓主权指数，内容赞扬俄罗斯并批评西方。该事件属于平台治理而非产品发布，但它显示生成式 AI 已被用于构造机构身份、指标话术和跨语境宣传材料。模型平台对影响力行动的识别与处置，会影响企业 API 风控、账号注册、内容溯源和跨平台传播监测。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/disrupting-malicious-uses-of-ai-influence-campaign-russia",
+          "publishedAt": "2026-08-25T00:00:00.000Z",
+          "tags": [
+            "OpenAI",
+            "平台治理",
+            "影响力行动"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "字节将 TRAE 与扣子并入豆包体系",
+          "summary": "据 juya 引用媒体报道，字节跳动已完成办公 AI 产品团队整合，TRAE 与扣子团队整体并入豆包体系并向豆包产品负责人汇报，其中 TRAE Work 与扣子将与豆包工作场景能力整合，TRAE IDE 及 CLI 作为编程产品线。报道称豆包最快本周内推出统一 AI 办公产品豆包工作并与飞书深度整合，字节方面回应称调整旨在协同资源且现有用户权益不受影响。聊天入口、自动化编排、AI 编程和协同办公被放入同一产品体系后，平台边界会从单一助手扩展到工作软件组合。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://mp.weixin.qq.com/s/ZgA2HZIgkNsE5HQkC40Sgw",
+          "publishedAt": "2026-08-25T00:50:12.000Z",
+          "tags": [
+            "字节跳动",
+            "豆包",
+            "AI 办公"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "产品与增长侧关注校园获客、AI 产品体验、个人记忆、工作入口和搜索购物转化的变化。",
+      "items": [
+        {
+          "title": "OpenAI 向美国大学生提供四个月免费 ChatGPT Plus",
+          "summary": "OpenAI 推出面向美国大学生的优惠活动，向符合条件的美国学位授予机构全日制与兼职学生提供四个月免费 ChatGPT Plus，价值 80 美元。学生需在 10 月 31 日前通过 SheerID 验证领取，新用户需要添加付款方式激活，免费期内不扣费。校园获客继续成为 AI 订阅产品的重要增长方式，学生身份验证、免费期和后续付费转化被组合成标准化订阅流程。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://chatgpt.com/students/2026",
+          "publishedAt": "2026-08-25T00:50:12.000Z",
+          "tags": [
+            "ChatGPT Plus",
+            "校园增长",
+            "订阅"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Anthropic 重建 Claude 流式渲染器，长回答更平滑",
+          "summary": "Anthropic 重建了 Claude 网页端与桌面端的流式渲染器，官方称长回答流式输出平滑度提升约 4 倍。新渲染器只处理仍在变化的内容，使慢速笔记本上的长回复卡顿减少 9 倍、最长冻结时间缩短 4.5 倍，并可在 120Hz MacBook 上维持从头到尾 120fps。AI 产品体验正在从回答质量延伸到生成过程本身，长文本、代码块和结构化输出的实时渲染会影响用户是否愿意等待和阅读复杂结果。",
+          "sourceName": "Claude Developers",
+          "sourceUrl": "https://x.com/ClaudeDevs/status/2092006814804214163",
+          "publishedAt": "2026-08-25T00:50:12.000Z",
+          "tags": [
+            "Claude",
+            "交互体验",
+            "前端性能"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "阿里云面向高校学生发放 Qoder CN 专业版权益",
+          "summary": "阿里云云工开物面向高校学生推出开学季福利，学生完成支付宝学生认证后可领取 300 元代金券，用于免费兑换 1 个月 Qoder CN 个人专业版 Pro。该版本支持 Qwen3.8、GLM-5.3、DeepSeek-V4 等多款国内模型，福利仅限阿里云下单页面使用，同一阿里云账号完成认证、领券与下单仅限抵扣 1 次。AI 编程工具的校园增长开始与云账号、支付认证和模型资源绑定，获客链路从产品官网扩展到云服务生态。",
+          "sourceName": "juya-ai-daily",
+          "sourceUrl": "https://university.aliyun.com/",
+          "publishedAt": "2026-08-25T00:50:12.000Z",
+          "tags": [
+            "Qoder",
+            "阿里云",
+            "校园增长"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程实践保留推理系统、数据管道、text-to-SQL、开源工作区和本地 Agent 项目的高信号内容。",
+      "items": [
+        {
+          "title": "LangChain 讨论用 LLM 构建可靠 text-to-SQL 方案",
+          "summary": "LangChain 发布文章讨论如何用大语言模型以自然语言查询 SQL 数据库，重点介绍减少模型幻觉、构建可靠 text-to-SQL 解决方案的技术方法。内容基于 LangChain 框架展开，覆盖从自然语言到 SQL 查询转换的关键实现路径。企业数据问答系统需要同时处理 schema 理解、查询生成、执行反馈和错误修正，可靠性会比单轮生成效果更影响上线边界。",
+          "sourceName": "LangChain Blog",
+          "sourceUrl": "https://www.langchain.com/blog/llms-and-sql",
+          "publishedAt": "2026-08-25T00:00:00.000Z",
+          "tags": [
+            "text-to-SQL",
+            "LangChain",
+            "数据应用"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "GitHub Trending：Apache Maka 以追加日志记录 Agent 工作区",
+          "summary": "GitHub Trending 显示 Apache Maka 今日新增 543 星、总星数 3341，项目描述为 local-first AI agent workspace。它会把模型消息、工具调用、工具结果、权限决策和终止事件记录为 append-only log。Agent 工作区把每次工具操作和权限判断写成不可变日志后，调试、复盘和审计可以围绕完整事件流展开，而不是只查看最终回答。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/apache/maka",
+          "publishedAt": "2026-08-26T01:09:33.156Z",
+          "tags": [
+            "Agent 工作区",
+            "开源",
+            "审计日志"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "GitHub Trending：anthropics/claude-plugins-community 升温",
+          "summary": "GitHub Trending 显示 anthropics/claude-plugins-community 今日新增 351 星、总星数 1756，项目是 Claude Cowork 和 Claude Code 的社区插件市场镜像。Anthropic 同时有 claude-plugins-official 官方插件目录上榜。Claude 插件生态把工具扩展、提交入口和社区分发做成独立目录，Agent 能力开始从单一产品内置功能扩展到可安装插件和市场化分发。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/anthropics/claude-plugins-community",
+          "publishedAt": "2026-08-26T01:09:33.156Z",
+          "tags": [
+            "Claude",
+            "插件",
+            "GitHub Trending"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "GitHub Trending：AI job search 框架把求职流程本地化",
+          "summary": "GitHub Trending 显示 MadsLorentzen/ai-job-search 今日新增 1265 星、总星数 35296，项目描述为运行在本机的 AI 求职申请框架，基于 Claude Code 评估岗位、定制简历、撰写求职信并准备面试。它把个人数据、岗位筛选和文档生成放在本地仓库中处理。AI Agent 正在进入高度私人的垂直流程，本地运行和可 fork 的项目形态降低了把敏感材料交给中心化服务的依赖。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/MadsLorentzen/ai-job-search",
+          "publishedAt": "2026-08-26T01:09:33.156Z",
+          "tags": [
+            "本地 Agent",
+            "求职工具",
+            "Claude Code"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "GitHub Trending：openai/codex 继续保持终端 Agent 热度",
+          "summary": "GitHub Trending 显示 openai/codex 今日新增 1181 星、总星数 118119，项目描述为运行在终端里的轻量级 coding agent。同期榜单中还出现 andrej-karpathy-skills、ponytail、awesome-llm-apps 等围绕 Agent 行为约束、应用样例和技能文件的项目。终端 Agent 的开源热度显示开发者仍在围绕命令行、技能约束、插件扩展和仓库内工作方式形成工具链。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/openai/codex",
+          "publishedAt": "2026-08-26T01:09:33.156Z",
+          "tags": [
+            "Codex",
+            "AI 编程",
+            "开源生态"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "投融资和行业机会集中在 AI 心理影响研究、模型算力集中度和开源安全研究资助。",
+      "items": [
+        {
+          "title": "Anthropic 推出 500 万美元用户幸福感研究资助计划",
+          "summary": "Anthropic 启动 500 万美元资助计划，为研究 AI 如何影响用户幸福感的独立研究提供资金、模型访问权限和技术支持。受资助者将完全独立工作，并以开源项目形式发布成果，申请截止日期为 9 月 21 日，入选者将在 10 月 5 日前收到通知。AI 产品的影响评估正在从安全漏洞和有害输出扩展到心理健康、依赖关系和长期使用后果，独立研究资金会影响未来平台治理和产品默认设置。",
+          "sourceName": "Anthropic",
+          "sourceUrl": "https://www.anthropic.com/news/wellbeing-research-grants",
+          "publishedAt": "2026-08-25T00:00:00.000Z",
+          "tags": [
+            "Anthropic",
+            "研究资助",
+            "AI 影响"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Thinking Machines Lab 为开源模型安全研究提供最高 5 万美元算力额度",
+          "summary": "Thinking Machines Lab 启动 Tinker 资助计划，为开源权重模型的安全研究提供最高 5 万美元算力额度。计划重点关注使模型更安全地开源、理解对齐失败模式以及测量与预测风险三大领域，覆盖防御主导能力训练、危险数据分类器构建、防篡改安全训练和涌现性不对齐等方向。开源模型安全正在获得专门算力供给，研究对象从模型评测延伸到发布条件、危险能力检测和训练过程防护。",
+          "sourceName": "Thinking Machines Lab",
+          "sourceUrl": "https://thinkingmachines.ai/news/safety-research-grants/",
+          "publishedAt": "2026-08-25T00:50:12.000Z",
+          "tags": [
+            "AI 安全",
+            "开源模型",
+            "资助"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "合规侧保留平台影响力行动处置、AI 记忆敏感边界、网络安全 Agent 和生成内容溯源相关信号。",
+      "items": [
+        {
+          "title": "OpenAI 处置俄罗斯虚假影响力行动账号",
+          "summary": "OpenAI 封禁了一批源自俄罗斯的账号，这些账号利用 AI 推广虚构的以色列智库和主权指数，相关内容赞扬俄罗斯并批评西方。该事件显示生成式 AI 可被用于制造机构外观、指标体系和政治叙事材料。平台处置这类行为时，需要结合账号行为、内容来源、虚构实体识别和跨平台传播线索，AI 滥用治理的对象已经超出单条有害内容。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/disrupting-malicious-uses-of-ai-influence-campaign-russia",
+          "publishedAt": "2026-08-25T00:00:00.000Z",
+          "tags": [
+            "影响力行动",
+            "平台治理",
+            "OpenAI"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Claude 记忆明确部分敏感信息永不保存",
+          "summary": "Anthropic 在 Claude 记忆更新中说明，健康、信仰等敏感话题默认不存储但可在设置中开启，敏感识别号、犯罪记录等信息始终不会保存。用户可在 Memory 设置中按主题查看、编辑或删除每条记忆。长期记忆让 AI 助手更依赖用户历史上下文，也会增加数据分类、默认关闭范围、删除权和审计说明的要求。",
+          "sourceName": "Claude Blog",
+          "sourceUrl": "https://claude.com/blog/claudes-memory-works-everywhere-and-you-decide-whats-in-it",
+          "publishedAt": "2026-08-25T18:02:04.743Z",
+          "tags": [
+            "隐私",
+            "AI 记忆",
+            "合规"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "这些内容讨论度高，但多为背景、情绪或社区信号，没有挤占核心排序。",
+      "items": [
+        {
+          "title": "HN 关注 Nitter 收到停止侵权通知与 XCancel 暂停",
+          "summary": "Hacker News 上 Nitter project received cease and desist 获得 602 分，XCancel also down, at least for time being 获得 214 分，The service XCancel is stopped until further notice 也进入高分列表。这类讨论与 X 第三方访问、镜像服务和替代前端有关，工作相关性主要体现在平台访问边界、抓取限制和非官方客户端生态。它属于社区背景信号，显示封闭平台对第三方入口的限制仍会影响信息采集和归档工具。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://github.com/zedeus/nitter/issues/1442",
+          "publishedAt": "2026-08-26T00:00:00.000Z",
+          "tags": [
+            "HN",
+            "X",
+            "第三方客户端"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "GitHub Trending：Prompt as Code 图像提示词库单日新增 1698 星",
+          "summary": "GitHub Trending 显示 freestylefly/awesome-gpt-image-2 今日新增 1698 星、总星数 17840，项目描述为 GPT-Image2 工业级提示词引擎与模板库，包含 530 多个案例逆向工程和 20 多套模板，并提炼出 Skills。该项目热度属于生成图片提示词工程的社区信号。它反映图像生成使用者正在把提示词从一次性文本整理成模板、案例库和可复用技能文件。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/freestylefly/awesome-gpt-image-2",
+          "publishedAt": "2026-08-26T01:09:33.156Z",
+          "tags": [
+            "GitHub Trending",
+            "图像生成",
+            "Prompt"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "HN 高分帖关注 Qwen 3.8-Flash-Next 预发布",
+          "summary": "Hacker News 上 Qwen 3.8-Flash-Next releasing tomorrow 获得 310 分，链接指向 ModelScope 上的 Qwen/Qwen3.8-Flash-Next 页面，标题提到 125B a6B。该信息目前更接近社区预热和模型页面信号，公开材料没有形成完整发布事实。它可作为开源模型社区关注度背景，尚未取代正式公告或基准结果。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://modelscope.cn/models/Qwen/Qwen3.8-Flash-Next",
+          "publishedAt": "2026-08-26T00:00:00.000Z",
+          "tags": [
+            "HN",
+            "Qwen",
+            "模型发布"
+          ],
+          "importance": "medium"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "本期优先采用 juya 与 AI HOT daily 的完整事实骨架，合并 Apple 芯片和设备重复信息，并将 Claude 记忆、OpenAI Admin 插件、OpenAI Jalapeno、WeatherNext、OpenWorker、LangChain、OpenRouter 等条目按工作影响重新分板块。过滤 Dolly Parton、泛科学、生活方式、游戏、弱相关消费内容和分数不高的纯技术讨论；HN 与 GitHub Trending 中高热但话题性较强的条目放入社交热度观察。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (38 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (41 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (16 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-08-26T01:25:00.000Z"
+}
