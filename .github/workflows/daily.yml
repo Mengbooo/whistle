@@ -34,15 +34,114 @@ jobs:
           pnpm exec playwright install --with-deps chromium
           pnpm add -g @openai/codex
 
-      - name: Configure Codex provider
+      - name: Select available MICU model
         env:
           MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
           MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
           MICU_MODEL: ${{ secrets.MICU_MODEL }}
         run: |
+          set -u
+          test -n "$MICU_API_KEY"
+          EFFECTIVE_MICU_BASE_URL="${MICU_BASE_URL:-https://www.micuapi.ai/v1}"
+
+          if ! MODELS_STATUS="$(curl --retry 2 --retry-delay 2 --max-time 30 -sS \
+            -o /tmp/micu-models.json -w "%{http_code}" \
+            -H "Authorization: Bearer $MICU_API_KEY" \
+            "$EFFECTIVE_MICU_BASE_URL/models")"; then
+            MODELS_STATUS="000"
+          fi
+          echo "MICU /models status=$MODELS_STATUS"
+          if [ "$MODELS_STATUS" = "401" ]; then
+            echo "MICU_API_KEY was rejected by the configured provider."
+            exit 1
+          fi
+          if [ "$MODELS_STATUS" -lt 200 ] || [ "$MODELS_STATUS" -ge 300 ]; then
+            echo "Unexpected MICU /models status."
+            cat /tmp/micu-models.json
+            exit 1
+          fi
+
+          ADVERTISED_MODELS=()
+          while IFS= read -r advertised; do
+            [ -n "$advertised" ] && ADVERTISED_MODELS+=("$advertised")
+          done < <(jq -r '.data[]?.id // empty' /tmp/micu-models.json)
+          if [ "${#ADVERTISED_MODELS[@]}" -eq 0 ]; then
+            echo "MICU /models returned no usable model IDs."
+            cat /tmp/micu-models.json
+            exit 1
+          fi
+
+          CANDIDATES=()
+          add_candidate() {
+            local candidate="$1"
+            [ -n "$candidate" ] || return 0
+            for existing in "${CANDIDATES[@]-}"; do
+              [ "$existing" = "$candidate" ] && return 0
+            done
+            CANDIDATES+=("$candidate")
+          }
+
+          # MICU_MODEL is a preference, not a hard requirement. If its channel is
+          # unavailable, try known fallbacks and then the provider's advertised list.
+          add_if_advertised() {
+            local candidate="$1"
+            for advertised in "${ADVERTISED_MODELS[@]}"; do
+              if [ "$advertised" = "$candidate" ]; then
+                add_candidate "$candidate"
+                return 0
+              fi
+            done
+          }
+          add_if_advertised "$MICU_MODEL"
+          for preferred in gpt-5.4 gpt-5.5 gpt-5.3 gpt-5.2 gpt-5.1 gpt-5; do
+            add_if_advertised "$preferred"
+          done
+          for advertised in "${ADVERTISED_MODELS[@]}"; do
+            add_candidate "$advertised"
+          done
+
+          SELECTED_MICU_MODEL=""
+          for candidate in "${CANDIDATES[@]}"; do
+            echo "Checking MICU model: $candidate"
+            REQUEST_BODY="$(jq -nc --arg model "$candidate" \
+              '{model:$model,input:[{role:"user",content:[{type:"input_text",text:"ping"}]}],stream:true}')"
+            if ! RESPONSES_STATUS="$(curl --retry 2 --retry-delay 2 --max-time 60 -sS \
+              -o /tmp/micu-responses.json -w "%{http_code}" \
+              -H "Authorization: Bearer $MICU_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d "$REQUEST_BODY" \
+              "$EFFECTIVE_MICU_BASE_URL/responses")"; then
+              RESPONSES_STATUS="000"
+            fi
+            echo "MICU /responses model=$candidate status=$RESPONSES_STATUS"
+            if [ "$RESPONSES_STATUS" -ge 200 ] && [ "$RESPONSES_STATUS" -lt 300 ]; then
+              SELECTED_MICU_MODEL="$candidate"
+              break
+            fi
+            if [ "$RESPONSES_STATUS" = "401" ]; then
+              echo "MICU_API_KEY was rejected by the configured provider."
+              cat /tmp/micu-responses.json
+              exit 1
+            fi
+          done
+
+          if [ -z "$SELECTED_MICU_MODEL" ]; then
+            echo "No advertised MICU model passed the /responses smoke test."
+            cat /tmp/micu-responses.json
+            exit 1
+          fi
+
+          echo "Using MICU model: $SELECTED_MICU_MODEL"
+          echo "SELECTED_MICU_MODEL=$SELECTED_MICU_MODEL" >> "$GITHUB_ENV"
+
+      - name: Configure Codex provider
+        env:
+          MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
+          MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
+        run: |
           mkdir -p ~/.codex
           cat > ~/.codex/config.toml <<EOF
-          model = "${MICU_MODEL:-gpt-5.5}"
+          model = "${SELECTED_MICU_MODEL}"
           model_provider = "micu"
           model_reasoning_effort = "medium"
           disable_response_storage = true
@@ -54,50 +153,16 @@ jobs:
           wire_api = "responses"
           EOF
 
-      - name: Validate MICU API
-        env:
-          MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
-          MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
-          MICU_MODEL: ${{ secrets.MICU_MODEL }}
-        run: |
-          test -n "$MICU_API_KEY"
-          EFFECTIVE_MICU_BASE_URL="${MICU_BASE_URL:-https://www.micuapi.ai/v1}"
-          STATUS="$(curl -sS -o /tmp/micu-models.json -w "%{http_code}" \
-            -H "Authorization: Bearer $MICU_API_KEY" \
-            "$EFFECTIVE_MICU_BASE_URL/models")"
-          echo "MICU /models status=$STATUS"
-          if [ "$STATUS" = "401" ]; then
-            echo "MICU_API_KEY was rejected by the configured provider."
-            exit 1
-          fi
-          if [ "$STATUS" -lt 200 ] || [ "$STATUS" -ge 300 ]; then
-            echo "Unexpected MICU API status."
-            cat /tmp/micu-models.json
-            exit 1
-          fi
-          RESPONSES_STATUS="$(curl -sS -o /tmp/micu-responses.json -w "%{http_code}" \
-            -H "Authorization: Bearer $MICU_API_KEY" \
-            -H "Content-Type: application/json" \
-            -d "{\"model\":\"${MICU_MODEL:-gpt-5.5}\",\"input\":[{\"role\":\"user\",\"content\":[{\"type\":\"input_text\",\"text\":\"ping\"}]}],\"stream\":true}" \
-            "$EFFECTIVE_MICU_BASE_URL/responses")"
-          echo "MICU /responses status=$RESPONSES_STATUS"
-          if [ "$RESPONSES_STATUS" -lt 200 ] || [ "$RESPONSES_STATUS" -ge 300 ]; then
-            echo "Unexpected MICU /responses status."
-            cat /tmp/micu-responses.json
-            exit 1
-          fi
-
       - name: Generate report with headless agent
         env:
           MICU_API_KEY: ${{ secrets.MICU_API_KEY }}
           MICU_BASE_URL: ${{ secrets.MICU_BASE_URL }}
-          MICU_MODEL: ${{ secrets.MICU_MODEL }}
         run: |
           test -n "$MICU_API_KEY"
           codex exec \
             --cd . \
             --dangerously-bypass-approvals-and-sandbox \
-            --model "${MICU_MODEL:-gpt-5.5}" \
+            --model "$SELECTED_MICU_MODEL" \
             "$(cat prompts/daily_report.md)"
 
       - name: Verify generated report
