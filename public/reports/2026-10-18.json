@@ -1,0 +1,427 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-18",
+  "title": "Whistle 互联网日报｜2026-10-18",
+  "summary": "早上好，今天有几件事值得留意：DeepSeek 发布 V4.1-Flash-1017，在不改变 API 调用方式和价格的同时，扩大了推理、编码、Agent 和搜索接口的能力；OpenCode 披露旧系统被未授权访问，1.4% 的 Console 用户可能有第三方 API 密钥暴露；Meta、Reflection、NVIDIA 等继续把大参数开放权重模型推向编码、Agent 和本地设备。另一边，Claude Code 插件、Agent harness、沙箱和本地语音工具在 GitHub 上快速聚集关注，说明工具层正在从单一聊天入口扩展到可组合的执行环境。安全事件和提示词注入评测也提醒人们，模型能力越接近真实操作，密钥、权限、沙箱和审计就越成为产品边界的一部分。",
+  "theme": "模型更新与 Agent 工具链同时进入实用层",
+  "topline": [
+    "DeepSeek V4.1-Flash-1017 发布，API 价格和调用方式不变，并开放 Search 与 Fetch 接口。",
+    "OpenCode 披露旧系统遭入侵，部分外部模型供应商 API 密钥可能暴露。",
+    "开放权重模型、Agent harness、插件目录和本地 AI 设备继续获得开发者关注。",
+    "Agent 产品的安全边界从模型本身扩展到密钥、浏览器控制、沙箱和数据访问。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "今天最直接影响模型调用、Agent 工具和安全边界的几条变化。",
+      "items": [
+        {
+          "title": "DeepSeek 发布 V4.1-Flash-1017，并开放搜索接口",
+          "summary": "DeepSeek 于 10 月 17 日发布并开源 DeepSeek-V4.1-Flash-1017，网页端、App 和 API 已同步更新，继续使用 `deepseek-flash` 即可，调用方式和价格不变。官方称新版本增强了推理、编码、Agent、视觉以及从零构建游戏和 3D 项目的能力；模型有 7630 亿参数、1M token 上下文，权重采用 MIT 许可证。DeepSeek 同时开放 Search 和 Fetch API，价格均为 5 元/千次，当前在 Harness、Claude Code 和 Codex 中触发的搜索调用暂不收费，11 月 1 日起按次计费。模型升级与实时检索被放进同一套接口，Agent 的输出从生成文本延伸到带来源的网页信息获取。",
+          "sourceName": "juya-ai-daily / DeepSeek API 更新日志",
+          "sourceUrl": "https://api-docs.deepseek.com/zh-cn/news/news261017",
+          "publishedAt": "2026-10-17T08:00:00.000Z",
+          "tags": [
+            "模型",
+            "搜索 API",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenCode 披露旧系统被入侵，部分 API 密钥可能暴露",
+          "summary": "OpenCode 称，一个正在停用的旧系统遭到未授权访问，保存在 OpenCode Console 中的 OpenAI、Anthropic 和 Google 等第三方供应商 API 密钥可能已暴露。事件被描述为一次大规模蒸馏攻击，影响 1.4% 的 Console 用户，范围限于关联外部提供商的用户；OpenCode 已通过邮件通知相关用户，Anthropic 也撤销了其认为受影响的 Claude API 密钥。事件把 Agent 控制台的风险从模型输出延伸到供应商凭据存储和旧系统下线流程，相关使用方式同时获得了 HN 775 分和 GitHub Trending 的关注。",
+          "sourceName": "juya-ai-daily / OpenCode",
+          "sourceUrl": "https://x.com/opencode/status/2111519637049319818",
+          "publishedAt": "2026-10-17T18:00:00.000Z",
+          "tags": [
+            "安全",
+            "API 密钥",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Meta 发布 Muse Spark Open，开放权重模型进入大上下文 Agent 竞争",
+          "summary": "Meta 发布 Muse Spark Open，模型总参数 816B、激活参数 42B，支持 1M token 上下文和图像、音频、文档等原生多模态输入，并以 Muse Model License 提供开放权重。模型面向编码和 Agent 工作，在 OpenRouter 的价格为输入 1.25 美元/百万 token、输出 4.25 美元/百万 token，Arena 也已开放 Agent Arena 实测。开放权重模型同时覆盖本地部署、托管调用和公开评测，模型选择开始同时受能力、许可证、上下文长度和部署成本影响。",
+          "sourceName": "AI HOT / PyTorch Blog",
+          "sourceUrl": "https://pytorch.org/blog/muse-spark-open/",
+          "publishedAt": "2026-10-16T00:00:00.000Z",
+          "tags": [
+            "开放权重",
+            "多模态",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Agent 工具层在 GitHub Trending 集中升温",
+          "summary": "GitHub 当日热门项目包括 Anthropic 官方 Claude Code 插件目录（当日新增 1397 星）、ECC Agent harness（1145 星）、CLI-Anything（574 星）、scientific-agent-skills（878 星）、Orca 多 Agent 运行环境（830 星）和 XERJ Agent 搜索工具（1160 星）。这些项目分别把插件、记忆、安全、软件 CLI、科学数据库、远程运行和代码索引做成可复用层，Agent 产品的组成部分正在从模型调用扩展到工具发现、长期状态和执行环境。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/anthropics/claude-plugins-official",
+          "publishedAt": "2026-10-18T01:51:35.100Z",
+          "tags": [
+            "开源",
+            "Agent 工具链",
+            "GitHub"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "模型、开发工具和生成工具继续向更长上下文、更强执行和更低部署门槛发展。",
+      "items": [
+        {
+          "title": "Claude Opus 5.5 fast mode 结束预览并移除等待名单",
+          "summary": "Anthropic 宣布 Claude 平台的 Opus 5.5 fast mode 结束研究预览并移除等待名单，速度最高提升 2.5 倍，价格为输入 8 美元、输出 40 美元/百万 token，已登陆 Microsoft Foundry，Google Cloud 即将支持。Claude Code 中的 fast mode 仍消耗额外 usage credits。该功能把同一模型的延迟和费用拆成独立选择，托管平台也开始把加速模式作为可计价的运行层。",
+          "sourceName": "Claude Developers",
+          "sourceUrl": "https://x.com/ClaudeDevs/status/2110825294655562048",
+          "publishedAt": "2026-10-16T00:00:00.000Z",
+          "tags": [
+            "Claude",
+            "开发工具",
+            "API"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "ChatGPT 在 Chrome 中加入标签页读取与控制",
+          "summary": "OpenAI 面向 Chrome 用户加入浏览器控制能力：ChatGPT 可以读取打开的标签页并汇总信息，在工作模式下还能控制标签页发送消息、填写表单、下载文件，以及整理和分组标签页。浏览器从信息输入界面变成可被模型操作的执行环境，权限范围、登录态和操作记录因此直接进入产品安全边界。",
+          "sourceName": "ChatGPT",
+          "sourceUrl": "https://x.com/ChatGPT/status/2110823738531037651",
+          "publishedAt": "2026-10-16T00:00:00.000Z",
+          "tags": [
+            "浏览器 Agent",
+            "Computer Use",
+            "自动化"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Kling 4.0 支持最长 30 秒一镜到底和多帧参考",
+          "summary": "可灵 AI 上线 Kling 4.0，支持最长 30 秒一镜到底直出，并把首尾帧参考扩展为最多 10 帧的多帧参考。实测信息称，模型在大范围动态、复杂动作衔接和人物与物体接触的细节上有改进；1080P 30 秒约 450 积分，720P 20 秒的 Kling 4.0 Flash 约 120 积分，10-bit 4K HDR 尚未上线。视频生成从短片段拼接转向更长镜头和更细的参考控制，成本与输出规格仍是使用边界。",
+          "sourceName": "AI HOT / 数字生命卡兹克",
+          "sourceUrl": "https://x.com/Khazix0918/status/2110914404393091205",
+          "publishedAt": "2026-10-16T02:03:07.000Z",
+          "tags": [
+            "视频生成",
+            "Kling",
+            "多帧参考"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "FLUX 3 Image Klein 开放权重并支持多参考图",
+          "summary": "Black Forest Labs 发布 5.6B 参数的 FLUX 3 Image Klein，支持文生图、图像编辑和最多 10 张参考图的多参考生成，采用 FLUX Kommunity License。模型可在单张消费级 GPU 上运行，并通过 OpenRouter 接入；同一轮更新还包括 4K 视频生成和视频超分降价。图像模型的差异从单次提示词生成扩展到参考图一致性、消费级硬件部署和视频后处理链路。",
+          "sourceName": "Black Forest Labs",
+          "sourceUrl": "https://bfl.ai/blog/flux-3-image-klein",
+          "publishedAt": "2026-10-16T00:00:00.000Z",
+          "tags": [
+            "图像生成",
+            "开放权重",
+            "视频"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Reflection Beam 以 501B MoE 模型接入 SGLang、vLLM 和 Ollama",
+          "summary": "Reflection 发布首个开放权重模型 Beam，规模为 501B 参数、每 token 激活 23B；SGLang 宣布原生支持并用它驱动生产 API，vLLM 提供 Day 0 支持，Ollama Cloud 作为合作方限时免费提供且采用零数据保留。多个推理和托管层在模型发布时同步适配，开放权重模型的可用性越来越取决于推理框架和部署服务是否及时跟上。",
+          "sourceName": "SGLang / vLLM / Ollama",
+          "sourceUrl": "https://www.lmsys.org/blog/2026-10-16-beam",
+          "publishedAt": "2026-10-16T00:00:00.000Z",
+          "tags": [
+            "推理框架",
+            "开放权重",
+            "MoE"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "NVIDIA RTX Spark 笔记本开售，128GB 统一内存面向本地 AI",
+          "summary": "NVIDIA 宣布 RTX Spark 笔记本开售，合作厂商包括 ASUS、Dell、HP、Lenovo、Microsoft 和 MSI，起价 2599 美元；相关实测机型采用 RTX Spark N1X 芯片、128GB 统一内存，售价 37999 元。统一内存把更大模型放到本地运行的门槛从显存容量转移到整机成本、功耗和软件兼容性，本地 token 处理正在从开发板和台式机扩展到移动设备。",
+          "sourceName": "NVIDIA Newsroom / AI HOT",
+          "sourceUrl": "https://nvidianews.nvidia.com/news/nvidia-rtx-spark-pcs-available-today-a-new-beginning-for-windows-pcs",
+          "publishedAt": "2026-10-16T12:00:00.000Z",
+          "tags": [
+            "本地 AI",
+            "硬件",
+            "推理"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Perplexity 开源支撑 Computer 的沙箱平台 SPACE",
+          "summary": "Perplexity 开源 SPACE 沙箱平台，称其支撑 Perplexity Computer 的全部沙箱能力，并已经服务数百万沙箱。项目重点处理生产级 Agent 沙箱的隔离、调度和扩展细节，代码托管在 `perplexityai/space`。Agent 的可执行能力不只依赖模型，也依赖一套能承受多租户运行和数据隔离要求的基础设施。",
+          "sourceName": "Perplexity",
+          "sourceUrl": "https://github.com/perplexityai/space",
+          "publishedAt": "2026-10-16T00:00:00.000Z",
+          "tags": [
+            "沙箱",
+            "Agent 基础设施",
+            "开源"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Meta 用 AI 原生方式开发 Forum，八周完成 Groups 核心功能对齐",
+          "summary": "Meta 工程团队介绍 Forum 的开发过程：AI Agent 以 human-on-the-loop 方式参与实现和验证，团队用生产级产出衡量结果；项目在八周内与 Facebook Groups 的核心功能对齐，自主压测循环发现并修复了内存问题，内存占用和缺页约减半，上线后 Agent 还参与用户反馈的根因分析。这个案例把 Agent 从代码生成器放进了测试、性能分析和上线后排障链路。",
+          "sourceName": "Meta Engineering",
+          "sourceUrl": "https://engineering.fb.com/2026/10/15/ml-applications/how-meta-built-forum-ai-native-engineering/",
+          "publishedAt": "2026-10-15T00:00:00.000Z",
+          "tags": [
+            "AI 工程",
+            "代码生成",
+            "性能工程"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "模型供应商、云平台和 Agent 产品正在把能力拆成可单独计价、托管和调用的服务。",
+      "items": [
+        {
+          "title": "WorkBuddy 国际版接入 DeepSeek 新模型并限时免费",
+          "summary": "WorkBuddy 国际版已接入 DeepSeek-V4.1-Flash-1017，10 月 31 日前免费开放。DeepSeek 发布模型时点名针对 DeepSeek Harness、腾讯 CodeBuddy 和 WorkBuddy 等平台做了优化，WorkBuddy 因此成为模型发布后的首批分发渠道之一。模型厂商通过平台适配和限时免费同时扩大调用量，应用层的模型切换成本被进一步压低。",
+          "sourceName": "WorkBuddy",
+          "sourceUrl": "https://x.com/WorkBuddy_AI/status/2111404103402430558",
+          "publishedAt": "2026-10-17T10:29:00.000Z",
+          "tags": [
+            "平台",
+            "模型分发",
+            "WorkBuddy"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "AI 搜索开始把反 SEO 和反低质 AIGC 写进接口能力",
+          "summary": "DeepSeek 搜索 API 声称底层引擎每天处理数亿次请求、索引全球千亿级网页，并通过识别机制过滤 SEO 作弊、GEO 操纵和低质 AIGC；Search 与 Fetch 接口统一按 5 元/千次计费。搜索接口不再只是返回链接，也开始承担来源筛选和内容质量判断，Agent 的检索结果会直接受到索引策略和反操纵规则影响。",
+          "sourceName": "AI HOT / DeepSeek API 更新日志",
+          "sourceUrl": "https://api-docs.deepseek.com/zh-cn/updates/#开放自研搜索-api",
+          "publishedAt": "2026-10-16T16:00:00.000Z",
+          "tags": [
+            "AI 搜索",
+            "检索",
+            "内容治理"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Anthropic fast mode 登陆 Microsoft Foundry，Google Cloud 即将支持",
+          "summary": "Opus 5.5 fast mode 在 Claude 平台结束预览后进入 Microsoft Foundry，Google Cloud 支持也在安排中，速度最高提升 2.5 倍，API 价格单独按输入和输出 token 计费。相同模型的低延迟变体同时出现在厂商平台和云市场，模型能力、延迟和托管渠道被拆分成不同的采购选项。",
+          "sourceName": "Claude Developers",
+          "sourceUrl": "https://x.com/ClaudeDevs/status/2110825294655562048",
+          "publishedAt": "2026-10-16T00:00:00.000Z",
+          "tags": [
+            "云平台",
+            "Anthropic",
+            "API 定价"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "AI 产品的增长入口正在从聊天页面扩展到浏览器、视频创作和消费决策链路。",
+      "items": [
+        {
+          "title": "智能体购物仍卡在发现与下单之间",
+          "summary": "a16z 图表周报援引 Cloudflare 数据称，智能体和爬虫收到的 403 响应自夏季起明显增加，约为原先两倍；调查中 42% 的消费者完全不信任 AI 代购，Similarweb 数据显示 AI 购物更多发生在发现与购买之间，而不是最终下单环节。退货率和退货成本也较 2019 年分别翻倍和增至三倍。智能体进入电商不只涉及推荐质量，还会触及站点访问控制、信任和退货责任。",
+          "sourceName": "a16z News",
+          "sourceUrl": "https://www.a16z.news/p/this-week-in-charts-agents-denied",
+          "publishedAt": "2026-10-16T14:00:39.000Z",
+          "tags": [
+            "Agent 商务",
+            "电商",
+            "分发"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Anthropic 用 Claude Code 重做代码评审流程",
+          "summary": "Anthropic 相关材料称，在 Claude Code 约完成 90% 代码后，团队重新设计了代码评审；2026 年 6 月到 9 月合并 PR 数量翻倍以上，revert 率下降超过 40%。变化不只是让模型多写代码，而是把评审、验证和回滚指标放进同一条生产流程，代码产量增长必须与可恢复性和质量信号一起观察。",
+          "sourceName": "AI HOT / Anthropic 相关解读",
+          "sourceUrl": "https://x.com/shao__meng/status/2111274173192638932",
+          "publishedAt": "2026-10-17T01:52:43.000Z",
+          "tags": [
+            "代码评审",
+            "Claude Code",
+            "工程流程"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "推理优化、插件目录和代码搜索显示出工具层的工程化方向。",
+      "items": [
+        {
+          "title": "vLLM 解析 Kimi K3 在 AMD MI355X 上的推理优化",
+          "summary": "vLLM 官方博客介绍 Kimi K3 在八卡 AMD Instinct MI355X 上的推理优化，文中称单 GPU 吞吐比 NVIDIA HGX B300 高 24.4%。这类结果依赖模型结构、量化、内核和硬件组合，说明开源模型的实际成本不只由参数量决定，推理框架的适配会直接改变硬件选择。",
+          "sourceName": "vLLM Blog",
+          "sourceUrl": "https://vllm.ai/blog/2026-10-16-kimi-k3-mi355x",
+          "publishedAt": "2026-10-16T00:00:00.000Z",
+          "tags": [
+            "推理优化",
+            "AMD",
+            "vLLM"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Anthropic 官方 Claude Code 插件目录成为 GitHub 热门项目",
+          "summary": "Anthropic 管理的 `claude-plugins-official` 目录当日新增 1397 星，项目用于收录高质量 Claude Code 插件。官方目录把插件发现、质量筛选和分发入口放在同一处，Agent 的扩展能力由单个工具的功能表转向可安装、可复用的组件集合。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/anthropics/claude-plugins-official",
+          "publishedAt": "2026-10-18T01:51:35.100Z",
+          "tags": [
+            "Claude Code",
+            "插件",
+            "开源生态"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "XERJ 用自动索引减少 Agent 搜索代码的 token 消耗",
+          "summary": "XERJ 当日新增 1160 星，项目用一次命令索引代码、文档、日志和 PDF，面向搜索、RAG、安全审计和 Agent 记忆场景，项目方宣称相较 grep 可减少约 40 倍 token 使用，并可作为 ElasticSearch 的轻量替代。它把 Agent 的检索成本从每次扫描文本转移到预先建立索引，长期记忆和代码理解因此共享同一层搜索基础设施。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/xerj-org/xerj",
+          "publishedAt": "2026-10-18T01:51:35.100Z",
+          "tags": [
+            "代码搜索",
+            "RAG",
+            "Agent 记忆"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "本期可确认的融资与估值信号有限，仅保留一条仍需谨慎看待的市场传闻。",
+      "items": [
+        {
+          "title": "消息称 Anthropic IPO 估值预期从约 2 万亿美元降至约 1.5 万亿美元",
+          "summary": "路透社援引知情人士消息称，Anthropic 公布最新财务数据后，部分投资者在投资者日活动中讨论把其 11 月上市预期估值从约 2 万亿美元下调至约 1.5 万亿美元。该信息来自知情人士而非正式发行文件，可作为前沿模型公司资本定价波动的市场信号；估值变化尚未改变公司公开的产品和服务事实。",
+          "sourceName": "AI HOT / IT之家转述 Reuters",
+          "sourceUrl": "https://www.ithome.com/1/013/723.htm",
+          "publishedAt": "2026-10-16T00:54:07.827Z",
+          "tags": [
+            "Anthropic",
+            "IPO",
+            "估值"
+          ],
+          "importance": "low"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "AI 能力进入搜索、浏览器和内容生产后，数据访问、出口和生成内容责任边界继续收紧。",
+      "items": [
+        {
+          "title": "中国拟在出口技术目录增列 23 项人工智能技术",
+          "summary": "商务部、科技部发布 2026 年第 48 号公告，就修订《中国禁止出口限制出口技术目录》公开征求意见，拟新增人工智能、生物医药和光伏共 40 项技术，其中禁止出口 14 项、限制出口 26 项，并对相关技术实施出口前登记的临时管理措施。若按征求意见方向落地，模型、算法或相关技术跨境转移将多出登记和分类环节，技术出口不再只由合同和交付方式决定。",
+          "sourceName": "AI HOT / IT之家",
+          "sourceUrl": "https://www.ithome.com/1/013/983.htm",
+          "publishedAt": "2026-10-16T08:23:54.520Z",
+          "tags": [
+            "出口管制",
+            "AI 监管",
+            "跨境"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "研究称开放权重模型更容易受到间接提示词注入",
+          "summary": "PromptArmor 在 9800 次试验中评测 DeepSeek、Kimi、GLM、Qwen 等开放权重模型和 GPT、Claude、Gemini 等闭源模型，称真实世界间接提示词注入攻击链的易感率分别为 26.7% 和 14.2%，前者高 88%。这是单一安全机构的评测，不等同于所有部署环境的统一结论，但它把 Agent 风险落到了外部网页、文档和工具返回内容如何影响模型指令这一具体环节。",
+          "sourceName": "PromptArmor",
+          "sourceUrl": "https://www.promptarmor.com/resources/open-weight-susceptibility",
+          "publishedAt": "2026-10-16T00:00:00.000Z",
+          "tags": [
+            "提示词注入",
+            "模型安全",
+            "开放权重"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "以下内容讨论度较高，但更多是传播和兴趣信号，不改变今日核心排序。",
+      "items": [
+        {
+          "title": "Claude 用不到半小时追溯 NIST ECDSA 曲线种子来源",
+          "summary": "Anthropic 研究称，内部模型在不到半小时内找到了 NIST P-192、P-224、P-256、P-384 和 P-521 曲线种子的来源：它们来自以 Unix 时间戳初始化的 C 库 lrand48 随机数生成器，P-256 需要 1842 次迭代。该研究在 HN 获得 1023 分，属于可验证的研究展示和社区传播热点，重点是模型辅助逆向分析的速度，不是新的密码学标准。",
+          "sourceName": "Hacker News / Anthropic Research",
+          "sourceUrl": "https://www.anthropic.com/research/ecdsa-curve-origins",
+          "publishedAt": "2026-10-16T18:55:59.000Z",
+          "tags": [
+            "密码学",
+            "AI 研究",
+            "社区热度"
+          ],
+          "importance": "low"
+        },
+        {
+          "title": "本地 LLM 速度体验工具 Llmspeed 获 HN 253 分",
+          "summary": "Show HN 项目 Llmspeed 用浏览器体验或基准方式展示本地 LLM 的运行速度，帮助用户在购买硬件前比较推理表现。帖子获得 253 分，属于硬件选型和本地模型传播中的工具化信号；它提供的是体验入口，不构成跨模型、跨硬件的统一性能结论。",
+          "sourceName": "Hacker News / Show HN",
+          "sourceUrl": "https://llmspeed.dev/",
+          "publishedAt": "2026-10-17T04:36:53.000Z",
+          "tags": [
+            "本地 AI",
+            "硬件评测",
+            "社区热度"
+          ],
+          "importance": "low"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "优先保留 juya 和 AI HOT 中有明确主体、数字、产品动作和原始链接的内容；合并 DeepSeek、WorkBuddy、Kling 等多源重复报道，把 HN 和 GitHub 的高热度但弱工作相关项目放入社交热度观察或过滤。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (45 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (13 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-10-18T02:10:00.000Z"
+}
