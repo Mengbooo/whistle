@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="早上好，先看几条具体变化：Kimi 为 K3.1 Pro 的限流和额外消耗致歉，补回部分用量并减少不必要的子智能体调用；CapCut 预告 11 月测试 ChatGPT 视频编辑插件，让对话中的结果保留为可继续修改的草稿；南北阁开放 33B 模型，OpenCode 则公布 DeepSeek 推理机架的吞吐与延迟数据。这些消息分别涉及任务怎么执行、结果怎么交付、服务如何供给，却都落在了额度、文件、上下文和运行性能这些具体环节。Anthropic 的单 Agent 架构比较，也与减少编排开销相互呼应。开源榜单里，设计技能、本地语音和安全审计受到关注；Gheist 攻击研究则揭示了仓库凭证如何经 CI 扩大为云端风险。今天没有足够明确的融资新进展，相关板块留空。">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Whistle 互联网日报｜2026-10-26</title>
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem("whistle-theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0d0d0d;
+      --panel-soft: #151515;
+      --line: #242424;
+      --line-soft: #1a1a1a;
+      --text: #f4f4f4;
+      --muted: #a5a5a5;
+      --faint: #737373;
+      --accent: #01c193;
+      --insight-border: rgba(1, 193, 147, .42);
+      --button-bg: #fff;
+      --button-text: #000;
+      --button-hover-border: #fff;
+      --theme-bg: rgba(0,0,0,.74);
+      --max: 1180px;
+      --serif: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #fff;
+      --panel: #f7f7f7;
+      --panel-soft: #f0f0f0;
+      --line: #dcdcdc;
+      --line-soft: #ececec;
+      --text: #0b0b0b;
+      --muted: #555;
+      --faint: #777;
+      --accent: #012fe3;
+      --insight-border: rgba(1, 47, 227, .42);
+      --button-bg: #000;
+      --button-text: #fff;
+      --button-hover-border: #000;
+      --theme-bg: rgba(255,255,255,.78);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
+    body { font-family: var(--sans); line-height: 1.72; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
+    a:hover { color: var(--text); border-bottom-color: var(--text); }
+    .theme-bar {
+      position: fixed;
+      top: 24px;
+      right: max(40px, calc((100vw - var(--max)) / 2 + 40px));
+      z-index: 30;
+      pointer-events: none;
+    }
+    .theme-toggle {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--theme-bg);
+      color: var(--text);
+      cursor: pointer;
+      pointer-events: auto;
+      transition: border-color .16s ease, transform .16s ease;
+    }
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .theme-toggle:hover { border-color: var(--button-hover-border); transform: translateY(-1px); }
+    :root[data-theme="light"] .theme-toggle { color: #000; }
+    :root:not([data-theme="light"]) .theme-toggle { color: #fff; }
+    .back-link {
+      display: inline-block;
+      margin: 0 0 34px;
+      border: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+    .back-link:hover { color: var(--text); }
+    .hero { width: 100%; padding: 0 0 58px; text-align: left; }
+    h1 { margin: 0; font-size: clamp(26px, 3vw, 38px); font-weight: 560; line-height: 1.06; letter-spacing: -.05em; }
+    .summary { max-width: 720px; margin: 24px 0 0; color: var(--text); font-size: 18px; line-height: 1.7; }
+    .hero-meta { margin-top: 22px; color: var(--text); font-size: 13px; }
+    .hero-actions { display: flex; justify-content: flex-start; gap: 12px; margin-top: 30px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
+      background: var(--button-bg); color: var(--button-text); font-size: 14px; font-weight: 600;
+      transition: border-color .16s ease, color .16s ease, background .16s ease;
+    }
+    .button--ghost { background: transparent; color: var(--text); }
+    .button:hover { border-color: var(--button-hover-border); }
+    .layout {
+      display: grid; grid-template-columns: 190px minmax(0, 760px);
+      gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
+    }
+    .toc { position: sticky; top: 86px; align-self: start; color: var(--muted); font-size: 13px; }
+    .toc strong { display: block; margin-bottom: 8px; color: var(--text); font-size: 13px; }
+    .toc a { display: block; margin: 0 0 3px; padding: 3px 0; border: 0; color: var(--muted); line-height: 1.35; transition: color .16s ease; }
+    .toc a[aria-current="true"] { color: var(--text); }
+    .toc a:hover { color: var(--text); }
+    .topline {
+      margin-bottom: 54px; padding: 26px; border: 1px solid var(--line); border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .topline h2 { margin: 0 0 16px; font-size: 24px; letter-spacing: -.025em; }
+    .topline ul { margin: 0; padding-left: 20px; color: var(--muted); }
+    .report-section { padding: 54px 0; border-top: 1px solid var(--line); }
+    .section-heading { margin-bottom: 30px; }
+    .section-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+    .section-heading h2 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; }
+    .section-heading span { display: block; margin-top: 8px; color: var(--muted); }
+    .section-count { flex: 0 0 auto; margin-top: 0 !important; color: var(--faint) !important; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    .section-items { display: grid; gap: 0; }
+    .report-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+    .report-item:first-child { border-top: 0; padding-top: 0; }
+    .item-rail { padding-top: 3px; }
+    .item-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1;
+    }
+    .item-kicker {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 8px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .item-kicker .tags { margin-bottom: 0; }
+    .tags span { color: var(--accent); font-size: 12px; }
+    .report-item h3 { margin: 0; font-size: 22px; line-height: 1.35; letter-spacing: -.025em; }
+    .report-item h3 a { border: 0; }
+    .report-item h3 a span { color: var(--accent); font-size: .82em; }
+    .item-copy { margin-top: 12px; display: grid; gap: 10px; }
+    .report-item p { margin: 0; color: var(--text); font-size: 15px; }
+    .item-fact { color: var(--text); line-height: 1.82; }
+    .item-insight {
+      position: relative;
+      padding-left: 16px;
+      border-left: 2px solid var(--insight-border);
+      color: var(--muted) !important;
+      line-height: 1.76;
+    }
+    .item-insight span {
+      display: inline-block;
+      margin-right: 9px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .item-source, .item-meta { color: var(--faint); font-size: 12px; white-space: nowrap; }
+    .item-meta { display: none; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .report-section--featured { padding-top: 54px; }
+    .report-section--featured .section-heading { margin-bottom: 30px; }
+    .report-section--featured .report-item h3 { font-size: 23px; }
+    .report-section--featured .item-index { color: var(--muted); }
+    .empty, .note { margin: 0; color: var(--muted); }
+    .action-list { display: grid; gap: 12px; }
+    .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: var(--muted); }
+    .action-item strong { color: var(--text); }
+    .status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .status-grid div { padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+    .status-grid strong, .status-grid span { display: block; }
+    .status-grid span { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+    @media (max-width: 980px) {
+      .layout { display: block; padding: 66px 24px 72px; }
+      .theme-bar { top: 18px; right: 24px; }
+      .toc { display: none; }
+      .hero { padding: 0 0 58px; }
+      .hero-actions { justify-content: flex-start; }
+      .section-title-row { display: block; }
+      .section-count { margin-top: 8px !important; }
+      .report-item { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+      .item-rail { display: none; }
+      .item-kicker { display: block; }
+      .item-source { display: none; }
+      .item-meta { display: block; }
+      .status-grid, .action-item { grid-template-columns: 1fr; }
+    }
+    @media print {
+      @page { size: A4; margin: 0; }
+      :root { color-scheme: dark; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html, body { background: var(--bg) !important; color: var(--text) !important; }
+      :root, :root[data-theme="light"] {
+        color-scheme: dark;
+        --bg: #000;
+        --panel: #0d0d0d;
+        --panel-soft: #151515;
+        --line: #242424;
+        --line-soft: #1a1a1a;
+        --text: #f4f4f4;
+        --muted: #a5a5a5;
+        --faint: #737373;
+        --accent: #01c193;
+      }
+      .theme-bar, .back-link, .toc, .hero-actions, script { display: none !important; }
+      .hero { text-align: left; padding: 0 0 42px; }
+      .layout { display: block; max-width: 760px; margin: 0; padding: 12mm; }
+      .report-section { break-inside: auto; page-break-inside: auto; padding: 38px 0; }
+      .section-heading { break-after: avoid; page-break-after: avoid; }
+      .report-item { break-inside: auto; page-break-inside: auto; }
+      .item-kicker, .report-item h3 { break-after: avoid; page-break-after: avoid; }
+      .item-insight { border-left-color: rgba(1, 193, 147, .55); }
+      .footer { display: none; }
+      a { color: inherit; border: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-bar">
+    <button class="theme-toggle" data-theme-toggle type="button" aria-label="切换到亮色模式" title="切换到亮色模式">
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M12 2v2"></path>
+        <path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"></path>
+        <path d="M16 12a4 4 0 0 0-4-4"></path>
+        <path d="m19 5-1.256 1.256"></path>
+        <path d="M20 12h2"></path>
+      </svg>
+    </button>
+  </div>
+  <main>
+    <div class="layout">
+      <aside class="toc">
+        <strong>目录</strong>
+        <a href="#section-headline">今日头条</a><a href="#section-ai-tools">AI 与新工具</a><a href="#section-platforms">大厂与平台动态</a><a href="#section-product-growth">产品与增长观察</a><a href="#section-engineering">开发者与工程实践</a><a href="#section-funding">投融资与行业机会</a><a href="#section-policy">政策监管与合规</a><a href="#section-social-buzz">社交热度观察</a>
+      </aside>
+      <article>
+        <a class="back-link" href="/archive/" aria-label="返回归档">← 返回</a>
+        <section class="hero">
+          <h1>Whistle 互联网日报｜2026-10-26</h1>
+          <p class="summary">早上好，先看几条具体变化：Kimi 为 K3.1 Pro 的限流和额外消耗致歉，补回部分用量并减少不必要的子智能体调用；CapCut 预告 11 月测试 ChatGPT 视频编辑插件，让对话中的结果保留为可继续修改的草稿；南北阁开放 33B 模型，OpenCode 则公布 DeepSeek 推理机架的吞吐与延迟数据。这些消息分别涉及任务怎么执行、结果怎么交付、服务如何供给，却都落在了额度、文件、上下文和运行性能这些具体环节。Anthropic 的单 Agent 架构比较，也与减少编排开销相互呼应。开源榜单里，设计技能、本地语音和安全审计受到关注；Gheist 攻击研究则揭示了仓库凭证如何经 CI 扩大为云端风险。今天没有足够明确的融资新进展，相关板块留空。</p>
+          <p class="hero-meta">24 条信号 · 2026/10/26 09:56:47</p>
+          <div class="hero-actions">
+            <a class="button button--ghost" href="../assets/report-2026-10-26.pdf">下载 PDF</a>
+            <a class="button button--ghost" href="/archive/">查看归档</a>
+          </div>
+        </section>
+        <section class="report-section report-section--featured" id="section-headline">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>今日头条</h2>
+        <span class="section-count">4 条</span>
+      </div>
+      
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Kimi</span><span>订阅额度</span><span>Agent</span></div>
+        <span class="item-source">Kimi；juya</span>
+      </div>
+      <h3><a href="https://x.com/Kimi_Moonshot/status/2114450610724708492" target="_blank" rel="noreferrer">Kimi 就 K3.1 Pro 限流致歉，补回最多 25% 月度额度 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">据 juya 收录的官方公告，Kimi 承认 K3.1 Pro 订阅限流和不必要的额度消耗由自身问题造成，为所有档位订阅用户一次性补回最多相当于月度额度 25% 的用量；已用额度不足 25% 的账户则将已用量归零。</p>
+        <p class="item-insight"><span>解读</span>公司称进度条将在公告所指的美国太平洋时间当日结束前更新，并调整 Kimi Code CLI 与桌面应用，减少不必要的子智能体调用及输出长度。此次调整同时涉及补偿和调用配置：复杂任务中重复委派、过长输出所产生的消耗，最终会体现在订阅限额与可完成任务量上。</p>
+      </div>
+      <div class="item-meta">Kimi；juya</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>视频编辑</span><span>ChatGPT</span><span>交互界面</span></div>
+        <span class="item-source">CapCut 产品页；juya-ai-daily</span>
+      </div>
+      <h3><a href="https://www.capcut.com/tools/capcut-x-codex" target="_blank" rel="noreferrer">CapCut 预告接入 ChatGPT，11 月测试可编辑视频草稿 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">CapCut 宣布视频编辑与生成插件计划于 11 月在移动端、桌面端和网页端开放测试，用户可在 ChatGPT 中生成可编辑视频草稿，再转入 CapCut 网页编辑器细化、分享与发布。其 CapCut × Codex 页面还描述了在 ChatGPT 桌面版用自然语言生成素材、调整草稿时间线，以及上传已有草稿继续编辑的流程，并提示可用性因应用版本、账户和地区而异。</p>
+        <p class="item-insight"><span>解读</span>这里的输出不是一段剪辑说明或仅供播放的成片，而是能够继续修改的项目草稿；对话入口与时间线编辑器由此承担不同阶段的制作工作。该功能仍处于开放测试预告阶段，不能视为已经全面上线。</p>
+      </div>
+      <div class="item-meta">CapCut 产品页；juya-ai-daily</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>开放权重</span><span>长上下文</span><span>模型评测</span></div>
+        <span class="item-source">Nanbeige；juya</span>
+      </div>
+      <h3><a href="https://huggingface.co/Nanbeige/Nanbeige4.3-33B" target="_blank" rel="noreferrer">南北阁开源 Nanbeige4.3-33B，支持 512K 上下文 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">BOSS 直聘南北阁团队发布 Nanbeige4.3-33B，采用 33B 参数的稠密架构、512K 上下文和 Apache-2.0 协议，重点覆盖智能体编程与办公任务。团队公布的 Terminal-Bench 2.1 成绩为 80.9，对比列出的 Qwen3.8-27B 为 73.0，并计划以此训练后续小模型，首个为 Nanbeige4.3-3B；</p>
+        <p class="item-insight"><span>解读</span>社区 GGUF 量化文件约占 13.7GB 至 35.2GB 磁盘空间。开放权重与许可为自托管和再训练提供了基础，但这些成绩属于官方评测，量化文件大小也不等于完整运行内存，长上下文还会带来额外资源开销。</p>
+      </div>
+      <div class="item-meta">Nanbeige；juya</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>推理基础设施</span><span>DeepSeek</span><span>延迟</span></div>
+        <span class="item-source">OpenCode dax；juya</span>
+      </div>
+      <h3><a href="https://x.com/thdxr/status/2114211145615626433" target="_blank" rel="noreferrer">OpenCode 披露 DeepSeek 推理机架吞吐与尾延迟问题 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenCode 团队成员 dax 称，新 GPU 机架上的 DeepSeek 推理配置在过去 24 小时处理了 6.77 万亿 token，首 token 延迟中位数为 1.16 秒，输出吞吐中位数为每秒 143 token；被问及量化时，他表示服务与 DeepSeek 官方 API 完全一致。</p>
+        <p class="item-insight"><span>解读</span>他同时披露一个不稳定托盘影响了 p95 表现，此前关于价格性能领先其他供应商的说法也来自其自身测试。这组运行数据把总体处理量、典型请求速度和慢请求表现分开呈现，但没有完整公开硬件规模、负载结构及比较条件，不能直接换算成通用性价比排名。</p>
+      </div>
+      <div class="item-meta">OpenCode dax；juya</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-ai-tools">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>AI 与新工具</h2>
+        <span class="section-count">8 条</span>
+      </div>
+      
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>浏览器自动化</span><span>登录态</span><span>权限</span></div>
+        <span class="item-source">Browser Use；AI HOT 精选 · 2026-10-25</span>
+      </div>
+      <h3><a href="https://browser-use.com/posts/coding-agent-logged-in-chrome" target="_blank" rel="noreferrer">Browser Use 梳理六种复用已登录 Chrome 的智能体接入方式 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Browser Use 在 10 月 25 日发布实操比较，覆盖 Claude in Chrome、Playwright MCP 扩展模式、Chrome DevTools MCP 自动连接、Gemini CLI 浏览器智能体、ChatGPT 桌面浏览器扩展和 Browser Harness。</p>
+        <p class="item-insight"><span>解读</span>文章区分了复用真实浏览器登录态与启动独立自动化配置：部分方案只暴露选定标签页，另一些能够访问整个浏览器，且订阅登录、API 密钥与不同客户端的支持范围并不一致。登录态复用省去重复认证，也把已有账户权限带入自动化过程，标签页范围、站点授权和遥测内容因此成为功能边界的一部分。该比较由其中一个工具的开发方撰写，并非独立测评。</p>
+      </div>
+      <div class="item-meta">Browser Use；AI HOT 精选 · 2026-10-25</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>开源 Agent</span><span>应用形态</span></div>
+        <span class="item-source">GitHub Trending · Cindy</span>
+      </div>
+      <h3><a href="https://github.com/makecindy/cindy" target="_blank" rel="noreferrer">Cindy 登上 Trending，提供开箱即用的开源 Agent <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">makecindy/cindy 在本次 GitHub Trending 抓取中获得 675 个当日新增 Star，累计 4,930 个，仓库以 TypeScript 为主要语言，定位是开箱即用的开源 AI Agent。其公开简介强调直接交付任务结果，而非只提供模型调用接口。</p>
+        <p class="item-insight"><span>解读</span>榜单反映了对完整 Agent 应用的关注，不过当前素材没有提供任务成功率、托管成本或权限隔离测试，不能据此判断实际交付质量。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · Cindy</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>本地语音</span><span>开源工具</span><span>配音</span></div>
+        <span class="item-source">GitHub Trending；VoiceStudio</span>
+      </div>
+      <h3><a href="https://github.com/debpalash/VoiceStudio" target="_blank" rel="noreferrer">VoiceStudio 以本地部署覆盖克隆、配音与转写 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">VoiceStudio 仓库自述提供完全本地运行的语音克隆、声音设计、视频配音、听写、转写和有声书制作，并声称覆盖 646 种语言；本次 Trending 快照显示当日新增 1,592 个 Star，累计 86,923 个。</p>
+        <p class="item-insight"><span>解读</span>它把多种语音任务放进同一个开源项目，本地运行也改变了音频上传和处理的路径。语言数量来自项目简介，不代表各语言在全部功能上具有相同质量，素材中没有独立测试或具体硬件要求。</p>
+      </div>
+      <div class="item-meta">GitHub Trending；VoiceStudio</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>TTS</span><span>电话语音</span><span>开放权重</span></div>
+        <span class="item-source">Destined AI；HN</span>
+      </div>
+      <h3><a href="https://huggingface.co/destined/hurston-1" target="_blank" rel="noreferrer">Hurston-1 开放英语口音 TTS，提供电话音频输出 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Destined AI 发布 Hurston-1，基于 Maya1 微调，使用 Apache-2.0 权重许可，覆盖美国南部、尼日利亚及非洲多个地区的英语口音；模型卡提供默认 24kHz 音频与 8kHz G.711 电话输出，后者是合成后的信道转换。</p>
+        <p class="item-insight"><span>解读</span>训练使用约 190 小时语音，其中约 10 小时来自贡献者与语音智能体的真实通话。它可生成带口音的电话测试音频，但仅支持英语、不克隆具体人物，而且每次调用和长文本分段之间可能换声，姓名与数字仍是薄弱项；电话格式兼容不等于稳定的跨通话品牌音色。</p>
+      </div>
+      <div class="item-meta">Destined AI；HN</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>IDE</span><span>编程 Agent</span><span>JetBrains</span></div>
+        <span class="item-source">JetBrains；GitHub；HN</span>
+      </div>
+      <h3><a href="https://github.com/JetBrains/thinkrail" target="_blank" rel="noreferrer">JetBrains Thinkrail 把 pi 编程 Agent 放进轻量 IDE <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">JetBrains 的 Thinkrail 同时出现在 GitHub Trending 与 Hacker News：抓取时累计 1,797 个 Star、当日新增 51 个，HN 帖子获得 182 分和 133 条评论。仓库将其描述为结合 pi 的轻量真实 IDE，并强调界面围绕使用方式调整。</p>
+        <p class="item-insight"><span>解读</span>它展示的是带编辑环境的 Agent 产品，而不是单独的终端聊天入口；现有素材没有给出完整语言支持、调试能力或发布成熟度，社区关注不能代替这些功能的核实。</p>
+      </div>
+      <div class="item-meta">JetBrains；GitHub；HN</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">06</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>设计 Skill</span><span>界面生成</span></div>
+        <span class="item-source">GitHub Trending · Hallmark</span>
+      </div>
+      <h3><a href="https://github.com/Nutlope/hallmark" target="_blank" rel="noreferrer">Hallmark 用设计 Skill 约束编程助手的界面输出 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Nutlope/hallmark 的仓库简介将其定位为面向 Claude Code、Cursor 和 Codex 的设计 Skill，重点减少 AI 生成界面的同质化；本次抓取显示当日新增 1,317 个 Star，累计 33,890 个。</p>
+        <p class="item-insight"><span>解读</span>设计要求以可加载的技能文件交付，意味着界面生成不仅受提示词影响，也受项目内可复用规则约束。当前热度记录没有附带对照实验，不能直接推导生成页面的可用性或视觉质量已得到验证。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · Hallmark</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">07</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>设计规范</span><span>AI 编程</span></div>
+        <span class="item-source">GitHub · Impeccable</span>
+      </div>
+      <h3><a href="https://github.com/pbakaus/impeccable" target="_blank" rel="noreferrer">Impeccable 以设计语言补充 AI 编程环境 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">pbakaus/impeccable 在本次 Trending 快照中累计 87,759 个 Star、当日新增 1,092 个，项目简介强调用设计语言改善 AI 编程运行环境的设计输出。它与 Hallmark 是不同项目，不能把两者的热度或能力合并计算。</p>
+        <p class="item-insight"><span>解读</span>此类项目将设计规范纳入代码生成过程，但当前素材只确认项目定位与榜单关注，未提供与具体模型或编辑器组合的效果比较。</p>
+      </div>
+      <div class="item-meta">GitHub · Impeccable</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">08</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>安全审计</span><span>Skill</span><span>结构化输出</span></div>
+        <span class="item-source">Cloudflare；GitHub</span>
+      </div>
+      <h3><a href="https://github.com/cloudflare/security-audit-skill" target="_blank" rel="noreferrer">Cloudflare 安全审计 Skill 在 Trending 当日新增 2,878 Star <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Cloudflare 的 security-audit-skill 在本次榜单抓取中当日新增 2,878 个 Star，累计 46,997 个；仓库简介描述了面向编码 Agent 的多阶段安全审计，以及独立验证、机器可读的发现结果。</p>
+        <p class="item-insight"><span>解读</span>该项目并非本期首次发布，今日记录的是其开源关注度变化。审计输出采用可供程序处理的结构，使后续核查不必只依赖一段自然语言结论，但独立验证环节也不意味着已经消除漏报和误报。</p>
+      </div>
+      <div class="item-meta">Cloudflare；GitHub</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-platforms">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>大厂与平台动态</h2>
+        <span class="section-count">1 条</span>
+      </div>
+      
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Codex</span><span>订阅额度</span></div>
+        <span class="item-source">Tibo；juya</span>
+      </div>
+      <h3><a href="https://x.com/thsottiaux/status/2114237083652882932" target="_blank" rel="noreferrer">Codex 团队称 28 天计划第 20 天完成全量用量重置 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">据 juya 收录的团队成员 Tibo 公告，OpenAI 的 28 天改进计划在第 20 天安排全量用量重置，相关变更随后已传播完成。该计划的安排是每天为 Codex 或 ChatGPT Work 推出改进、为所有人重置用量，或同时进行两者；</p>
+        <p class="item-insight"><span>解读</span>公告还预告了后续一周的进展，但没有给出具体功能。此次可确认的是用量窗口调整，不是模型能力升级，也没有足够信息将其理解为永久提高订阅配额。</p>
+      </div>
+      <div class="item-meta">Tibo；juya</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-product-growth">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>产品与增长观察</h2>
+        <span class="section-count">2 条</span>
+      </div>
+      
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>数据可视化</span><span>交互产品</span></div>
+        <span class="item-source">Big Whale Hunting；HN · 2026-10-25 23:05</span>
+      </div>
+      <h3><a href="https://bigwhalehunting.com/workforce/" target="_blank" rel="noreferrer">标普 500 可视化把员工人数放进市值气泡 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">一个 Show HN 项目按行业展示标普 500 公司，以气泡面积表示市值，再在气泡内用相同大小的人形表示员工，支持点击详情和缩放；抓取时获得 167 分、47 条评论。</p>
+        <p class="item-insight"><span>解读</span>项目说明员工数来自各公司最新年报，可能滞后一年，并存在公司筛选与少数例外展示规则。这个界面把规模与人力密度放在同一视图中，但市值与员工数的时间口径不同，图形疏密不能直接视为劳动生产率或利润率。</p>
+      </div>
+      <div class="item-meta">Big Whale Hunting；HN · 2026-10-25 23:05</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>SEO</span><span>Agent 可访问性</span><span>内容分发</span></div>
+        <span class="item-source">GitHub · claude-seo</span>
+      </div>
+      <h3><a href="https://github.com/AgriciDaniel/claude-seo" target="_blank" rel="noreferrer">Claude SEO 将技术 SEO 与 Agent 可访问性纳入技能包 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">AgriciDaniel/claude-seo 的仓库简介列出 26 个子技能、19 个子智能体，覆盖技术 SEO、结构化数据、GEO/AEO、外链、本地与电商搜索，并纳入 WebMCP、llms.txt 等 Agent 可访问性主题；另有 9 个可选的实时数据扩展。</p>
+        <p class="item-insight"><span>解读</span>本次 Trending 抓取记录累计 20,947 个 Star、当日新增 197 个。项目把传统搜索检查和 AI 访问相关检查放入同一工具体系，但功能清单不等于搜索平台认可的排名因素，也不构成流量增长效果的证据。</p>
+      </div>
+      <div class="item-meta">GitHub · claude-seo</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-engineering">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>开发者与工程实践</h2>
+        <span class="section-count">5 条</span>
+      </div>
+      
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent 架构</span><span>Skills</span><span>成本与延迟</span></div>
+        <span class="item-source">Anthropic；juya；AI HOT</span>
+      </div>
+      <h3><a href="https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop" target="_blank" rel="noreferrer">Anthropic 比较单 Agent 循环与多子 Agent 的成本和质量 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Anthropic 的指南讨论把路由器、规划器与领域子智能体并入主 Agent 循环，通过 Skills 和工具搜索按需加载上下文及工具。其应用 AI 团队称，多家企业部署对比中，带 Skills 的单 Agent 经常取得更高质量、更低单任务成本和延迟，一家客户的运行速度约为原多 Agent 框架的两倍；</p>
+        <p class="item-insight"><span>解读</span>官方同时提供迁移工具包与 Claude API Skills。文章仍保留上下文隔离和任务并行等子智能体使用场景，因此比较针对的是编排方式及其额外开销，而不是宣称单 Agent 在所有任务上胜出。</p>
+      </div>
+      <div class="item-meta">Anthropic；juya；AI HOT</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>推理架构</span><span>片上内存</span><span>长上下文</span></div>
+        <span class="item-source">Cerebras；HN</span>
+      </div>
+      <h3><a href="https://www.cerebras.ai/blog/how-we-deploy-trillion-parameter-frontier-models-on-cerebras" target="_blank" rel="noreferrer">Cerebras 用约 3T 参数 Kimi K3 解释多晶圆推理映射 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Cerebras 在技术文章中以约 3T 参数的 Kimi K3 为例，假设平均请求长度 256K、权重 4 位量化、KV 缓存 8 位，将 69 个线性注意力层和 24 个稠密注意力层映射到 59 片 WSE-3T 晶圆。每片拥有 44GB 片上内存，方案让权重尽量常驻、只在晶圆间传递激活，并通过流水线同时处理多个请求。</p>
+        <p class="item-insight"><span>解读</span>文章把层的存储、KV 缓存和并发数联系起来，说明长上下文服务不只受参数量约束；这是带明确假设的架构说明，不能直接当作所有负载下的性能承诺。</p>
+      </div>
+      <div class="item-meta">Cerebras；HN</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>供应链安全</span><span>GitHub Actions</span><span>凭证</span></div>
+        <span class="item-source">Wiz Research；Hacker News</span>
+      </div>
+      <h3><a href="https://www.wiz.io/blog/gheist-attempted-scaled-abuse-of-stolen-github-tokens-stumbles" target="_blank" rel="noreferrer">Wiz 披露 Gheist 滥用 GitHub Token 窃取 CI 密钥 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Wiz 称自 9 月 15 日追踪到 Gheist 活动，恢复了超过 850 个受影响账户下的 13,500 多个植入分支；攻击者用被盗 GitHub Token 提交工作流，把密钥编码后写入日志，再经 GitHub API 下载并快速删除运行记录。</p>
+        <p class="item-insight"><span>解读</span>研究指出，所检查的公开仓库攻击被审批机制拦住，但私有仓库和 GitHub Enterprise 环境出现成功执行及后续云凭证活动，10 月 24 日攻击仍在演变。密钥经过编码后可能避开原文遮罩，而限制作业 GITHUB_TOKEN 权限并不等于限制 secrets 上下文；风险涉及仓库授权、CI 执行与云身份之间的连接。</p>
+      </div>
+      <div class="item-meta">Wiz Research；Hacker News</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>自托管</span><span>PaaS</span><span>部署</span></div>
+        <span class="item-source">GitHub Trending · Coolify</span>
+      </div>
+      <h3><a href="https://github.com/coollabsio/coolify" target="_blank" rel="noreferrer">Coolify 在 Trending 获关注，自托管 PaaS 覆盖应用与数据库 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Coolify 在本次 GitHub Trending 快照中累计 64,433 个 Star、当日新增 152 个，项目简介列出静态站点、数据库、全栈应用和 360 多种一键服务，部署目标是用户自己的服务器。它将部分 PaaS 部署体验交付为可自托管的软件，而不是只提供托管服务账户。</p>
+        <p class="item-insight"><span>解读</span>控制部署环境也意味着基础服务器、备份与故障恢复不会因为安装平台软件而自动由第三方承担；榜单没有提供这些服务的兼容性和可靠性评测。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · Coolify</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>上下文工程</span><span>Agent</span><span>工具选择</span></div>
+        <span class="item-source">Drew Breunig 原文；Hacker News</span>
+      </div>
+      <h3><a href="https://www.dbreunig.com/2026/10/24/the-state-of-context-engineering.html" target="_blank" rel="noreferrer">上下文工程复盘区分信息污染、分心、混淆与冲突 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Drew Breunig 在 10 月 24 日发布的 AGNTCon 演讲整理中，将上下文问题分为污染、分心、混淆与冲突，并展示信息增强、工具选择、上下文隔离、裁剪、外部存储和摘要六类处理方法。他以 DSPy 循环演示这些操作如何进入 Agent 的运行代码，而不只是放在提示词里。</p>
+        <p class="item-insight"><span>解读</span>文章解释了长上下文能够容纳更多信息，也会保留错误示例与过期工具结果，因此窗口上限和任务中的有效信息量是两个不同指标；这些内容是工程经验整理，不是统一基准排名。</p>
+      </div>
+      <div class="item-meta">Drew Breunig 原文；Hacker News</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-funding">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>投融资与行业机会</h2>
+        <span class="section-count">本期无强信号</span>
+      </div>
+      <span>本期无强信号</span>
+    </div>
+    <div class="section-items"><p class="empty">本期无强信号。</p></div>
+  </section>
+<section class="report-section" id="section-policy">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>政策监管与合规</h2>
+        <span class="section-count">1 条</span>
+      </div>
+      
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>版权</span><span>训练数据</span><span>诉讼</span></div>
+        <span class="item-source">Billboard、Rolling Stone；juya</span>
+      </div>
+      <h3><a href="https://www.billboard.com/pro/elvis-presley-estate-sues-suno-anthropic/" target="_blank" rel="noreferrer">猫王歌曲权利方起诉 Anthropic，争议涉及训练与生成内容 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">据 juya 引述 Billboard 和 Rolling Stone，Authentic Brands Group 旗下实体及其他 Elvis Presley 歌曲权利实体起诉 Anthropic，指控其未经授权用 274 首歌曲训练 Claude，并生成未经授权的衍生内容。报道所述索赔为每首 15 万美元，合计约 4,100 万美元。</p>
+        <p class="item-insight"><span>解读</span>这是原告提出的指控与请求，尚不能视为法院认定；争议同时涉及训练材料的使用与输出内容的权利边界，两者并不是同一个授权问题。</p>
+      </div>
+      <div class="item-meta">Billboard、Rolling Stone；juya</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-social-buzz">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>社交热度观察</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>社区讨论</span><span>工程文化</span></div>
+        <span class="item-source">Hacker News；Dan Luu · 2026-10-25 05:47</span>
+      </div>
+      <h3><a href="https://danluu.com/ambitious/" target="_blank" rel="noreferrer">Dan Luu 关于软件抱负的文章获得 742 分讨论 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">《We should be more ambitious with the software we build》在本次 HN 抓取中获得 742 分和 695 条评论，帖子发表于 10 月 24 日。它属于软件建设目标与工程文化讨论，并非产品发布或平台规则变化。</p>
+        <p class="item-insight"><span>解读</span>这里记录的是技术社区的讨论热度，不能把评论规模当作某种技术路线已经获得一致认可。</p>
+      </div>
+      <div class="item-meta">Hacker News；Dan Luu · 2026-10-25 05:47</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>设备控制权</span><span>社区热度</span></div>
+        <span class="item-source">Hacker News；log4j 原帖 · 2026-10-24 13:49</span>
+      </div>
+      <h3><a href="https://twitter.com/log4j/status/2113014142600953868?s=46" target="_blank" rel="noreferrer">三星电视 Root Shell 帖获 771 分，暂作设备控制权讨论信号 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">一则关于在三星电视上取得 Root Shell 的帖子，在本次 HN 快照中获得 771 分、583 条评论，发布时间为 10 月 24 日。当前素材没有列出受影响型号、固件范围、利用条件或厂商处置情况，因此不能据标题推断为所有三星电视的通用漏洞。</p>
+        <p class="item-insight"><span>解读</span>其热度主要反映设备控制权与系统开放性的社区关注，本期不将其列为基础设施安全通告。</p>
+      </div>
+      <div class="item-meta">Hacker News；log4j 原帖 · 2026-10-24 13:49</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>多 Agent</span><span>开源热度</span><span>金融研究</span></div>
+        <span class="item-source">GitHub · TradingAgents</span>
+      </div>
+      <h3><a href="https://github.com/TauricResearch/TradingAgents" target="_blank" rel="noreferrer">TradingAgents 累计超 11 万 Star，热度不等于收益验证 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">TauricResearch/TradingAgents 在本次 Trending 抓取中累计 114,665 个 Star、当日新增 381 个，仓库将其描述为多智能体大语言模型金融交易框架。项目关注度反映了金融任务中多 Agent 编排的传播情况，但素材没有提供经独立核验的实盘收益、交易成本或风险指标。</p>
+        <p class="item-insight"><span>解读</span>本条仅作为开源社区兴趣信号，不把仓库热度写成投资表现。</p>
+      </div>
+      <div class="item-meta">GitHub · TradingAgents</div>
+    </div>
+  </article></div>
+  </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">© 2026 Whistle. 低噪音互联网与 AI 日报。</footer>
+  <script>
+    (() => {
+      const themeKey = "whistle-theme";
+      const themeButton = document.querySelector("[data-theme-toggle]");
+      const setTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        try { localStorage.setItem(themeKey, theme); } catch {}
+        if (themeButton) {
+          const label = theme === "dark" ? "切换到亮色模式" : "切换到暗色模式";
+          themeButton.setAttribute("aria-label", label);
+          themeButton.setAttribute("title", label);
+        }
+      };
+      let currentTheme = document.documentElement.dataset.theme || "dark";
+      setTheme(currentTheme);
+      themeButton?.addEventListener("click", () => {
+        currentTheme = currentTheme === "dark" ? "light" : "dark";
+        setTheme(currentTheme);
+      });
+
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = links
+        .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))
+        .filter((item) => item.section);
+      if (!sections.length) return;
+
+      const updateActiveToc = () => {
+        const threshold = Math.max(120, window.innerHeight * 0.28);
+        let active = null;
+        for (const item of sections) {
+          const rect = item.section.getBoundingClientRect();
+          if (rect.top <= threshold && rect.bottom > 80) active = item;
+        }
+        links.forEach((link) => link.removeAttribute("aria-current"));
+        if (active) active.link.setAttribute("aria-current", "true");
+      };
+
+      updateActiveToc();
+      window.addEventListener("scroll", updateActiveToc, { passive: true });
+      window.addEventListener("resize", updateActiveToc);
+    })();
+  </script>
+</body>
+</html>
