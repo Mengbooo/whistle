@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-30",
+  "title": "Whistle 互联网日报｜2026-10-30",
+  "summary": "早上好，今天有几件事值得留意：OpenAI 提高 Pro 与 Business Premium 的用量上限，Google 把 Gemini 的文件生成和编辑放进聊天，Mistral Large 4 以 1T 参数多模态 MoE 形式开放权重，Factory 则把程序化工具调用做成 Agent 的默认执行方式。与此同时，Google 关闭 Jules 并将经验并入 Antigravity，OpenRouter 用速度、可靠性和质量重排模型供应商路由，Reddit 测试登录优先以应对 AI 搜索带来的流量下滑。模型能力、Agent 工具和内容分发都从单次回答转向更长的执行链路，但成本、权限、引用可靠性和安全审计也一起进入产品边界。今天没有新的强监管落地，合规信号更多来自智能体攻击和模型失准监测。",
+  "theme": "Agent 执行链路与 AI 分发边界同时变长",
+  "topline": [
+    "OpenAI 将 Pro 各档与 Business Premium 用量上限翻倍，扩展用量仍单独计算。",
+    "Mistral Large 4 开放权重，1T 参数、49B 激活、1M 上下文的多模态 MoE 进入开发者工具链。",
+    "Google 关停 Jules 并把异步编程 Agent 的经验并入 Antigravity，同时开放插件市场。",
+    "Reddit 以登录优先应对 AI 抓取和搜索引荐下降，开放网络的流量分配正在变化。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "几项变化同时落在模型使用成本、Agent 执行方式和开放网络分发上。",
+      "items": [
+        {
+          "title": "OpenAI 将 Pro 与 Business Premium 用量上限翻倍",
+          "summary": "OpenAI 宣布 Pro 100、Pro 200、Pro 500 和 Business Premium 的所有用量上限翻倍，现有订阅者无需等续订即可获得新额度，Pro 200 月费仍为 200 美元，Work 与 Codex 用量保持不变；dots 的扩展用量暂时继续提供，并与默认用量分开计算。变化直接作用于高频模型和编码使用的可用量，而不是单纯降价，订阅档位的实际容量和扩展额度会成为产品体验的一部分。",
+          "sourceName": "juya AI 早报 / OpenAI",
+          "sourceUrl": "https://x.com/thsottiaux/status/2115850175868727621",
+          "publishedAt": "2026-10-30T01:23:51.000Z",
+          "tags": [
+            "AI 产品",
+            "订阅"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Mistral Large 4 开放权重，激活参数 49B、上下文 1M token",
+          "summary": "Mistral Large 4（Le Chonk）以约 1T 总参数、49B 激活参数的多模态多语言 MoE 架构发布，原生支持 1M token 上下文；Hugging Face 已上线权重，vLLM 宣布 Day 0 支持，Unsloth 还发布了约 233GB 的 1-bit GGUF 量化版本。总参数很大，但稀疏激活和量化让本地部署、服务化推理与长上下文实验有了不同的成本入口，模型选择不再只看总参数。",
+          "sourceName": "Hugging Face 官方团队博客",
+          "sourceUrl": "https://huggingface.co/blog/mistral-large4",
+          "publishedAt": "2026-10-29T00:00:00.000Z",
+          "tags": [
+            "模型",
+            "开源权重",
+            "多模态"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google 关停异步编程 Agent Jules，经验并入 Antigravity",
+          "summary": "Google 宣布异步编程 Agent Jules 进入关停流程，并称正在把它在后台自主执行任务方面的经验整合进 Antigravity，形成统一的 Agent 优先开发环境。Jules 页面同时提供了导出设置、环境变量、定时任务、已连接仓库、记忆、脚本和会话的工具。产品从实验服务并入更大平台，迁移脚本则把 Agent 的配置和历史会话变成需要被保留的用户资产。",
+          "sourceName": "Jules 官方更新",
+          "sourceUrl": "https://jules.google/docs/changelog/2026-10-29",
+          "publishedAt": "2026-10-29T00:00:00.000Z",
+          "tags": [
+            "Agent",
+            "开发工具",
+            "Google"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Reddit 测试登录优先，以应对 AI 搜索引荐下降",
+          "summary": "Reddit 在第三季度财报中宣布将转向以登录为主的体验，先在美国以外市场测试，以减少 AI 抓取并改善广告变现。公司称 10 月来自搜索的引荐平均每周减少超过 100 万次，第三季度全球日活 1.303 亿、美国日活同比下降 2%，但收入同比增长 53% 至 8.95 亿美元。内容平台开始把登录、抓取权限和广告身份绑定在一起，开放网页带来的自然分发不再是稳定前提。",
+          "sourceName": "TechCrunch：AI",
+          "sourceUrl": "https://techcrunch.com/2026/10/29/as-search-traffic-dries-up-reddit-announces-its-shifting-to-a-logged-in-experience/",
+          "publishedAt": "2026-10-29T20:08:31.000Z",
+          "tags": [
+            "平台",
+            "搜索",
+            "分发"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "模型、Agent harness 和文件交互产品都在扩大一次请求能完成的工作范围。",
+      "items": [
+        {
+          "title": "Factory Droid 1.0 默认使用程序化工具调用",
+          "summary": "Factory 发布 Droid 1.0，将程序化工具调用设为默认：模型先编写 JavaScript 程序，再在沙箱中一次运行数百个工具。Factory 称在 Terminal-Bench 4 上效率最高提升 20%；一个迁移 151 个 Linear 问题的案例从约 36 次请求、3.1M 输入 token 降至 2 次请求、约 61K token。工具调用从逐项往返变成批量执行，token 消耗、权限边界和沙箱设计因此被放在同一条执行链上。",
+          "sourceName": "Factory 研究 / 产品",
+          "sourceUrl": "https://factory.com/news/frontier-harness",
+          "publishedAt": "2026-10-29T00:00:00.000Z",
+          "tags": [
+            "Agent",
+            "开发工具",
+            "工具调用"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenRouter 重做供应商路由，减少 429 但成本上升",
+          "summary": "OpenRouter 将默认 provider 路由从主要按输入 token 价格排序，改为综合有效价格、首 token 延迟、吞吐、可靠性和输出质量计算 Routing Cost。在超过 2400 万次请求的一周实验中，TTFT p95 下降 18.9%，中位吞吐提升 16.3%，出现 429 的请求从 7.1% 降至 3.8%，重试比例从 10.4% 降至 6.9%，每百万 token 成本则上升 7.3%；仍可手动指定按价格路由。多模型服务的成本已经和稳定性、延迟一起进入调度逻辑。",
+          "sourceName": "OpenRouter：Announcements",
+          "sourceUrl": "https://openrouter.ai/blog/announcements/how-we-rebuilt-provider-routing/",
+          "publishedAt": "2026-10-29T00:00:00.000Z",
+          "tags": [
+            "模型路由",
+            "基础设施"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Gemini 支持在聊天中生成、预览和编辑文件",
+          "summary": "Gemini 应用现在可以直接生成、预览和编辑文档、PDF、演示文稿、电子表格、Markdown、TXT 和代码文件；用户能展开全屏修改、选中文字提问或让模型调整文字与视觉元素。PDF 的预览和编辑支持网页与移动端，其余格式目前仅支持网页端，且 Workspace 管理员没有对应控制选项。聊天界面开始承载可继续修改的结构化文件，输出形态从回答文本变成可编辑的中间产物。",
+          "sourceName": "Google Gemini 官方博客",
+          "sourceUrl": "https://blog.google/innovation-and-ai/products/gemini-app/edit-files-directly/",
+          "publishedAt": "2026-10-29T16:36:12.000Z",
+          "tags": [
+            "AI 应用",
+            "文件编辑"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google Antigravity 推出 Plugin Marketplace",
+          "summary": "Antigravity 的 Plugin Marketplace 在 App 和 CLI 中提供第三方及 Google 插件，首批包括 Figma、Stripe、Atlassian、Canva、Datadog、Unity 等。Google 称插件把此前需要手动配置的 MCP 端点、环境变量、领域 skills 和自定义 subagents 打包，用户可在 App 安装，也可运行 `agy plugin install`。Agent 接入外部系统从配置文件和命令行设置转成可分发、可更新的插件目录。",
+          "sourceName": "Google Antigravity 官方博客",
+          "sourceUrl": "https://antigravity.google/blog/plugin-marketplace-in-antigravity",
+          "publishedAt": "2026-10-29T00:00:00.000Z",
+          "tags": [
+            "Agent",
+            "插件",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Pika H3 Flex 将视频生成采样从 50 步压到 6 步",
+          "summary": "Pika Labs 基于 MiniMax H3 做后训练，发布并开源 Pika H3 Flex，将采样步数从 50 步压缩到 6 步，并称生成时间大幅降低、质量有所提升。这个变化落在视频生成的推理阶段，不是单纯增加模型参数；生成速度、单位成本和交互等待时间会因此一起变化。",
+          "sourceName": "AI HOT：X 卡兹克",
+          "sourceUrl": "https://x.com/Khazix0918/status/2115898252004622617",
+          "publishedAt": "2026-10-29T20:07:09.000Z",
+          "tags": [
+            "视频生成",
+            "开源模型"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Figma 公开专用画布编辑模型的训练方法",
+          "summary": "Figma 介绍其为 Agent 训练专用画布编辑模型的过程：先用超过 25 万条合成样本进行 SFT，使早期 Llama 3.3 70B 在编辑任务上接近当时顶级模型，再转向 RL，并用确定性校验器和视觉评委评测。画布编辑不是只生成一段文本，训练过程需要同时验证对象结构、位置和视觉结果，产品内专用模型因此承担了通用模型之外的约束。",
+          "sourceName": "Figma AI / Agent / Make",
+          "sourceUrl": "https://www.figma.com/blog/training-a-figma-fluent-editing-model/",
+          "publishedAt": "2026-10-29T21:00:00.000Z",
+          "tags": [
+            "设计工具",
+            "Agent",
+            "模型训练"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "腾讯混元开源交互式视频世界模型 Hy-Nomas",
+          "summary": "腾讯混元发布 Hy-Nomas 技术报告和 Hy-Nomas-Bench 数据集，定位为开源交互式视频世界模型，并提供在线试用与 Genie 4 示例的复现对比。开源评测集让研究者可以围绕交互一致性和视频世界建模复现实验；输出从一次性视频生成转向可被交互推进的环境模拟。",
+          "sourceName": "腾讯混元",
+          "sourceUrl": "https://x.com/TencentHunyuan/status/2115851165904814283",
+          "publishedAt": "2026-10-29T17:00:03.000Z",
+          "tags": [
+            "世界模型",
+            "视频生成",
+            "开源"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "MOSS-Image 开放权重，支持长文本和 JSON Layout",
+          "summary": "OpenMOSS、复旦 NLP、上海创智和 MOSI 发布 5B 参数的 MOSS-Image，采用单流 DiT 从零预训练，支持最长 4K token 提示词、中英文长文本渲染和可编辑 JSON Layout。结构化布局字段让生成结果不只是一张不可拆分的图片，也能携带可编辑的版面信息。",
+          "sourceName": "OpenMOSS / 复旦 NLP / 上海创智 / MOSI",
+          "sourceUrl": "https://openmoss.ai/blog/cn/moss-image/",
+          "publishedAt": "2026-10-28T16:00:00.000Z",
+          "tags": [
+            "图像生成",
+            "开源模型",
+            "布局"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "OpenRouter 给出 PDF 表格结构化抽取方案",
+          "summary": "OpenRouter 的教程把 PDF 文件连同严格 JSON schema 发送给支持文件输入的模型，让表格以带类型的行返回，并把括号亏损、千分位和脚注标记等清理规则写进字段描述。这里的重点不是让模型读懂一页 PDF，而是用 schema 约束输出，再把格式清洗纳入字段定义，文件理解因此进入可校验的数据处理流程。",
+          "sourceName": "OpenRouter：Announcements",
+          "sourceUrl": "https://openrouter.ai/blog/tutorials/extract-tables-from-pdf-llm/",
+          "publishedAt": "2026-10-29T00:00:00.000Z",
+          "tags": [
+            "文档处理",
+            "结构化输出"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "MiniCPM-OCR 以 1.3B 参数覆盖文档解析",
+          "summary": "面壁智能发布并开源 MiniCPM-OCR 系列，包括 1.3B 的解析模型和 2B 的判别模型；MiniCPM-OCR 1.0 在 Real5-OmniDocBench 得分 93.68、OCRBench v2 得分 54.7，经过 DSpark 加速后吞吐达到每秒 1.217 页，端到端效率提升 55%。轻量模型和推理加速把 OCR 从云端大模型能力扩展到更靠近本地或批处理环节的位置。",
+          "sourceName": "公众号：面壁智能（MiniCPM）",
+          "sourceUrl": "https://mp.weixin.qq.com/s?__biz=Mzg3Mzg2MTg2NQ%3D%3D&mid=2247499654&idx=1&sn=9bcbf9492c492a5d5e611af41670425f",
+          "publishedAt": "2026-10-28T11:38:17.000Z",
+          "tags": [
+            "OCR",
+            "多模态",
+            "本地推理"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "平台更新集中在搜索、企业 AI 管理和开发生态的入口变化。",
+      "items": [
+        {
+          "title": "Google 搜索收入增长低于预期，AI Mode 变现率成为财报变量",
+          "summary": "Google 第三季度搜索收入增长约 12%，低于分析师预期的 15%；高管承认 AI Mode 查询增长很快，但变现率低于传统搜索，公司仍计划在美国及国际市场扩大聊天机器人广告项目。搜索查询增速达到五年来高位，却没有同步转化为同等广告收入，AI 搜索的回答界面正在改变广告展示和点击路径。",
+          "sourceName": "The Decoder：AI News",
+          "sourceUrl": "https://the-decoder.com/googles-ai-search-problem-finally-shows-up-in-the-earnings-report-some-investors-believe/",
+          "publishedAt": "2026-10-29T10:16:34.000Z",
+          "tags": [
+            "Google",
+            "搜索",
+            "广告"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Claude Enterprise 增加智能报告和团队共享预算",
+          "summary": "Anthropic 为 Claude Enterprise 推出智能报告，管理员可选择团队、最长 28 天时间范围和 Claude 产品，查看工作流、产出、开销和常见阻碍；每个组织每月免费生成 10 份，功能默认关闭，使用客户自管密钥、HIPAA 配置或混合部署的组织不可用。Anthropic 明确称报告不用于个人绩效和人事决定，企业 AI 产品开始把使用统计、成本归集和权限声明放在同一管理面板中。",
+          "sourceName": "Claude：Blog",
+          "sourceUrl": "https://claude.com/blog/smart-reports-surveys-pooled-budgets",
+          "publishedAt": "2026-10-28T00:00:00.000Z",
+          "tags": [
+            "企业 AI",
+            "管理",
+            "成本"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Microsoft 通过 Foundry 开放 Copilot harness",
+          "summary": "Microsoft 宣布将 GitHub 团队构建的 Copilot harness 通过 Microsoft Foundry 向开发者和企业开放；该 harness 已驱动 Copilot Code、Copilot Studio、GitHub Copilot app 和 CLI 等产品。相同的 Agent 执行层被放入云平台供外部使用，模型选择、工具权限和运行环境由产品层拆开管理。",
+          "sourceName": "Microsoft 官方博客",
+          "sourceUrl": "https://blogs.microsoft.com/blog/2026/10/28/introducing-the-microsoft-copilot-harness-unlocking-the-potential-of-truly-multi-model-agentic-work/",
+          "publishedAt": "2026-10-28T16:51:35.000Z",
+          "tags": [
+            "Microsoft",
+            "Agent",
+            "云平台"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "产品形态正在从生成结果转向可继续编辑的对象，内容平台则在重新定义未登录访问。",
+      "items": [
+        {
+          "title": "Gemini Notebook 向学生开放数百本免费教科书",
+          "summary": "Google 在 Gemini Notebook 中加入来自 S Chand Publishing、OpenStax 和 Open Textbook Library 的数百本教科书，学生可以直接浏览、选取并作为资料来源，用于生成学习指南和测验。书籍从外部链接变成产品内可检索的来源，Notebook 的内容消费、资料管理和生成式学习功能因此被放在同一个入口。",
+          "sourceName": "Google 官方博客",
+          "sourceUrl": "https://blog.google/innovation-and-ai/products/gemini-notebook/new-access-textbooks/",
+          "publishedAt": "2026-10-29T00:00:00.000Z",
+          "tags": [
+            "教育产品",
+            "内容分发"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "GitHub Octoverse：过去一年推送代码 179 亿次",
+          "summary": "GitHub 发布 2026 年 Octoverse 数据，过去 12 个月开发者推送代码 179 亿次，超过 2024 和 2025 年之和，合并 PR 达 13 亿次，报告还称超过 40% 的 PR 由 Agent 起草。这里的数字同时包含平台活动增长和 Agent 参与开发的比例，软件交付平台正在把代码、Pull Request 与智能体活动放进同一统计口径。",
+          "sourceName": "GitHub Blog",
+          "sourceUrl": "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents/",
+          "publishedAt": "2026-10-28T16:07:40.000Z",
+          "tags": [
+            "GitHub",
+            "开发活动",
+            "Agent"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "工程信号集中在模型运行效率、Agent 本地工作区和引用可靠性。",
+      "items": [
+        {
+          "title": "vLLM 为 Mistral Large 4 提供 Day 0 支持",
+          "summary": "vLLM 宣布支持 Mistral Large 4，这一 1T 参数、每 token 激活 49B 的原生多模态 MoE 模型采用 MLA 稀疏注意力、DSA top-k 索引器、跨层 KV 共享、NoPE、SSMax 和 LeRoPE，并集成 DSpark 推测解码草稿器与 Pixtral 视觉编码器。推理框架在模型发布当天跟进，意味着新架构能否快速进入可用服务，已经和权重发布同样影响落地速度。",
+          "sourceName": "vLLM 官方博客",
+          "sourceUrl": "https://vllm.ai/blog/2026-10-29-mistral-large-4",
+          "publishedAt": "2026-10-29T00:00:00.000Z",
+          "tags": [
+            "推理",
+            "vLLM",
+            "MoE"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "GitHub Trending 出现多个本地 Agent 工作区项目",
+          "summary": "GitHub 当日热门仓库中，nightly-labs/openbot 提供带独立工作区、任务队列、文件共享和浏览器控制的本地桌面 Agent 工作区；CopilotKit/OpenBot 为 Agent 提供独立浏览器、文件和工具，并记录每次行动；thedotmack/claude-mem 则压缩会话并把相关上下文注入后续任务。仓库描述显示，持久上下文、可记录的工具动作和多 Agent 协作正在成为独立的工程组件，而不是单一聊天接口的附属功能。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/nightly-labs/openbot",
+          "publishedAt": "2026-10-30T00:00:00.000Z",
+          "tags": [
+            "开源",
+            "Agent",
+            "本地工作区"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "Wiz 总结智能体攻击的七类指纹",
+          "summary": "Wiz 根据事件响应和公开披露案例，整理 AI 智能体参与真实入侵的模式，涉及 ARTEX、Hermes 等框架，以及韩国金融机构约 67,000 人信息外泄、泰国财政部和 ConnectWise 供应链中尝试攻击超过 2,250 个租户等案例。智能体可以加快侦察、凭证使用和横向移动，第三方工具调用、身份权限和执行记录因此成为安全边界的一部分。",
+          "sourceName": "Wiz Research",
+          "sourceUrl": "https://www.wiz.io/blog/the-rise-of-agentic-attacks-what-they-look-like-and-where-theyre-headed",
+          "publishedAt": "2026-10-29T14:36:22.000Z",
+          "tags": [
+            "安全",
+            "Agent",
+            "供应链"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Trakkr：AI 引用的统计数字只有 40% 能追到一致研究",
+          "summary": "Trakkr 向 ChatGPT、Perplexity、Gemini、Claude 和 Google AI Overviews 提出 200 个需要数字回答的问题，追踪到 1285 条统计引用：40% 到达说法一致的研究，8% 到达但数字或语境已变化，40% 无法核查，11% 没有可追溯出处。数字型回答的风险不只在模型是否给出引用，还在来源、口径和原始语境能否对应。",
+          "sourceName": "Trakkr Research / Hacker News",
+          "sourceUrl": "https://trakkr.ai/trakkr-research/zombie-stats",
+          "publishedAt": "2026-10-29T15:06:17.000Z",
+          "tags": [
+            "AI 可靠性",
+            "引用",
+            "研究"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "本期强信号集中在算力投入与模型基础设施融资。",
+      "items": [
+        {
+          "title": "AWS 预计 2026 年资本开支约 2200 亿美元",
+          "summary": "亚马逊 CEO Andy Jassy 重申 AWS 未来五到十年可能成为年营收 1 万亿美元业务，预计 2026 年现金资本开支约 2200 亿美元，其中大部分投向 AWS；AWS 当季营收同比增长 39%，年化营收运行率达到 1840 亿美元，公司预计 2027 和 2028 年增速均可超过 40%。云基础设施的收入预期和资本开支同时扩大，模型训练、推理和企业 Agent 的成本仍在由大规模数据中心投资支撑。",
+          "sourceName": "TechCrunch：AI",
+          "sourceUrl": "https://techcrunch.com/2026/10/29/aws-will-be-a-1t-business-jassy-says-but-first-it-will-spend-big/",
+          "publishedAt": "2026-10-29T23:42:22.000Z",
+          "tags": [
+            "AWS",
+            "云基础设施",
+            "资本开支"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "本期没有新的强监管落地，公开规则和监测机制仍在补齐模型行为与企业使用边界。",
+      "items": [
+        {
+          "title": "OpenAI 更新 Model Spec，重组模型行为准则",
+          "summary": "OpenAI 更新公开 Model Spec，将指导原则重组为忠实于人类意图、最小化伤害、诚实透明、促进人类自主和关怀五项价值，并增加上下文理解、监督和自主性的指导，减少大部分详细风格指南。公开规范从具体话术调整为价值和监督原则，模型行为边界因此更依赖上下文与可解释的治理框架。",
+          "sourceName": "OpenAI 官方动态",
+          "sourceUrl": "https://openai.com/index/updated-model-spec",
+          "publishedAt": "2026-10-29T17:00:00.000Z",
+          "tags": [
+            "AI 治理",
+            "模型规范"
+          ],
+          "importance": "medium"
+        },
+        {
+          "title": "OpenAI 扩展前沿模型失准行为监测",
+          "summary": "OpenAI 介绍针对前沿模型失准行为的四层监测系统，包括激活探针、基于模型的审查、调查智能体和自动化调查，并称将覆盖 GPT-6 Astra 及以上模型的全部强化学习运行、评估和内部 Codex 流量。监测从发布前评测扩展到训练运行和真实内部流量，模型安全边界开始由一次性测试转成持续观测。",
+          "sourceName": "OpenAI 官方动态",
+          "sourceUrl": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
+          "publishedAt": "2026-10-29T09:00:00.000Z",
+          "tags": [
+            "AI 安全",
+            "监测",
+            "治理"
+          ],
+          "importance": "medium"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "以下内容有较高讨论度，但更多是传播和情绪信号，不改变核心工作排序。",
+      "items": [
+        {
+          "title": "Hacker News 热议 Mistral Large 4 开放权重与本地运行",
+          "summary": "Mistral Large 4 开放权重的 Hacker News 帖子获得超过 1200 分，是今日技术社区最高热度的相关条目之一；讨论集中在 1T 参数 MoE、量化后本地运行和模型开放策略。它反映了开发者对大模型权重、硬件门槛和可复现实验的关注，但热度本身不能替代实际部署成本和兼容性验证。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://mistral.ai/news/mistral-large-4-oss/",
+          "publishedAt": "2026-10-29T14:13:21.000Z",
+          "tags": [
+            "社区热度",
+            "开源模型",
+            "Mistral"
+          ],
+          "importance": "low"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "优先保留 juya 与 AI HOT 中事实完整、能影响模型使用、Agent 开发、平台分发、基础设施或治理边界的条目；合并同一事件的重复报道，过滤消费电子、泛社会新闻、无明确工作关联的社区讨论，并将高热度但工作性较弱的信号放入社交热度观察。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (44 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (11 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-10-30T00:00:00.000Z"
+}
