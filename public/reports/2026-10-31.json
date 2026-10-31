@@ -1,0 +1,492 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "title": "Whistle 互联网日报｜2026-10-31",
+  "summary": "周末好，先看几条新变化：Cursor 扩展市场中的恶意 Claude Code 版本最多波及约 5000 名用户；Apple 智能确定在中国接入千问，11 月进入开发者测试；四家 AI 公司开始支持统一的训练偏好标记；科技巨头今年超过 7400 亿美元的 AI 资本开支则引发市场对现金流和回报周期的重新估价。工具侧也在继续补齐执行能力，Gemini Computer Use 正式可用，OpenAI Agents API 加入命令审核、异步压缩和提示缓存，Figma Weave 把生成与编辑流程封装成可复用节点。与此同时，AI 开发平台的供应链安全、模型利用补丁窗口自主攻击，以及内容网站从搜索获得的流量下降，正在把权限、审计、抓取规则和商业回报带到同一张账上。",
+  "theme": "AI 执行能力扩展，安全与商业成本同步显现",
+  "topline": [
+    "Cursor 扩展市场出现恶意 Claude Code 版本，最多影响约 5000 名用户，卸载扩展不足以清除独立持久化脚本。",
+    "Apple 智能在中国接入千问，11 月 4 日开放开发者测试，12 月随 iOS 27.3 正式推出。",
+    "OpenAI、Google、Microsoft 和 Anthropic 支持统一训练偏好标记，网站可通过 robots.txt 表达内容训练授权偏好。",
+    "四家科技巨头今年计划投入超过 7400 亿美元资本开支，市场开始集中评估 AI 投资的现金流压力和回报周期。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "安全事件、平台落地、内容授权和基础设施投入构成今天最直接的工作信号。",
+      "items": [
+        {
+          "title": "Cursor 扩展市场的恶意 Claude Code 版本最多影响约 5000 名用户",
+          "summary": "Cursor 确认其 VS Code 扩展市场曾分发被篡改的 Claude Code 2.1.312 和 2.1.313，影响 Windows 与 macOS，最多约 5000 名用户；恶意版本并非 Anthropic 开发，会收集主机信息并尝试植入持久化 SSH 后门。Cursor 已下架相关版本、让攻击服务器离线并恢复市场，但单纯卸载扩展不足以清除独立运行的持久化脚本。事件把 IDE 扩展市场、开发者身份凭据和本机执行权限串成了一条软件供应链风险路径。",
+          "sourceName": "Cursor Blog",
+          "sourceUrl": "https://cursor.com/blog/claude-code-extension-security-notice",
+          "publishedAt": "2026-10-29T12:00:00.000Z",
+          "tags": [
+            "供应链安全",
+            "Claude Code",
+            "Cursor"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Apple 智能在中国接入千问，11 月 4 日开放开发者测试",
+          "summary": "苹果宣布首批 Apple 智能功能将在中国接入阿里千问，覆盖现有 Siri、写作工具、视觉智能、实时翻译和照片消除等能力；11 月 4 日随 iOS 开发者 Beta 开测，12 月随 iOS 27.3 正式推出。首批支持 iPhone 16 及后续机型、iPhone Duo、iPhone 15 Pro 系列和 iPhone Air，Siri 与设备语言需设置为英文和简体中文，用户可自主选择是否开通，请求与回复不用于模型训练。本次不含下一代 Siri AI，其他平台仍要等待必要审批，国行 AI 服务的模型接入、用户授权和监管审批由此成为产品功能的一部分。",
+          "sourceName": "Apple Newsroom",
+          "sourceUrl": "https://www.apple.com.cn/newsroom/2026/10/apple-intelligence-features-are-coming-to-users-in-china/",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "Apple 智能",
+            "千问",
+            "中国市场"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "四家 AI 公司支持通过 robots.txt 统一表达训练偏好",
+          "summary": "OpenAI、Google、Microsoft 和 Anthropic 宣布支持基于 IETF 草案的通用训练偏好标记，网站可在 robots.txt 中用 policy token 对全站或指定路径表达内容是否可用于训练。Anthropic 已开始实施，OpenAI 计划未来数月落地，Google 目标为 2027 年；Microsoft 将从 2027 年 2 月 1 日随抓取生效，并在 3 月 1 日后不再把旧的 NoArchive 和 NoCache 标签视作训练或 grounding 偏好。内容授权由各家公司不同的爬虫规则转向共享声明格式，但实施时间、执行方式和法律效力仍由各服务商分别承担。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/helping-websites-express-ai-training-preferences/",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "内容授权",
+            "robots.txt",
+            "AI 训练"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "科技巨头 AI 资本开支超过 7400 亿美元，市场重新评估回报周期",
+          "summary": "Alphabet、Amazon、Meta 和 Microsoft 今年计划的资本开支合计超过 7400 亿美元，主要投向 AI 数据中心、芯片和云基础设施。投资者此前普遍奖励大额投入，如今关注点转向负自由现金流、债务增加与收入兑现速度，美股科技股随之出现连续下跌。基础设施供给仍在扩张，但资本成本和商业回报已经从远期叙事变成财报中的现金流约束。",
+          "sourceName": "TechCrunch AI",
+          "sourceUrl": "https://techcrunch.com/2026/10/30/cracks-are-emerging-in-the-ai-spending-boom/",
+          "publishedAt": "2026-10-30T21:17:40.000Z",
+          "tags": [
+            "资本开支",
+            "AI 基础设施",
+            "现金流"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "模型、Agent 和创作工具继续增加可执行能力，同时细化额度、运行环境与输出形式。",
+      "items": [
+        {
+          "title": "Claude 订阅更名为 Max 与 Ultra，认证 Ultra 账户取消五小时限制",
+          "summary": "Anthropic 将 Claude Max 5x 更名为 Max、Max 20x 更名为 Ultra，月费仍为 100 美元和 200 美元。多数现有且已验证的 Ultra 账户正逐步取消五小时使用限制，新账户和未验证账户仍保留临时限制，Ultra 周额度维持为 Pro 的 10 倍；验证目前自动进行，没有主动申请入口。调整改变的是单次连续使用窗口，而不是周总量，身份验证也被放入订阅容量管理。",
+          "sourceName": "Claude Support",
+          "sourceUrl": "https://support.claude.com/en/articles/17728952-what-is-the-ultra-plan",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "Claude",
+            "订阅",
+            "用量限制"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "OpenCode Go 为 DeepSeek V4.1 Flash 提供每月 100 美元额度",
+          "summary": "OpenCode 在 Operation Cheepseek 第四阶段为 Go 订阅用户加入 DeepSeek V4.1 Flash 每月 100 美元额度，Go 套餐每月 10 美元起，同时受五小时和周限额约束，分别为月额度的 20% 和 50%。模型按高峰与非高峰计价：每百万输入和输出 token 非高峰分别为 0.15 美元、0.60 美元，高峰分别为 0.30 美元、1.20 美元。低订阅价与高名义额度并存，实际容量由时间段价格和多层限额共同决定。",
+          "sourceName": "OpenCode",
+          "sourceUrl": "https://opencode.ai/v2/docs/console/go",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "OpenCode",
+            "DeepSeek",
+            "定价"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Qoder 支持局域网多设备配对与远程分派任务",
+          "summary": "Qoder 新增同一局域网内的设备互联，用户可用配对码连接笔记本、台式机和手机，在常用客户端向其他设备分派任务，无需配置 SSH 或切换远程桌面。终端、文件和浏览器操作在目标设备执行，过程可查看进度和补充要求，远端生成的 PPT、Excel 等文件能在当前设备预览。Agent 的执行环境由单机界面扩展到多设备，但模型目录、文件权限和运行结果仍跟随目标设备。",
+          "sourceName": "Qoder Docs",
+          "sourceUrl": "http://docs.qoder.com/qoder/execution-environments",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "Qoder",
+            "多设备",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "OpenAI Agents API 加入命令审核、异步压缩与跨会话提示缓存",
+          "summary": "OpenAI Agents API 推出五项更新：命令执行前由 Auto Review 检查潜在不当行为，会话压缩可在后台异步完成，实验性时间感知让模型识别时间流逝，工具可在会话中动态更新，系统提示则会跨会话自动缓存。新功能同时处理执行前安全、长会话上下文和重复提示成本。Agent 运行时由固定工具和同步上下文处理，转向可变工具集、后台状态维护与更细的命令审核。",
+          "sourceName": "OpenAI Agents API",
+          "sourceUrl": "https://x.com/stevendcoffey/status/2116303789649236048",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "OpenAI",
+            "Agents API",
+            "工具调用"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "商汤开源 9B 多模态模型 SenseNova-Loop-9B-Preview",
+          "summary": "商汤开源 SenseNova-Loop-9B-Preview，模型约 90 亿参数，支持图文输入、文档和编码任务，训练序列最长 262,144 token，并通过循环复用部分解码器参数增加计算深度。商汤称其在 WorkBuddy Bench 等复杂任务测试中超过 Qwen3.5-27B，达到 27B 参数级表现。参数循环把计算深度与静态参数规模拆开，部署成本仍取决于重复计算次数、上下文长度和实际吞吐。",
+          "sourceName": "SenseNova on Hugging Face",
+          "sourceUrl": "https://huggingface.co/sensenova/SenseNova-Loop-9B-Preview",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "开源模型",
+            "多模态",
+            "长上下文"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Gemini API 的 Computer Use 工具正式开放",
+          "summary": "Google 在 10 月 30 日将 Gemini API 的 Computer Use 工具转为正式可用，覆盖 Interactions API 和 GenerateContent API。该工具让模型通过界面操作完成浏览器或计算机任务，不再停留在预览接口。正式开放意味着接口稳定性和支持承诺进入生产阶段，同时也扩大了点击、输入、登录状态与外部页面之间的权限边界。",
+          "sourceName": "Gemini API Changelog",
+          "sourceUrl": "https://ai.google.dev/gemini-api/docs/changelog#10-30-2026",
+          "publishedAt": "2026-10-30T00:00:00.000Z",
+          "tags": [
+            "Gemini API",
+            "Computer Use",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Figma 发布 Weave，用节点工作流复用图像与视频创作流程",
+          "summary": "Figma 发布 Weave 创作平台，并将其工作流与 Figma 画框连接。Weave 用节点组织图像和视频生成、分支探索、多模型对比、色彩校正、合成、裁剪和 Painter 编辑，完整流程还能打包成 Weave tool，供其他成员一键运行并发布到社区。生成式创作由单次提示变成可查看、可分支、可封装的流程，模型输出和人工编辑被保留在同一张节点图中。",
+          "sourceName": "Figma",
+          "sourceUrl": "https://www.figma.com/blog/the-tldr-on-figma-weave/",
+          "publishedAt": "2026-10-31T00:58:00.000Z",
+          "tags": [
+            "Figma",
+            "创作工具",
+            "节点工作流"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Kimi K3.1 Pro 展示从参数化建模到 Blender 自动生成的 3D 流程",
+          "summary": "月之暗面发布 Kimi K3.1 Pro 的 3D 创作教程，区分参数化建模与网格化建模，并用四个案例演示在 Unreal Engine 构建场景、制作可打印台灯、调用 Blender 生成建筑，以及结合 Tripo 和 Blender 搭建微缩城市。教程强调先用图像明确目标、先搭灰模再细化，并保留各工具间的转换步骤。模型输出由文本和图片进一步进入可编辑的三维资产，流程依赖外部建模软件、代码执行和多轮视觉校验。",
+          "sourceName": "月之暗面 Kimi",
+          "sourceUrl": "https://mp.weixin.qq.com/s?__biz=MzkzMTY4NTIyNA%3D%3D&mid=2247484364&idx=1&sn=42491c3f098deb797ee8f2a17d147b3a",
+          "publishedAt": "2026-10-30T04:04:56.000Z",
+          "tags": [
+            "Kimi",
+            "3D 生成",
+            "Blender"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "OpenRouter 演示用 Agent SDK 构建常驻 Hacker News 监控",
+          "summary": "OpenRouter 发布教程，使用 `@openrouter/agent` 0.11.0 和 TypeScript 搭建定时运行的常驻 Agent，持续监控 Hacker News 并生成摘要。示例把模型调用放进周期任务，而不是等待用户逐次发起对话。常驻运行会把调度、失败重试、状态保存和长期费用带入原本以单次请求为单位的 Agent 应用。",
+          "sourceName": "OpenRouter",
+          "sourceUrl": "https://openrouter.ai/blog/tutorials/build-always-on-ai-agent/",
+          "publishedAt": "2026-10-31T00:00:00.000Z",
+          "tags": [
+            "OpenRouter",
+            "Agent SDK",
+            "自动化"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "企业数据保护、轨道计算和自动驾驶测试都在扩大平台能力的运行边界。",
+      "items": [
+        {
+          "title": "OpenAI 推出 Private Intelligence，细化企业数据与 Agent 权限控制",
+          "summary": "OpenAI 发布面向商业客户的 Private Intelligence，客户保有输入和输出等业务数据，并能控制 Agent 可访问的内容、可执行的操作以及何时触发审批。符合条件的 API 流程可启用 Zero Data Retention，在处理后不留存提示词和回复；保护推理过程的 Private Inference 目前处于预览阶段。企业 AI 的隐私边界由数据是否训练模型，扩展到运行时留存、工具权限和人工审批。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/business/private-intelligence",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "企业 AI",
+            "数据隐私",
+            "权限控制"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google 星载 TPU 完成首次推理，2027 年测试跨卫星计算",
+          "summary": "Google 的 Project Suncatcher 原型卫星已在轨启动数据中心级 TPU，运行 Gemma 4 并将生成的一首俳句回传地球；此前共有四颗 TPU 被送入轨道，用于验证启动、推理和通信链路。Google 计划在 2027 年发射两颗搭载 TPU 的卫星，测试跨卫星分布式 AI 计算。当前成果仍是原型验证，后续难点落在卫星间通信、能源、散热和持续运维，而不是一次模型回复本身。",
+          "sourceName": "Google",
+          "sourceUrl": "https://blog.google/innovation-and-ai/models-and-research/google-research/project-suncatcher-satellite-response/",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "Google",
+            "TPU",
+            "卫星计算"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Toyota 与 Waymo 计划 2027 年在日本测试自动驾驶 bZ4X 车队",
+          "summary": "Toyota 与 Waymo 宣布把 2025 年 4 月达成的初步合作推进到测试阶段，将从 2027 年起在日本验证搭载 Waymo 自动驾驶系统的 Toyota bZ4X 车队，之后计划扩展到英国等 Waymo 服务市场。合作把整车制造、自动驾驶软件与本地道路验证分开承担。跨市场部署仍受车辆适配、地图数据、道路规则和当地许可共同限制。",
+          "sourceName": "Waymo",
+          "sourceUrl": "https://waymo.com/blog/2026/10/toyota-bz4x-partnership",
+          "publishedAt": "2026-10-30T00:00:00.000Z",
+          "tags": [
+            "Waymo",
+            "Toyota",
+            "自动驾驶"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "搜索分发减弱和补贴拉新分别影响内容平台与消费级 AI 产品的增长方式。",
+      "items": [
+        {
+          "title": "Reddit 每周流失逾百万 Google 搜索访问，并测试登录墙限制抓取",
+          "summary": "Reddit CEO Steve Huffman 表示，10 月平台每周减少超过 100 万次来自 Google 搜索的访问，并称 Google AI Mode 几乎不向网站输送流量；公司正在美国以外测试登录墙，同时继续与 AI 服务商谈判数据授权。Reddit 业绩强劲但股价仍下跌超过 25%，显示搜索引荐下降已经进入市场对内容平台增长的估值。开放页面、搜索分发、广告身份和训练数据授权正被重新组合。",
+          "sourceName": "The Decoder",
+          "sourceUrl": "https://the-decoder.com/googles-ai-mode-doesnt-drive-traffic-for-anybody-reddit-ceo-huffman-warns-the-entire-web/",
+          "publishedAt": "2026-10-30T17:15:24.000Z",
+          "tags": [
+            "Reddit",
+            "AI 搜索",
+            "流量分发"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "豆包用 30 天订阅体验和签到额度拉动桌面端使用",
+          "summary": "豆包从 10 月 30 日起向新用户提供电脑版 30 天免费订阅体验，所有用户可通过每日签到和完成任务领取额度，连续 30 天最多获得 8800 额度，赠送额度有效期为 30 天。活动把拉新入口放在桌面端，并用每日任务和限时额度维持回访。订阅试用、任务频次与额度到期被组合成一套消费级 AI 产品的留存机制。",
+          "sourceName": "豆包",
+          "sourceUrl": "https://mp.weixin.qq.com/s/SyRyGyX-5O_v--1z3msLgg",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "豆包",
+            "订阅试用",
+            "用户增长"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "今天的工程信号集中在补丁窗口攻击、平台供应链安全、持续学习和 Agent 基础组件。",
+      "items": [
+        {
+          "title": "GLM 5.3 被用于在补丁窗口期自主构建 Firefox 攻击",
+          "summary": "Epoch AI 实验发现，Z.ai 在 8 月发布的开源权重模型 GLM 5.3 能读取 Mozilla 已发布但尚未推送给用户的安全补丁，自主构建网页攻击；访问恶意页面即可读取访客电脑文件。实验覆盖 9 月 17 日至 10 月 26 日发布的六个 Firefox 版本，模型对这些版本全部完成利用。安全补丁公开到用户安装之间的时间差，正在从人工逆向窗口变成模型可自动处理的攻击输入。",
+          "sourceName": "Epoch AI",
+          "sourceUrl": "https://epochai.substack.com/p/glm-patch-gap-exploit-firefox",
+          "publishedAt": "2026-10-30T12:07:16.000Z",
+          "tags": [
+            "浏览器安全",
+            "自动化攻击",
+            "补丁窗口"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Wiz 汇总十月九起 AI 开发平台安全事件",
+          "summary": "Wiz 研究团队统计，10 月至少有九个 AI 开发者平台披露安全事件，涉及 Fireworks AI、Lightning AI、Railway、Warp 和 OpenCode 等服务，多起事件指向凭据窃取、Agent swarm 攻击和以模型蒸馏为目的的数据窃取。事件并非集中在单一模型漏洞，而是分布在身份、扩展、云环境和自动化工具链。AI 开发平台持有的高权限令牌和可执行工具，使一次供应链入侵能够跨越代码、模型与基础设施。",
+          "sourceName": "Wiz Research",
+          "sourceUrl": "https://www.wiz.io/blog/black-october-for-ai-developer-platforms",
+          "publishedAt": "2026-10-30T22:51:44.000Z",
+          "tags": [
+            "AI 安全",
+            "开发平台",
+            "凭据"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Google 提出 Sleep 框架，让语言模型在持续学习中保留知识",
+          "summary": "Google Research 发布 Sleep framework，探索语言模型在持续学习新信息时如何保留既有知识，相关 Hacker News 帖子获得 167 分。框架借鉴离线整理记忆的思路，把新知识吸收与旧知识巩固分成不同阶段，以降低持续训练中的灾难性遗忘。它仍属于研究方案，但直接对应长期运行 Agent 和持续更新模型面临的知识覆盖问题。",
+          "sourceName": "Google Research",
+          "sourceUrl": "https://research.google/blog/the-sleep-framework-a-new-way-for-llms-to-retain-knowledge-in-continual-learning/",
+          "publishedAt": "2026-10-28T12:24:25.000Z",
+          "tags": [
+            "持续学习",
+            "模型记忆",
+            "研究"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "GitHub Trending 聚集持久记忆、独立运行环境与 Agent skills 项目",
+          "summary": "GitHub Trending 当日出现多类 Agent 基础组件：claude-mem 记录并压缩会话，再向 Claude Code、Codex、Gemini、OpenCode 等后续任务注入相关上下文；OpenBot 为每个 Agent 提供独立浏览器、文件和工具，并记录执行前后的动作；Expo 与 Anthropic 的 skills 仓库则把领域操作说明打包分发。热门项目把持久记忆、隔离环境、审计记录和技能包拆成独立模块，Agent 工程不再只由模型和提示词组成。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/thedotmack/claude-mem",
+          "publishedAt": "2026-10-31T00:00:00.000Z",
+          "tags": [
+            "GitHub Trending",
+            "Agent 记忆",
+            "skills"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "基础设施融资继续放大，企业 Agent 收入也出现新的规模化数字。",
+      "items": [
+        {
+          "title": "Nvidia 洽谈为 Anthropic 数据中心项目提供数十亿美元债务担保",
+          "summary": "据 The Information 报道并获 Bloomberg 佐证，Nvidia 正洽谈为 Nscale 在西弗吉尼亚建设的数据中心项目担保数十亿美元债务融资，该项目服务 Anthropic，后者已为首栋建筑签署 446 亿美元合同。若交易落地，芯片供应商将不只出售算力硬件，还会以信用支持帮助客户完成基础设施融资。AI 数据中心的设备销售、长期算力采购和项目债务由此被绑定在同一资本结构中。",
+          "sourceName": "TechCrunch AI",
+          "sourceUrl": "https://techcrunch.com/2026/10/30/nvidia-weighs-playing-the-cosigner-for-nscales-ai-data-center-in-west-virginia/",
+          "publishedAt": "2026-10-31T01:20:05.000Z",
+          "tags": [
+            "Nvidia",
+            "数据中心",
+            "债务融资"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "AWS 预计 2026 年资本开支约 2200 亿美元",
+          "summary": "Amazon CEO Andy Jassy 在季度财报电话会上表示，AWS 未来五到十年可能达到年营收 1 万亿美元，Amazon 预计 2026 年现金资本开支约 2200 亿美元，其中大部分投入 AWS，2027 年还会大幅增加。收入目标与资本投入同时扩大，反映云厂商仍在用长期基础设施建设承接模型训练、推理和企业 Agent 需求。如此规模的投入也会继续影响算力价格、折旧和云业务自由现金流。",
+          "sourceName": "TechCrunch AI",
+          "sourceUrl": "https://techcrunch.com/2026/10/29/aws-will-be-a-1t-business-jassy-says-but-first-it-will-spend-big/",
+          "publishedAt": "2026-10-29T23:42:22.000Z",
+          "tags": [
+            "AWS",
+            "资本开支",
+            "云计算"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Sierra ARR 突破 4 亿美元，五个月内再次翻倍",
+          "summary": "企业 Agent 公司 Sierra 宣布年度经常性收入已超过 4 亿美元，第三季度单季新增超过 1.5 亿美元，从 2 亿美元增至 4 亿美元用时五个月，快于此前一次翻倍所用的六个月。该数字来自公司披露，尚未给出客户集中度、毛利率和合同期限等完整口径。它仍提供了企业客服与业务 Agent 从试点进入大额年度合同的收入信号。",
+          "sourceName": "Sierra",
+          "sourceUrl": "https://sierra.ai/blog/our-customers-ambition-is-accelerating-our-growth",
+          "publishedAt": "2026-10-30T12:50:00.000Z",
+          "tags": [
+            "Sierra",
+            "ARR",
+            "企业 Agent"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "版权边界、未成年人保护和生成式工具的知识产权限制都有新的平台动作。",
+      "items": [
+        {
+          "title": "Claude Code 增加限制，避免重制特定现有游戏",
+          "summary": "Anthropic 技术团队成员 Addy Osmani 确认，Claude Code 为 Opus 5.5 的提示词加入规则，即使改名或声称原创，也不得重制他人的特定现有游戏；原创游戏、同类型游戏以及使用用户自有设计和资产制作的项目不受此限制。Anthropic 将规则与知识产权使用政策相连。生成式编码工具的版权控制由事后内容治理进入模型运行时提示，边界落在特定作品复刻与类型化创作之间。",
+          "sourceName": "Addy Osmani",
+          "sourceUrl": "https://x.com/addyosmani/status/2116213240363729013",
+          "publishedAt": "2026-10-31T01:19:32.000Z",
+          "tags": [
+            "Claude Code",
+            "游戏",
+            "知识产权"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "OpenAI 汇编法庭之友意见，继续主张 AI 训练属于合理使用",
+          "summary": "OpenAI 汇总《纽约时报》相关诉讼中提交的法庭之友意见，来源包括图书馆协会、法律学者、独立创作者和美国政府。这些意见主张模型训练具有转换性，不构成版权法认可的市场损害，并警告收窄合理使用会影响科研与经济活动；完整文件仍以法院公开卷宗为准。这是诉讼一方整理的支持材料，并非法院结论，但它集中呈现了美国 AI 训练版权争议中的核心法律论证。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/fair-use-benefits-everyone",
+          "publishedAt": "2026-10-30T00:00:00.000Z",
+          "tags": [
+            "合理使用",
+            "版权",
+            "AI 训练"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "OpenAI 将每半年发布社区安全报告，并加强未成年人暴力内容限制",
+          "summary": "OpenAI 承诺在 2027 年初发布首份社区安全报告，覆盖 2026 年下半年，此后每半年更新识别与处置社区安全风险的方式和效果；公司称 2026 年第三季度已向执法机构转介 200 余条线索。未来几周，ChatGPT 将限制向未成年人提供可能被用于暴力的武器和安防系统实用信息，并在对话持续表现出暴力执念时自动终止。平台治理由使用政策扩展到定期透明度报告、年龄保护和会话级中止机制。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/community-safety-report-and-new-protections-for-teens/",
+          "publishedAt": "2026-10-30T09:00:00.000Z",
+          "tags": [
+            "平台安全",
+            "未成年人",
+            "透明度报告"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "技术社区的高讨论集中在开放权重大模型和 AI 参与运维后的技能结构变化。",
+      "items": [
+        {
+          "title": "Mistral Large 4 开放权重在 Hacker News 获得 1600 余分",
+          "summary": "Mistral Large 4 开放权重的 Hacker News 帖子获得 1678 分和 400 余条评论，是今日技术社区热度最高的 AI 条目。模型采用约 1T 总参数、约 49B 激活参数的多模态 MoE 架构，并支持 1M token 上下文，相关权重与推理工具已陆续上线。高分主要反映社区对开放权重、硬件门槛和本地运行的关注，实际部署仍受数百 GB 存储、内存和推理成本限制。",
+          "sourceName": "Hacker News / Mistral",
+          "sourceUrl": "https://mistral.ai/news/mistral-large-4-oss/",
+          "publishedAt": "2026-10-29T14:13:21.000Z",
+          "tags": [
+            "Mistral",
+            "开放权重",
+            "社区热度"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "AI 是否削弱 SRE 技能的讨论在 Hacker News 获得 500 余分",
+          "summary": "一篇讨论 AI 并未替代 SRE、却可能削弱排障技能积累的文章在 Hacker News 获得 509 分和 300 余条评论。文章关注自动生成修复步骤后，工程师是否减少了对系统状态、因果链和故障模式的直接理解。它属于社区观点和职业情绪信号，并非量化研究，但讨论规模反映出 AI 辅助运维的评价标准正从处理速度扩展到知识保留与故障责任。",
+          "sourceName": "Hacker News / SigNoz",
+          "sourceUrl": "https://newsletter.signoz.io/p/ai-isnt-replacing-sres-its-deskilling",
+          "publishedAt": "2026-10-30T15:52:18.000Z",
+          "tags": [
+            "SRE",
+            "AI 辅助",
+            "社区讨论"
+          ],
+          "importance": "normal"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "合并 Cursor 恶意扩展、Apple 智能接入千问、Claude 套餐调整、Google 轨道 TPU 和 AI 资本开支等多源重复报道；过滤弱相关消费电子、娱乐、纯传闻及分数不足 200 的一般技术讨论。Mistral Large 4 因当日 HN 热度极高且前一期已刊发核心事实，本期仅作为社交热度延续信号保留。",
+  "fetchErrors": [],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "ok (40 items)",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (43 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (15 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-10-31T01:53:28.000Z"
+}
