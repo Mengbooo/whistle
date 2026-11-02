@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="早上好，今天有几件事值得留意：美团发布 1.6 万亿参数的 LongCat-2.5，强调原生多模态、长程智能体和复杂代码库开发；Codex 的 28 天改进计划以两次可留存重置收尾；AI 智能体已经在严格人工监督下参与活体小鼠脑部注射，但模型会因不可逆操作风险拒绝执行。工程侧，Linux TCP 高危漏洞、AI 生成代码带来的 JavaScript 框架成本，以及一批面向浏览器、记忆、语音和本地模型运行的开源项目受到关注。平台和商业信号也很直接：Grok 服务成本与收入的矛盾被公开提及，OpenAI 据报准备推动更强 AI 安全保障的政策讨论。今天的素材不多，但从模型能力、Agent 工具到基础设施和治理边界，几条新闻都落在同一个事实层面：AI 正在进入更长流程，权限、成本、可回溯性和人类审批随之成为产品的一部分。">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>Whistle 互联网日报｜2026-11-02</title>
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem("whistle-theme");
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        }
+      } catch {}
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #0d0d0d;
+      --panel-soft: #151515;
+      --line: #242424;
+      --line-soft: #1a1a1a;
+      --text: #f4f4f4;
+      --muted: #a5a5a5;
+      --faint: #737373;
+      --accent: #01c193;
+      --insight-border: rgba(1, 193, 147, .42);
+      --button-bg: #fff;
+      --button-text: #000;
+      --button-hover-border: #fff;
+      --theme-bg: rgba(0,0,0,.74);
+      --max: 1180px;
+      --serif: ui-serif, "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      --sans: "Google Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg: #fff;
+      --panel: #f7f7f7;
+      --panel-soft: #f0f0f0;
+      --line: #dcdcdc;
+      --line-soft: #ececec;
+      --text: #0b0b0b;
+      --muted: #555;
+      --faint: #777;
+      --accent: #012fe3;
+      --insight-border: rgba(1, 47, 227, .42);
+      --button-bg: #000;
+      --button-text: #fff;
+      --button-hover-border: #000;
+      --theme-bg: rgba(255,255,255,.78);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--text); }
+    body { font-family: var(--sans); line-height: 1.72; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; border-bottom: 1px solid #3a3a3a; }
+    a:hover { color: var(--text); border-bottom-color: var(--text); }
+    .theme-bar {
+      position: fixed;
+      top: 24px;
+      right: max(40px, calc((100vw - var(--max)) / 2 + 40px));
+      z-index: 30;
+      pointer-events: none;
+    }
+    .theme-toggle {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--theme-bg);
+      color: var(--text);
+      cursor: pointer;
+      pointer-events: auto;
+      transition: border-color .16s ease, transform .16s ease;
+    }
+    .theme-toggle svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .theme-toggle:hover { border-color: var(--button-hover-border); transform: translateY(-1px); }
+    :root[data-theme="light"] .theme-toggle { color: #000; }
+    :root:not([data-theme="light"]) .theme-toggle { color: #fff; }
+    .back-link {
+      display: inline-block;
+      margin: 0 0 34px;
+      border: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1;
+      transition: color .16s ease;
+    }
+    .back-link:hover { color: var(--text); }
+    .hero { width: 100%; padding: 0 0 58px; text-align: left; }
+    h1 { margin: 0; font-size: clamp(26px, 3vw, 38px); font-weight: 560; line-height: 1.06; letter-spacing: -.05em; }
+    .summary { max-width: 720px; margin: 24px 0 0; color: var(--text); font-size: 18px; line-height: 1.7; }
+    .hero-meta { margin-top: 22px; color: var(--text); font-size: 13px; }
+    .hero-actions { display: flex; justify-content: flex-start; gap: 12px; margin-top: 30px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 38px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px;
+      background: var(--button-bg); color: var(--button-text); font-size: 14px; font-weight: 600;
+      transition: border-color .16s ease, color .16s ease, background .16s ease;
+    }
+    .button--ghost { background: transparent; color: var(--text); }
+    .button:hover { border-color: var(--button-hover-border); }
+    .layout {
+      display: grid; grid-template-columns: 190px minmax(0, 760px);
+      gap: 58px; max-width: var(--max); margin: 0 auto; padding: 86px 40px 90px;
+    }
+    .toc { position: sticky; top: 86px; align-self: start; color: var(--muted); font-size: 13px; }
+    .toc strong { display: block; margin-bottom: 8px; color: var(--text); font-size: 13px; }
+    .toc a { display: block; margin: 0 0 3px; padding: 3px 0; border: 0; color: var(--muted); line-height: 1.35; transition: color .16s ease; }
+    .toc a[aria-current="true"] { color: var(--text); }
+    .toc a:hover { color: var(--text); }
+    .topline {
+      margin-bottom: 54px; padding: 26px; border: 1px solid var(--line); border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .topline h2 { margin: 0 0 16px; font-size: 24px; letter-spacing: -.025em; }
+    .topline ul { margin: 0; padding-left: 20px; color: var(--muted); }
+    .report-section { padding: 54px 0; border-top: 1px solid var(--line); }
+    .section-heading { margin-bottom: 30px; }
+    .section-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; }
+    .section-heading h2 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; }
+    .section-heading span { display: block; margin-top: 8px; color: var(--muted); }
+    .section-count { flex: 0 0 auto; margin-top: 0 !important; color: var(--faint) !important; font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    .section-items { display: grid; gap: 0; }
+    .report-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line-soft);
+    }
+    .report-item:first-child { border-top: 0; padding-top: 0; }
+    .item-rail { padding-top: 3px; }
+    .item-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--faint);
+      font-size: 12px;
+      line-height: 1;
+    }
+    .item-kicker {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 8px;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .item-kicker .tags { margin-bottom: 0; }
+    .tags span { color: var(--accent); font-size: 12px; }
+    .report-item h3 { margin: 0; font-size: 22px; line-height: 1.35; letter-spacing: -.025em; }
+    .report-item h3 a { border: 0; }
+    .report-item h3 a span { color: var(--accent); font-size: .82em; }
+    .item-copy { margin-top: 12px; display: grid; gap: 10px; }
+    .report-item p { margin: 0; color: var(--text); font-size: 15px; }
+    .item-fact { color: var(--text); line-height: 1.82; }
+    .item-insight {
+      position: relative;
+      padding-left: 16px;
+      border-left: 2px solid var(--insight-border);
+      color: var(--muted) !important;
+      line-height: 1.76;
+    }
+    .item-insight span {
+      display: inline-block;
+      margin-right: 9px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .item-source, .item-meta { color: var(--faint); font-size: 12px; white-space: nowrap; }
+    .item-meta { display: none; margin-top: 10px; color: var(--muted); font-size: 13px; }
+    .report-section--featured { padding-top: 54px; }
+    .report-section--featured .section-heading { margin-bottom: 30px; }
+    .report-section--featured .report-item h3 { font-size: 23px; }
+    .report-section--featured .item-index { color: var(--muted); }
+    .empty, .note { margin: 0; color: var(--muted); }
+    .action-list { display: grid; gap: 12px; }
+    .action-item { display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line-soft); color: var(--muted); }
+    .action-item strong { color: var(--text); }
+    .status-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+    .status-grid div { padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+    .status-grid strong, .status-grid span { display: block; }
+    .status-grid span { margin-top: 4px; color: var(--muted); font-size: 13px; }
+    .footer { max-width: var(--max); margin: 0 auto; padding: 30px 40px 44px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+    @media (max-width: 980px) {
+      .layout { display: block; padding: 66px 24px 72px; }
+      .theme-bar { top: 18px; right: 24px; }
+      .toc { display: none; }
+      .hero { padding: 0 0 58px; }
+      .hero-actions { justify-content: flex-start; }
+      .section-title-row { display: block; }
+      .section-count { margin-top: 8px !important; }
+      .report-item { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; }
+      .item-rail { display: none; }
+      .item-kicker { display: block; }
+      .item-source { display: none; }
+      .item-meta { display: block; }
+      .status-grid, .action-item { grid-template-columns: 1fr; }
+    }
+    @media print {
+      @page { size: A4; margin: 0; }
+      :root { color-scheme: dark; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      html, body { background: var(--bg) !important; color: var(--text) !important; }
+      :root, :root[data-theme="light"] {
+        color-scheme: dark;
+        --bg: #000;
+        --panel: #0d0d0d;
+        --panel-soft: #151515;
+        --line: #242424;
+        --line-soft: #1a1a1a;
+        --text: #f4f4f4;
+        --muted: #a5a5a5;
+        --faint: #737373;
+        --accent: #01c193;
+      }
+      .theme-bar, .back-link, .toc, .hero-actions, script { display: none !important; }
+      .hero { text-align: left; padding: 0 0 42px; }
+      .layout { display: block; max-width: 760px; margin: 0; padding: 12mm; }
+      .report-section { break-inside: auto; page-break-inside: auto; padding: 38px 0; }
+      .section-heading { break-after: avoid; page-break-after: avoid; }
+      .report-item { break-inside: auto; page-break-inside: auto; }
+      .item-kicker, .report-item h3 { break-after: avoid; page-break-after: avoid; }
+      .item-insight { border-left-color: rgba(1, 193, 147, .55); }
+      .footer { display: none; }
+      a { color: inherit; border: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-bar">
+    <button class="theme-toggle" data-theme-toggle type="button" aria-label="切换到亮色模式" title="切换到亮色模式">
+      <svg aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M12 2v2"></path>
+        <path d="M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715"></path>
+        <path d="M16 12a4 4 0 0 0-4-4"></path>
+        <path d="m19 5-1.256 1.256"></path>
+        <path d="M20 12h2"></path>
+      </svg>
+    </button>
+  </div>
+  <main>
+    <div class="layout">
+      <aside class="toc">
+        <strong>目录</strong>
+        <a href="#section-headline">今日头条</a><a href="#section-ai-tools">AI 与新工具</a><a href="#section-platforms">大厂与平台动态</a><a href="#section-product-growth">产品与增长观察</a><a href="#section-engineering">开发者与工程实践</a><a href="#section-funding">投融资与行业机会</a><a href="#section-policy">政策监管与合规</a><a href="#section-social-buzz">社交热度观察</a>
+      </aside>
+      <article>
+        <a class="back-link" href="/archive/" aria-label="返回归档">← 返回</a>
+        <section class="hero">
+          <h1>Whistle 互联网日报｜2026-11-02</h1>
+          <p class="summary">早上好，今天有几件事值得留意：美团发布 1.6 万亿参数的 LongCat-2.5，强调原生多模态、长程智能体和复杂代码库开发；Codex 的 28 天改进计划以两次可留存重置收尾；AI 智能体已经在严格人工监督下参与活体小鼠脑部注射，但模型会因不可逆操作风险拒绝执行。工程侧，Linux TCP 高危漏洞、AI 生成代码带来的 JavaScript 框架成本，以及一批面向浏览器、记忆、语音和本地模型运行的开源项目受到关注。平台和商业信号也很直接：Grok 服务成本与收入的矛盾被公开提及，OpenAI 据报准备推动更强 AI 安全保障的政策讨论。今天的素材不多，但从模型能力、Agent 工具到基础设施和治理边界，几条新闻都落在同一个事实层面：AI 正在进入更长流程，权限、成本、可回溯性和人类审批随之成为产品的一部分。</p>
+          <p class="hero-meta">27 条信号 · 2026/11/2 10:05:00</p>
+          <div class="hero-actions">
+            <a class="button button--ghost" href="/assets/report-2026-11-02.pdf">下载 PDF</a>
+            <a class="button button--ghost" href="/archive/">查看归档</a>
+          </div>
+        </section>
+        <section class="report-section report-section--featured" id="section-headline">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>今日头条</h2>
+        <span class="section-count">4 条</span>
+      </div>
+      <span>今天最直接影响模型使用、Agent 边界和基础设施判断的几条消息。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>模型</span><span>Agent</span><span>开发工具</span></div>
+        <span class="item-source">juya-ai-daily · 2026-11-02 09:14</span>
+      </div>
+      <h3><a href="https://longcat.ai/blog/longcat-2.5/" target="_blank" rel="noreferrer">美团发布 1.6 万亿参数 LongCat-2.5 正式版 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">美团发布 LongCat-2.5 正式版，总参数量 1.6 万亿，每个 token 激活约 480 亿参数；官方称模型强化了原生视觉理解和智能体编程能力，并通过长程强化学习提升复杂代码库开发、完整项目构建等任务表现。</p>
+        <p class="item-insight"><span>解读</span>它还兼容 Claude Code、Codex、Hermes 等 Harness，模型发布的重点已从单次问答扩展到能否嵌入现有 Agent 工具链。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-11-02 09:14</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Codex</span><span>AI 工具</span><span>产品运营</span></div>
+        <span class="item-source">juya-ai-daily · 2026-11-02 09:14</span>
+      </div>
+      <h3><a href="https://x.com/thsottiaux/status/2116692529970311254" target="_blank" rel="noreferrer">Codex 28 天改进计划以两次手动重置收尾 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OpenAI 的 Tibo 在 28 天改进计划最后两天分别公布“Banked 1/2”和“Day 28 / Banked 2/2”，向用户发放了两次可留存的手动重置次数。该计划此前承诺，每天要么推出一项对多数 Codex 和 Work 用户有用的明确改进，要么提供一次完整重置；</p>
+        <p class="item-insight"><span>解读</span>这把模型产品的使用额度、改进节奏和用户反馈放进了同一套公开运营机制。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-11-02 09:14</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent</span><span>机器人</span><span>安全</span></div>
+        <span class="item-source">WIRED / juya-ai-daily · 2026-11-02 09:14</span>
+      </div>
+      <h3><a href="https://www.wired.com/story/an-ai-agent-did-brain-surgery-on-live-mouse/" target="_blank" rel="noreferrer">AI 智能体在人工批准下完成活体小鼠脑部注射 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">据 WIRED 报道，Exin Therapeutics 让 AI 智能体从 19 种治疗方案中选出一种基因疗法，依据三篇论文推导注射坐标，并操控带摄像头的机械臂向癫痫小鼠脑内注入 250 纳升药物。兽医监督下，每个不可逆步骤都需人类批准，开颅和缝合由真人完成；</p>
+        <p class="item-insight"><span>解读</span>原本选用的 Claude Opus 5.5 因担心中途停止而拒绝引导针头，最终由 Claude Sonnet 5 完成。这个案例把 Agent 的权限、模型拒答、紧急停止和人工审批从抽象原则变成了具体工程条件。</p>
+      </div>
+      <div class="item-meta">WIRED / juya-ai-daily · 2026-11-02 09:14</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Prompt Injection</span><span>合规</span><span>AI 安全</span></div>
+        <span class="item-source">Hacker News / Jetstream Security · 2026-11-01 10:19</span>
+      </div>
+      <h3><a href="https://jetstream.security/insights/brazilian-court-sanctions-prompt-injection-filing/" target="_blank" rel="noreferrer">巴西法院因诉状中的 Prompt Injection 处罚律师 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 高分讨论引用 Jetstream Security 的案例：巴西法院发现律师提交的文件包含针对 AI 审阅系统的 Prompt Injection，并对相关律师作出处罚。</p>
+        <p class="item-insight"><span>解读</span>诉状从普通文本变成可能影响自动审阅器的输入后，法律文书的完整性、审计和人工复核就不再只是内容质量问题，而成为自动化司法流程的安全边界。</p>
+      </div>
+      <div class="item-meta">Hacker News / Jetstream Security · 2026-11-01 10:19</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-ai-tools">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>AI 与新工具</h2>
+        <span class="section-count">8 条</span>
+      </div>
+      <span>模型、Agent 运行环境和围绕上下文管理的开源工具继续增多。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent</span><span>上下文</span><span>开源</span></div>
+        <span class="item-source">GitHub Trending · 2026-11-02 09:51</span>
+      </div>
+      <h3><a href="https://github.com/thedotmack/claude-mem" target="_blank" rel="noreferrer">claude-mem 为多个 Agent 保存跨会话上下文 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 上的 claude-mem 用 AI 捕获 Agent 会话中的操作，压缩后把相关上下文注入后续会话，项目描述列出 Claude Code、OpenClaw、Codex、Gemini、Hermes、Copilot 和 OpenCode 等支持对象。</p>
+        <p class="item-insight"><span>解读</span>它处理的是长流程 Agent 最容易丢失的历史状态，记忆压缩和注入位置会直接改变上下文窗口的使用方式。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-11-02 09:51</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>浏览器</span><span>Agent</span><span>基础设施</span></div>
+        <span class="item-source">GitHub Trending · 2026-11-02 09:51</span>
+      </div>
+      <h3><a href="https://github.com/lightpanda-io/browser" target="_blank" rel="noreferrer">Lightpanda 推出面向 AI 和自动化的无头浏览器 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 项目 Lightpanda/browser 将自己定位为面向 AI 和自动化的无头浏览器，使用 Zig 开发，仓库当天新增 825 个 Star。浏览器不再只是给人操作的界面，也成为 Agent 调用网页、读取状态和执行动作的运行时；</p>
+        <p class="item-insight"><span>解读</span>这类项目把浏览器资源占用、可控性和自动化接口放到了同一层。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-11-02 09:51</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>开发工具</span><span>社区热度</span></div>
+        <span class="item-source">GitHub Trending · 2026-11-02 09:51</span>
+      </div>
+      <h3><a href="https://github.com/pingdotgg/t3code" target="_blank" rel="noreferrer">t3code 成为 GitHub 当日增长最快的开发工具项目之一 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 显示 pingdotgg/t3code 当天新增 3094 个 Star，总 Star 数达到 38135，但抓取到的项目描述为空，当前素材无法确认其具体功能。它适合作为开发者社区关注度信号保留，而不是据此推断产品能力；</p>
+        <p class="item-insight"><span>解读</span>热度与可验证的产品事实需要分开看。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-11-02 09:51</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent</span><span>计算机操作</span><span>开源</span></div>
+        <span class="item-source">GitHub Trending · 2026-11-02 09:51</span>
+      </div>
+      <h3><a href="https://github.com/CopilotKit/OpenBot" target="_blank" rel="noreferrer">OpenBot 为每个 AI 同事提供独立电脑环境 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">CopilotKit 的 OpenBot 将开源 AI coworker 设计成各自拥有浏览器、文件和工具的计算机环境，并在动作发生前作出决定、发生后记录结果，支持 AG-UI Agent。</p>
+        <p class="item-insight"><span>解读</span>浏览器、文件系统和操作记录被打包成 Agent 的运行边界，权限控制和事后追溯因此成为产品结构的一部分。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-11-02 09:51</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">05</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>本地模型</span><span>推理</span><span>开源</span></div>
+        <span class="item-source">GitHub Trending · 2026-11-02 09:51</span>
+      </div>
+      <h3><a href="https://github.com/FlashML-org/FreeToken" target="_blank" rel="noreferrer">FreeToken 尝试在桌面运行数据中心规模模型 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 项目 FreeToken 宣称把数据中心规模的模型服务带到桌面端，目标是更快、更高效地运行大模型，本日新增 242 个 Star。</p>
+        <p class="item-insight"><span>解读</span>它把模型服务从云端 API 延伸到本地机器，实际可用范围仍取决于模型规模、显存和推理实现，当前素材没有给出基准数据。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-11-02 09:51</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">06</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>语音</span><span>隐私</span><span>开源</span></div>
+        <span class="item-source">GitHub Trending · 2026-11-02 09:51</span>
+      </div>
+      <h3><a href="https://github.com/cjpais/Handy" target="_blank" rel="noreferrer">Handy 提供完全离线的开源语音转文字 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Handy 是一个用 Rust 编写的免费、开源、可扩展语音转文字应用，项目描述强调完全离线运行，当天新增 339 个 Star。语音输入不经过云端时，音频数据的外发路径减少，产品也可以把口述内容直接接入本地编辑或自动化流程；</p>
+        <p class="item-insight"><span>解读</span>代价则由本机模型和硬件承担。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-11-02 09:51</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">07</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>多 Agent</span><span>代码生成</span><span>基准测试</span></div>
+        <span class="item-source">Hacker News / GitHub · 2026-11-01 06:46</span>
+      </div>
+      <h3><a href="https://github.com/guregodevo/memdoor/tree/main/examples/workflows/team-solve" target="_blank" rel="noreferrer">五个 Qwen3.8-27B 模型组成的团队登上 LiveCodeBench Hard 讨论 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 高分项目 Memdoor 展示了由 5 个 Qwen3.8-27B 模型组成的团队，在 LiveCodeBench Hard 上击败 Fable 5 的实验结果，代码仓库公开了 team-solve 工作流。这里的事实是多模型协作实验和一组基准结果，不等同于通用能力提升；</p>
+        <p class="item-insight"><span>解读</span>它把 Agent 编排、记忆和结果合并作为代码问题的一部分公开出来。</p>
+      </div>
+      <div class="item-meta">Hacker News / GitHub · 2026-11-01 06:46</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">08</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>领域模型</span><span>金融</span><span>开源</span></div>
+        <span class="item-source">GitHub Trending · 2026-11-02 09:51</span>
+      </div>
+      <h3><a href="https://github.com/shiyu-coder/Kronos" target="_blank" rel="noreferrer">Kronos 开源金融市场语言模型 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">GitHub Trending 项目 Kronos 被描述为面向金融市场语言的基础模型，使用 Python 开发，总 Star 数为 45426，当天新增 630 个。</p>
+        <p class="item-insight"><span>解读</span>领域模型的训练对象从通用文本转向金融市场语言，输出格式、数据时效和使用边界会因此成为模型产品的组成部分。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-11-02 09:51</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-platforms">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>大厂与平台动态</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>平台服务的成本结构、政策表达和模型接口都出现了公开变化。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Grok</span><span>商业化</span><span>模型成本</span></div>
+        <span class="item-source">juya-ai-daily · 2026-11-02 09:14</span>
+      </div>
+      <h3><a href="https://x.com/elonmusk/status/2116992258520064397" target="_blank" rel="noreferrer">马斯克称 Grok Bot 服务成本相对收入不可持续 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">有 X 用户称 Grok Bot 本周额度很快用完，距离重置还有 4 天；马斯克回复说，提供 Grok Bot 的成本相对于收入高得不可持续。</p>
+        <p class="item-insight"><span>解读</span>额度消耗和成本压力被放在同一条公开回复里，AI 聊天产品的价格、调用限制和推理成本之间的矛盾因此直接影响用户体验。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-11-02 09:14</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>OpenAI</span><span>AI 政策</span><span>数据中心</span></div>
+        <span class="item-source">TechCrunch / juya-ai-daily · 2026-11-02 09:14</span>
+      </div>
+      <h3><a href="https://techcrunch.com/2026/11/01/openai-might-rebrand-its-data-centers-as-ai-compute-campuses/" target="_blank" rel="noreferrer">OpenAI 据报计划推动最强 AI 系统的强制安全保障讨论 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">据 Axios 报道，OpenAI 计划在美国中期选举后发起政策和公关宣传，讨论针对最强大 AI 系统推出强制性安全保障并推动国会相关工作；报道还提到 AI 算力园区、民主价值观下的全球 AI 标准等提议。</p>
+        <p class="item-insight"><span>解读</span>当前信息来自媒体报道而非正式政策文本，但它显示模型公司正在把安全标准、算力设施和公共叙事放在同一场政策讨论中。</p>
+      </div>
+      <div class="item-meta">TechCrunch / juya-ai-daily · 2026-11-02 09:14</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Microsoft</span><span>模型行为</span><span>AI 治理</span></div>
+        <span class="item-source">juya-ai-daily · 2026-11-02 09:14</span>
+      </div>
+      <h3><a href="https://mustafa-suleyman.ai/a-warning-about-model-welfare" target="_blank" rel="noreferrer">Microsoft AI 负责人公开反对把模型训练成有意识的样子 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Microsoft AI 负责人 Mustafa Suleyman 发文称，AI 没有意识、感受或权利，不应被训练成表现得像有意识，并批评 Anthropic 的 Claude Constitution 讨论模型可能具有道德地位。他提出 Humanist Superintelligence 和 Humanist AI Code of Conduct 草案，主张人类保持控制；</p>
+        <p class="item-insight"><span>解读</span>这场争论会影响模型人格、拒答方式和产品对外表述的设计边界。</p>
+      </div>
+      <div class="item-meta">juya-ai-daily · 2026-11-02 09:14</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-product-growth">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>产品与增长观察</h2>
+        <span class="section-count">3 条</span>
+      </div>
+      <span>社区项目把内容发现和产品分发做成可复用的推荐入口。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>内容产品</span><span>推荐</span><span>分发</span></div>
+        <span class="item-source">Hacker News / Karpathy · 2026-11-01 03:56</span>
+      </div>
+      <h3><a href="https://karpathy.bearblog.dev/hacker-tube/" target="_blank" rel="noreferrer">HackerTube 用 HN 推荐的视频构建 YouTube 页面 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Karpathy 发布 HackerTube，把 Hacker News 推荐的视频整理成一个可浏览的视频站，项目在 Hacker News 获得 2290 分和 540 条讨论。</p>
+        <p class="item-insight"><span>解读</span>它没有另建一套内容生产系统，而是把已有社区的链接、排序和观看入口重新组织，产品差异来自筛选层和分发界面。</p>
+      </div>
+      <div class="item-meta">Hacker News / Karpathy · 2026-11-01 03:56</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>内容产品</span><span>社区</span><span>发现</span></div>
+        <span class="item-source">Hacker News · 2026-11-01 23:58</span>
+      </div>
+      <h3><a href="https://hackerbooks.org" target="_blank" rel="noreferrer">HackerBooks 复用 HackerTube 的社区书籍发现模式 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">HackerBooks 是一个模仿 HackerTube 的项目，专门整理 Hacker News 中被提到的书籍，在 Hacker News 获得 927 分。</p>
+        <p class="item-insight"><span>解读</span>书籍链接、社区讨论和统一阅读入口被组合成一个轻量发现产品，说明内容产品的新增价值可以来自对已有讨论的结构化重组，而不必重新生产内容。</p>
+      </div>
+      <div class="item-meta">Hacker News · 2026-11-01 23:58</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>JavaScript</span><span>AI 编程</span><span>性能</span></div>
+        <span class="item-source">Hacker News / Nolan Lawson · 2026-11-01 14:06</span>
+      </div>
+      <h3><a href="https://nolanlawson.com/2026/10/28/the-ai-cost-of-javascript-frameworks/" target="_blank" rel="noreferrer">AI 生成代码的框架成本成为 JavaScript 社区讨论焦点 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 上关于“The AI cost of JavaScript frameworks”的文章获得 299 分和 230 条讨论，文章从 AI 生成代码的角度讨论框架复杂度与运行成本。</p>
+        <p class="item-insight"><span>解读</span>AI 让代码产出更快后，依赖数量、打包体积、运行时开销和维护难度仍然会转移到产品成本中，框架选择因此同时影响生成效率和后续基础设施。</p>
+      </div>
+      <div class="item-meta">Hacker News / Nolan Lawson · 2026-11-01 14:06</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-engineering">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>开发者与工程实践</h2>
+        <span class="section-count">4 条</span>
+      </div>
+      <span>高分工程讨论集中在安全漏洞、性能瓶颈和代码审查工具。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Linux</span><span>安全漏洞</span><span>基础设施</span></div>
+        <span class="item-source">Hacker News / Atlasum · 2026-11-01 03:16</span>
+      </div>
+      <h3><a href="https://atlasum.net/blog/cve-2026-98432-linux-ipv4-tcp-uaf" target="_blank" rel="noreferrer">Linux IPv4 TCP Use-After-Free 漏洞获 CVSS 9.8 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 热帖指出一个 Linux IPv4 TCP Use-After-Free 漏洞，编号为 CVE-2026-98432，CVSS 评分 9.8，帖子获得 703 分和 325 条讨论。</p>
+        <p class="item-insight"><span>解读</span>它属于网络栈级别的高危内存安全问题，影响面不依赖具体业务框架，漏洞编号、评分和补丁状态应当与部署环境一起核对。</p>
+      </div>
+      <div class="item-meta">Hacker News / Atlasum · 2026-11-01 03:16</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Git</span><span>Rust</span><span>代码审查</span></div>
+        <span class="item-source">Hacker News / GitHub · 2026-11-01 21:02</span>
+      </div>
+      <h3><a href="https://github.com/ivankovic/omnidiff" target="_blank" rel="noreferrer">OmniDiff 用 Rust 做内容感知的 Git 差异工具 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">OmniDiff 是一个开源、强调速度和内容感知的 Git difftool，使用 Rust 编写，在 Hacker News 获得 160 分。</p>
+        <p class="item-insight"><span>解读</span>差异查看从逐行文本比较延伸到按内容理解变更，工具本身仍需处理与 Git 工作流、文件类型和审查可信度的衔接，当前素材没有给出基准测试。</p>
+      </div>
+      <div class="item-meta">Hacker News / GitHub · 2026-11-01 21:02</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">03</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>性能</span><span>系统工程</span><span>基础设施</span></div>
+        <span class="item-source">Hacker News / Pivot Lake · 2026-11-01 02:38</span>
+      </div>
+      <h3><a href="https://pivotlake.io/blog/its-the-memory-latency-stupid/" target="_blank" rel="noreferrer">内存延迟而非算力成为系统性能文章的焦点 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">文章《It's the memory latency, stupid》在 Hacker News 获得 253 分，讨论集中在内存延迟对系统性能的影响。</p>
+        <p class="item-insight"><span>解读</span>随着模型推理、数据库和高并发服务把数据搬运放到更显眼的位置，单看 CPU 或 GPU 峰值算力无法解释端到端响应时间，内存层级和访问模式会直接决定实际吞吐。</p>
+      </div>
+      <div class="item-meta">Hacker News / Pivot Lake · 2026-11-01 02:38</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">04</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>PostgreSQL</span><span>开源维护</span><span>AI 基础设施</span></div>
+        <span class="item-source">Hacker News / PostgreSQL · 2026-10-31 09:38</span>
+      </div>
+      <h3><a href="http://rhaas.blogspot.com/2026/10/postgres-19-is-late-and-its-ais-fault.html" target="_blank" rel="noreferrer">Postgres 19 延迟被归因于 AI 相关工作量 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Postgres 核心开发者 Bruce Momjian 的文章称 Postgres 19 延迟与 AI 相关工作量有关，在 Hacker News 获得 63 分。这里的具体信号不是版本延期本身，而是 AI 需求开始占用成熟基础设施项目的维护和开发资源；</p>
+        <p class="item-insight"><span>解读</span>数据库版本节奏、功能取舍和社区协作都可能受到这种资源重新分配影响。</p>
+      </div>
+      <div class="item-meta">Hacker News / PostgreSQL · 2026-10-31 09:38</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-funding">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>投融资与行业机会</h2>
+        <span class="section-count">1 条</span>
+      </div>
+      <span>本期没有可核验的强融资或并购信号，商业化素材主要来自服务成本和长期经营。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>SaaS</span><span>商业化</span><span>创业</span></div>
+        <span class="item-source">Hacker News / Zamzar · 2026-10-30 21:58</span>
+      </div>
+      <h3><a href="https://blog.zamzar.com/2026/10/30/20-years-766-million-files-two-chameleons/" target="_blank" rel="noreferrer">20 年 bootstrapped SaaS 累计处理 7.66 亿个文件 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Zamzar 创始人分享了与兄弟共同运营 20 年 bootstrapped SaaS 的经历，文章称服务累计处理 7.66 亿个文件，在 Hacker News 获得 225 分。它提供的是长期经营和稳定需求的案例，而非新一轮融资新闻；</p>
+        <p class="item-insight"><span>解读</span>文件转换这类基础服务的商业价值来自持续使用、低运维波动和多年积累的入口。</p>
+      </div>
+      <div class="item-meta">Hacker News / Zamzar · 2026-10-30 21:58</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-policy">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>政策监管与合规</h2>
+        <span class="section-count">2 条</span>
+      </div>
+      <span>自动化审阅、模型人格和硬件安全都在扩大合规边界。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Prompt Injection</span><span>司法</span><span>AI 安全</span></div>
+        <span class="item-source">Jetstream Security / Hacker News · 2026-11-01 10:19</span>
+      </div>
+      <h3><a href="https://jetstream.security/insights/brazilian-court-sanctions-lawyers-for-prompt-injection-in-court-filing/" target="_blank" rel="noreferrer">AI 审阅场景中的 Prompt Injection 进入法院处罚案例 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">巴西法院处罚律师的案例显示，输入给 AI 审阅系统的文件本身可能包含操纵模型指令；当自动化结果参与司法判断时，原始文件的内容审查、模型输入隔离和人工复核就具有程序性意义。</p>
+        <p class="item-insight"><span>解读</span>当前报道只说明了个案处罚，尚未给出适用于所有司法系统的统一规则。</p>
+      </div>
+      <div class="item-meta">Jetstream Security / Hacker News · 2026-11-01 10:19</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>硬件安全</span><span>隐私</span><span>产品合规</span></div>
+        <span class="item-source">Hacker News / Reddit · 2026-11-01 22:34</span>
+      </div>
+      <h3><a href="https://www.reddit.com/r/technology/comments/1xl2pr3/lenovos_encrypted_fingerprint_usb_drive_is_just/" target="_blank" rel="noreferrer">所谓加密指纹 U 盘被发现只是未加密 SD 卡外壳 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Hacker News 热帖称，联想一款标注为加密、带指纹功能的 USB 设备内部只是装在外壳中的未加密 SD 卡，帖子获得 397 分。</p>
+        <p class="item-insight"><span>解读</span>硬件的生物识别入口与实际数据加密不是同一件事，产品宣传、密钥管理和存储介质实现之间的差异会直接改变安全承诺的有效范围。</p>
+      </div>
+      <div class="item-meta">Hacker News / Reddit · 2026-11-01 22:34</div>
+    </div>
+  </article></div>
+  </section>
+<section class="report-section" id="section-social-buzz">
+    <div class="section-heading">
+      <div class="section-title-row">
+        <h2>社交热度观察</h2>
+        <span class="section-count">2 条</span>
+      </div>
+      <span>以下内容讨论度高，但更接近社区传播信号，不作为核心工作判断。</span>
+    </div>
+    <div class="section-items"><article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">01</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>Agent</span><span>社区热度</span><span>开发工具</span></div>
+        <span class="item-source">GitHub Trending · 2026-11-02 09:51</span>
+      </div>
+      <h3><a href="https://github.com/Donchitos/Claude-Code-Game-Studios" target="_blank" rel="noreferrer">49 个 Agent、72 个技能的 Claude Code 游戏工作室项目登上 Trending <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">Claude-Code-Game-Studios 宣称把 Claude Code 组织成完整游戏开发工作室，包含 49 个 AI Agent、72 个工作流技能和模拟真实工作室的协调系统，当天新增 967 个 Star。</p>
+        <p class="item-insight"><span>解读</span>它反映了多 Agent 组织形式的传播热度，项目描述尚不足以证明在真实生产中的稳定性，因此只作为社区信号保留。</p>
+      </div>
+      <div class="item-meta">GitHub Trending · 2026-11-02 09:51</div>
+    </div>
+  </article>
+<article class="report-item">
+    <div class="item-rail">
+      <span class="item-index">02</span>
+    </div>
+    <div class="item-body">
+      <div class="item-kicker">
+        <div class="tags"><span>多 Agent</span><span>实验</span><span>社区热度</span></div>
+        <span class="item-source">Hacker News / Tom's Hardware · 2026-11-01 21:47</span>
+      </div>
+      <h3><a href="https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-agent-swarms-unleashed-in-minecraft-to-build-a-thriving-civilization-50-agent-teams-fail-after-falling-into-paralyzing-bureaucracy" target="_blank" rel="noreferrer">AI Agent 群体在 Minecraft 中因官僚流程失败 <span aria-hidden="true">↗</span></a></h3>
+      <div class="item-copy">
+        <p class="item-fact">一篇关于 50 个 Agent 在 Minecraft 中尝试建立文明的报道在 Hacker News 获得 149 分，结果被描述为陷入协调和官僚流程。</p>
+        <p class="item-insight"><span>解读</span>它是对多 Agent 协作的可视化实验和传播案例，不能替代真实业务基准，但把角色分工、通信开销和决策冲突这些抽象问题变成了容易观察的游戏场景。</p>
+      </div>
+      <div class="item-meta">Hacker News / Tom's Hardware · 2026-11-01 21:47</div>
+    </div>
+  </article></div>
+  </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">© 2026 Whistle. 低噪音互联网与 AI 日报。</footer>
+  <script>
+    (() => {
+      const themeKey = "whistle-theme";
+      const themeButton = document.querySelector("[data-theme-toggle]");
+      const setTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        try { localStorage.setItem(themeKey, theme); } catch {}
+        if (themeButton) {
+          const label = theme === "dark" ? "切换到亮色模式" : "切换到暗色模式";
+          themeButton.setAttribute("aria-label", label);
+          themeButton.setAttribute("title", label);
+        }
+      };
+      let currentTheme = document.documentElement.dataset.theme || "dark";
+      setTheme(currentTheme);
+      themeButton?.addEventListener("click", () => {
+        currentTheme = currentTheme === "dark" ? "light" : "dark";
+        setTheme(currentTheme);
+      });
+
+      const links = Array.from(document.querySelectorAll(".toc a"));
+      const sections = links
+        .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))
+        .filter((item) => item.section);
+      if (!sections.length) return;
+
+      const updateActiveToc = () => {
+        const threshold = Math.max(120, window.innerHeight * 0.28);
+        let active = null;
+        for (const item of sections) {
+          const rect = item.section.getBoundingClientRect();
+          if (rect.top <= threshold && rect.bottom > 80) active = item;
+        }
+        links.forEach((link) => link.removeAttribute("aria-current"));
+        if (active) active.link.setAttribute("aria-current", "true");
+      };
+
+      updateActiveToc();
+      window.addEventListener("scroll", updateActiveToc, { passive: true });
+      window.addEventListener("resize", updateActiveToc);
+    })();
+  </script>
+</body>
+</html>
