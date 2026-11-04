@@ -1,0 +1,438 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-04",
+  "title": "Whistle 互联网日报｜2026-11-04",
+  "summary": "早上好，先看几项已经落到产品里的变化：Claude 把企业插件授权集中到组织管理员，微信视觉团队把识别、分割和抠图放进同一个开源模型，ChatGPT 则披露了搜索使用量与界面合并计划。AI 产品正在承接更多具体操作，权限由谁授予、结果怎样核验，也随之成为产品设计的一部分。Anthropic 的 FlashProve 尝试证明回复来自指定模型，但证明成本仍远高于普通推理；MiniMax 的 BYOB 则把多人的 Agent 协作拆成提议、授权、执行和核验。另一边，Figma 用专门训练的模型直接修改画布，fal 获得两轮合计 16.5 亿美元融资。能力、交互与算力服务同时变化，但研究原型、厂商自报数据和已上线功能仍有明确区别，本期逐项交代这些边界。",
+  "theme": "AI 接入更多操作，授权与核验边界随之变化",
+  "topline": [
+    "Claude 团队版与企业版上线组织级插件授权，个人套餐不在范围内。",
+    "WeVisOne-VL 开源 2B、4B 视觉模型，统一物体级与像素级任务。",
+    "FlashProve 可核验模型计算来源，但证明开销达普通推理的 70 至 95 倍。",
+    "fal 完成 E、F 两轮合计 16.5 亿美元融资，估值 160 亿美元为彭博报道口径。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "",
+      "items": [
+        {
+          "title": "Claude 上线企业托管授权，组织插件可自动连接",
+          "summary": "Anthropic 为 Claude 团队版和企业版推出企业托管授权：管理员统一授权后，员工首次登录即可连接组织开通的插件，无需逐个登录确认。通过身份提供商管理的方式已正式可用，目前支持 Okta；由 Claude 作为可信签发方直接签发授权的方式仍处于测试版，支持 Amplitude、Notion、Figma、Datadog 等 14 款插件，免费版、Pro 和 Max 不在范围内。插件接入由个人逐次配置转为组织统一管理，授权范围和员工身份之间的关联因此成为接入过程的核心边界；两种方式的可用状态仍有区别。",
+          "sourceName": "Anthropic 文档／juya-ai-daily",
+          "sourceUrl": "https://claude.com/docs/connectors/building/enterprise-managed-auth",
+          "publishedAt": "",
+          "tags": [
+            "企业授权",
+            "连接器"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "微信开源 WeVisOne-VL，将检测、OCR、分割和抠图统一到一个模型",
+          "summary": "腾讯微信视觉团队开源基于 Qwen3-VL 的 WeVisOne-VL，提供 2B 和 4B 版本，并发布权重、推理包、Cookbooks 和评测流程，腾讯自研代码采用 Apache 2.0 许可证。模型用结构化的下一 token 预测统一检测、指代定位、计数、指点、OCR 等物体级任务，以及分割和抠图等像素级任务，再由 9.6M 参数的像素解码器输出掩码和 alpha 抠图，推理时不必另接 SAM。查询目标不在图中时支持返回 None，30 多个基准上的领先成绩为官方自报。它的输出包含位置、掩码等结构化结果，将图像理解与后续图像处理接到同一套模型接口上。",
+          "sourceName": "腾讯微信视觉团队／juya-ai-daily",
+          "sourceUrl": "https://tencent.github.io/WeVisOne-VL/",
+          "publishedAt": "",
+          "tags": [
+            "视觉模型",
+            "开源",
+            "结构化输出"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Anthropic 开源 FlashProve，核验回复所用模型仍有高额计算成本",
+          "summary": "Anthropic 开源可验证推理研究原型 FlashProve：服务方先发布固定模型权重的加密承诺，再为输出生成证明，用户不拿到权重也能在 CPU 上核验计算是否与该模型一致。在 Llama 4 Maverick 的 4 位量化版本上，单张 H100 按 24 个请求一批生成证明，吞吐约每秒 110 token；每个 1024 token 请求的证明约 19 MB，24 核 CPU 验证约需 17 秒，但证明消耗的 GPU 时间为普通推理的 70 至 95 倍。原型最多支持 1024 token 上下文，针对整数模型的贪心解码，快速验证代码尚无形式化保证，也没有实验室部署计划。它核验的是模型与计算的一致性，不能保证回答真实；模型是否被替换与内容是否正确，是两种不同的验证问题。",
+          "sourceName": "Anthropic Research／juya-ai-daily",
+          "sourceUrl": "https://anthropic.com/research/provable-inference",
+          "publishedAt": "",
+          "tags": [
+            "可验证推理",
+            "模型核验"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 自报 ChatGPT 搜索查询量达 Google 的约 20%，拟合并 Chat 与 Work",
+          "summary": "OpenAI 消费产品负责人 Adam Fry 接受 Big Technology 采访时称，按用户每次提问触发联网搜索计一次，ChatGPT 搜索查询量约为 Google 的 20%；这是公司内部数据，不能直接等同于搜索市场份额。他还披露，近两个月 ChatGPT 周活从 10 亿增至 12 亿，含听写与语音对话的语音输入周活为 2.5 亿，每周生成约 15 亿张图片。OpenAI 计划把 Chat 与 Work 合并为由单一界面判断用户意图。使用量披露与界面调整涉及同一个入口：搜索、交流和任务处理都由对话承接，但访问量、搜索次数和向外部网站导流的数量仍是不同指标。",
+          "sourceName": "Adam Fry／juya-ai-daily",
+          "sourceUrl": "https://x.com/adamhfry/status/2117714179209723951",
+          "publishedAt": "",
+          "tags": [
+            "搜索",
+            "产品入口",
+            "使用数据"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "",
+      "items": [
+        {
+          "title": "MiniMax 开源 BYOB，为不同主人持有的 Agent 定义协作协议",
+          "summary": "MiniMax 开源 BYOB（Bring Your Own Bot），发布协议规范和采用 MIT 许可证的 TypeScript 参考实现。共享空间允许 MiniMax Code、Grok Bot、支持 MCP 的 Agent 或脚本共同参与，各自的记忆、身份、权限和账号仍归原主人；跨主人操作依次经过 Agent 提议、受影响主人批准、该主人的 Agent 执行、另一席位核验。共享空间本身不持有任何 Agent，协作因此不要求先把所有账号和权限交给同一个中控服务，执行权与核验权也在协议中分开。",
+          "sourceName": "MiniMax／juya-ai-daily",
+          "sourceUrl": "https://github.com/MiniMax-AI/mcode-agent-table?ref=explainx",
+          "publishedAt": "",
+          "tags": [
+            "Agent",
+            "协作协议",
+            "开源"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Crouton Alpha 上线 OpenCode 与 OpenRouter，免费期和地区均有限制",
+          "summary": "隐身模型 Crouton Alpha 已在 OpenCode 和 OpenRouter 上线，OpenRouter 标示上下文为 100 万 token，输入和输出均为每百万 token 0 美元。OpenCode 宣布未来一周免费，支持多模态，数据不用于训练，但仅限特定地区使用。免费期、地区开放范围和数据政策是本次试用的明确条件，不能据此推断长期服务价格；关于模型可能来自 Meta 的分析尚未确认，提供方身份与已公开能力分开看待。",
+          "sourceName": "OpenRouter、OpenCode／juya-ai-daily",
+          "sourceUrl": "https://openrouter.ai/stealth/crouton-alpha",
+          "publishedAt": "",
+          "tags": [
+            "模型试用",
+            "多模态",
+            "长上下文"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "dots 将扩展模型组合，按任务分配不同模型",
+          "summary": "OpenAI 团队成员 Tibo 表示，dots 正扩展支持的模型组合，包括 GPT-6 Astra 和 GPT-6.1 Terra，之后还会加入其他模型；此前产品介绍称 dots 由 Astra 驱动。他称 Terra 将改善速度与个性表现，每个 dot 会按任务选择模型，让不同模型处理工作的不同部分。这里披露的是产品内部的模型分配方式变化，尚未给出各模型的调用比例、完整开放范围或独立性能数据；同一个产品界面的响应不再必然对应固定的单一模型。",
+          "sourceName": "Tibo／juya-ai-daily",
+          "sourceUrl": "https://x.com/thsottiaux/status/2117283124833055196",
+          "publishedAt": "",
+          "tags": [
+            "Agent",
+            "模型路由"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Figma 披露专用编辑模型训练方法，直接生成原生画布修改",
+          "summary": "Figma 介绍其编辑模型：以原生文件格式表示设计，用起始画布、合成编辑请求及成功修改训练，再结合确定性校验、视觉评判和设计师校准；早期 Llama 3.3 70B 版本用了超过 25 万个样本，目前也投入强化学习，并展示了尚未发布的 Qwen 3.8 27B 后训练版本。已上线的 Figma Agent 同时调用自研编辑模型与第三方模型，前者处理精确修改，后者承担图像、矢量生成等任务。Figma 称从测试到正式版，典型任务快约 20%，专家对比中胜出或持平占 62%，用户评分高 33%，撤销操作少 60%；这些是整个 Agent 的改进结果，不能全归因于编辑模型。输出直接回写画布，使组件、布局和未修改内容的完整性进入评测范围。",
+          "sourceName": "Figma 官方博客／Hacker News",
+          "sourceUrl": "https://www.figma.com/blog/training-a-figma-fluent-editing-model/",
+          "publishedAt": "",
+          "tags": [
+            "设计工具",
+            "后训练",
+            "交互界面"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "claude-mem 用压缩和检索延续跨会话上下文",
+          "summary": "GitHub Trending 中，claude-mem 当日新增 1139 星，累计 111956 星。项目描述称，它记录 Agent 会话活动，以 AI 压缩，再把相关上下文注入后续会话，支持 Claude Code、OpenClaw、Codex、Gemini、Copilot、OpenCode 等工具。跨会话记忆由一层持久化记录与检索实现，而非单次对话自动拥有无限上下文；保存哪些活动、压缩后留下哪些细节，会直接影响后续任务拿到的信息。榜单热度未提供记忆准确率或数据隔离评测。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/thedotmack/claude-mem",
+          "publishedAt": "",
+          "tags": [
+            "Agent 记忆",
+            "上下文"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Vercel Labs 的 agent-desktop 提供面向 Agent 的电脑操作 CLI",
+          "summary": "Vercel Labs 的 agent-desktop 进入 GitHub Trending，当日新增 3791 星，累计 12877 星；项目以 Rust 编写，定位为 AI Agent 使用电脑的命令行工具。它把电脑操作能力放到可由 Agent 调用的 CLI 接口中，任务范围因而能够涉及图形界面，而不局限于已有业务 API。当前抓取材料仅提供定位与热度，没有列出兼容系统、权限隔离或操作成功率，星数不能替代这些能力信息。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/vercel-labs/agent-desktop",
+          "publishedAt": "",
+          "tags": [
+            "电脑操作",
+            "Agent",
+            "CLI"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "hex 提供跨桌面系统的本地语音听写",
+          "summary": "anomalyco 的 hex 在 GitHub Trending 当日新增 410 星，累计 4612 星，项目描述为面向 macOS、Windows 和 Linux 的本地语音听写工具，使用 Rust 编写。它将语音转为文字输入，接入点是现有桌面文字操作，而非另起一套语音对话界面。抓取描述没有说明所用模型、离线依赖或准确率，本地听写的定位与具体数据传输行为仍不能画等号。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/anomalyco/hex",
+          "publishedAt": "",
+          "tags": [
+            "语音输入",
+            "桌面工具"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "colibri 为 MoE 推理设置 GPU、内存与 NVMe 分层",
+          "summary": "colibri 当日新增 802 星，累计 47266 星，是用 C 编写的 MoE 推理引擎。项目把频繁调用的专家留在 GPU，较少调用的专家放在内存，再从 NVMe 读取冷专家，并列出 CUDA 与 Vulkan 支持。它通过分层存储安排模型专家的驻留位置，减少全部专家同时占用显存的要求，但读取存储也进入推理路径；当前榜单没有给出具体硬件上的速度、延迟或模型兼容性测试。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/JustVugg/colibri",
+          "publishedAt": "",
+          "tags": [
+            "MoE",
+            "本地推理",
+            "显存"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "",
+      "items": [
+        {
+          "title": "Google 为学生推出 Guided Learning，同时默认关闭多项 K-12 访问",
+          "summary": "Google 将 Guided Learning 引入 Search 和 Classroom，识别学生寻求作业帮助的场景后，以分步讲解和提示引导解题；Classroom 版本即日起全球可用。同时，Gemini、Gemini Notebook、Classroom 中的 Gemini 和 Google Search 对 K-12 学生账号的访问全部默认关闭。HN 上相关学校访问报道获得 558 分、406 条评论，但该讨论热度不改变官方公告的账号范围。学习功能开放与学校账号默认权限同步调整，教育搜索的可用性因此同时取决于产品能力和学校的访问设置。",
+          "sourceName": "Google 官方博客／juya-ai-daily；HN 热度交叉参照",
+          "sourceUrl": "https://blog.google/products-and-platforms/products/education/guided-learning/",
+          "publishedAt": "",
+          "tags": [
+            "教育",
+            "搜索",
+            "账号权限"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "ChatGPT Classic 将于 2027 年 1 月 30 日停用",
+          "summary": "据 juya 转述的应用内通知，OpenAI 已向仍使用 ChatGPT Classic 的用户确认，旧版桌面应用将于 2027 年 1 月 30 日停用，完整聊天记录会随账号迁移到新版 ChatGPT，通知横幅提供新版下载入口。这里终止的是旧桌面客户端的使用，不是账号聊天历史的保留；客户端入口集中到新版应用，而历史记录按账号延续。该条未附独立官方网页，来源链接保留当日早报，通知范围以仍在使用旧版的用户为准。",
+          "sourceName": "juya-ai-daily（转述应用内通知）",
+          "sourceUrl": "https://daily.juya.uk/issues/2026-11-04/",
+          "publishedAt": "",
+          "tags": [
+            "桌面客户端",
+            "停用日期"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "",
+      "items": [
+        {
+          "title": "Side Chats 改为长期保存，归档删除随主会话联动",
+          "summary": "OpenAI 团队成员 Brent Traut 表示，ChatGPT Side Chats 不再因应用重启、更新或到期而消失，存储方式与普通会话一致；用户仍能手动删除或归档，主会话归档或删除时侧聊同步处理。他还称已修复一批体验细节，启动、主会话沟通、工具调用和活动界面预计改善，移动端和 TUI 支持仍在推进。侧聊由短暂的分支讨论变成可持续保留的会话记录，其生命周期明确绑定主会话，但这次披露不代表所有终端已经同步完成。",
+          "sourceName": "Brent Traut／juya-ai-daily",
+          "sourceUrl": "https://x.com/btraut/status/2117696510146265089",
+          "publishedAt": "",
+          "tags": [
+            "会话管理",
+            "产品交互"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "豆包工作免费开放个人简单问答，文档与研究仍可能消耗额度",
+          "summary": "豆包工作通过官方公众号宣布，向个人用户免费开放日常简单问答，并自称在这类问题上比豆包对话模式更准确可靠；素材没有提供独立比较评测。用户能在同一对话里从提问继续到写文档或制作 PPT，但后续文档、PPT 和深入研究可能消耗付费额度。免费范围停留在基础问答，同一入口承接后续付费任务，问答与成果生成之间没有再切换产品的步骤。",
+          "sourceName": "豆包工作官方公众号／juya-ai-daily",
+          "sourceUrl": "https://mp.weixin.qq.com/s/n4RUfNxJwfcxsByEWLuhfw",
+          "publishedAt": "",
+          "tags": [
+            "免费入口",
+            "付费额度",
+            "办公产品"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "",
+      "items": [
+        {
+          "title": "OpenAI 提高漏洞赏金，并与 Cathedral Systems 筹备安全测试",
+          "summary": "OpenAI 计划与 Cathedral Systems 开展新一轮内部安全冲刺，由双方研究人员利用 OpenAI 自身模型寻找系统弱点，并同步提高漏洞赏金。关键漏洞奖励增至原来的四倍以上，特别出色的发现连同奖金最高可获 172000 美元；新标准覆盖等待赏金的报告，过去 30 天已获赏金且符合更高标准的报告也会补发差额。安全测试与报告激励同时调整，外部报告的计奖边界也向最近已结算的发现延伸，但最高金额不代表每个关键漏洞的固定报酬。",
+          "sourceName": "OpenAI 公告／juya-ai-daily",
+          "sourceUrl": "https://openai.com/index/preparing-our-next-security-sprint-to-harden-openai/",
+          "publishedAt": "",
+          "tags": [
+            "安全测试",
+            "漏洞赏金"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Worktrunk 用 CLI 管理并行 Agent 所需的 Git worktree",
+          "summary": "Worktrunk 在 GitHub Trending 当日新增 438 星，累计 10527 星，以 Rust 编写，定位为面向并行 AI Agent 工作的 Git worktree 管理命令行工具。Git worktree 允许同一仓库对应多份工作目录，这类工具处理的是多个任务同时改动代码时的目录与分支管理。工作目录分开不等于最终改动自动兼容，抓取材料也没有声称具备自动消除合并冲突的能力。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/max-sixty/worktrunk",
+          "publishedAt": "",
+          "tags": [
+            "Git",
+            "并行开发",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "floci 提供本地 AWS 模拟器，进入当日开源榜单",
+          "summary": "Java 项目 floci 在 GitHub Trending 当日新增 482 星，累计 28836 星，项目自述为轻量、免费的 AWS 本地模拟器替代方案。本地模拟将部分依赖云服务的开发测试搬到本机环境，但与真实云端的 API 行为、权限和网络条件是否一致，取决于具体实现覆盖。榜单材料没有列出服务清单、兼容率或许可证细节，项目的免费定位不能替代这些工程条件。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/floci-io/floci",
+          "publishedAt": "",
+          "tags": [
+            "AWS",
+            "本地测试",
+            "开发工具"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "",
+      "items": [
+        {
+          "title": "fal 两轮融资合计 16.5 亿美元，彭博报道估值达 160 亿美元",
+          "summary": "AI 推理服务商 fal 宣布完成 E、F 两轮合计 16.5 亿美元融资：E 轮 3.5 亿美元由 Sequoia Capital 领投，F 轮 13 亿美元由 Bessemer Venture Partners 领投，NVIDIA 作为战略投资方参与，另有 Sound Ventures、HOF Capital 和 T. Rowe Price。彭博报道本次估值为 160 亿美元，较今年 4 月的 80 亿美元翻倍，估值口径与公司融资公告分开归因。资本投入对象是推理服务环节，而非又一项基础模型发布；材料未披露营收、毛利或资金用途细目，融资规模不能直接推导业务盈利情况。",
+          "sourceName": "fal 公告、彭博／juya-ai-daily",
+          "sourceUrl": "https://fal.ai/blog/series-e-f",
+          "publishedAt": "",
+          "tags": [
+            "融资",
+            "推理服务",
+            "基础设施"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "",
+      "items": [
+        {
+          "title": "上海盗用算力案宣判：非法调用接口 29 万余次并转售服务",
+          "summary": "上海市徐汇区人民法院审理的案件中，宗某某利用 AI 伪造签名、绕过平台防护，通过自建网站转售图片和视频生成服务。检察机关称，涉案两款应用短时间内出现同一 IP 注册的 400 多万用户，被告非法调用接口 29 万余次，违法所得 3.4 万余元；法院以非法获取计算机信息系统数据罪判处有期徒刑三年、缓刑三年，并处罚金 4 万元。判决涉及绕过防护后的接口调用和商业转售，AI 生成服务的使用边界仍受平台授权及计算机信息系统相关法律约束，不能把技术上可调用视作已获授权。",
+          "sourceName": "澎湃新闻／juya-ai-daily",
+          "sourceUrl": "https://www.thepaper.cn/newsDetail_forward_34389477",
+          "publishedAt": "",
+          "tags": [
+            "接口授权",
+            "算力盗用",
+            "司法"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Postman 用户报告自动安装 Agent 插件，原帖未证实数据外传",
+          "summary": "Postman 的 GitHub issue 作者称，在 macOS 打开 12.33.4 版桌面应用后，发现自动安装 Codex、Claude Code 插件及 CLI 的日志、全局配置变更，以及引导通用 API 任务使用 Postman 的启动钩子；作者还给出安装器尝试批准自身钩子的固定版本源码链接。该帖在 HN 获 1027 分、343 条评论，但报告明确说尚未在干净系统复现，也未证明数据外传，不能沿用 HN 标题把它写成已确认泄露。它指向的具体争议是一个应用能否自行改变另一个 Agent 的配置和信任状态，问题跨越了普通插件安装与宿主授权的边界。",
+          "sourceName": "Postman GitHub 用户报告／Hacker News",
+          "sourceUrl": "https://github.com/postmanlabs/postman-app-support/issues/14370",
+          "publishedAt": "",
+          "tags": [
+            "插件权限",
+            "用户报告",
+            "信任边界"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "",
+      "items": [
+        {
+          "title": "“直接读写模型权重”引发高分讨论，实验条件并不统一",
+          "summary": "Matthew Honnibal 质疑相关研究把无工具读取小网络权重与使用 Python、运行模型后修改 Qwen 的实验并置，该帖获 HN 909 分；Simon Willison 的本地 Qwen 3.8 27B 复现实验获 492 分，四个游戏识别任务中成功三个、失败一个，成功任务耗时约 46 至 65 分钟。后者没有复现大模型权重修改，而前者指出 Qwen 实验允许最多 50 批练习题前向运行。两条讨论合并作为研究传播信号：裸读浮点权重、借助代码分析、带反馈修改权重是不同条件，热度不能把它们变成同一种已获验证的能力。",
+          "sourceName": "Matthew Honnibal、Simon Willison／Hacker News",
+          "sourceUrl": "https://simonwillison.net/2026/Nov/3/qwen-can-interpret-model-weights/",
+          "publishedAt": "",
+          "tags": [
+            "研究讨论",
+            "实验边界"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "mattpocock/skills 当日新增 1164 星，工程技能库保持高关注",
+          "summary": "mattpocock/skills 在 GitHub Trending 当日新增 1164 星，累计 311514 星，描述为直接来自作者 .agents 目录的工程技能集合。它提供的是可复用的 Agent 工作指令，当前抓取未列出具体技能内容或执行效果。此处记录为工程经验以技能文件传播的热度信号，星数没有验证这些指令在不同仓库中的正确性。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/mattpocock/skills",
+          "publishedAt": "",
+          "tags": [
+            "技能文件",
+            "传播信号"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "49 个 Agent 的游戏工作室项目进入榜单，规模仍属项目自述",
+          "summary": "Claude-Code-Game-Studios 当日新增 1182 星，累计 34700 星；项目称包含 49 个 AI Agent、72 项工作技能，以及参照真实工作室层级的协调系统。多角色配置的传播度较高，但素材没有成品游戏、交付周期或独立评测数据。该条作为多 Agent 组织形式的热度观察，Agent 和技能数量本身并不等于完成开发工作的能力。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/Donchitos/Claude-Code-Game-Studios",
+          "publishedAt": "",
+          "tags": [
+            "多 Agent",
+            "游戏开发",
+            "热度信号"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Claude Code 产品负责人 Cat Wu 宣布离职，尚无产品调整信息",
+          "summary": "Claude Code 产品负责人 Cat Wu 发帖称，周五将是她在 Anthropic 的最后一个工作日，并回顾了两年前从内部工具试用者加入团队、参与 Claude Code 与 Cowork 等产品的经历。她描述了用户从逐条批准权限到更多自动批准的使用变化，这属于本人回顾，并非用户行为统计。该条保留为相关产品的人事背景信号，现有素材没有继任安排或产品路线调整公告，不能由离职推断服务变化。",
+          "sourceName": "Cat Wu／juya-ai-daily",
+          "sourceUrl": "https://x.com/_catwu/status/2117731934340337676",
+          "publishedAt": "",
+          "tags": [
+            "人事",
+            "背景信号"
+          ],
+          "importance": "normal"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "以 juya 完整 contentHtml 为主素材，避免 contentText 的 8000 字符截断丢失尾部事实；补充 HN 原文核验与 GitHub 项目描述。合并权重研究争议及复现实验，Google 学校访问讨论并入官方产品新闻。过滤未确认的 DeepSeek 预训练传闻、无规格的 Hy4 预热、弱工作相关人事公告和过期或低相关讨论；未将 GitHub 上榜视作当日发布。AI HOT 两个接口返回 404，未以历史数据替代。",
+  "fetchErrors": [
+    {
+      "source": "aihotDaily",
+      "message": "AI HOT 结构化日报接口 https://aihot.virxact.com/api/public/daily 返回 HTTP 404，本期未取得该源素材。"
+    },
+    {
+      "source": "aihotItems",
+      "message": "AI HOT 精选条目接口 https://aihot.virxact.com/api/public/items?mode=selected&take=40 返回 HTTP 404，本期未取得该源素材。"
+    }
+  ],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "failed",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "failed",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (45 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (13 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-11-04T01:52:40Z"
+}
