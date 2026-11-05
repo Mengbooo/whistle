@@ -1,0 +1,499 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-05",
+  "title": "Whistle 互联网日报｜2026-11-05",
+  "summary": "早上好，今天的几项更新落在模型能力、开发协作和安全边界上：OpenAI 将图像生成扩展到 GIF 与逐帧编辑，腾讯混元 Hy4 加入视觉和电脑操作，月之暗面开放 Kimi K3.1 Pro 权重；OpenAI 还披露了自动化 Linux 漏洞研究结果，并宣布收购开发工具公司 Pierre。与此同时，Meta 收购多 Agent 编程产品 Conductor，国内多家机构发布智能体自律公约。模型能力正在进入更多具体的软件与研究流程，工具厂商也在争夺代码审查、任务编排和用户入口；安全审查、数据处理与开源许可因此成为这些产品落地时不可分割的一部分。",
+  "theme": "模型进入具体工作流程，开发协作与安全边界同步变化",
+  "topline": [
+    "OpenAI Images 2.6 在 ChatGPT、Codex 和 API 上线，新增 GIF 生成、逐帧编辑与可复用参考图，API 生成速度官方称提升 50%。",
+    "腾讯混元 Hy4 正式发布，首次支持视觉与电脑操作，官方披露金融任务测试结果并表示其在高难度数学和长程开发上仍落后顶尖闭源模型。",
+    "OpenAI 称自动流程复现 1,724 个 Linux 漏洞并为 948 个本地提权漏洞生成候选补丁，结果仍需人工审查。",
+    "OpenAI 宣布收购开发者工具公司 Pierre，Meta 收购多 Agent 编程工具 Conductor，代码工作流成为平台竞争的一部分。"
+  ],
+  "sections": [
+    {
+      "id": "headline",
+      "title": "今日头条",
+      "summary": "",
+      "items": [
+        {
+          "title": "OpenAI Images 2.6 上线，图像生成加入 GIF 与逐帧编辑",
+          "summary": "OpenAI 将 Images 2.6 同步上线 ChatGPT、Codex 和 API：用户可用文字或照片生成循环 GIF、调整播放速度并逐帧编辑，也可保存人物或角色作为后续生成的参考图。API 提供 GPT-Image-2.6 Flare 和 Sunburst，官方称速度比上一代提升 50%；低画质档的 Flare 最快约 6 秒出图，Sunburst 面向更高画质并强调多轮编辑的一致性。API 还加入图片标注、complexity 参数和 SVG 导出，定价与 2.5 相同；这些变化把静态出图扩展到可编辑的短动效和连续视觉资产生产。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/introducing-images-2-6/",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "图像生成",
+            "API",
+            "多模态"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "腾讯混元 Hy4 正式版加入视觉理解和电脑操作",
+          "summary": "腾讯发布混元 Hy4 正式版，首次在 Hy 系列加入视觉能力与电脑操作，可分析复杂图表，并结合命令行和图形界面执行专业软件任务。腾讯披露，Hy4 在由 213 位金融从业者参与、包含 579 个真实任务的众测中综合得分 3.04、位居开源模型第一，内部评测幻觉率从 preview 的 15.76% 降至 5.45%；游戏开发评测较 preview 提升 19.1%。模型已在腾讯云、WorkBuddy 和 OpenRouter 上线，API 输入和输出每百万 token 分别为 0.834 美元和 2.501 美元；前沿数学与长程开发仍与顶尖闭源模型有差距。视觉、工具调用和桌面操作被纳入同一模型能力后，企业软件任务开始从问答扩展到跨界面执行。",
+          "sourceName": "腾讯混元",
+          "sourceUrl": "https://hy.tencent.com/research/hy4",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "模型发布",
+            "开源模型",
+            "电脑操作"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 披露自动流程为 Linux 内核漏洞生成候选补丁",
+          "summary": "OpenAI 称，其安全研究人员用一套自主漏洞研究流程测试 Linux 内核，在一次运行中复现 1,724 个漏洞，为其中 948 个本地权限提升漏洞生成候选补丁，并为 291 个信息泄露漏洞生成概念验证；API 成本约 121.3 万美元。公司还称流程使用了至少 10 种其判断为新发现的漏洞利用技术。候选结果由研究人员审核，OpenAI 正与 Linux 维护者及 Patch the Planet 合作伙伴处理报告和修复。该结果展示了模型在大规模漏洞发现与补丁草拟中的能力，同时也凸显验证、协调披露和维护者审查仍是安全研究流程的必要环节。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/a-thousand-fewer-paths-to-root/",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "网络安全",
+            "代码智能体",
+            "Linux"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 将收购 Pierre，扩展 Codex 的团队开发能力",
+          "summary": "OpenAI 宣布收购 Pierre Computer Company。Pierre 开发的 Trees、Diffs 和 Code Storage 等工具中，Trees 与 Diffs 已用于 Codex 的文件浏览和代码审查；OpenAI 表示，希望把 Codex 扩展为团队与 AI 从想法到发布共同构建软件的平台。交易仍需常规交割条件和监管批准，完成前双方独立运营；Pierre 的开源项目将继续开源，Code Storage 客户仍可使用现有服务，相关能力之后逐步整合进 Codex。收购把代码浏览、差异审查和存储能力纳入编码 Agent 的产品版图，Git 工作流与 Agent 协作的衔接将成为产品整合重点。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/openai-to-acquire-pierre/",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "开发工具",
+            "并购",
+            "Codex"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "ai-tools",
+      "title": "AI 与新工具",
+      "summary": "",
+      "items": [
+        {
+          "title": "Ripple-65B Preview 以 12 万亿 token 预训练，开放 Apache 2.0 权重",
+          "summary": "Ricursive Intelligence 发布 Ripple-65B Preview，这是从零预训练 12 万亿 token 的 650 亿参数稠密模型，支持最长 100 万 token 上下文，权重以 Apache 2.0 协议开放。公司称其 TerminalBench 2.1 得分为 80.5%，在 agentic coding 上超过若干参数规模更大的开放权重模型，训练预算为 3,200 万美元；模型也可通过 GMI Cloud 和 OpenRouter 调用。评测与成本数据目前来自公司披露，完整技术报告尚待发布；开放权重让代码任务能力可直接纳入本地或自托管环境测试。",
+          "sourceName": "Ricursive Intelligence",
+          "sourceUrl": "https://ricursive.com/ripple",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "开放权重",
+            "代码模型",
+            "长上下文"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Cognition 推出 SWE-2 Flash，主打更低成本的编程推理",
+          "summary": "Cognition 发布 SWE-2 Flash，称该模型在其所列领先评测中超过所有美国开放权重模型，包括参数量约为其三倍的模型。它基于 Thinking Machines 的 Inkling-Small，总参数 276B、激活参数 12B；Cognition 称相较 SWE-2 速度快 3 倍、成本为五分之一，并计划在 11 月 30 日前向 Pro、Max 和 Teams 用户免费开放。上述排名和效率数据为厂商口径，模型表现仍取决于具体代码任务和评测设置；更快、更便宜的专用模型降低了编程 Agent 连续调用的推理成本。",
+          "sourceName": "Cognition",
+          "sourceUrl": "https://cognition.com/blog/swe-2-flash",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "编程模型",
+            "Agent",
+            "推理成本"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "字节跳动开源 Axion 1.0 Agent 模型",
+          "summary": "字节跳动发布并开源 Axion 1.0 Agent 模型，定位于智能体任务执行。现有素材确认了开源发布和模型用途，但未提供参数规模、许可细节或基准成绩，因此暂不据此比较其能力。模型权重开放后，外部开发者可在自身任务与工具环境中验证其表现，Agent 模型的竞争也由闭源服务扩展到可部署权重。",
+          "sourceName": "Axion 1.0",
+          "sourceUrl": "https://axion1-0.github.io/",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "Agent",
+            "开源模型"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "月之暗面开放 Kimi K3.1 Pro 权重，许可证设有商业门槛",
+          "summary": "月之暗面在 Hugging Face 开放 Kimi K3.1 Pro 权重，模型总参数约 2.8T、上下文窗口 100 万 token。许可证允许复制、修改、再发布和销售，但以模型服务方式经营且被许可方及关联方连续 12 个月营收超过 2,000 万美元时，须另行签约；月活超过 1 亿或月营收超过 2,000 万美元的商业产品还须显著标注模型名称，内部使用及官方产品或认证推理伙伴不受这两项限制。公司表示训练阶段移除了网络攻击相关数据。权重开放并不等于无条件商用，许可证门槛、标注义务和安全限制会直接影响部署与分发方式。",
+          "sourceName": "月之暗面 / Hugging Face",
+          "sourceUrl": "https://huggingface.co/moonshotai/Kimi-K3.1-Pro",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "开放权重",
+            "模型许可",
+            "安全"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Antigravity CLI 1.5.0 内置 ACP 服务端与远程 Agent 会话",
+          "summary": "Antigravity CLI 1.5.0 将 agy acp 内置为可通过 stdio 运行的 Agent Client Protocol 服务端，编辑器可直接把它接入为 Agent；无浏览器或 SSH 环境可用 agy acp --login 登录。更新还让 /btw 在对话中途读取文件和调用工具，加入远程 Agent 会话、项目管理与启动配置覆盖，并修复模型遇到限流或服务器错误后不重试的问题。ACP 接口让 CLI 能嵌入其它编辑器与终端客户端，错误重试和远程会话则影响长任务的连续性。",
+          "sourceName": "Google Antigravity CLI",
+          "sourceUrl": "https://github.com/google-antigravity/antigravity-cli/blob/main/CHANGELOG.md",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "CLI",
+            "ACP",
+            "Agent"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Gemini 3.8 Flash TTS 支持用自然语言重混声音",
+          "summary": "Google 在 AI Studio 和 Gemini API 上线 Voice Remixing。用户可从 2,000 多种预设声音或自定义声音开始，通过自然语言调整音色、音高、语速和口音；AI Studio 可并排试听三个版本，选定后保存并用于不同脚本或多说话人场景。声音从一次性合成素材变成可保存、反复调用的配置，适用于需要保持角色声音一致的语音内容生产。",
+          "sourceName": "Google",
+          "sourceUrl": "https://x.com/Google/status/2118027058794148099",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "语音生成",
+            "TTS",
+            "API"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Claude Code 放宽原创游戏开发限制，仍拒绝复刻原作",
+          "summary": "Anthropic 在 Claude Code 2.1.317 中调整游戏开发限制：用户可以提及现有游戏并要求参考其玩法制作原创作品，不再因此被拒；明确要求复制原作时仍会被拒绝。此前系统规则曾把玩法参考也拦截，引发开发者反馈。此次调整把“借鉴玩法”与“复制具体作品”区分开来，模型拒绝边界更贴近版权争议中的表达与实现差别。",
+          "sourceName": "Anthropic",
+          "sourceUrl": "https://x.com/addyosmani/status/2117848568535106001",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "Claude Code",
+            "内容边界",
+            "版权"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Claude 桌面端新增 Storage 面板，可清理旧会话与工作树",
+          "summary": "Claude 桌面版 v3.1623.0 在设置中增加 Storage 面板和 /storage 命令，按 Cowork 任务、Code 会话与 worktree、Runtime、缓存和日志展示本机占用。用户可清理超过 30 天不活跃的任务与会话，以及没有未提交更改的工作树；删除会话会永久移除对话记录，删除任务也会连附件和产出文件一起删除，Runtime 则不能从面板卸载。Agent 桌面应用持续保存任务与工作区后，本地存储回收和删除后果也成为产品管理的一部分。",
+          "sourceName": "Anthropic",
+          "sourceUrl": "https://x.com/lydiahallie/status/2118045439803195567",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "Claude",
+            "桌面应用",
+            "本地存储"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "NVIDIA auto-ontology 尝试为 Agent 提供可解释的数据查询层",
+          "summary": "NVIDIA/auto-ontology 登上 GitHub Trending。项目以 Python 构建基于语义图谱的推理层，目标是改善 LLM 和 Agent 的上下文检索，生成确定性更高、可解释的数据查询。仓库当日新增约 2,050 颗星。它把自然语言访问企业数据时的语义建模和查询生成作为独立层处理，反映出 Agent 接入结构化业务数据仍需要明确的数据定义与可检查的查询过程。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/NVIDIA/auto-ontology",
+          "publishedAt": "2026-11-05T01:51:49.787Z",
+          "tags": [
+            "开源",
+            "Agent",
+            "数据检索"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Vercel Labs agent-desktop 提供面向 Agent 的电脑操作 CLI",
+          "summary": "Vercel Labs 的 agent-desktop 当日进入 GitHub Trending，项目以 Rust 编写，定位为 AI Agent 操作电脑的命令行工具，当日新增约 2,470 颗星。它把桌面操作封装为可供 Agent 调用的接口，与模型原生电脑操作能力形成不同实现路径；实际可用范围和权限控制需以项目文档与运行环境为准。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/vercel-labs/agent-desktop",
+          "publishedAt": "2026-11-05T01:51:49.787Z",
+          "tags": [
+            "开源",
+            "电脑操作",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Worktrunk 用 Git worktree 管理并行 Agent 工作区",
+          "summary": "Rust 命令行工具 Worktrunk 面向并行 AI Agent 工作流管理 Git worktree，当日新增约 531 颗星。独立 worktree 可让多个任务在不同工作目录并行修改代码，减少共享工作区中的文件冲突；这类工具将版本控制的分支隔离能力直接用于多 Agent 编码任务。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/max-sixty/worktrunk",
+          "publishedAt": "2026-11-05T01:51:49.787Z",
+          "tags": [
+            "Git",
+            "开发工具",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "人工智能基准改用任务总耗时比较 API 速度",
+          "summary": "Artificial Analysis 更新 API 性能基准，将 Time per Task 作为核心指标，统计从发送请求到最后一个 token 返回的端到端时长，而非只看流式输出速度。基准覆盖约 1,000 个 serverless 端点，并纳入 Agent 工作负载、短提示词、长上下文、编程和知识任务的多轮会话。模型完成整项任务的实际耗时由首 token 延迟、输出速度与所需 token 数共同决定，单看 token/秒无法反映完整体验。",
+          "sourceName": "Artificial Analysis",
+          "sourceUrl": "https://artificialanalysis.ai/methodology/performance-benchmarking",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "模型评测",
+            "API",
+            "Agent"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "platforms",
+      "title": "大厂与平台动态",
+      "summary": "",
+      "items": [
+        {
+          "title": "Meta 收购 Conductor，其云服务将在 11 月 20 日关闭",
+          "summary": "Meta 收购了可让工程师同时管理多个编程 Agent 的初创公司 Conductor。新用户已无法注册或下载；云服务将于 11 月 13 日转为只读、11 月 20 日关闭并开始删除用户数据，活跃订阅者将获退款。本地客户端暂时继续运行，预计维护至 2027 年初，之后逐步退出。此次交易将多 Agent 编排能力带入 Meta，同时也意味着原有用户需面对云端产品迁移和数据保存期限。",
+          "sourceName": "Conductor",
+          "sourceUrl": "https://conductor.build/announcement",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "Meta",
+            "并购",
+            "开发工具"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "OpenAI 任命 Cat Wu 负责 Core Products 产品管理",
+          "summary": "曾参与 Anthropic Claude Code、并在 Dagster 和 Scale AI 任职的 Cat Wu 宣布加入 OpenAI，负责 Core Products 产品管理。她表示将与团队打造保持用户控制的 Agent 产品；OpenAI 联合创始人 Greg Brockman 等公开欢迎。此次人事变动发生在 OpenAI 扩大 Codex 与 Agent 产品布局之际，但其具体职责范围和产品路线尚未披露。",
+          "sourceName": "Cat Wu / OpenAI",
+          "sourceUrl": "https://x.com/_catwu/status/2118137612577968402",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "OpenAI",
+            "产品",
+            "Agent"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "OpenAI 称印度 ChatGPT 周活用户已超过美国",
+          "summary": "OpenAI 印度区负责人 Prabhjeet Singh 向 The Economic Times 表示，印度 ChatGPT 周活跃用户已超过美国，成为最大市场，用户数自 1 月以来翻倍；公司没有披露最新绝对数字。OpenAI 曾在今年 2 月称印度周活超过 1 亿，当时仍排在美国之后。受访者将增长与月费低于 5 美元的 ChatGPT Go 及一年免费开放等本地价格措施联系起来，显示低价订阅和市场投入会改变生成式 AI 产品的地区用户分布。",
+          "sourceName": "Indian Startup News",
+          "sourceUrl": "https://indianstartupnews.com/news/india-overtakes-the-united-states-as-chatgpts-largest-market-user-base-doubled-in-10-months-12780027",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "OpenAI",
+            "用户增长",
+            "印度"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "ChatGPT dots 更新本地任务延续与 iOS 分享能力",
+          "summary": "OpenAI 宣布更新 ChatGPT dots：Windows 端延续本地线程任务、电脑和浏览器操作，以及本地 MCP 工具和插件工作流均有改进；iOS 可从通知直接回复、分享文件给 dot，并通过 iPhone 操作按钮启动。通话连接也得到优化，Gmail 链接可跳转到对应邮件。更新将 Agent 从单一聊天窗口扩展到通知、文件分享和本地工具等系统入口，任务连续性与应用权限成为体验的一部分。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://x.com/_samirism/status/2118103057980690771",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "ChatGPT",
+            "桌面应用",
+            "MCP"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "product-growth",
+      "title": "产品与增长观察",
+      "summary": "",
+      "items": [
+        {
+          "title": "OpenAI 与 Mazda 用 Codex 辅助模拟数十种车头设计",
+          "summary": "OpenAI 表示，其 Forward Deployed Engineering 团队与 Mazda 空气动力学工程师使用 Codex 中的 Astra 构建并模拟了数十种车头设计，模型用于分析气流和结构行为，并在造型与成本约束下探索性能改进。该案例将生成式模型接入实体工程设计评估，而非只生成概念图；OpenAI 称后续数月还会分享更多进展。",
+          "sourceName": "OpenAI",
+          "sourceUrl": "https://openai.com/index/accelerating-engineering-for-the-physical-world",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "工业设计",
+            "Codex",
+            "仿真"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "engineering",
+      "title": "开发者与工程实践",
+      "summary": "",
+      "items": [
+        {
+          "title": "HN 高分讨论聚焦 AI 揭示长期技术债与安全问题",
+          "summary": "一篇发表于 IEEE Spectrum 的文章在 Hacker News 获得超过 1,000 分，讨论 AI 如何让过去数十年积累的技术债更容易被自动化安全工具触及。讨论背景是研究者利用模型发现并分析既有代码中的漏洞；高讨论度反映工程社区关注点从模型能否生成代码，延伸到如何审计和修补庞大遗留系统。该帖为社区讨论信号，具体论据以原文为准。",
+          "sourceName": "Hacker News / IEEE Spectrum",
+          "sourceUrl": "https://spectrum.ieee.org/ai-in-cybersecurity-php2shell-vulnerability",
+          "publishedAt": "2026-11-04T11:52:17.000Z",
+          "tags": [
+            "技术债",
+            "安全",
+            "社区讨论"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "GitHub 发布事故影响 Pull Request、Git 操作和 Issues",
+          "summary": "GitHub Status 记录了一起影响 Pull Request、Git 操作和 Issues 的服务事故，并在 Hacker News 获得较高讨论。代码托管平台故障会同时影响代码提交、评审和协作问题跟踪，说明这些工作流集中在单一托管服务时，平台可用性直接决定团队协作连续性；具体影响范围与恢复情况以事故记录为准。",
+          "sourceName": "GitHub Status",
+          "sourceUrl": "https://www.githubstatus.com/incidents/smtdswd1h2w4",
+          "publishedAt": "2026-11-04T10:00:06.000Z",
+          "tags": [
+            "GitHub",
+            "服务可用性",
+            "开发协作"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "Claude Code 配套项目展示跨会话 Agent 记忆与技能组织",
+          "summary": "GitHub Trending 上的 claude-mem 项目提供跨会话上下文保存、压缩与检索，声称支持 Claude Code、Codex、Gemini、Copilot 等多个 Agent 环境；mattpocock/skills 则整理面向工程工作的 Agent skills。两个仓库当日均获得较多新增关注，但功能范围与兼容性属于项目维护者描述，尚不能视为各平台官方支持。社区关注点体现出多 Agent 使用中持续上下文与可复用任务规范的现实需求。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/thedotmack/claude-mem",
+          "publishedAt": "2026-11-05T01:51:49.787Z",
+          "tags": [
+            "开源",
+            "Agent",
+            "上下文管理"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "AI 编程 Agent 工作区隔离项目集中登上 GitHub Trending",
+          "summary": "除 Worktrunk 外，GitHub Trending 还出现 agent-desktop、GitHub Spec Kit 和 PR Agent 等项目，分别涉及电脑操作接口、规格驱动开发流程和代码评审自动化。单日榜单反映仓库关注度而非产品采用量，但这些项目所处环节共同覆盖 Agent 从操作环境、理解需求到提交审查的工程链路。",
+          "sourceName": "GitHub Trending",
+          "sourceUrl": "https://github.com/github/spec-kit",
+          "publishedAt": "2026-11-05T01:51:49.787Z",
+          "tags": [
+            "开源生态",
+            "开发流程",
+            "Agent"
+          ],
+          "importance": "normal"
+        }
+      ]
+    },
+    {
+      "id": "funding",
+      "title": "投融资与行业机会",
+      "summary": "",
+      "items": []
+    },
+    {
+      "id": "policy",
+      "title": "政策监管与合规",
+      "summary": "",
+      "items": [
+        {
+          "title": "中国信通院等发布智能体发展自律公约，覆盖互操作与用户权益",
+          "summary": "11 月 4 日世界互联网大会乌镇峰会上，中国信通院联合腾讯、蚂蚁、阿里、抖音等机构发布《智能体发展自律公约》，华为、OPPO、小米、百度等也列为发起单位。公约提出八项措施，涵盖智能体信任体系、互联基础设施、安全防护、用户权益和技术普惠；发起单位承诺落实并接受行业组织和公众监督。这是行业自律安排而非强制法规，但其覆盖面显示互操作、安全与用户权益正在成为智能体产品共同讨论的治理事项。",
+          "sourceName": "中国信通院 / 世界互联网大会",
+          "sourceUrl": "https://mp.weixin.qq.com/s?new=1&signature=ZXFIEJTXFSrTZRVCqoYjz98shoKy1zpDpoEaKD91Fx8pBxuVxVv0UwJmk%2AeA8VbPQ3UQMuWyZd%2Ag34zNqoTl42ABOP9XYr7TnWAie4EBT3322hDMli9AbV951bdp%2Adlp&src=11&timestamp=1793785314&ver=7068",
+          "publishedAt": "2026-11-04T00:00:00.000Z",
+          "tags": [
+            "智能体",
+            "行业自律",
+            "用户权益"
+          ],
+          "importance": "high"
+        },
+        {
+          "title": "Kimi K3.1 Pro 开放权重时附带安全与商业使用限制",
+          "summary": "Kimi K3.1 Pro 的开放许可证规定，大型模型服务商超过指定营收门槛须另行签约，达到月活 1 亿或月营收 2,000 万美元的商业产品须显著标注模型名称；公司还称已从中期训练和强化学习阶段移除网络攻击相关数据。许可证允许多种再分发和商业使用，但对大规模托管服务及大型商业产品设置额外条件。开放权重的实际可用范围因此同时由技术许可、标注义务和安全策略决定。",
+          "sourceName": "Moonshot AI",
+          "sourceUrl": "https://kimi.ai/blog/kimi-k3-1-pro",
+          "publishedAt": "2026-11-05T01:34:23.000Z",
+          "tags": [
+            "模型许可",
+            "开源安全",
+            "合规"
+          ],
+          "importance": "high"
+        }
+      ]
+    },
+    {
+      "id": "social-buzz",
+      "title": "社交热度观察",
+      "summary": "",
+      "items": [
+        {
+          "title": "HN 用户热议 Gemini 个人账户聊天记录是否用于训练",
+          "summary": "一则 Hacker News 帖子以个人账户用户的说法质疑 Gemini 即使面向订阅用户也会使用聊天记录训练，获得超过 600 分。该帖是用户报告与讨论，并非独立核实的政策公告；相关数据处理应以 Google 账户设置和官方隐私条款为准。讨论集中反映了消费者对订阅状态、聊天数据用途和训练退出选项之间关系的关注。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://news.ycombinator.com/item?id=50363461",
+          "publishedAt": "2026-11-04T10:10:27.000Z",
+          "tags": [
+            "隐私",
+            "Google",
+            "社区讨论"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "HN 讨论多 Agent 使用成本，帖子提及每年最高 20 万美元 token 支出",
+          "summary": "一篇报道援引 Y Combinator 总裁 Garry Tan 称，他大量使用 AI Agent，每年 token 支出最高可达 20 万美元，并在 Hacker News 引发讨论。该数字是个人极端使用案例，不代表典型用户成本；它将 Agent 的持续调用、并行任务和订阅/按量计费之间的成本差异带入公开讨论。",
+          "sourceName": "Hacker News / TechCrunch",
+          "sourceUrl": "https://techcrunch.com/2026/11/02/y-combinator-garry-tan-uses-ai-agents-so-much-he-spends-up-to-200k-a-year-on-tokens/",
+          "publishedAt": "2026-11-04T15:28:31.000Z",
+          "tags": [
+            "Agent",
+            "推理成本",
+            "社区讨论"
+          ],
+          "importance": "normal"
+        },
+        {
+          "title": "OpenAI 收购 Pierre 与 Meta 收购 Conductor 同日引发开发工具讨论",
+          "summary": "OpenAI 收购 Pierre、Meta 收购 Conductor 两条消息均登上 Hacker News 热门列表。前者涉及代码浏览、差异审查和存储，后者涉及多编程 Agent 管理；两项交易的产品定位不同，但都把开发工作流工具纳入大型 AI 平台的产品布局。热度是社区对开发工具整合的关注信号，并不代表收购后的产品整合已经完成。",
+          "sourceName": "Hacker News",
+          "sourceUrl": "https://openai.com/index/openai-to-acquire-pierre/",
+          "publishedAt": "2026-11-04T15:21:21.000Z",
+          "tags": [
+            "开发工具",
+            "并购",
+            "社区讨论"
+          ],
+          "importance": "normal"
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "noiseNote": "优先保留 juya 详述中可核实的产品、模型、数字与限制条件；去除重复报道、传闻及与互联网工作关联较弱的内容。HN 与 GitHub Trending 仅补充有明确开发、基础设施、隐私或 Agent 关联的信号。",
+  "fetchErrors": [
+    {
+      "source": "aihotDaily",
+      "message": "AI HOT daily fetch failed: 404"
+    },
+    {
+      "source": "aihotItems",
+      "message": "AI HOT items fetch failed: 404"
+    }
+  ],
+  "sourceStatus": [
+    {
+      "name": "juya",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "name": "aihotDaily",
+      "status": "failed",
+      "detail": ""
+    },
+    {
+      "name": "aihotItems",
+      "status": "failed",
+      "detail": ""
+    },
+    {
+      "name": "hackernews",
+      "status": "ok (35 stories >= 30pts)",
+      "detail": ""
+    },
+    {
+      "name": "githubTrending",
+      "status": "ok (16 repos)",
+      "detail": ""
+    }
+  ],
+  "generatedAt": "2026-11-05T02:00:00.000Z"
+}
